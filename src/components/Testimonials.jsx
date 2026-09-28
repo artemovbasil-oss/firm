@@ -13,7 +13,7 @@ export default function Testimonials({ lang }) {
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 sm:mb-24 gap-6">
           <div>
             <div className="text-xs sm:text-sm font-mono text-slate-500 uppercase tracking-widest mb-3">
-              // 07 · {lang === 'en' ? 'Client Feedback' : (lang === 'kz' ? 'Пікірлер' : 'Доверие клиентов')}
+              {lang === 'en' ? 'Client Feedback' : (lang === 'kz' ? 'Пікірлер' : 'Доверие клиентов')}
             </div>
             <h2 className="text-4xl sm:text-6xl md:text-7xl font-heading font-black tracking-tight text-slate-950 dark:text-white uppercase leading-[0.95]">
               {lang === 'en' ? 'Trusted by Leaders.' : (lang === 'kz' ? 'Тапсырыс берушілер.' : 'Нам доверяют лидеры.')}

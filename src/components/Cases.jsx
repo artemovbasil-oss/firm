@@ -28,7 +28,7 @@ export default function Cases({ lang, casesList = [], onOpenContact }) {
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 sm:mb-24 gap-6">
           <div>
             <div className="text-xs sm:text-sm font-mono text-slate-500 uppercase tracking-widest mb-3">
-              // 02 · {lang === 'en' ? 'Proof of Work' : (lang === 'kz' ? 'Нәтижелер' : 'Кейсы и цифры')}
+              {lang === 'en' ? 'Proof of Work' : (lang === 'kz' ? 'Нәтижелер' : 'Кейсы и цифры')}
             </div>
             <h2 className="text-4xl sm:text-6xl md:text-7xl font-heading font-black tracking-tight text-slate-950 dark:text-white uppercase leading-[0.95]">
               {lang === 'en' ? 'Selected Cases.' : (lang === 'kz' ? 'Таңдаулы жобалар.' : 'Избранные кейсы.')}
@@ -88,7 +88,7 @@ export default function Cases({ lang, casesList = [], onOpenContact }) {
                   {/* Top Bar with category tag & status */}
                   <div className="flex items-center justify-between z-10 gap-3">
                     <span className="font-mono text-xs text-white/70 uppercase tracking-widest truncate">
-                      {client} // 2026
+                      {client} · 2026
                     </span>
                     <span className="px-3 py-1 rounded-full text-xs font-mono font-bold bg-white/95 text-slate-950 shadow-lg shrink-0">
                       {badge}

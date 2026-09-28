@@ -1,207 +1,337 @@
 import React, { useEffect, useRef } from 'react';
 
+/**
+ * Modern WebGL Interactive Fluid Fragment Shader
+ * Replaces dated particle lines with luxury GPU fluid caustics,
+ * chromatic wave dispersion, and dynamic mouse wake distortion.
+ */
 export default function HeroCanvas() {
   const canvasRef = useRef(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
+
+    // Initialize WebGL context
+    const gl = canvas.getContext('webgl', { 
+      alpha: true, 
+      antialias: true, 
+      powerPreference: 'high-performance',
+      premultipliedAlpha: false
+    }) || canvas.getContext('experimental-webgl');
+
+    if (!gl) {
+      console.warn('WebGL not supported on this device');
+      return;
+    }
+
+    // Vertex Shader: full-screen triangle quad
+    const vsSource = `
+      attribute vec2 a_position;
+      varying vec2 v_uv;
+      void main() {
+        v_uv = (a_position + 1.0) * 0.5;
+        gl_Position = vec4(a_position, 0.0, 1.0);
+      }
+    `;
+
+    // Fragment Shader: Liquid caustics, domain warping, chromatic aberration & interactive mouse fluid ripples
+    const fsSource = `
+      precision highp float;
+      varying vec2 v_uv;
+      uniform vec2 u_resolution;
+      uniform vec2 u_mouse;
+      uniform float u_time;
+      uniform float u_hover;
+      uniform vec2 u_velocity;
+
+      // 2D Simplex Noise
+      vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+      vec2 mod289(vec2 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+      vec3 permute(vec3 x) { return mod289(((x * 34.0) + 1.0) * x); }
+
+      float snoise(vec2 v) {
+        const vec4 C = vec4(0.211324865405187, 0.366025403784439, -0.577350269189626, 0.024390243902439);
+        vec2 i  = floor(v + dot(v, C.yy));
+        vec2 x0 = v - i + dot(i, C.xx);
+        vec2 i1 = (x0.x > x0.y) ? vec2(1.0, 0.0) : vec2(0.0, 1.0);
+        vec4 x12 = x0.xyxy + C.xxzz;
+        x12.xy -= i1;
+        i = mod289(i);
+        vec3 p = permute(permute(i.y + vec3(0.0, i1.y, 1.0)) + i.x + vec3(0.0, i1.x, 1.0));
+        vec3 m = max(0.5 - vec3(dot(x0, x0), dot(x12.xy, x12.xy), dot(x12.zw, x12.zw)), 0.0);
+        m = m * m;
+        m = m * m;
+        vec3 x = 2.0 * fract(p * C.www) - 1.0;
+        vec3 h = abs(x) - 0.5;
+        vec3 ox = floor(x + 0.5);
+        vec3 a0 = x - ox;
+        m *= 1.79284291400159 - 0.85373472095314 * (a0 * a0 + h * h);
+        vec3 g;
+        g.x  = a0.x * x0.x + h.x * x0.y;
+        g.yz = a0.yz * x12.xz + h.yz * x12.yw;
+        return 130.0 * dot(m, g);
+      }
+
+      // Fractal Brownian Motion
+      float fbm(vec2 p) {
+        float v = 0.0;
+        float a = 0.5;
+        mat2 rot = mat2(cos(0.55), sin(0.55), -sin(0.55), cos(0.55));
+        for (int i = 0; i < 4; ++i) {
+          v += a * snoise(p);
+          p = rot * p * 2.05 + vec2(10.0, 10.0);
+          a *= 0.48;
+        }
+        return v;
+      }
+
+      void main() {
+        vec2 st = gl_FragCoord.xy / u_resolution.xy;
+        float aspect = u_resolution.x / u_resolution.y;
+        vec2 uv = vec2((st.x - 0.5) * aspect, st.y - 0.5);
+        vec2 mouseUv = vec2((u_mouse.x - 0.5) * aspect, u_mouse.y - 0.5);
+
+        // Distance from cursor
+        float distToMouse = length(uv - mouseUv);
+        
+        // Fluid wave ripple triggered by mouse proximity & velocity
+        float vel = clamp(length(u_velocity) * 12.0, 0.0, 3.5);
+        float ripple = sin(distToMouse * 24.0 - u_time * 4.0) * exp(-distToMouse * 4.2);
+        float mouseField = smoothstep(0.48, 0.0, distToMouse) * (0.35 + vel) * u_hover;
+
+        // Slow ambient liquid motion
+        float slowTime = u_time * 0.12;
+        vec2 p = uv * 1.8;
+
+        // Domain warping
+        vec2 q = vec2(
+          fbm(p + vec2(slowTime * 0.35, 0.0)),
+          fbm(p + vec2(5.2, 1.3 - slowTime * 0.3))
+        );
+
+        vec2 r = vec2(
+          fbm(p + 3.2 * q + vec2(1.7, 9.2 + slowTime * 0.4)),
+          fbm(p + 3.2 * q + vec2(8.3 - slowTime * 0.2, 2.8))
+        );
+
+        // Fluid displacement with mouse shockwave
+        vec2 mouseDisplacement = normalize(uv - mouseUv + 0.0001) * ripple * mouseField * 0.22;
+        vec2 totalDisplacement = r * 0.28 + mouseDisplacement;
+
+        // Chromatic dispersion offsets (Red, Green, Blue refraction)
+        float chroma = 0.015 * (1.0 + mouseField * 2.5);
+        float nR = fbm(p + totalDisplacement + vec2(chroma, 0.0));
+        float nG = fbm(p + totalDisplacement);
+        float nB = fbm(p + totalDisplacement - vec2(chroma, 0.0));
+
+        // High-end studio color palette (Cosmic Cyan, Radiant Violet, Subtle Rose Gold)
+        vec3 colViolet = vec3(0.38, 0.26, 0.92); // #6342eb
+        vec3 colCyan   = vec3(0.12, 0.78, 0.92); // #1fc7eb
+        vec3 colRose   = vec3(0.96, 0.42, 0.58); // #f56b94
+        vec3 colGold   = vec3(0.98, 0.72, 0.28); // #f9b847
+
+        vec3 color = mix(colViolet, colCyan, clamp(nG * 0.5 + 0.5, 0.0, 1.0));
+        color = mix(color, colRose, clamp(nR * 0.4 + 0.2, 0.0, 1.0) * mouseField);
+        color = mix(color, colGold, clamp(nB * nB, 0.0, 1.0) * 0.35);
+
+        // Caustic light highlights
+        float caustics = pow(clamp(nR * 0.5 + 0.5, 0.0, 1.0), 3.2) * 1.6;
+        color += vec3(caustics * 0.4);
+
+        // Dynamic fluid alpha mask
+        float flowAlpha = smoothstep(0.1, 0.9, length(totalDisplacement) * 1.8 + mouseField * 0.5);
+        float alpha = clamp(flowAlpha * 0.65 + caustics * 0.2, 0.0, 0.75);
+
+        // Enhance alpha near cursor for responsive interaction
+        alpha += mouseField * 0.25;
+        alpha = clamp(alpha, 0.0, 0.85);
+
+        gl_FragColor = vec4(color, alpha);
+      }
+    `;
+
+    // Compile helper
+    function createShader(glCtx, type, source) {
+      const shader = glCtx.createShader(type);
+      glCtx.shaderSource(shader, source);
+      glCtx.compileShader(shader);
+      if (!glCtx.getShaderParameter(shader, glCtx.COMPILE_STATUS)) {
+        console.error('Shader compilation error:', glCtx.getShaderInfoLog(shader));
+        glCtx.deleteShader(shader);
+        return null;
+      }
+      return shader;
+    }
+
+    const vertexShader = createShader(gl, gl.VERTEX_SHADER, vsSource);
+    const fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fsSource);
+    if (!vertexShader || !fragmentShader) return;
+
+    const program = gl.createProgram();
+    gl.attachShader(program, vertexShader);
+    gl.attachShader(program, fragmentShader);
+    gl.linkProgram(program);
+
+    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+      console.error('Program link error:', gl.getProgramInfoLog(program));
+      return;
+    }
+
+    gl.useProgram(program);
+
+    // Fullscreen quad buffer
+    const positionBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+    gl.bufferData(
+      gl.ARRAY_BUFFER,
+      new Float32Array([
+        -1.0, -1.0,
+         1.0, -1.0,
+        -1.0,  1.0,
+        -1.0,  1.0,
+         1.0, -1.0,
+         1.0,  1.0
+      ]),
+      gl.STATIC_DRAW
+    );
+
+    const aPositionLocation = gl.getAttribLocation(program, 'a_position');
+    gl.enableVertexAttribArray(aPositionLocation);
+    gl.vertexAttribPointer(aPositionLocation, 2, gl.FLOAT, false, 0, 0);
+
+    // Uniform locations
+    const uResolution = gl.getUniformLocation(program, 'u_resolution');
+    const uMouse = gl.getUniformLocation(program, 'u_mouse');
+    const uTime = gl.getUniformLocation(program, 'u_time');
+    const uHover = gl.getUniformLocation(program, 'u_hover');
+    const uVelocity = gl.getUniformLocation(program, 'u_velocity');
+
+    // State tracking with smooth damping
+    const state = {
+      mouseX: 0.5,
+      mouseY: 0.5,
+      targetMouseX: 0.5,
+      targetMouseY: 0.5,
+      prevMouseX: 0.5,
+      prevMouseY: 0.5,
+      velocityX: 0,
+      velocityY: 0,
+      hover: 0,
+      targetHover: 0,
+      isVisible: true
+    };
 
     let animationFrameId;
-    let width = 0;
-    let height = 0;
+    let startTime = performance.now();
 
-    // Mouse tracking with smooth lerp interpolation
-    const mouse = {
-      x: -1000,
-      y: -1000,
-      targetX: -1000,
-      targetY: -1000,
-      isHovered: false,
-      radius: 160
-    };
-
-    // Particles pool
-    const particleCount = window.innerWidth < 768 ? 35 : 70;
-    const particles = [];
-
+    // Resize handler
     const handleResize = () => {
-      const rect = canvas.parentElement?.getBoundingClientRect() || { width: window.innerWidth, height: window.innerHeight };
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      width = rect.width;
-      height = rect.height;
+      const parent = canvas.parentElement;
+      const rect = parent ? parent.getBoundingClientRect() : { width: window.innerWidth, height: window.innerHeight };
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.5); // Optimal for 60fps
+      const w = Math.floor(rect.width * dpr);
+      const h = Math.floor(rect.height * dpr);
 
-      canvas.width = width * dpr;
-      canvas.height = height * dpr;
-      canvas.style.width = `${width}px`;
-      canvas.style.height = `${height}px`;
-      ctx.scale(dpr, dpr);
+      if (canvas.width !== w || canvas.height !== h) {
+        canvas.width = w;
+        canvas.height = h;
+        canvas.style.width = `${rect.width}px`;
+        canvas.style.height = `${rect.height}px`;
+        gl.viewport(0, 0, w, h);
+      }
     };
-
-    class Particle {
-      constructor() {
-        this.reset(true);
-      }
-
-      reset(initial = false) {
-        this.x = initial ? Math.random() * (width || window.innerWidth) : Math.random() * width;
-        this.y = initial ? Math.random() * (height || window.innerHeight) : Math.random() * height;
-        this.vx = (Math.random() - 0.5) * 0.6;
-        this.vy = (Math.random() - 0.5) * 0.6;
-        this.baseRadius = Math.random() * 1.5 + 1;
-        this.radius = this.baseRadius;
-        this.alpha = Math.random() * 0.4 + 0.2;
-        // Accent color (mostly cool white/slate with hints of cyan)
-        this.isAccent = Math.random() > 0.75;
-      }
-
-      update() {
-        this.x += this.vx;
-        this.y += this.vy;
-
-        // Wrap around bounds
-        if (this.x < 0) this.x = width;
-        if (this.x > width) this.x = 0;
-        if (this.y < 0) this.y = height;
-        if (this.y > height) this.y = 0;
-
-        // Mouse interaction (repel + spring)
-        if (mouse.isHovered) {
-          const dx = this.x - mouse.x;
-          const dy = this.y - mouse.y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-
-          if (dist < mouse.radius && dist > 0) {
-            const force = (mouse.radius - dist) / mouse.radius;
-            const angle = Math.atan2(dy, dx);
-            this.x += Math.cos(angle) * force * 3;
-            this.y += Math.sin(angle) * force * 3;
-            this.radius = this.baseRadius * (1 + force * 1.5);
-          } else {
-            this.radius += (this.baseRadius - this.radius) * 0.1;
-          }
-        } else {
-          this.radius += (this.baseRadius - this.radius) * 0.1;
-        }
-      }
-
-      draw() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        if (this.isAccent) {
-          ctx.fillStyle = `rgba(56, 189, 248, ${this.alpha * 1.2})`; // cyan accent
-        } else {
-          ctx.fillStyle = `rgba(255, 255, 255, ${this.alpha})`;
-        }
-        ctx.fill();
-      }
-    }
 
     handleResize();
-    for (let i = 0; i < particleCount; i++) {
-      particles.push(new Particle());
-    }
 
-    const parent = canvas.parentElement;
-
-    const handleMouseMove = (e) => {
+    // Mouse tracking on hero section or window
+    const handlePointerMove = (e) => {
+      const parent = canvas.parentElement;
+      if (!parent) return;
       const rect = parent.getBoundingClientRect();
-      mouse.targetX = e.clientX - rect.left;
-      mouse.targetY = e.clientY - rect.top;
-      mouse.isHovered = true;
+
+      // Only activate if inside or near hero section
+      if (
+        e.clientY >= rect.top - 80 &&
+        e.clientY <= rect.bottom + 80 &&
+        e.clientX >= rect.left &&
+        e.clientX <= rect.right
+      ) {
+        state.targetMouseX = (e.clientX - rect.left) / rect.width;
+        state.targetMouseY = 1.0 - (e.clientY - rect.top) / rect.height; // Invert for WebGL coordinates
+        state.targetHover = 1.0;
+      } else {
+        state.targetHover = 0.0;
+      }
     };
 
-    const handleMouseLeave = () => {
-      mouse.isHovered = false;
-      mouse.targetX = -1000;
-      mouse.targetY = -1000;
+    const handlePointerLeave = () => {
+      state.targetHover = 0.0;
     };
 
-    if (parent) {
-      parent.addEventListener('mousemove', handleMouseMove, { passive: true });
-      parent.addEventListener('mouseleave', handleMouseLeave, { passive: true });
-    }
-    window.addEventListener('resize', handleResize);
+    window.addEventListener('pointermove', handlePointerMove, { passive: true });
+    document.addEventListener('mouseleave', handlePointerLeave, { passive: true });
+    window.addEventListener('resize', handleResize, { passive: true });
 
-    let isVisible = true;
+    // IntersectionObserver to pause when hero is scrolled out of view
     const observer = new IntersectionObserver(([entry]) => {
-      isVisible = entry.isIntersecting;
-    }, { threshold: 0.1 });
+      state.isVisible = entry.isIntersecting;
+    }, { threshold: 0.05 });
     observer.observe(canvas);
 
-    // Animation Loop
-    const render = () => {
-      if (isVisible) {
-        ctx.clearRect(0, 0, width, height);
+    // Render loop
+    const render = (now) => {
+      if (state.isVisible) {
+        const elapsedTime = (now - startTime) * 0.001;
 
-        // Interpolate mouse coordinates smoothly
-        mouse.x += (mouse.targetX - mouse.x) * 0.12;
-        mouse.y += (mouse.targetY - mouse.y) * 0.12;
+        // Smooth mouse lerp
+        state.mouseX += (state.targetMouseX - state.mouseX) * 0.09;
+        state.mouseY += (state.targetMouseY - state.mouseY) * 0.09;
 
-        // Draw soft ambient spotlight following mouse
-        if (mouse.isHovered && mouse.x > 0 && mouse.y > 0) {
-          const glow = ctx.createRadialGradient(
-            mouse.x, mouse.y, 0,
-            mouse.x, mouse.y, 220
-          );
-          glow.addColorStop(0, 'rgba(99, 102, 241, 0.16)'); // soft indigo
-          glow.addColorStop(0.4, 'rgba(56, 189, 248, 0.08)'); // cyan haze
-          glow.addColorStop(1, 'rgba(0, 0, 0, 0)');
-          ctx.fillStyle = glow;
-          ctx.beginPath();
-          ctx.arc(mouse.x, mouse.y, 220, 0, Math.PI * 2);
-          ctx.fill();
-        }
+        // Compute mouse velocity
+        state.velocityX = (state.mouseX - state.prevMouseX);
+        state.velocityY = (state.mouseY - state.prevMouseY);
+        state.prevMouseX = state.mouseX;
+        state.prevMouseY = state.mouseY;
 
-        // Draw proximity connecting lines
-        const maxDist = 95;
-        for (let i = 0; i < particles.length; i++) {
-          for (let j = i + 1; j < particles.length; j++) {
-            const dx = particles[i].x - particles[j].x;
-            const dy = particles[i].y - particles[j].y;
-            const dist = Math.sqrt(dx * dx + dy * dy);
+        // Smooth hover transition
+        state.hover += (state.targetHover - state.hover) * 0.06;
 
-            if (dist < maxDist) {
-              const alpha = (1 - dist / maxDist) * 0.18;
-              ctx.beginPath();
-              ctx.moveTo(particles[i].x, particles[i].y);
-              ctx.lineTo(particles[j].x, particles[j].y);
-              ctx.strokeStyle = `rgba(165, 180, 252, ${alpha})`;
-              ctx.lineWidth = 0.75;
-              ctx.stroke();
-            }
-          }
-        }
+        gl.uniform2f(uResolution, canvas.width, canvas.height);
+        gl.uniform2f(uMouse, state.mouseX, state.mouseY);
+        gl.uniform1f(uTime, elapsedTime);
+        gl.uniform1f(uHover, state.hover);
+        gl.uniform2f(uVelocity, state.velocityX, state.velocityY);
 
-        // Update and draw particles
-        for (let i = 0; i < particles.length; i++) {
-          particles[i].update();
-          particles[i].draw();
-        }
+        gl.drawArrays(gl.TRIANGLES, 0, 6);
       }
 
       animationFrameId = requestAnimationFrame(render);
     };
 
-    render();
+    animationFrameId = requestAnimationFrame(render);
 
+    // Cleanup
     return () => {
       cancelAnimationFrame(animationFrameId);
+      window.removeEventListener('pointermove', handlePointerMove);
+      document.removeEventListener('mouseleave', handlePointerLeave);
       window.removeEventListener('resize', handleResize);
-      if (parent) {
-        parent.removeEventListener('mousemove', handleMouseMove);
-        parent.removeEventListener('mouseleave', handleMouseLeave);
-      }
       observer.disconnect();
+
+      if (gl) {
+        gl.deleteProgram(program);
+        gl.deleteShader(vertexShader);
+        gl.deleteShader(fragmentShader);
+        gl.deleteBuffer(positionBuffer);
+      }
     };
   }, []);
 
   return (
-    <canvas 
-      ref={canvasRef} 
-      className="absolute inset-0 pointer-events-none z-10 w-full h-full mix-blend-screen opacity-90 transition-opacity"
+    <canvas
+      ref={canvasRef}
+      className="absolute inset-0 pointer-events-none z-10 w-full h-full mix-blend-screen opacity-70 dark:opacity-60 transition-opacity duration-700"
     />
   );
 }

@@ -41,7 +41,7 @@ export default function Services({
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 sm:mb-24 gap-6">
           <div>
             <div className="text-xs sm:text-sm font-mono text-slate-500 uppercase tracking-widest mb-3">
-              // 01 · {lang === 'en' ? 'Core Capabilities' : (lang === 'kz' ? 'Негізгі бағыттар' : 'Экспертиза и стек')}
+              {lang === 'en' ? 'Core Capabilities' : (lang === 'kz' ? 'Негізгі бағыттар' : 'Экспертиза и стек')}
             </div>
             <h2 className="text-4xl sm:text-6xl md:text-7xl font-heading font-black tracking-tight text-slate-950 dark:text-white uppercase leading-[0.95]">
               {lang === 'en' ? 'What We Build.' : (lang === 'kz' ? 'Біз не жасаймыз.' : 'Что мы создаем.')}
@@ -59,13 +59,12 @@ export default function Services({
 
         {/* Editorial Interactive Studio Index with Framer Motion Accordion */}
         <div className="divide-y divide-black/[0.08] dark:divide-white/[0.08] border-y border-black/[0.08] dark:border-white/[0.08]">
-          {servicesList.map((service, index) => {
+          {servicesList.map((service) => {
             const isSelected = activeService === service.id;
             const title = getLocalized(service.title);
             const tagline = getLocalized(service.tagline);
             const category = getLocalized(service.category);
             const deliverables = service.deliverables?.[lang] || service.deliverables?.ru || [];
-            const ghostNum = String(index + 1).padStart(2, '0');
 
             return (
               <div 
@@ -81,10 +80,6 @@ export default function Services({
                   className="w-full py-8 sm:py-10 text-left flex flex-col md:flex-row md:items-center justify-between gap-4 sm:gap-6 focus:outline-none group px-2 sm:px-4"
                 >
                   <div className="flex items-center gap-6 sm:gap-10 min-w-0 flex-1">
-                    <span className="font-mono text-sm sm:text-base font-bold text-slate-400 dark:text-slate-600 group-hover:text-slate-950 dark:group-hover:text-white transition-colors shrink-0">
-                      {ghostNum}
-                    </span>
-
                     <h3 className="text-2xl sm:text-4xl md:text-5xl font-heading font-extrabold tracking-tight text-slate-950 dark:text-white group-hover:translate-x-2 transition-transform duration-200 truncate sm:whitespace-normal">
                       {title}
                     </h3>

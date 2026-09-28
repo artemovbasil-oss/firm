@@ -2,9 +2,9 @@ export const INITIAL_SERVICES = [
   {
     id: 'websites',
     title: {
-      kz: 'Сайттар мен веб-сервистерді әзірлеу',
-      ru: 'Разработка сайтов и веб-сервисов',
-      en: 'Websites & Web Platform Engineering'
+      kz: 'Сайттар & Сервистер',
+      ru: 'Сайты и сервисы',
+      en: 'Web & Platforms'
     },
     tagline: {
       kz: 'Жоғары жылдамдық пен конверсиясы бар корпоративтік порталдар мен сервистер',
@@ -73,9 +73,9 @@ export const INITIAL_SERVICES = [
   {
     id: 'branding',
     title: {
-      kz: 'Брендинг және визуалды айдентика',
-      ru: 'Брендинг и визуальная айдентика',
-      en: 'Brand Strategy & Visual Identity'
+      kz: 'Брендинг & стиль',
+      ru: 'Брендинг & стиль',
+      en: 'Brand & Identity'
     },
     tagline: {
       kz: 'Сенім ұялататын, есте қалатын және қымбат сататын бренд бейнесі',
@@ -144,9 +144,9 @@ export const INITIAL_SERVICES = [
   {
     id: 'landings',
     title: {
-      kz: 'Сатушы лендингтер (High-Conversion)',
-      ru: 'Продающие лендинги (High-Conversion)',
-      en: 'High-Converting Landing Pages'
+      kz: 'Лендингтер',
+      ru: 'Лендинги',
+      en: 'Landing Pages'
     },
     tagline: {
       kz: 'Аудитория қажеттілігіне дәл тиетін 8–22% конверсиялы парақшалар',
@@ -215,9 +215,9 @@ export const INITIAL_SERVICES = [
   {
     id: 'presentations',
     title: {
-      kz: 'Презентациялар және Pitch Decks',
-      ru: 'Презентации и Pitch Decks',
-      en: 'Investor Pitch Decks & B2B Decks'
+      kz: 'Презентациялар',
+      ru: 'Презентации & Decks',
+      en: 'Pitch Decks'
     },
     tagline: {
       kz: 'Миллиондаған инвестиция тартып, ірі мәмілелерді жабатын презентациялар',
@@ -286,9 +286,9 @@ export const INITIAL_SERVICES = [
   {
     id: 'software',
     title: {
-      kz: 'Арнайы БҚ (ПО) және SaaS әзірлеу',
-      ru: 'Разработка кастомного ПО и SaaS',
-      en: 'Custom Software & SaaS Development'
+      kz: 'Жеке ПО & SaaS',
+      ru: 'Кастомное ПО & SaaS',
+      en: 'Custom Software'
     },
     tagline: {
       kz: 'Жеке тапсырмаларға арналған цифрлық өнімдер, веб-сервистер мен интеграциялар',
@@ -357,9 +357,9 @@ export const INITIAL_SERVICES = [
   {
     id: 'seo_audit',
     title: {
-      kz: 'Аудит және SEO-оңтайландыру',
-      ru: 'Аудит и SEO-оптимизация',
-      en: 'SEO Dominance & Conversion Audit'
+      kz: 'SEO & Аудит',
+      ru: 'SEO & Аудит',
+      en: 'SEO & Audit'
     },
     tagline: {
       kz: 'Сайтты терең талдау, қателерді жою және тұрақты органикалық трафик ағыны',
@@ -428,9 +428,9 @@ export const INITIAL_SERVICES = [
   {
     id: 'smm',
     title: {
-      kz: 'Әлеуметтік желілерді жүргізу және SMM',
-      ru: 'Ведение соцсетей и контент-маркетинг',
-      en: 'Social Media Management & Video SMM'
+      kz: 'SMM & Контент',
+      ru: 'SMM & Контент',
+      en: 'SMM & Content'
     },
     tagline: {
       kz: 'Сараптамалық визуал, вирустық Reels/Shorts және өтінімдер ағыны',
@@ -499,9 +499,9 @@ export const INITIAL_SERVICES = [
   {
     id: 'packaging',
     title: {
-      kz: 'Бизнесті толық 360° қаптау',
-      ru: 'Комплексная упаковка бизнеса под ключ',
-      en: 'Turnkey Business Packaging 360°'
+      kz: '360° Қаптама',
+      ru: 'Упаковка 360°',
+      en: 'Packaging 360°'
     },
     tagline: {
       kz: 'Бизнесті біртұтас жинаймыз: мықты мағыналар, дизайн және сату воронкасы',

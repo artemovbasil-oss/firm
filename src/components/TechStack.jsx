@@ -14,7 +14,7 @@ export default function TechStack({ lang }) {
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 sm:mb-24 gap-6">
           <div>
             <div className="text-xs sm:text-sm font-mono text-slate-500 uppercase tracking-widest mb-3">
-              // 06 · {lang === 'en' ? 'Stack & Infrastructure' : (lang === 'kz' ? 'Технологиялық стек' : 'Технологический стек')}
+              {lang === 'en' ? 'Stack & Infrastructure' : (lang === 'kz' ? 'Технологиялық стек' : 'Технологический стек')}
             </div>
             <h2 className="text-4xl sm:text-6xl md:text-7xl font-heading font-black tracking-tight text-slate-950 dark:text-white uppercase leading-[0.95]">
               {lang === 'en' ? 'Engineered for Speed.' : (lang === 'kz' ? 'Жоғары жылдамдық.' : 'Стек без компромиссов.')}
@@ -38,9 +38,6 @@ export default function TechStack({ lang }) {
               className="p-8 rounded-3xl bg-black/[0.02] dark:bg-white/[0.02] border border-black/[0.06] dark:border-white/[0.06] space-y-6"
             >
               <div className="flex items-center justify-between">
-                <span className="font-mono text-xs text-slate-400">
-                  0{idx + 1}
-                </span>
                 <span className="font-heading font-bold text-sm sm:text-base text-slate-950 dark:text-white uppercase tracking-wider">
                   {group.category}
                 </span>

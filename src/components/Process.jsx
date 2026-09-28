@@ -75,7 +75,7 @@ export default function Process({ lang }) {
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 sm:mb-24 gap-6">
           <div>
             <div className="text-xs sm:text-sm font-mono text-slate-500 uppercase tracking-widest mb-3">
-              // 04 · {lang === 'en' ? 'Methodology' : (lang === 'kz' ? 'Әдістеме' : 'Как мы работаем')}
+              {lang === 'en' ? 'Methodology' : (lang === 'kz' ? 'Әдістеме' : 'Как мы работаем')}
             </div>
             <h2 className="text-4xl sm:text-6xl md:text-7xl font-heading font-black tracking-tight text-slate-950 dark:text-white uppercase leading-[0.95]">
               {lang === 'en' ? 'How We Execute.' : (lang === 'kz' ? 'Жұмыс кезеңдері.' : 'Процесс работы.')}
@@ -93,14 +93,12 @@ export default function Process({ lang }) {
 
         {/* Typographic Progression Grid (Clean, Breathable, High-End) */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-12">
-          {steps.map((step) => (
+          {steps.map((step, idx) => (
             <div 
-              key={step.num}
+              key={idx}
               className="space-y-4 pt-8 border-t border-black/[0.08] dark:border-white/[0.08] group"
             >
-              <div className="font-mono text-xs sm:text-sm font-bold text-slate-400 dark:text-slate-600 group-hover:text-slate-950 dark:group-hover:text-white transition-colors">
-                // {step.num}
-              </div>
+              <div className="w-6 h-0.5 bg-slate-300 dark:bg-slate-700 group-hover:w-12 group-hover:bg-slate-950 dark:group-hover:bg-white transition-all duration-300"></div>
 
               <h3 className="text-xl sm:text-2xl font-heading font-extrabold tracking-tight text-slate-950 dark:text-white leading-snug">
                 {step.title}

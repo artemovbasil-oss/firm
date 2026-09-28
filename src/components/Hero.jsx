@@ -39,26 +39,29 @@ export default function Hero({ lang, onOpenContact }) {
   return (
     <section className="relative pt-36 pb-24 md:pt-48 md:pb-32 overflow-hidden ambient-glow-hero">
       
-      {/* Background Video & Interactive Hover Canvas Layer */}
+      {/* Background Video & Interactive WebGL Shader Canvas Layer */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none select-none z-0">
-        {/* Thematic Cinematic Fluid Video Loop */}
+        {/* Thematic Cinematic Surreal Fluid Video Loop */}
         <video
           autoPlay
           loop
           muted
           playsInline
           poster="/videos/hero-poster.jpg"
-          className="w-full h-full object-cover opacity-55 dark:opacity-40 transition-opacity duration-1000 scale-105"
+          className="w-full h-full object-cover opacity-60 dark:opacity-50 transition-opacity duration-1000 scale-105 filter brightness-90 contrast-105"
         >
           <source src="/videos/hero-bg.mp4" type="video/mp4" />
         </video>
 
-        {/* Interactive Mouse Hover Canvas Effect */}
+        {/* Dynamic Darkening Tint for 100% Readability */}
+        <div className="absolute inset-0 bg-black/25 dark:bg-black/55 backdrop-brightness-95"></div>
+
+        {/* Interactive WebGL GPU Fragment Shader Effect */}
         <HeroCanvas />
 
-        {/* Dual Mode Atmospheric Gradient Overlay for 100% Readability */}
-        <div className="absolute inset-0 bg-gradient-to-b from-white/80 via-white/50 to-white dark:from-[#08090d]/85 dark:via-[#08090d]/60 dark:to-[#08090d]"></div>
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_75%_55%_at_50%_35%,rgba(0,0,0,0)_0%,var(--tw-gradient-stops))] from-transparent to-white dark:to-[#08090d]"></div>
+        {/* Dual Mode Atmospheric Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-b from-white/85 via-white/60 to-[#fbfbfd] dark:from-[#06070a]/90 dark:via-[#06070a]/75 dark:to-[#06070a]"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_75%_55%_at_50%_35%,rgba(0,0,0,0)_0%,var(--tw-gradient-stops))] from-transparent to-[#fbfbfd] dark:to-[#06070a]"></div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">

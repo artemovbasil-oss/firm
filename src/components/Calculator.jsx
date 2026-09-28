@@ -130,7 +130,7 @@ export default function Calculator({
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 sm:mb-24 gap-6">
           <div>
             <div className="text-xs sm:text-sm font-mono text-slate-500 uppercase tracking-widest mb-3">
-              // 05 · {lang === 'en' ? 'Transparent Pricing' : (lang === 'kz' ? 'Баға калькуляторы' : 'Оценка бюджета')}
+              {lang === 'en' ? 'Transparent Pricing' : (lang === 'kz' ? 'Баға калькуляторы' : 'Оценка бюджета')}
             </div>
             <h2 className="text-4xl sm:text-6xl md:text-7xl font-heading font-black tracking-tight text-slate-950 dark:text-white uppercase leading-[0.95]">
               {lang === 'en' ? 'Estimate Scope.' : (lang === 'kz' ? 'Жоба құны.' : 'Расчет сметы.')}
@@ -155,7 +155,7 @@ export default function Calculator({
             {/* 1. Services Chips */}
             <div>
               <div className="text-xs font-mono uppercase tracking-wider text-slate-500 mb-5">
-                01 / {lang === 'en' ? 'Select Project Disciplines' : (lang === 'kz' ? 'Бағыттарды таңдаңыз' : 'Выберите направления')}
+                {lang === 'en' ? 'Select Project Disciplines' : (lang === 'kz' ? 'Бағыттарды таңдаңыз' : 'Выберите направления')}
               </div>
 
               <div className="flex flex-wrap gap-3">
@@ -190,7 +190,7 @@ export default function Calculator({
             {/* 2. Scale Selector */}
             <div>
               <div className="text-xs font-mono uppercase tracking-wider text-slate-500 mb-5">
-                02 / {lang === 'en' ? 'Company Scale' : (lang === 'kz' ? 'Жоба ауқымы' : 'Масштаб проекта')}
+                {lang === 'en' ? 'Company Scale' : (lang === 'kz' ? 'Жоба ауқымы' : 'Масштаб проекта')}
               </div>
 
               <div className="grid grid-cols-3 gap-3.5">
@@ -219,7 +219,7 @@ export default function Calculator({
             {/* 3. Speed Toggle */}
             <div>
               <div className="text-xs font-mono uppercase tracking-wider text-slate-500 mb-5">
-                03 / {lang === 'en' ? 'Launch Velocity' : (lang === 'kz' ? 'Орындау қарқыны' : 'Скорость релиза')}
+                {lang === 'en' ? 'Launch Velocity' : (lang === 'kz' ? 'Орындау қарқыны' : 'Скорость релиза')}
               </div>
 
               <div className="grid grid-cols-2 gap-3.5">

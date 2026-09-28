@@ -19,7 +19,7 @@ export default function Faq({ lang }) {
         {/* Section Header */}
         <div className="text-center mb-16 sm:mb-24">
           <div className="text-xs sm:text-sm font-mono text-slate-500 uppercase tracking-widest mb-3">
-            // 08 · {lang === 'en' ? 'Direct Answers' : (lang === 'kz' ? 'Сұрақ-жауап' : 'Частые вопросы')}
+            {lang === 'en' ? 'Direct Answers' : (lang === 'kz' ? 'Сұрақ-жауап' : 'Частые вопросы')}
           </div>
           <h2 className="text-4xl sm:text-6xl md:text-7xl font-heading font-black tracking-tight text-slate-950 dark:text-white uppercase leading-[0.95]">
             {lang === 'en' ? 'F.A.Q.' : (lang === 'kz' ? 'Жиі қойылатын сұрақтар' : 'Вопросы и ответы')}
