@@ -1,11 +1,25 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { ArrowUpRight, ArrowDown } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { TRANSLATIONS } from '../data/translations';
-import HeroCanvas from './HeroCanvas';
 
 export default function Hero({ lang, onOpenContact }) {
   const t = TRANSLATIONS[lang].hero;
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (video) {
+      video.defaultMuted = true;
+      video.muted = true;
+      const playPromise = video.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {
+          // Autoplay fallback if browser requires user gesture
+        });
+      }
+    }
+  }, []);
 
   const marqueeItems = lang === 'en' ? [
     'HIGH-LOAD WEB PLATFORMS',
@@ -39,27 +53,25 @@ export default function Hero({ lang, onOpenContact }) {
   return (
     <section className="relative pt-36 pb-24 md:pt-48 md:pb-32 overflow-hidden ambient-glow-hero">
       
-      {/* Background Video & Interactive WebGL Heatmap Shader Layer */}
+      {/* Background Video Layer (No GPU Heatmap Lag, Ultra Fast & Smooth) */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none select-none z-0">
-        {/* Thematic Cinematic Surreal Video Loop with Cache-Busting Version */}
         <video
-          key="hero-surreal-v3"
+          ref={videoRef}
+          key="hero-video-v4"
           autoPlay
           loop
           muted
           playsInline
-          poster="/videos/hero-surreal-v3.jpg"
-          className="w-full h-full object-cover opacity-85 dark:opacity-85 transition-opacity duration-1000 scale-105"
+          preload="auto"
+          poster="/videos/hero-surreal-v4.jpg"
+          className="w-full h-full object-cover opacity-85 dark:opacity-80 transition-opacity duration-1000 scale-105"
         >
-          <source src="/videos/hero-surreal-v3.mp4?v=3" type="video/mp4" />
+          <source src="/videos/hero-surreal-v4.mp4" type="video/mp4" />
         </video>
 
-        {/* Interactive Web Traffic Heatmap Shader (Transparent everywhere except active heat spots) */}
-        <HeroCanvas />
-
-        {/* Atmospheric Edge Blend (Leaves Center Clean & Video Vividly Visible) */}
+        {/* Atmospheric Edge Blend */}
         <div className="absolute inset-0 bg-gradient-to-b from-white/70 via-transparent to-[#fbfbfd] dark:from-[#06070a]/75 dark:via-transparent dark:to-[#06070a]"></div>
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_95%_75%_at_50%_40%,rgba(0,0,0,0)_0%,rgba(0,0,0,0.15)_65%,rgba(251,251,253,0.85)_100%)] dark:bg-[radial-gradient(ellipse_95%_75%_at_50%_40%,rgba(0,0,0,0)_0%,rgba(0,0,0,0.15)_65%,rgba(6,7,10,0.85)_100%)]"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_95%_75%_at_50%_40%,rgba(0,0,0,0)_0%,rgba(0,0,0,0.12)_65%,rgba(251,251,253,0.85)_100%)] dark:bg-[radial-gradient(ellipse_95%_75%_at_50%_40%,rgba(0,0,0,0)_0%,rgba(0,0,0,0.12)_65%,rgba(6,7,10,0.85)_100%)]"></div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">

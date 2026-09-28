@@ -312,7 +312,42 @@ const server = http.createServer(async (req, res) => {
         res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
       }
 
-      res.writeHead(200, { 'Content-Type': contentType });
+      const stat = fs.statSync(filePath);
+      const fileSize = stat.size;
+
+      // Handle HTTP Range Requests (Crucial for Safari, iOS, Chrome HTML5 video streaming)
+      const range = req.headers.range;
+      if (range && (ext === '.mp4' || ext === '.webm')) {
+        const parts = range.replace(/bytes=/, '').split('-');
+        const start = parseInt(parts[0], 10);
+        const end = parts[1] ? parseInt(parts[1], 10) : fileSize - 1;
+
+        if (start >= fileSize || end >= fileSize) {
+          res.writeHead(416, {
+            'Content-Range': `bytes */${fileSize}`,
+            'Access-Control-Allow-Origin': '*'
+          });
+          return res.end();
+        }
+
+        const chunksize = (end - start) + 1;
+        const fileStream = fs.createReadStream(filePath, { start, end });
+
+        res.writeHead(206, {
+          'Content-Range': `bytes ${start}-${end}/${fileSize}`,
+          'Accept-Ranges': 'bytes',
+          'Content-Length': chunksize,
+          'Content-Type': contentType,
+          'Cache-Control': 'public, max-age=3600',
+          'Access-Control-Allow-Origin': '*'
+        });
+
+        if (req.method === 'HEAD') return res.end();
+        return fileStream.pipe(res);
+      }
+
+      res.setHeader('Accept-Ranges', 'bytes');
+      res.writeHead(200, { 'Content-Type': contentType, 'Content-Length': fileSize });
       if (req.method === 'HEAD') return res.end();
 
       const stream = fs.createReadStream(filePath);
