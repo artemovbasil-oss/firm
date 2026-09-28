@@ -15,7 +15,7 @@ function CaseCard({ item, idx, lang, onOpenContact, t, getLocalized }) {
   const badge = getLocalized(item.badge);
   const heroMetric = item.metrics && item.metrics[0];
 
-  const colorModes = ['indigo', 'emerald', 'purple', 'amber'];
+  const colorModes = ['thermal', 'cyber', 'ultraviolet', 'magma'];
   const colorMode = item.colorMode || colorModes[idx % colorModes.length];
 
   const gradients = [
@@ -44,7 +44,7 @@ function CaseCard({ item, idx, lang, onOpenContact, t, getLocalized }) {
       transition={{ duration: 0.5, delay: idx * 0.1 }}
       className="group flex flex-col justify-between"
     >
-      {/* Visual Showcase Card with Motion Hover & WebGL Noise Gradient */}
+      {/* Visual Showcase Card with Motion Hover & WebGL Thermal Heatmap */}
       <motion.div 
         ref={cardRef}
         onMouseEnter={() => setIsHovered(true)}
@@ -53,13 +53,15 @@ function CaseCard({ item, idx, lang, onOpenContact, t, getLocalized }) {
         onClick={() => onOpenContact(`${title} Case Discussion`)}
         whileHover={{ y: -6 }}
         transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
-        className={`w-full aspect-[16/10] rounded-3xl bg-gradient-to-br ${activeGrad} p-6 sm:p-10 flex flex-col justify-between relative overflow-hidden shadow-2xl border border-black/[0.06] dark:border-white/10 cursor-pointer`}
+        style={{ borderRadius: '24px' }}
+        className={`w-full aspect-[16/10] rounded-3xl bg-gradient-to-br ${activeGrad} p-6 sm:p-10 flex flex-col justify-between relative overflow-hidden shadow-2xl border border-black/[0.06] dark:border-white/10 cursor-pointer isolate transform-gpu`}
       >
-        {/* Dynamic WebGL Mesh Gradient + Analog Film Grain Noise on Hover */}
+        {/* Dynamic WebGL Thermal Heatmap + Analog Film Grain Noise on Hover */}
         <CardShaderHover 
           colorMode={colorMode}
           isHovered={isHovered}
           mousePos={mousePos}
+          borderRadius={24}
         />
 
         {/* Top Bar with category tag & status */}

@@ -64,19 +64,21 @@ export default function ExpressAudit({ lang, onSuccessLead }) {
     <section id="audit" className="py-32 sm:py-40 relative">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Luxury Studio Diagnostic Card with WebGL Shader Caustics & Film Noise on Hover */}
+        {/* Luxury Studio Diagnostic Card with WebGL Thermal Heatmap & Film Noise on Hover */}
         <div 
           ref={cardRef}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
           onMouseMove={handleMouseMove}
-          className="p-8 sm:p-14 lg:p-20 rounded-3xl bg-slate-950 text-white relative overflow-hidden shadow-2xl border border-white/10"
+          style={{ borderRadius: '24px' }}
+          className="p-8 sm:p-14 lg:p-20 rounded-3xl bg-slate-950 text-white relative overflow-hidden shadow-2xl border border-white/10 isolate transform-gpu"
         >
-          {/* Subtle Dynamic WebGL Caustics & Film Noise on Hover */}
+          {/* Subtle Dynamic WebGL Thermal Heatmap & Film Noise on Hover */}
           <CardShaderHover 
-            colorMode="indigo" 
+            colorMode="thermal" 
             isHovered={isHovered} 
             mousePos={mousePos} 
+            borderRadius={24}
           />
           
           {/* Subtle Ambient Glow */}
