@@ -36,7 +36,9 @@ const MIME_TYPES = {
   '.woff': 'font/woff',
   '.ttf': 'font/ttf',
   '.xml': 'application/xml; charset=utf-8',
-  '.txt': 'text/plain; charset=utf-8'
+  '.txt': 'text/plain; charset=utf-8',
+  '.mp4': 'video/mp4',
+  '.webm': 'video/webm'
 };
 
 function readLeads() {
@@ -304,6 +306,8 @@ const server = http.createServer(async (req, res) => {
       // Cache headers
       if (ext === '.html' || ext === '.xml' || ext === '.txt') {
         res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+      } else if (ext === '.mp4' || ext === '.webm') {
+        res.setHeader('Cache-Control', 'public, max-age=3600');
       } else {
         res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
       }

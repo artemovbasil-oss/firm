@@ -41,16 +41,17 @@ export default function Hero({ lang, onOpenContact }) {
       
       {/* Background Video & Interactive WebGL Heatmap Shader Layer */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none select-none z-0">
-        {/* Thematic Cinematic Surreal Video Loop */}
+        {/* Thematic Cinematic Surreal Video Loop with Cache-Busting Version */}
         <video
+          key="hero-surreal-v3"
           autoPlay
           loop
           muted
           playsInline
-          poster="/videos/hero-poster.jpg"
-          className="w-full h-full object-cover opacity-85 dark:opacity-80 transition-opacity duration-1000 scale-105"
+          poster="/videos/hero-surreal-v3.jpg"
+          className="w-full h-full object-cover opacity-85 dark:opacity-85 transition-opacity duration-1000 scale-105"
         >
-          <source src="/videos/hero-bg.mp4" type="video/mp4" />
+          <source src="/videos/hero-surreal-v3.mp4?v=3" type="video/mp4" />
         </video>
 
         {/* Interactive Web Traffic Heatmap Shader (Transparent everywhere except active heat spots) */}
@@ -89,7 +90,7 @@ export default function Hero({ lang, onOpenContact }) {
             initial={{ opacity: 0, y: 25 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-heading font-black tracking-tight text-slate-950 dark:text-white leading-[1.04] sm:leading-[1.0] uppercase"
+            className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-heading font-black tracking-tight text-slate-950 dark:text-white leading-[1.04] sm:leading-[1.0] uppercase drop-shadow-sm"
           >
             <span>{t.titleStart}</span>{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-slate-900 via-slate-600 to-slate-900 dark:from-white dark:via-slate-400 dark:to-white">
@@ -137,59 +138,50 @@ export default function Hero({ lang, onOpenContact }) {
 
         </div>
 
-        {/* Minimalist Pure Counter Strip (Zero Clutter, Pure Typography) */}
+        {/* Architectural Solid Opaque Islands for Key Performance Metrics */}
         <motion.div 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.35 }}
-          className="mt-24 sm:mt-32 pt-12 border-t border-black/[0.06] dark:border-white/[0.06] grid grid-cols-2 md:grid-cols-4 gap-8 sm:gap-12 text-center md:text-left"
+          className="relative z-20 mt-20 sm:mt-28 grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6"
         >
-          <div>
-            <div className="text-3xl sm:text-5xl font-heading font-black tracking-tight text-slate-950 dark:text-white">
-              {t.stats.projects}
+          {[
+            { value: t.stats.projects, label: t.stats.projectsDesc, accent: 'bg-emerald-400' },
+            { value: t.stats.conversion, label: t.stats.conversionDesc, accent: 'bg-cyan-400' },
+            { value: t.stats.capital, label: t.stats.capitalDesc, accent: 'bg-amber-400' },
+            { value: t.stats.sla, label: t.stats.slaDesc, accent: 'bg-indigo-400' }
+          ].map((stat, idx) => (
+            <div 
+              key={idx}
+              className="p-6 sm:p-7 rounded-3xl bg-white dark:bg-[#08090f] border border-black/[0.08] dark:border-white/10 shadow-xl shadow-black/[0.03] dark:shadow-black/50 flex flex-col justify-between group hover:border-black/20 dark:hover:border-white/25 transition-all duration-300"
+            >
+              <div className="flex items-center justify-between mb-4">
+                <span className={`w-2 h-2 rounded-full ${stat.accent}`}></span>
+                <span className="text-[10px] font-mono uppercase tracking-widest text-slate-400 dark:text-slate-500">
+                  METRIC
+                </span>
+              </div>
+              <div>
+                <div className="text-3xl sm:text-4xl lg:text-5xl font-heading font-black tracking-tight text-slate-950 dark:text-white leading-none mb-2">
+                  {stat.value}
+                </div>
+                <div className="text-xs sm:text-sm font-mono text-slate-600 dark:text-slate-400 uppercase tracking-wider font-medium">
+                  {stat.label}
+                </div>
+              </div>
             </div>
-            <div className="text-xs sm:text-sm font-mono text-slate-500 dark:text-slate-400 mt-1 uppercase tracking-wider">
-              {t.stats.projectsDesc}
-            </div>
-          </div>
-
-          <div>
-            <div className="text-3xl sm:text-5xl font-heading font-black tracking-tight text-slate-950 dark:text-white">
-              {t.stats.conversion}
-            </div>
-            <div className="text-xs sm:text-sm font-mono text-slate-500 dark:text-slate-400 mt-1 uppercase tracking-wider">
-              {t.stats.conversionDesc}
-            </div>
-          </div>
-
-          <div>
-            <div className="text-3xl sm:text-5xl font-heading font-black tracking-tight text-slate-950 dark:text-white">
-              {t.stats.capital}
-            </div>
-            <div className="text-xs sm:text-sm font-mono text-slate-500 dark:text-slate-400 mt-1 uppercase tracking-wider">
-              {t.stats.capitalDesc}
-            </div>
-          </div>
-
-          <div>
-            <div className="text-3xl sm:text-5xl font-heading font-black tracking-tight text-slate-950 dark:text-white">
-              {t.stats.sla}
-            </div>
-            <div className="text-xs sm:text-sm font-mono text-slate-500 dark:text-slate-400 mt-1 uppercase tracking-wider">
-              {t.stats.slaDesc}
-            </div>
-          </div>
+          ))}
         </motion.div>
 
       </div>
 
-      {/* Infinite Running Marquee Ticker */}
-      <div className="mt-20 py-4 bg-slate-950 dark:bg-white text-white dark:text-slate-950 overflow-hidden select-none">
+      {/* Infinite Running Marquee Ticker with 100% Solid Opaque Island Background */}
+      <div className="relative z-20 mt-16 sm:mt-20 py-4 sm:py-5 bg-white dark:bg-[#06070b] text-slate-950 dark:text-white border-y border-black/[0.1] dark:border-white/15 overflow-hidden select-none shadow-2xl">
         <div className="animate-marquee whitespace-nowrap flex items-center gap-8 text-xs sm:text-sm font-mono font-bold tracking-widest uppercase">
           {[...marqueeItems, ...marqueeItems].map((item, idx) => (
             <span key={idx} className="flex items-center gap-8">
               <span>{item}</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0"></span>
             </span>
           ))}
         </div>

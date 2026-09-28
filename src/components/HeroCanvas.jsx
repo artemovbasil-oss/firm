@@ -1,11 +1,10 @@
 import React, { useEffect, useRef } from 'react';
 
 /**
- * Web Traffic Heatmap WebGL Shader
- * Simulates real-time digital analytics, clickstream telemetry,
- * and user conversion thermal hotspots.
- * Transparent everywhere except active heat zones so the video
- * underneath is 100% visible.
+ * Ultra-Smooth Web Traffic Heatmap WebGL Shader
+ * Silky continuous thermal gradient (Gaussian spectral synthesis),
+ * zero harsh contour steps, soft ambient traffic dissipation,
+ * and 100% transparent base allowing the background artwork to shine through.
  */
 export default function HeroCanvas() {
   const canvasRef = useRef(null);
@@ -14,7 +13,6 @@ export default function HeroCanvas() {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    // WebGL context with transparent background
     const gl = canvas.getContext('webgl', { 
       alpha: true, 
       antialias: true, 
@@ -37,7 +35,7 @@ export default function HeroCanvas() {
       }
     `;
 
-    // Fragment Shader: Web Traffic Heatmap, Thermal Spectrum & Analytics Isolines
+    // Fragment Shader: Soft Gaussian Spectral Heatmap & Web Traffic Telemetry
     const fsSource = `
       precision highp float;
       varying vec2 v_uv;
@@ -48,7 +46,7 @@ export default function HeroCanvas() {
       uniform vec3 u_trail[8];     // x, y, intensity
       uniform vec3 u_hotspots[4];  // x, y, intensity
 
-      // Simplex 2D noise for organic heat dissipation
+      // Simplex 2D noise for subtle organic dissipation
       vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
       vec2 mod289(vec2 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
       vec3 permute(vec3 x) { return mod289(((x * 34.0) + 1.0) * x); }
@@ -76,28 +74,38 @@ export default function HeroCanvas() {
         return 130.0 * dot(m, g);
       }
 
-      // Classic High-End Analytics Heatmap Color Spectrum (Turbo / Infrared / UX Thermal)
-      vec3 heatmapSpectrum(float t) {
-        t = clamp(t, 0.0, 1.3);
+      // Continuous Gaussian Spectral Color Synthesis
+      // Produces silky smooth, non-stepped transitions across the thermal scale
+      vec3 smoothHeatSpectrum(float t) {
+        t = clamp(t, 0.0, 1.25);
 
-        vec3 c0 = vec3(0.06, 0.14, 0.65); // Deep Indigo / Cold baseline
-        vec3 c1 = vec3(0.02, 0.75, 0.95); // Electric Cyan
-        vec3 c2 = vec3(0.10, 0.92, 0.45); // Emerald Green
-        vec3 c3 = vec3(0.98, 0.86, 0.12); // Solar Yellow
-        vec3 c4 = vec3(0.98, 0.22, 0.06); // Thermal Crimson
-        vec3 c5 = vec3(1.00, 1.00, 1.00); // White Hot Core
+        // Soft overlapping Gaussian envelopes
+        float wBlue   = exp(-pow((t - 0.10) / 0.16, 2.0));
+        float wCyan   = exp(-pow((t - 0.28) / 0.16, 2.0));
+        float wMint   = exp(-pow((t - 0.46) / 0.16, 2.0));
+        float wAmber  = exp(-pow((t - 0.66) / 0.16, 2.0));
+        float wCoral  = exp(-pow((t - 0.86) / 0.16, 2.0));
+        float wCore   = smoothstep(0.85, 1.15, t);
 
-        if (t < 0.20) {
-          return mix(c0, c1, t / 0.20);
-        } else if (t < 0.42) {
-          return mix(c1, c2, (t - 0.20) / 0.22);
-        } else if (t < 0.68) {
-          return mix(c2, c3, (t - 0.42) / 0.26);
-        } else if (t < 0.92) {
-          return mix(c3, c4, (t - 0.68) / 0.24);
-        } else {
-          return mix(c4, c5, clamp((t - 0.92) / 0.25, 0.0, 1.0));
-        }
+        // Elegant studio thermal palette
+        vec3 colBlue  = vec3(0.08, 0.20, 0.70); // Deep velvet blue
+        vec3 colCyan  = vec3(0.06, 0.76, 0.92); // Electric cyan
+        vec3 colMint  = vec3(0.16, 0.88, 0.48); // Crisp mint emerald
+        vec3 colAmber = vec3(0.96, 0.78, 0.16); // Solar warm amber
+        vec3 colCoral = vec3(0.96, 0.28, 0.16); // Soft infrared coral
+        vec3 colCore  = vec3(1.00, 0.96, 0.92); // Radiant warm core
+
+        vec3 color = colBlue * wBlue +
+                     colCyan * wCyan +
+                     colMint * wMint +
+                     colAmber * wAmber +
+                     colCoral * wCoral;
+
+        float totalWeight = wBlue + wCyan + wMint + wAmber + wCoral + 0.001;
+        color /= totalWeight;
+        color = mix(color, colCore, wCore * 0.85);
+
+        return color;
       }
 
       void main() {
@@ -108,73 +116,60 @@ export default function HeroCanvas() {
 
         float heat = 0.0;
 
-        // 1. Primary Mouse Interaction Heat (Interactive User Focus)
+        // 1. Primary Mouse Interaction (Gentle Gaussian focus)
         if (u_hover > 0.01) {
           float distMouse = length(uv - mouseUv);
-          float pulse = 0.9 + 0.15 * sin(u_time * 5.0);
-          float mouseSpot = exp(-distMouse * distMouse * 36.0) * 1.15 * pulse * u_hover;
+          float breathe = 0.92 + 0.08 * sin(u_time * 3.5);
+          float mouseSpot = exp(-distMouse * distMouse * 24.0) * 1.05 * breathe * u_hover;
           heat += mouseSpot;
         }
 
-        // 2. Lingering Mouse Heat Trail (Clickstream / Attention Decay)
+        // 2. Lingering Mouse Heat Trail (Softly dissipating clickstream)
         for (int i = 0; i < 8; i++) {
           if (u_trail[i].z > 0.02) {
             vec2 tUv = vec2((u_trail[i].x - 0.5) * aspect, u_trail[i].y - 0.5);
             float d = length(uv - tUv);
-            heat += exp(-d * d * 48.0) * u_trail[i].z * 0.72;
+            heat += exp(-d * d * 32.0) * u_trail[i].z * 0.65;
           }
         }
 
-        // 3. Autonomous Simulated Web Traffic Hotspots (CRO / Conversion Flows)
+        // 3. Ambient Autonomous Web Traffic Hotspots (Soft floating conversion clusters)
         for (int i = 0; i < 4; i++) {
           if (u_hotspots[i].z > 0.02) {
             vec2 sUv = vec2((u_hotspots[i].x - 0.5) * aspect, u_hotspots[i].y - 0.5);
             float d = length(uv - sUv);
-            heat += exp(-d * d * 28.0) * u_hotspots[i].z * 0.55;
+            heat += exp(-d * d * 20.0) * u_hotspots[i].z * 0.45;
           }
         }
 
-        // IMPORTANT: If below heat threshold, discard completely!
-        // This ensures the underlying video is 100% visible and unclouded!
-        if (heat < 0.035) {
+        // If below heat threshold, completely transparent: video is 100% visible!
+        if (heat < 0.025) {
           gl_FragColor = vec4(0.0);
           return;
         }
 
-        // Organic subtle thermal turbulence
-        float noise = snoise(uv * 4.5 + vec2(u_time * 0.12, u_time * 0.08)) * 0.07;
-        heat += noise * smoothstep(0.08, 0.6, heat);
+        // Extremely soft organic dissipation
+        float turbulence = snoise(uv * 3.5 + vec2(u_time * 0.08, u_time * 0.05)) * 0.04;
+        heat += turbulence * smoothstep(0.05, 0.5, heat);
 
-        // Heatmap Topographical Isolines (Contour elevation curves like analytics maps)
-        float contour = abs(fract(heat * 5.5) - 0.5);
-        float isoline = smoothstep(0.07, 0.0, contour) * 0.35 * smoothstep(0.08, 0.6, heat);
+        // Synthesize ultra-smooth thermal colors
+        vec3 color = smoothHeatSpectrum(heat);
 
-        // Map heat to infrared thermal palette
-        vec3 color = heatmapSpectrum(heat);
-        color += vec3(isoline * 0.4);
-
-        // Telemetry dot matrix HUD overlay in active heat zones
-        vec2 grid = fract(st * vec2(u_resolution.x / 18.0, u_resolution.y / 18.0));
-        float dotPattern = smoothstep(0.18, 0.0, length(grid - 0.5)) * 0.12 * smoothstep(0.1, 0.5, heat);
-        color += vec3(dotPattern);
-
-        // Telemetry Cursor Target Rings (Laser focus on active cursor)
+        // Very faint, delicate telemetry pulse ring near cursor
         if (u_hover > 0.01) {
           float distMouse = length(uv - mouseUv);
-          float ring1 = smoothstep(0.003, 0.0, abs(distMouse - 0.055)) * 0.35;
-          float ring2 = smoothstep(0.003, 0.0, abs(distMouse - 0.105)) * 0.2;
-          color += vec3(ring1 + ring2) * u_hover;
+          float ring = smoothstep(0.002, 0.0, abs(distMouse - 0.065)) * 0.22;
+          color += vec3(ring) * u_hover;
         }
 
-        // Alpha ramp: zero outside heat, smooth transition inside heat
-        float alpha = smoothstep(0.035, 0.45, heat) * 0.72;
-        alpha = clamp(alpha, 0.0, 0.82);
+        // Silky soft alpha falloff
+        float alpha = smoothstep(0.025, 0.45, heat) * 0.58;
+        alpha = clamp(alpha, 0.0, 0.72);
 
         gl_FragColor = vec4(color, alpha);
       }
     `;
 
-    // Shader compilation
     function createShader(glCtx, type, source) {
       const shader = glCtx.createShader(type);
       glCtx.shaderSource(shader, source);
@@ -231,7 +226,6 @@ export default function HeroCanvas() {
     const uTrail = gl.getUniformLocation(program, 'u_trail');
     const uHotspots = gl.getUniformLocation(program, 'u_hotspots');
 
-    // Trail buffer: 8 points with {x, y, intensity}
     const TRAIL_LENGTH = 8;
     const trailData = [];
     for (let i = 0; i < TRAIL_LENGTH; i++) {
@@ -254,7 +248,6 @@ export default function HeroCanvas() {
     let animationFrameId;
     let startTime = performance.now();
 
-    // Resize handler
     const handleResize = () => {
       const parent = canvas.parentElement;
       const rect = parent ? parent.getBoundingClientRect() : { width: window.innerWidth, height: window.innerHeight };
@@ -273,7 +266,6 @@ export default function HeroCanvas() {
 
     handleResize();
 
-    // Mouse tracking on hero section
     const handlePointerMove = (e) => {
       const parent = canvas.parentElement;
       if (!parent) return;
@@ -286,18 +278,16 @@ export default function HeroCanvas() {
         e.clientX <= rect.right
       ) {
         state.targetMouseX = (e.clientX - rect.left) / rect.width;
-        state.targetMouseY = 1.0 - (e.clientY - rect.top) / rect.height; // WebGL coordinates
+        state.targetMouseY = 1.0 - (e.clientY - rect.top) / rect.height;
         state.targetHover = 1.0;
 
-        // Add to heat trail every 45ms when moving
         const now = performance.now();
-        if (now - state.lastTrailTime > 45) {
+        if (now - state.lastTrailTime > 50) {
           state.lastTrailTime = now;
-          // Shift and add
           trailData.unshift({
             x: state.targetMouseX,
             y: state.targetMouseY,
-            intensity: 0.95
+            intensity: 0.9
           });
           if (trailData.length > TRAIL_LENGTH) {
             trailData.pop();
@@ -316,50 +306,44 @@ export default function HeroCanvas() {
     document.addEventListener('mouseleave', handlePointerLeave, { passive: true });
     window.addEventListener('resize', handleResize, { passive: true });
 
-    // IntersectionObserver to pause when offscreen
     const observer = new IntersectionObserver(([entry]) => {
       state.isVisible = entry.isIntersecting;
     }, { threshold: 0.05 });
     observer.observe(canvas);
 
-    // Render loop
     const render = (now) => {
       if (state.isVisible) {
         const elapsedTime = (now - startTime) * 0.001;
 
-        // Smooth mouse lerp
-        state.mouseX += (state.targetMouseX - state.mouseX) * 0.12;
-        state.mouseY += (state.targetMouseY - state.mouseY) * 0.12;
-        state.hover += (state.targetHover - state.hover) * 0.06;
+        // Smooth damping
+        state.mouseX += (state.targetMouseX - state.mouseX) * 0.10;
+        state.mouseY += (state.targetMouseY - state.mouseY) * 0.10;
+        state.hover += (state.targetHover - state.hover) * 0.05;
 
-        // Decay trail intensity over time (dissipating thermal heat)
+        // Trail decay
         for (let i = 0; i < trailData.length; i++) {
-          trailData[i].intensity *= 0.955;
+          trailData[i].intensity *= 0.95;
           trailBuffer[i * 3 + 0] = trailData[i].x;
           trailBuffer[i * 3 + 1] = trailData[i].y;
           trailBuffer[i * 3 + 2] = trailData[i].intensity;
         }
 
-        // Autonomous Simulated Web Traffic Hotspots (CRO & live session clusters)
-        // Hotspot 0: Top left conversion funnel
-        hotspotsBuffer[0] = 0.22 + 0.08 * Math.sin(elapsedTime * 0.4);
-        hotspotsBuffer[1] = 0.65 + 0.06 * Math.cos(elapsedTime * 0.5);
-        hotspotsBuffer[2] = 0.65 + 0.3 * Math.sin(elapsedTime * 1.2);
+        // Subtle autonomous hotspots
+        hotspotsBuffer[0] = 0.24 + 0.06 * Math.sin(elapsedTime * 0.35);
+        hotspotsBuffer[1] = 0.62 + 0.05 * Math.cos(elapsedTime * 0.45);
+        hotspotsBuffer[2] = 0.55 + 0.25 * Math.sin(elapsedTime * 1.1);
 
-        // Hotspot 1: Right CTA attention spot
-        hotspotsBuffer[3] = 0.78 + 0.07 * Math.cos(elapsedTime * 0.35);
-        hotspotsBuffer[4] = 0.42 + 0.08 * Math.sin(elapsedTime * 0.45);
-        hotspotsBuffer[5] = 0.6 + 0.35 * Math.cos(elapsedTime * 0.9);
+        hotspotsBuffer[3] = 0.76 + 0.06 * Math.cos(elapsedTime * 0.3);
+        hotspotsBuffer[4] = 0.44 + 0.06 * Math.sin(elapsedTime * 0.4);
+        hotspotsBuffer[5] = 0.50 + 0.25 * Math.cos(elapsedTime * 0.85);
 
-        // Hotspot 2: Central flow
-        hotspotsBuffer[6] = 0.5 + 0.15 * Math.sin(elapsedTime * 0.25);
-        hotspotsBuffer[7] = 0.28 + 0.05 * Math.sin(elapsedTime * 0.6);
-        hotspotsBuffer[8] = 0.55 + 0.3 * Math.sin(elapsedTime * 1.5);
+        hotspotsBuffer[6] = 0.50 + 0.12 * Math.sin(elapsedTime * 0.22);
+        hotspotsBuffer[7] = 0.30 + 0.04 * Math.sin(elapsedTime * 0.55);
+        hotspotsBuffer[8] = 0.45 + 0.25 * Math.sin(elapsedTime * 1.3);
 
-        // Hotspot 3: Top right surge
-        hotspotsBuffer[9] = 0.84 + 0.06 * Math.sin(elapsedTime * 0.5);
-        hotspotsBuffer[10] = 0.74 + 0.05 * Math.cos(elapsedTime * 0.4);
-        hotspotsBuffer[11] = 0.55 + 0.3 * Math.cos(elapsedTime * 1.1);
+        hotspotsBuffer[9] = 0.82 + 0.05 * Math.sin(elapsedTime * 0.45);
+        hotspotsBuffer[10] = 0.72 + 0.04 * Math.cos(elapsedTime * 0.35);
+        hotspotsBuffer[11] = 0.48 + 0.22 * Math.cos(elapsedTime * 1.0);
 
         gl.clearColor(0.0, 0.0, 0.0, 0.0);
         gl.clear(gl.COLOR_BUFFER_BIT);
@@ -379,7 +363,6 @@ export default function HeroCanvas() {
 
     animationFrameId = requestAnimationFrame(render);
 
-    // Cleanup
     return () => {
       cancelAnimationFrame(animationFrameId);
       window.removeEventListener('pointermove', handlePointerMove);
@@ -399,7 +382,7 @@ export default function HeroCanvas() {
   return (
     <canvas
       ref={canvasRef}
-      className="absolute inset-0 pointer-events-none z-10 w-full h-full mix-blend-screen opacity-85 dark:opacity-80 transition-opacity duration-500"
+      className="absolute inset-0 pointer-events-none z-10 w-full h-full mix-blend-screen opacity-75 dark:opacity-70 transition-opacity duration-700"
     />
   );
 }
