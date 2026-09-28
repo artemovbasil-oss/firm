@@ -149,6 +149,97 @@
   animation: pulseSubtle 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
+/* Marquee Running Ticker */
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 32s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* Ambient Spotlights */
+.ambient-glow-hero {
+  background: radial-gradient(circle 800px at 50% -80px, rgba(99, 102, 241, 0.09), rgba(59, 130, 246, 0.03), transparent 75%);
+}
+
+.dark .ambient-glow-hero {
+  background: radial-gradient(circle 950px at 50% -120px, rgba(99, 102, 241, 0.15), rgba(168, 85, 247, 0.06), transparent 75%);
+}
+
+.ambient-spotlight {
+  background: radial-gradient(circle 600px at 50% 50%, rgba(59, 130, 246, 0.06), transparent 80%);
+}
+
+.dark .ambient-spotlight {
+  background: radial-gradient(circle 600px at 50% 50%, rgba(99, 102, 241, 0.08), transparent 80%);
+}
+
+/* Awwwards Studio Hero Card styling */
+.card-studio-hero {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.04);
+  transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card-studio-hero:hover {
+  transform: translateY(-4px);
+  border-color: rgba(100, 116, 139, 0.4);
+  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.08);
+}
+
+.dark .card-studio-hero:hover {
+  border-color: rgba(255, 255, 255, 0.22);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8), 0 0 35px -5px rgba(99, 102, 241, 0.15);
+}
+
+/* Range slider track & thumb */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+  height: 8px;
+  border-radius: 9999px;
+  background: rgba(148, 163, 184, 0.25);
+}
+
+.dark input[type="range"]::-webkit-slider-runnable-track {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 22px;
+  width: 22px;
+  border-radius: 50%;
+  background: #0f172a;
+  margin-top: -7px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.15s ease, background-color 0.15s ease;
+}
+
+.dark input[type="range"]::-webkit-slider-thumb {
+  background: #ffffff;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.18);
+}
+
 /* Custom modern scrollbar */
 ::-webkit-scrollbar {
   width: 7px;

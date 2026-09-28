@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { 
-  Menu, X, Sun, Moon, Globe, Shield, 
-  ArrowUpRight, Send, LayoutDashboard, SlidersHorizontal 
+  Menu, X, Sun, Moon, ArrowUpRight, LayoutDashboard, Sparkles
 } from 'lucide-react';
 import { TRANSLATIONS } from '../data/translations';
 
@@ -21,7 +20,7 @@ export default function Navbar({
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      setIsScrolled(window.scrollY > 25);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
@@ -38,97 +37,76 @@ export default function Navbar({
   ];
 
   return (
-    <header 
-      className={`fixed top-0 left-0 right-0 z-40 transition-all duration-200 ${
-        isScrolled 
-          ? 'bg-white/85 dark:bg-[#090a0f]/85 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shadow-sm py-3' 
-          : 'bg-transparent py-4'
-      }`}
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between">
+    <header className="fixed top-0 left-0 right-0 z-50 pointer-events-none transition-all duration-300">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 pt-3 sm:pt-4">
+        
+        {/* Floating Dock Container */}
+        <div 
+          className={`pointer-events-auto transition-all duration-300 rounded-full px-4 sm:px-6 py-2.5 sm:py-3 flex items-center justify-between shadow-xl ${
+            isScrolled 
+              ? 'bg-white/90 dark:bg-[#0a0c13]/90 backdrop-blur-2xl border border-slate-200/90 dark:border-white/15 shadow-2xl shadow-slate-900/5 dark:shadow-black/40' 
+              : 'bg-white/80 dark:bg-[#0d0f18]/80 backdrop-blur-xl border border-slate-200/70 dark:border-white/10'
+          }`}
+        >
           
-          {/* Logo */}
-          <a href="#" className="flex items-center gap-2.5 group">
-            <div className="w-8 h-8 rounded-lg bg-slate-900 dark:bg-white text-white dark:text-slate-900 flex items-center justify-center font-heading font-extrabold text-sm tracking-widest transition-transform group-hover:scale-105">
+          {/* Logo with live status beacon */}
+          <a href="#" className="flex items-center gap-2.5 group shrink-0">
+            <div className="w-8 h-8 rounded-xl bg-slate-950 dark:bg-white text-white dark:text-slate-950 flex items-center justify-center font-heading font-black text-sm tracking-wider shadow-sm group-hover:scale-105 transition-transform">
               F
             </div>
             <div className="flex flex-col">
-              <span className="font-heading font-extrabold text-lg tracking-tight text-slate-900 dark:text-white leading-none">
-                FIRM
-              </span>
-              <span className="text-[9px] uppercase font-mono tracking-widest text-slate-500 dark:text-slate-400 mt-0.5">
-                Digital Agency
+              <div className="flex items-center gap-1.5">
+                <span className="font-heading font-extrabold text-base sm:text-lg tracking-tight text-slate-950 dark:text-white leading-none">
+                  FIRM
+                </span>
+                <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" title="Available for projects"></span>
+              </div>
+              <span className="text-[9px] uppercase font-mono tracking-widest text-slate-400 dark:text-slate-400 leading-tight">
+                Studio
               </span>
             </div>
           </a>
 
-          {/* Desktop Nav */}
-          <nav className="hidden lg:flex items-center gap-6">
+          {/* Desktop Nav Links */}
+          <nav className="hidden lg:flex items-center gap-1 xl:gap-2">
             {navLinks.map((link) => (
               <a
                 key={link.name}
                 href={link.href}
-                className="text-xs font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors"
+                className="px-2.5 py-1.5 rounded-full text-xs font-heading font-semibold text-slate-600 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10 transition-all duration-150"
               >
                 {link.name}
               </a>
             ))}
           </nav>
 
-          {/* Controls: Language + Theme + Currency + CRM + CTA */}
-          <div className="hidden sm:flex items-center gap-2.5">
+          {/* Controls Dock */}
+          <div className="hidden sm:flex items-center gap-2">
             
             {/* Language Switcher */}
-            <div className="flex items-center rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 p-0.5 text-xs font-mono">
-              <button
-                onClick={() => setLang('kz')}
-                className={`px-2 py-1 rounded transition-colors ${
-                  lang === 'kz' 
-                    ? 'bg-white dark:bg-slate-800 text-slate-950 dark:text-white font-bold shadow-sm' 
-                    : 'text-slate-500 hover:text-slate-900 dark:hover:text-white'
-                }`}
-              >
-                KZ
-              </button>
-              <button
-                onClick={() => setLang('ru')}
-                className={`px-2 py-1 rounded transition-colors ${
-                  lang === 'ru' 
-                    ? 'bg-white dark:bg-slate-800 text-slate-950 dark:text-white font-bold shadow-sm' 
-                    : 'text-slate-500 hover:text-slate-900 dark:hover:text-white'
-                }`}
-              >
-                RU
-              </button>
-              <button
-                onClick={() => setLang('en')}
-                className={`px-2 py-1 rounded transition-colors ${
-                  lang === 'en' 
-                    ? 'bg-white dark:bg-slate-800 text-slate-950 dark:text-white font-bold shadow-sm' 
-                    : 'text-slate-500 hover:text-slate-900 dark:hover:text-white'
-                }`}
-              >
-                EN
-              </button>
+            <div className="flex items-center rounded-full border border-slate-200 dark:border-slate-800 bg-slate-100/80 dark:bg-slate-900/80 p-0.5 text-xs font-mono">
+              {['kz', 'ru', 'en'].map((l) => (
+                <button
+                  key={l}
+                  onClick={() => setLang(l)}
+                  className={`px-2 py-0.5 rounded-full uppercase transition-all ${
+                    lang === l 
+                      ? 'bg-white dark:bg-slate-800 text-slate-950 dark:text-white font-bold shadow-sm' 
+                      : 'text-slate-500 hover:text-slate-900 dark:hover:text-white'
+                  }`}
+                >
+                  {l}
+                </button>
+              ))}
             </div>
 
-            {/* Theme Switcher */}
-            <button
-              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-              className="p-2 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors"
-              title={theme === 'dark' ? t.themeLight : t.themeDark}
-            >
-              {theme === 'dark' ? <Sun className="w-3.5 h-3.5" /> : <Moon className="w-3.5 h-3.5" />}
-            </button>
-
             {/* Currency selector */}
-            <div className="flex items-center rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 p-0.5 text-xs font-mono">
+            <div className="flex items-center rounded-full border border-slate-200 dark:border-slate-800 bg-slate-100/80 dark:bg-slate-900/80 p-0.5 text-xs font-mono">
               {['rub', 'usd', 'kzt'].map((cur) => (
                 <button
                   key={cur}
                   onClick={() => setCurrency(cur)}
-                  className={`px-2 py-1 rounded transition-colors uppercase ${
+                  className={`px-2 py-0.5 rounded-full uppercase transition-all ${
                     currency === cur
                       ? 'bg-white dark:bg-slate-800 text-slate-950 dark:text-white font-bold shadow-sm'
                       : 'text-slate-500 hover:text-slate-900 dark:hover:text-white'
@@ -139,63 +117,74 @@ export default function Navbar({
               ))}
             </div>
 
+            {/* Theme Switcher */}
+            <button
+              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+              className="w-8 h-8 rounded-full border border-slate-200 dark:border-slate-800 bg-slate-100/80 dark:bg-slate-900/80 text-slate-600 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white flex items-center justify-center transition-all hover:scale-105"
+              title={theme === 'dark' ? t.themeLight : t.themeDark}
+            >
+              {theme === 'dark' ? <Sun className="w-3.5 h-3.5" /> : <Moon className="w-3.5 h-3.5" />}
+            </button>
+
             {/* CRM Admin Button */}
             <button
               onClick={onOpenAdmin}
-              className="p-2 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors"
+              className="w-8 h-8 rounded-full border border-slate-200 dark:border-slate-800 bg-slate-100/80 dark:bg-slate-900/80 text-slate-600 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white flex items-center justify-center transition-all hover:scale-105"
               title={t.admin}
             >
               <LayoutDashboard className="w-3.5 h-3.5" />
             </button>
 
-            {/* Primary Action Button */}
+            {/* CTA Button */}
             <button
               onClick={() => onOpenContact(t.cta)}
-              className="px-4 py-2 rounded-lg bg-slate-900 dark:bg-white text-white dark:text-slate-950 text-xs font-semibold hover:bg-slate-800 dark:hover:bg-slate-100 transition-all flex items-center gap-1.5 shadow-sm active:scale-[0.98]"
+              className="ml-1 px-4 py-2 rounded-full bg-slate-950 dark:bg-white text-white dark:text-slate-950 text-xs font-heading font-bold hover:opacity-90 transition-all flex items-center gap-1.5 shadow-sm active:scale-95"
             >
               <span>{t.cta}</span>
               <ArrowUpRight className="w-3.5 h-3.5" />
             </button>
+
           </div>
 
-          {/* Mobile hamburger button */}
-          <div className="flex sm:hidden items-center gap-2">
+          {/* Mobile controls */}
+          <div className="flex sm:hidden items-center gap-1.5">
             <button
               onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-              className="p-2 rounded-lg border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300"
+              className="w-8 h-8 rounded-full border border-slate-200 dark:border-slate-800 flex items-center justify-center text-slate-700 dark:text-slate-300"
             >
-              {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+              {theme === 'dark' ? <Sun className="w-3.5 h-3.5" /> : <Moon className="w-3.5 h-3.5" />}
             </button>
+
             <button
               onClick={() => {
                 const nextLang = lang === 'kz' ? 'ru' : lang === 'ru' ? 'en' : 'kz';
                 setLang(nextLang);
               }}
-              className="px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-800 text-xs font-mono font-bold"
-              title="Тіл ауыстыру / Сменить язык / Change language"
+              className="px-2.5 py-1 rounded-full border border-slate-200 dark:border-slate-800 text-[11px] font-mono font-bold"
             >
               {lang.toUpperCase()}
             </button>
+
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-lg border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300"
+              className="w-8 h-8 rounded-full border border-slate-200 dark:border-slate-800 flex items-center justify-center text-slate-700 dark:text-slate-300"
             >
-              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              {mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
             </button>
           </div>
 
         </div>
 
-        {/* Mobile menu drawer */}
+        {/* Mobile menu dropdown */}
         {mobileMenuOpen && (
-          <div className="sm:hidden mt-3 p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xl space-y-4">
-            <div className="flex flex-col gap-2">
+          <div className="pointer-events-auto sm:hidden mt-3 p-5 rounded-3xl bg-white/95 dark:bg-[#0e101b]/95 backdrop-blur-2xl border border-slate-200 dark:border-white/10 shadow-2xl space-y-4 animate-scaleUp">
+            <div className="flex flex-col gap-1.5">
               {navLinks.map((link) => (
                 <a
                   key={link.name}
                   href={link.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="text-sm font-medium text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white py-1"
+                  className="px-3 py-2 rounded-xl text-sm font-heading font-medium text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-white/10"
                 >
                   {link.name}
                 </a>
@@ -209,7 +198,7 @@ export default function Navbar({
                   <button
                     key={l}
                     onClick={() => setLang(l)}
-                    className={`px-2.5 py-1 rounded text-xs uppercase font-mono ${
+                    className={`px-2.5 py-1 rounded-full text-xs uppercase font-mono ${
                       lang === l ? 'bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold' : 'text-slate-500'
                     }`}
                   >
@@ -226,7 +215,7 @@ export default function Navbar({
                   <button
                     key={cur}
                     onClick={() => setCurrency(cur)}
-                    className={`px-2 py-1 rounded text-xs uppercase font-mono ${
+                    className={`px-2.5 py-1 rounded-full text-xs uppercase font-mono ${
                       currency === cur ? 'bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold' : 'text-slate-500'
                     }`}
                   >
@@ -242,7 +231,7 @@ export default function Navbar({
                   setMobileMenuOpen(false);
                   onOpenAdmin();
                 }}
-                className="w-full py-2.5 rounded-lg border border-slate-300 dark:border-slate-700 text-xs font-mono text-slate-700 dark:text-slate-300 flex items-center justify-center gap-2"
+                className="w-full py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 text-xs font-mono text-slate-700 dark:text-slate-300 flex items-center justify-center gap-2"
               >
                 <LayoutDashboard className="w-3.5 h-3.5" />
                 <span>{t.admin}</span>
@@ -252,7 +241,7 @@ export default function Navbar({
                   setMobileMenuOpen(false);
                   onOpenContact(t.cta);
                 }}
-                className="w-full py-2.5 rounded-lg bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-xs font-bold text-center"
+                className="w-full py-3 rounded-xl bg-slate-950 dark:bg-white text-white dark:text-slate-950 text-xs font-heading font-bold text-center shadow-lg"
               >
                 {t.cta}
               </button>

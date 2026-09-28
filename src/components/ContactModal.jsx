@@ -90,55 +90,56 @@ export default function ContactModal({
       ></div>
 
       {/* Modal Dialog Content */}
-      <div className="relative w-full max-w-lg bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl z-10 animate-scaleUp">
+      <div className="relative w-full max-w-xl bg-white/95 dark:bg-[#0c0e18]/95 backdrop-blur-2xl border border-slate-200/90 dark:border-white/15 rounded-3xl p-7 sm:p-10 shadow-2xl z-10 animate-scaleUp">
         
         {/* Close button */}
         <button
           onClick={onClose}
-          className="absolute top-5 right-5 p-2 rounded-full border border-slate-200 dark:border-slate-800 text-slate-500 hover:text-slate-950 dark:hover:text-white transition-colors"
+          className="absolute top-6 right-6 w-9 h-9 rounded-full border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-500 hover:text-slate-950 dark:hover:text-white transition-colors"
         >
           <X className="w-4 h-4" />
         </button>
 
         {/* Modal Header */}
-        <div className="mb-5">
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 text-slate-600 dark:text-slate-400 text-xs font-mono uppercase mb-2">
+        <div className="mb-6">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-900 text-slate-700 dark:text-slate-300 text-xs font-mono uppercase mb-3">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
             <span>{t.badge}</span>
           </div>
-          <h3 className="text-xl sm:text-2xl font-heading font-extrabold text-slate-950 dark:text-white">
+          <h3 className="text-2xl sm:text-3xl font-heading font-extrabold text-slate-950 dark:text-white tracking-tight">
             {t.title}
           </h3>
-          <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+          <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1.5">
             {t.desc}
           </p>
         </div>
 
         {/* Quick Messengers */}
-        <div className="mb-5 flex gap-2.5">
+        <div className="mb-6 flex gap-3">
           <a
             href="https://t.me/artemov_basil"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex-1 p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 hover:border-slate-400 text-xs font-medium flex items-center justify-center gap-1.5 transition-colors"
+            className="flex-1 py-3 px-4 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50/80 dark:bg-slate-900/60 text-slate-900 dark:text-slate-100 hover:border-slate-400 dark:hover:border-white/20 text-xs sm:text-sm font-semibold flex items-center justify-center gap-2 transition-all"
           >
-            <Send className="w-3.5 h-3.5 text-cyan-500" />
+            <Send className="w-4 h-4 text-cyan-500" />
             <span>{t.tgDirect}</span>
           </a>
           <a
             href="https://wa.me/?text=Hello!%20I%20would%20like%20to%20discuss%20a%20project%20with%20FIRM%20agency"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex-1 p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 hover:border-slate-400 text-xs font-medium flex items-center justify-center gap-1.5 transition-colors"
+            className="flex-1 py-3 px-4 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50/80 dark:bg-slate-900/60 text-slate-900 dark:text-slate-100 hover:border-slate-400 dark:hover:border-white/20 text-xs sm:text-sm font-semibold flex items-center justify-center gap-2 transition-all"
           >
-            <MessageSquare className="w-3.5 h-3.5 text-emerald-500" />
+            <MessageSquare className="w-4 h-4 text-emerald-500" />
             <span>{t.waDirect}</span>
           </a>
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="space-y-3.5">
+        <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-xs font-mono text-slate-600 dark:text-slate-400 mb-1">
+            <label className="block text-xs font-mono font-medium text-slate-700 dark:text-slate-300 mb-1.5">
               {t.nameLabel}
             </label>
             <input
@@ -146,12 +147,12 @@ export default function ContactModal({
               placeholder={lang === 'en' ? 'John Doe / Acme Corp' : (lang === 'kz' ? 'Есіміңіз немесе Компания атауы' : 'Как к вам обращаться')}
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full px-3 py-2 rounded-xl input-studio text-xs placeholder-slate-400"
+              className="w-full px-4 py-3.5 rounded-xl input-studio text-sm placeholder-slate-400"
             />
           </div>
 
           <div>
-            <label className="block text-xs font-mono text-slate-600 dark:text-slate-400 mb-1">
+            <label className="block text-xs font-mono font-medium text-slate-700 dark:text-slate-300 mb-1.5">
               {t.contactLabel}
             </label>
             <input
@@ -160,19 +161,19 @@ export default function ContactModal({
               placeholder="@username, phone or email"
               value={contact}
               onChange={(e) => setContact(e.target.value)}
-              className="w-full px-3 py-2 rounded-xl input-studio text-xs placeholder-slate-400"
+              className="w-full px-4 py-3.5 rounded-xl input-studio text-sm placeholder-slate-400"
             />
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
             <div>
-              <label className="block text-xs font-mono text-slate-600 dark:text-slate-400 mb-1">
+              <label className="block text-xs font-mono font-medium text-slate-700 dark:text-slate-300 mb-1.5">
                 {t.serviceLabel}
               </label>
               <select
                 value={selectedService}
                 onChange={(e) => setSelectedService(e.target.value)}
-                className="w-full px-2.5 py-2 rounded-xl input-studio text-xs"
+                className="w-full px-3.5 py-3.5 rounded-xl input-studio text-xs sm:text-sm bg-white dark:bg-slate-900"
               >
                 <option value={lang === 'en' ? 'Full Packaging 360°' : (lang === 'kz' ? '360° Кешенді қаптама' : 'Комплексный проект / Упаковка')}>
                   {lang === 'en' ? 'Turnkey Packaging 360°' : (lang === 'kz' ? '360° Кешенді қаптама' : 'Комплексный проект / Упаковка')}
@@ -185,13 +186,13 @@ export default function ContactModal({
             </div>
 
             <div>
-              <label className="block text-xs font-mono text-slate-600 dark:text-slate-400 mb-1">
+              <label className="block text-xs font-mono font-medium text-slate-700 dark:text-slate-300 mb-1.5">
                 {t.budgetLabel}
               </label>
               <select
                 value={budget}
                 onChange={(e) => setBudget(e.target.value)}
-                className="w-full px-2.5 py-2 rounded-xl input-studio text-xs"
+                className="w-full px-3.5 py-3.5 rounded-xl input-studio text-xs sm:text-sm bg-white dark:bg-slate-900"
               >
                 <option value="<$1,000">&lt; $1,000 (до 100k ₽ / 500k ₸)</option>
                 <option value="$1,500 - $3,500">$1,500 – $3,500 (150k – 300k ₽ / 1.5M ₸)</option>
@@ -202,7 +203,7 @@ export default function ContactModal({
           </div>
 
           <div>
-            <label className="block text-xs font-mono text-slate-600 dark:text-slate-400 mb-1">
+            <label className="block text-xs font-mono font-medium text-slate-700 dark:text-slate-300 mb-1.5">
               {t.messageLabel}
             </label>
             <textarea
@@ -210,41 +211,41 @@ export default function ContactModal({
               placeholder={lang === 'en' ? 'Describe your challenge, timeline or send website link...' : (lang === 'kz' ? 'Мақсатыңыз, мерзім немесе қазіргі сайт сілтемесі...' : 'Расскажите о целях, сроках или пришлите ссылку на текущий сайт...')}
               value={message}
               onChange={(e) => setMessage(e.target.value)}
-              className="w-full px-3 py-2 rounded-xl input-studio text-xs placeholder-slate-400 resize-none"
+              className="w-full px-4 py-3.5 rounded-xl input-studio text-sm placeholder-slate-400 resize-none"
             ></textarea>
           </div>
 
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full py-3 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-950 font-bold text-xs shadow-sm btn-studio flex items-center justify-center gap-2 disabled:opacity-50"
+            className="w-full py-4 rounded-xl bg-slate-950 dark:bg-white text-white dark:text-slate-950 font-heading font-bold text-sm shadow-xl hover:opacity-95 transition-all flex items-center justify-center gap-2 disabled:opacity-50 active:scale-[0.99]"
           >
             {isSubmitting ? (
               <span>{t.submitting}</span>
             ) : (
               <>
-                <Send className="w-3.5 h-3.5" />
+                <Send className="w-4 h-4" />
                 <span>{t.submitBtn}</span>
               </>
             )}
           </button>
 
           {status === 'success' && (
-            <div className="p-2.5 rounded-lg border border-emerald-300 dark:border-emerald-800 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 text-xs flex items-center gap-2">
-              <CheckCircle2 className="w-3.5 h-3.5 shrink-0" />
+            <div className="p-3.5 rounded-xl border border-emerald-400/50 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-900 dark:text-emerald-200 text-xs sm:text-sm flex items-center gap-2.5 animate-fadeIn">
+              <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
               <span>{t.successMsg}</span>
             </div>
           )}
 
           {status === 'error' && (
-            <div className="p-2.5 rounded-lg border border-rose-300 dark:border-rose-800 bg-rose-50 dark:bg-rose-950/40 text-rose-800 dark:text-rose-300 text-xs flex items-center gap-2">
-              <AlertCircle className="w-3.5 h-3.5 shrink-0" />
+            <div className="p-3.5 rounded-xl border border-rose-400/50 bg-rose-50 dark:bg-rose-950/40 text-rose-900 dark:text-rose-200 text-xs sm:text-sm flex items-center gap-2.5 animate-fadeIn">
+              <AlertCircle className="w-4 h-4 text-rose-500 shrink-0" />
               <span>{t.errorMsg}</span>
             </div>
           )}
 
-          <div className="flex items-center justify-center gap-1.5 text-[10px] text-slate-400 pt-1">
-            <ShieldCheck className="w-3 h-3" />
+          <div className="flex items-center justify-center gap-2 text-xs text-slate-400 pt-1">
+            <ShieldCheck className="w-3.5 h-3.5" />
             <span>{t.footerNote}</span>
           </div>
 

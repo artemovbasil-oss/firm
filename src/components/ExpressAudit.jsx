@@ -74,95 +74,114 @@ export default function ExpressAudit({ lang, onSuccessLead }) {
   };
 
   return (
-    <section id="audit" className="py-20 relative border-t border-slate-200 dark:border-slate-800/80">
+    <section id="audit" className="py-28 sm:py-32 relative border-t border-slate-200/80 dark:border-white/10 overflow-hidden">
+      {/* Background ambient spotlight */}
+      <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-96 h-96 bg-cyan-500/10 dark:bg-cyan-500/15 rounded-full blur-3xl pointer-events-none -z-10"></div>
+      
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        <div className="card-studio rounded-3xl p-6 sm:p-10 border-slate-200 dark:border-slate-800">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        <div className="card-studio-hero rounded-3xl p-8 sm:p-12 lg:p-14 border border-slate-200/90 dark:border-white/10 bg-white/80 dark:bg-[#0b0d15]/90 backdrop-blur-2xl shadow-2xl relative">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
             
             {/* Left explanation column */}
-            <div className="lg:col-span-6 space-y-5">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 text-xs text-slate-600 dark:text-slate-400 font-mono uppercase tracking-wider">
+            <div className="lg:col-span-6 space-y-6">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-900/80 text-xs text-slate-700 dark:text-slate-300 font-mono uppercase tracking-wider">
+                <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse"></span>
                 {t.badge}
               </div>
 
-              <h2 className="text-2xl sm:text-3xl font-heading font-extrabold text-slate-900 dark:text-white tracking-tight">
+              <h2 className="text-3xl sm:text-5xl lg:text-5xl font-heading font-extrabold text-slate-950 dark:text-white tracking-tight sm:tracking-tighter leading-tight">
                 {t.title}
               </h2>
 
-              <p className="text-slate-600 dark:text-slate-400 text-xs sm:text-sm leading-relaxed">
+              <p className="text-slate-600 dark:text-slate-300 text-sm sm:text-base leading-relaxed max-w-xl">
                 {t.desc}
               </p>
 
-              {/* What client gets */}
-              <div className="space-y-3 pt-2">
-                <div className="flex items-start gap-3">
-                  <div className="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white mt-0.5">
-                    <Video className="w-3.5 h-3.5" />
+              {/* What client gets - Studio bento deliverables */}
+              <div className="space-y-3.5 pt-2">
+                {[
+                  {
+                    num: '01',
+                    icon: <Video className="w-4 h-4" />,
+                    title: t.feature1Title,
+                    desc: t.feature1Desc
+                  },
+                  {
+                    num: '02',
+                    icon: <FileText className="w-4 h-4" />,
+                    title: t.feature2Title,
+                    desc: t.feature2Desc
+                  },
+                  {
+                    num: '03',
+                    icon: <TrendingUp className="w-4 h-4" />,
+                    title: t.feature3Title,
+                    desc: t.feature3Desc
+                  }
+                ].map((f) => (
+                  <div 
+                    key={f.num}
+                    className="p-4 sm:p-5 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-slate-50/70 dark:bg-white/[0.03] hover:border-slate-400/50 dark:hover:border-white/20 transition-all flex items-start gap-4"
+                  >
+                    <div className="w-10 h-10 rounded-xl bg-slate-950 dark:bg-white text-white dark:text-slate-950 flex items-center justify-center shrink-0 shadow-sm mt-0.5">
+                      {f.icon}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center justify-between mb-1">
+                        <div className="text-sm font-heading font-bold text-slate-950 dark:text-white">
+                          {f.title}
+                        </div>
+                        <span className="font-mono text-xs font-bold text-slate-400 dark:text-slate-400">
+                          {f.num}
+                        </span>
+                      </div>
+                      <div className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+                        {f.desc}
+                      </div>
+                    </div>
                   </div>
-                  <div>
-                    <div className="text-xs font-bold text-slate-900 dark:text-white">{t.feature1Title}</div>
-                    <div className="text-[11px] text-slate-500">{t.feature1Desc}</div>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3">
-                  <div className="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white mt-0.5">
-                    <FileText className="w-3.5 h-3.5" />
-                  </div>
-                  <div>
-                    <div className="text-xs font-bold text-slate-900 dark:text-white">{t.feature2Title}</div>
-                    <div className="text-[11px] text-slate-500">{t.feature2Desc}</div>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3">
-                  <div className="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white mt-0.5">
-                    <TrendingUp className="w-3.5 h-3.5" />
-                  </div>
-                  <div>
-                    <div className="text-xs font-bold text-slate-900 dark:text-white">{t.feature3Title}</div>
-                    <div className="text-[11px] text-slate-500">{t.feature3Desc}</div>
-                  </div>
-                </div>
+                ))}
               </div>
 
             </div>
 
             {/* Right Form column */}
-            <div className="lg:col-span-6 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950">
-              <h3 className="text-sm font-heading font-bold text-slate-900 dark:text-white mb-1">
-                {t.formHeading}
-              </h3>
-              <p className="text-[11px] text-slate-500 mb-4">
-                {t.formSubheading}
-              </p>
+            <div className="lg:col-span-6 p-7 sm:p-10 rounded-3xl border border-slate-200 dark:border-white/10 bg-white/70 dark:bg-[#0c0e18]/80 backdrop-blur-xl shadow-xl">
+              <div className="mb-6">
+                <h3 className="text-lg sm:text-xl font-heading font-extrabold text-slate-950 dark:text-white mb-1.5">
+                  {t.formHeading}
+                </h3>
+                <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
+                  {t.formSubheading}
+                </p>
+              </div>
 
-              <form onSubmit={handleSubmit} className="space-y-3">
+              <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                  <label className="block text-[11px] font-mono text-slate-600 dark:text-slate-400 mb-1">
+                  <label className="block text-xs font-mono font-medium text-slate-700 dark:text-slate-300 mb-1.5">
                     {t.urlLabel}
                   </label>
                   <input
                     type="text"
-                    placeholder="https://example.com"
+                    placeholder="https://yourcompany.com"
                     value={targetUrl}
                     onChange={(e) => setTargetUrl(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl input-studio text-xs"
+                    className="w-full px-4 py-3.5 rounded-xl input-studio text-sm placeholder-slate-400"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-[11px] font-mono text-slate-600 dark:text-slate-400 mb-1">
+                  <label className="block text-xs font-mono font-medium text-slate-700 dark:text-slate-300 mb-1.5">
                     {t.issueLabel}
                   </label>
                   <select
                     value={selectedIssue}
                     onChange={(e) => setSelectedIssue(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl input-studio text-xs"
+                    className="w-full px-4 py-3.5 rounded-xl input-studio text-sm bg-white dark:bg-slate-900"
                   >
                     {issues.map(iss => (
-                      <option key={iss.id} value={iss.id} className="bg-white dark:bg-slate-900 text-slate-900 dark:text-white">
+                      <option key={iss.id} value={iss.id} className="bg-white dark:bg-slate-900 text-slate-950 dark:text-white">
                         {iss.label}
                       </option>
                     ))}
@@ -170,57 +189,57 @@ export default function ExpressAudit({ lang, onSuccessLead }) {
                 </div>
 
                 <div>
-                  <label className="block text-[11px] font-mono text-slate-600 dark:text-slate-400 mb-1">
+                  <label className="block text-xs font-mono font-medium text-slate-700 dark:text-slate-300 mb-1.5">
                     {t.contactLabel}
                   </label>
                   <input
                     type="text"
                     required
-                    placeholder="@telegram_login, WhatsApp or email"
+                    placeholder="@telegram_handle, WhatsApp or work email"
                     value={contact}
                     onChange={(e) => setContact(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl input-studio text-xs"
+                    className="w-full px-4 py-3.5 rounded-xl input-studio text-sm placeholder-slate-400"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-[11px] font-mono text-slate-600 dark:text-slate-400 mb-1">
+                  <label className="block text-xs font-mono font-medium text-slate-700 dark:text-slate-300 mb-1.5">
                     {t.notesLabel}
                   </label>
                   <input
                     type="text"
-                    placeholder={lang === 'en' ? 'Any specific goals...' : (lang === 'kz' ? 'Мысалы: жаңа тарифті іске қосу...' : 'Например: запуск нового тарифа...')}
+                    placeholder={lang === 'en' ? 'Target markets, metrics or specific goals...' : (lang === 'kz' ? 'Мақсаттар, нарық немесе басты мәселе...' : 'Целевые рынки, задачи или узкие места...')}
                     value={notes}
                     onChange={(e) => setNotes(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl input-studio text-xs"
+                    className="w-full px-4 py-3.5 rounded-xl input-studio text-sm placeholder-slate-400"
                   />
                 </div>
 
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full py-3 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-950 font-bold text-xs btn-studio shadow-sm flex items-center justify-center gap-2 disabled:opacity-50"
+                  className="w-full py-4 mt-2 rounded-xl bg-slate-950 dark:bg-white text-white dark:text-slate-950 font-heading font-bold text-sm tracking-wide shadow-xl hover:opacity-95 transition-all flex items-center justify-center gap-2 disabled:opacity-50 active:scale-[0.99]"
                 >
                   {isSubmitting ? (
                     <span>{t.submitting}</span>
                   ) : (
                     <>
-                      <Search className="w-3.5 h-3.5" />
+                      <Search className="w-4 h-4" />
                       <span>{t.submitBtn}</span>
                     </>
                   )}
                 </button>
 
                 {status === 'success' && (
-                  <div className="p-2.5 rounded-lg border border-emerald-300 dark:border-emerald-800 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 text-xs flex items-center gap-2">
-                    <CheckCircle2 className="w-3.5 h-3.5 shrink-0" />
+                  <div className="p-3.5 rounded-xl border border-emerald-400/50 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-900 dark:text-emerald-200 text-xs sm:text-sm flex items-center gap-2.5 animate-fadeIn">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
                     <span>{t.successMsg}</span>
                   </div>
                 )}
 
                 {status === 'error' && (
-                  <div className="p-2.5 rounded-lg border border-rose-300 dark:border-rose-800 bg-rose-50 dark:bg-rose-950/40 text-rose-800 dark:text-rose-300 text-xs flex items-center gap-2">
-                    <AlertCircle className="w-3.5 h-3.5 shrink-0" />
+                  <div className="p-3.5 rounded-xl border border-rose-400/50 bg-rose-50 dark:bg-rose-950/40 text-rose-900 dark:text-rose-200 text-xs sm:text-sm flex items-center gap-2.5 animate-fadeIn">
+                    <AlertCircle className="w-4 h-4 text-rose-500 shrink-0" />
                     <span>{t.errorMsg}</span>
                   </div>
                 )}
