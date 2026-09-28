@@ -39,29 +39,26 @@ export default function Hero({ lang, onOpenContact }) {
   return (
     <section className="relative pt-36 pb-24 md:pt-48 md:pb-32 overflow-hidden ambient-glow-hero">
       
-      {/* Background Video & Interactive WebGL Shader Canvas Layer */}
+      {/* Background Video & Interactive WebGL Heatmap Shader Layer */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none select-none z-0">
-        {/* Thematic Cinematic Surreal Fluid Video Loop */}
+        {/* Thematic Cinematic Surreal Video Loop */}
         <video
           autoPlay
           loop
           muted
           playsInline
           poster="/videos/hero-poster.jpg"
-          className="w-full h-full object-cover opacity-60 dark:opacity-50 transition-opacity duration-1000 scale-105 filter brightness-90 contrast-105"
+          className="w-full h-full object-cover opacity-85 dark:opacity-80 transition-opacity duration-1000 scale-105"
         >
           <source src="/videos/hero-bg.mp4" type="video/mp4" />
         </video>
 
-        {/* Dynamic Darkening Tint for 100% Readability */}
-        <div className="absolute inset-0 bg-black/25 dark:bg-black/55 backdrop-brightness-95"></div>
-
-        {/* Interactive WebGL GPU Fragment Shader Effect */}
+        {/* Interactive Web Traffic Heatmap Shader (Transparent everywhere except active heat spots) */}
         <HeroCanvas />
 
-        {/* Dual Mode Atmospheric Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-white/85 via-white/60 to-[#fbfbfd] dark:from-[#06070a]/90 dark:via-[#06070a]/75 dark:to-[#06070a]"></div>
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_75%_55%_at_50%_35%,rgba(0,0,0,0)_0%,var(--tw-gradient-stops))] from-transparent to-[#fbfbfd] dark:to-[#06070a]"></div>
+        {/* Atmospheric Edge Blend (Leaves Center Clean & Video Vividly Visible) */}
+        <div className="absolute inset-0 bg-gradient-to-b from-white/70 via-transparent to-[#fbfbfd] dark:from-[#06070a]/75 dark:via-transparent dark:to-[#06070a]"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_95%_75%_at_50%_40%,rgba(0,0,0,0)_0%,rgba(0,0,0,0.15)_65%,rgba(251,251,253,0.85)_100%)] dark:bg-[radial-gradient(ellipse_95%_75%_at_50%_40%,rgba(0,0,0,0)_0%,rgba(0,0,0,0.15)_65%,rgba(6,7,10,0.85)_100%)]"></div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
