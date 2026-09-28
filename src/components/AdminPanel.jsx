@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { 
   X, Lock, ShieldCheck, Users, Briefcase, Settings, 
   Plus, Trash2, Edit3, Save, ExternalLink, Download, 
@@ -185,8 +186,6 @@ export default function AdminPanel({ isOpen, onClose, lang = 'ru' }) {
     document.body.removeChild(link);
   };
 
-  if (!isOpen) return null;
-
   const statuses = [
     { id: 'new', label: 'Новая', color: 'bg-blue-500/15 text-blue-400 border-blue-500/30' },
     { id: 'in_progress', label: 'В обработке', color: 'bg-amber-500/15 text-amber-400 border-amber-500/30' },
@@ -205,10 +204,18 @@ export default function AdminPanel({ isOpen, onClose, lang = 'ru' }) {
   });
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex flex-col overflow-hidden animate-fadeIn">
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.25 }}
+          className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex flex-col overflow-hidden"
+        >
       
-      {/* Top Navbar */}
-      <div className="h-16 px-6 border-b border-slate-800 bg-slate-950 flex items-center justify-between shrink-0">
+          {/* Top Navbar */}
+          <div className="h-16 px-6 border-b border-slate-800 bg-slate-950 flex items-center justify-between shrink-0">
         <div className="flex items-center gap-4">
           <button
             onClick={onClose}
@@ -892,8 +899,10 @@ export default function AdminPanel({ isOpen, onClose, lang = 'ru' }) {
           </div>
         )}
 
-      </div>
+        </div>
 
-    </div>
+      </motion.div>
+    )}
+  </AnimatePresence>
   );
 }

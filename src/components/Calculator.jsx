@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { CheckCircle2, ArrowRight, ShieldCheck, Zap } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { TRANSLATIONS } from '../data/translations';
 
 export default function Calculator({ 
@@ -145,19 +146,19 @@ export default function Calculator({
           </p>
         </div>
 
-        {/* Minimalist 2-Column Cockpit */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 sm:gap-16 items-start">
+        {/* Minimalist 2-Column Cockpit with Healthy Breathing Room */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 sm:gap-16 items-start">
           
           {/* Left Controls (7 cols) */}
-          <div className="lg:col-span-7 space-y-10">
+          <div className="lg:col-span-7 space-y-12">
             
             {/* 1. Services Chips */}
             <div>
-              <div className="text-xs font-mono uppercase tracking-wider text-slate-500 mb-4">
+              <div className="text-xs font-mono uppercase tracking-wider text-slate-500 mb-5">
                 01 / {lang === 'en' ? 'Select Project Disciplines' : (lang === 'kz' ? 'Бағыттарды таңдаңыз' : 'Выберите направления')}
               </div>
 
-              <div className="flex flex-wrap gap-2.5">
+              <div className="flex flex-wrap gap-3">
                 {servicesList.map((s) => {
                   const isChecked = selectedServices.includes(s.id);
                   const title = s.title?.[lang] || s.title?.ru || s.id;
@@ -165,21 +166,22 @@ export default function Calculator({
                   const curSymbol = currency === 'rub' ? '₽' : currency === 'usd' ? '$' : '₸';
 
                   return (
-                    <button
+                    <motion.button
+                      whileTap={{ scale: 0.96 }}
                       key={s.id}
                       type="button"
                       onClick={() => onToggleService(s.id)}
-                      className={`px-4 sm:px-5 py-3 rounded-full text-xs sm:text-sm font-heading font-semibold transition-all flex items-center gap-2.5 ${
+                      className={`px-5 py-3.5 rounded-full text-xs sm:text-sm font-heading font-semibold transition-all flex items-center justify-between gap-4 ${
                         isChecked
                           ? 'bg-slate-950 dark:bg-white text-white dark:text-slate-950 shadow-md scale-[1.02]'
                           : 'border border-black/[0.08] dark:border-white/10 bg-white/40 dark:bg-white/[0.02] text-slate-700 dark:text-slate-300 hover:border-slate-400'
                       }`}
                     >
-                      <span>{title}</span>
-                      <span className={`text-[11px] font-mono opacity-60 ${isChecked ? 'text-white dark:text-slate-950' : ''}`}>
+                      <span className="truncate">{title}</span>
+                      <span className={`text-[11px] font-mono shrink-0 ${isChecked ? 'text-white/80 dark:text-slate-900/80' : 'text-slate-400'}`}>
                         +{price} {curSymbol}
                       </span>
-                    </button>
+                    </motion.button>
                   );
                 })}
               </div>
@@ -187,77 +189,80 @@ export default function Calculator({
 
             {/* 2. Scale Selector */}
             <div>
-              <div className="text-xs font-mono uppercase tracking-wider text-slate-500 mb-4">
+              <div className="text-xs font-mono uppercase tracking-wider text-slate-500 mb-5">
                 02 / {lang === 'en' ? 'Company Scale' : (lang === 'kz' ? 'Жоба ауқымы' : 'Масштаб проекта')}
               </div>
 
-              <div className="grid grid-cols-3 gap-3">
+              <div className="grid grid-cols-3 gap-3.5">
                 {[
                   { id: 'start', label: 'Startup' },
                   { id: 'business', label: 'Standard' },
                   { id: 'enterprise', label: 'Enterprise' }
                 ].map((item) => (
-                  <button
+                  <motion.button
+                    whileTap={{ scale: 0.97 }}
                     key={item.id}
                     type="button"
                     onClick={() => setScale(item.id)}
-                    className={`py-3.5 px-4 rounded-2xl text-xs sm:text-sm font-heading font-bold transition-all text-center ${
+                    className={`py-4 px-4 rounded-2xl text-xs sm:text-sm font-heading font-bold transition-all text-center ${
                       scale === item.id
                         ? 'bg-slate-950 dark:bg-white text-white dark:text-slate-950 shadow-md'
                         : 'border border-black/[0.08] dark:border-white/10 bg-white/40 dark:bg-white/[0.02] text-slate-600 dark:text-slate-400 hover:border-slate-400'
                     }`}
                   >
                     {item.label}
-                  </button>
+                  </motion.button>
                 ))}
               </div>
             </div>
 
             {/* 3. Speed Toggle */}
             <div>
-              <div className="text-xs font-mono uppercase tracking-wider text-slate-500 mb-4">
+              <div className="text-xs font-mono uppercase tracking-wider text-slate-500 mb-5">
                 03 / {lang === 'en' ? 'Launch Velocity' : (lang === 'kz' ? 'Орындау қарқыны' : 'Скорость релиза')}
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
-                <button
+              <div className="grid grid-cols-2 gap-3.5">
+                <motion.button
+                  whileTap={{ scale: 0.97 }}
                   type="button"
                   onClick={() => setUrgency('standard')}
-                  className={`py-3.5 px-4 rounded-2xl text-xs sm:text-sm font-heading font-semibold transition-all ${
+                  className={`py-4 px-4 rounded-2xl text-xs sm:text-sm font-heading font-semibold transition-all ${
                     urgency === 'standard'
                       ? 'bg-slate-950 dark:bg-white text-white dark:text-slate-950 shadow-md'
                       : 'border border-black/[0.08] dark:border-white/10 bg-white/40 dark:bg-white/[0.02] text-slate-600 dark:text-slate-400'
                   }`}
                 >
                   {t.standardSpeed}
-                </button>
+                </motion.button>
 
-                <button
+                <motion.button
+                  whileTap={{ scale: 0.97 }}
                   type="button"
                   onClick={() => setUrgency('express')}
-                  className={`py-3.5 px-4 rounded-2xl text-xs sm:text-sm font-heading font-semibold transition-all flex items-center justify-center gap-1.5 ${
+                  className={`py-4 px-4 rounded-2xl text-xs sm:text-sm font-heading font-semibold transition-all flex items-center justify-center gap-2 ${
                     urgency === 'express'
                       ? 'bg-slate-950 dark:bg-white text-white dark:text-slate-950 shadow-md'
                       : 'border border-black/[0.08] dark:border-white/10 bg-white/40 dark:bg-white/[0.02] text-slate-600 dark:text-slate-400'
                   }`}
                 >
-                  <Zap className="w-3.5 h-3.5 text-amber-500" />
+                  <Zap className="w-4 h-4 text-amber-500" />
                   <span>{t.expressSpeed}</span>
-                </button>
+                </motion.button>
               </div>
             </div>
 
           </div>
 
           {/* Right Live Estimate Output (5 cols) */}
-          <div className="lg:col-span-5 p-8 sm:p-12 rounded-3xl bg-slate-950 text-white relative overflow-hidden shadow-2xl border border-white/10 space-y-6">
+          <div className="lg:col-span-5 p-8 sm:p-12 rounded-3xl bg-slate-950 text-white relative overflow-hidden shadow-2xl border border-white/10 space-y-8">
             
             <div className="flex items-center justify-between">
               <span className="text-xs font-mono uppercase tracking-wider text-slate-400">
                 {t.summaryTitle}
               </span>
               {bundleDiscount > 0 && (
-                <span className="px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                <span className="px-3 py-1 rounded-full text-xs font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
                   -{bundleDiscount * 100}% Bundle
                 </span>
               )}
@@ -268,26 +273,28 @@ export default function Calculator({
               <div className="text-4xl sm:text-6xl font-heading font-black text-white tracking-tighter">
                 {formatCurrency(calculatedPrice)}
               </div>
-              <div className="text-xs sm:text-sm font-mono text-slate-400 mt-2">
+              <div className="text-xs sm:text-sm font-mono text-slate-400 mt-3">
                 {t.timelineLabel} ~{estimatedDays} {t.daysUnit} · {scaleNames[scale]}
               </div>
             </div>
 
-            {/* Fast 1-Click Inquiry */}
-            <form onSubmit={handleSubmitEstimate} className="space-y-3 pt-4 border-t border-white/10">
+            {/* Fast 1-Click Inquiry with Healthy Margins */}
+            <form onSubmit={handleSubmitEstimate} className="space-y-4 pt-6 border-t border-white/10">
               <input
                 type="text"
                 required
                 placeholder={lang === 'en' ? 'Telegram @username or WhatsApp' : (lang === 'kz' ? 'Telegram немесе телефон *' : 'Telegram или телефон *')}
                 value={clientContact}
                 onChange={(e) => setClientContact(e.target.value)}
-                className="w-full px-5 py-3.5 rounded-xl bg-white/10 text-white placeholder-slate-400 text-sm focus:outline-none border border-white/10"
+                className="w-full px-5 py-4 rounded-2xl bg-white/10 text-white placeholder-slate-400 text-sm focus:outline-none border border-white/10"
               />
 
-              <button
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full py-4 rounded-xl bg-white text-slate-950 font-heading font-bold text-xs sm:text-sm hover:bg-slate-200 transition-all flex items-center justify-center gap-2 active:scale-95 disabled:opacity-50"
+                className="w-full py-4 rounded-2xl bg-white text-slate-950 font-heading font-bold text-xs sm:text-sm hover:bg-slate-200 transition-all flex items-center justify-center gap-2 disabled:opacity-50 shadow-xl"
               >
                 {isSubmitting ? (
                   <span>...</span>
@@ -297,24 +304,24 @@ export default function Calculator({
                     <ArrowRight className="w-4 h-4" />
                   </>
                 )}
-              </button>
+              </motion.button>
 
               {submitStatus === 'success' && (
-                <div className="p-3 rounded-xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-200 text-xs flex items-center gap-2">
+                <div className="p-3.5 rounded-2xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-200 text-xs flex items-center gap-2">
                   <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
                   <span>{t.successMsg}</span>
                 </div>
               )}
 
               {submitStatus === 'error' && (
-                <div className="p-3 rounded-xl bg-rose-500/20 border border-rose-500/40 text-rose-200 text-xs flex items-center gap-2">
+                <div className="p-3.5 rounded-2xl bg-rose-500/20 border border-rose-500/40 text-rose-200 text-xs flex items-center gap-2">
                   <span>{t.errorMsg}</span>
                 </div>
               )}
             </form>
 
-            <div className="flex items-center gap-2 text-xs font-mono text-slate-500 pt-2">
-              <ShieldCheck className="w-4 h-4 text-indigo-400" />
+            <div className="flex items-center gap-2.5 text-xs font-mono text-slate-500 pt-2">
+              <ShieldCheck className="w-4 h-4 text-indigo-400 shrink-0" />
               <span>{t.privacyNote}</span>
             </div>
 

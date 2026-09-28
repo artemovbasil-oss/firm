@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 import { Search, CheckCircle2, AlertCircle, ArrowRight, ShieldCheck, Zap, Lock } from 'lucide-react';
 import { TRANSLATIONS } from '../data/translations';
 
@@ -100,10 +101,12 @@ export default function ExpressAudit({ lang, onSuccessLead }) {
                   className="flex-1 px-5 py-3.5 rounded-xl sm:rounded-full bg-transparent text-sm text-white placeholder-slate-400 focus:outline-none border-t sm:border-t-0 sm:border-l border-white/10"
                 />
 
-                <button
+                <motion.button
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
                   type="submit"
                   disabled={isSubmitting}
-                  className="px-8 py-3.5 rounded-xl sm:rounded-full bg-white text-slate-950 font-heading font-bold text-xs sm:text-sm hover:bg-slate-200 transition-all flex items-center justify-center gap-2 shrink-0 active:scale-95 disabled:opacity-50"
+                  className="px-8 py-3.5 rounded-xl sm:rounded-full bg-white text-slate-950 font-heading font-bold text-xs sm:text-sm hover:bg-slate-200 transition-all flex items-center justify-center gap-2 shrink-0 disabled:opacity-50"
                 >
                   {isSubmitting ? (
                     <span>...</span>
@@ -113,7 +116,7 @@ export default function ExpressAudit({ lang, onSuccessLead }) {
                       <ArrowRight className="w-4 h-4" />
                     </>
                   )}
-                </button>
+                </motion.button>
               </div>
 
               {status === 'success' && (

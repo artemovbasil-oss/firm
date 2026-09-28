@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { ArrowUpRight, Plus, Minus, ArrowRight, Check } from 'lucide-react';
+import { ArrowUpRight, ArrowRight } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { TRANSLATIONS } from '../data/translations';
 
 export default function Services({ 
@@ -56,7 +57,7 @@ export default function Services({
           </p>
         </div>
 
-        {/* Editorial Interactive Studio Index */}
+        {/* Editorial Interactive Studio Index with Framer Motion Accordion */}
         <div className="divide-y divide-black/[0.08] dark:divide-white/[0.08] border-y border-black/[0.08] dark:border-white/[0.08]">
           {servicesList.map((service, index) => {
             const isSelected = activeService === service.id;
@@ -77,73 +78,90 @@ export default function Services({
                 <button
                   type="button"
                   onClick={() => setActiveService(isSelected ? null : service.id)}
-                  className="w-full py-8 sm:py-10 text-left flex flex-col md:flex-row md:items-center justify-between gap-4 sm:gap-6 focus:outline-none group"
+                  className="w-full py-8 sm:py-10 text-left flex flex-col md:flex-row md:items-center justify-between gap-4 sm:gap-6 focus:outline-none group px-2 sm:px-4"
                 >
-                  <div className="flex items-start sm:items-center gap-6 sm:gap-10 min-w-0">
-                    <span className="font-mono text-sm sm:text-base font-bold text-slate-400 dark:text-slate-600 group-hover:text-slate-900 dark:group-hover:text-white transition-colors">
+                  <div className="flex items-center gap-6 sm:gap-10 min-w-0 flex-1">
+                    <span className="font-mono text-sm sm:text-base font-bold text-slate-400 dark:text-slate-600 group-hover:text-slate-950 dark:group-hover:text-white transition-colors shrink-0">
                       {ghostNum}
                     </span>
 
-                    <h3 className="text-2xl sm:text-4xl md:text-5xl font-heading font-extrabold tracking-tight text-slate-950 dark:text-white group-hover:translate-x-2 transition-transform duration-200">
+                    <h3 className="text-2xl sm:text-4xl md:text-5xl font-heading font-extrabold tracking-tight text-slate-950 dark:text-white group-hover:translate-x-2 transition-transform duration-200 truncate sm:whitespace-normal">
                       {title}
                     </h3>
                   </div>
 
-                  <div className="flex items-center justify-between md:justify-end gap-6 sm:gap-10 shrink-0 pl-12 md:pl-0">
+                  <div className="flex items-center justify-between md:justify-end gap-6 sm:gap-10 shrink-0 pl-10 md:pl-0">
                     <span className="text-xs sm:text-sm font-mono text-slate-500 uppercase tracking-wider hidden lg:inline">
                       [{category}]
                     </span>
 
-                    <span className="text-sm sm:text-base font-mono font-semibold text-slate-950 dark:text-white">
+                    <span className="text-sm sm:text-base font-mono font-bold text-slate-950 dark:text-white whitespace-nowrap">
                       {formatPrice(service.basePrice)}
                     </span>
 
-                    <div className={`w-8 h-8 rounded-full border border-black/[0.1] dark:border-white/15 flex items-center justify-center text-slate-900 dark:text-white transition-transform duration-200 ${isSelected ? 'rotate-45 bg-slate-950 dark:bg-white text-white dark:text-slate-950' : 'group-hover:scale-110'}`}>
+                    <motion.div 
+                      animate={{ rotate: isSelected ? 45 : 0 }}
+                      transition={{ duration: 0.2 }}
+                      className={`w-8 h-8 rounded-full border border-black/[0.1] dark:border-white/15 flex items-center justify-center text-slate-900 dark:text-white shrink-0 ${isSelected ? 'bg-slate-950 dark:bg-white text-white dark:text-slate-950' : 'group-hover:scale-110'}`}
+                    >
                       <ArrowUpRight className="w-4 h-4" />
-                    </div>
+                    </motion.div>
                   </div>
                 </button>
 
-                {/* Expanded Details Panel */}
-                {isSelected && (
-                  <div className="pb-10 pl-12 md:pl-16 pr-4 sm:pr-8 animate-fadeIn">
-                    <div className="max-w-4xl space-y-6">
-                      <p className="text-base sm:text-xl text-slate-700 dark:text-slate-300 leading-relaxed font-light">
-                        {tagline}
-                      </p>
+                {/* Animated Height Expansion via Framer Motion */}
+                <AnimatePresence initial={false}>
+                  {isSelected && (
+                    <motion.div
+                      key="content"
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                      className="overflow-hidden"
+                    >
+                      <div className="pb-10 pl-10 sm:pl-16 pr-4 sm:pr-8 space-y-6 pt-2">
+                        <p className="text-base sm:text-xl text-slate-700 dark:text-slate-300 leading-relaxed font-light max-w-4xl">
+                          {tagline}
+                        </p>
 
-                      {/* Clean Deliverable Tags (No wall of text!) */}
-                      <div className="flex flex-wrap gap-2 pt-2">
-                        {deliverables.slice(0, 4).map((d, dIdx) => (
-                          <span 
-                            key={dIdx}
-                            className="px-3 py-1.5 rounded-full text-xs font-mono bg-white dark:bg-white/[0.05] border border-black/[0.08] dark:border-white/10 text-slate-700 dark:text-slate-300"
+                        {/* Clean Deliverable Tags with Healthy Gaps */}
+                        <div className="flex flex-wrap gap-2.5 pt-2">
+                          {deliverables.slice(0, 4).map((d, dIdx) => (
+                            <span 
+                              key={dIdx}
+                              className="px-3.5 py-1.5 rounded-full text-xs font-mono bg-white dark:bg-white/[0.05] border border-black/[0.08] dark:border-white/10 text-slate-700 dark:text-slate-300 shadow-sm"
+                            >
+                              {d}
+                            </span>
+                          ))}
+                        </div>
+
+                        {/* Action buttons with proper margins */}
+                        <div className="flex flex-wrap items-center gap-4 pt-4">
+                          <motion.button
+                            whileHover={{ scale: 1.03 }}
+                            whileTap={{ scale: 0.97 }}
+                            onClick={() => onOrderService(title)}
+                            className="px-6 py-3.5 rounded-full bg-slate-950 dark:bg-white text-white dark:text-slate-950 text-xs sm:text-sm font-heading font-bold transition-all flex items-center gap-2 shadow-lg"
                           >
-                            {d}
-                          </span>
-                        ))}
-                      </div>
+                            <span>{t.orderBtn}</span>
+                            <ArrowRight className="w-3.5 h-3.5" />
+                          </motion.button>
 
-                      {/* Action buttons */}
-                      <div className="flex flex-wrap items-center gap-4 pt-4">
-                        <button
-                          onClick={() => onOrderService(title)}
-                          className="px-6 py-3 rounded-full bg-slate-950 dark:bg-white text-white dark:text-slate-950 text-xs sm:text-sm font-heading font-bold hover:opacity-90 transition-all flex items-center gap-2 active:scale-95"
-                        >
-                          <span>{t.orderBtn}</span>
-                          <ArrowRight className="w-3.5 h-3.5" />
-                        </button>
-
-                        <button
-                          onClick={() => onSelectForCalculator(service.id)}
-                          className="px-6 py-3 rounded-full border border-black/[0.1] dark:border-white/15 text-slate-800 dark:text-slate-200 hover:text-slate-950 dark:hover:text-white text-xs sm:text-sm font-heading font-medium transition-all"
-                        >
-                          {t.calcBtn}
-                        </button>
+                          <motion.button
+                            whileHover={{ scale: 1.03 }}
+                            whileTap={{ scale: 0.97 }}
+                            onClick={() => onSelectForCalculator(service.id)}
+                            className="px-6 py-3.5 rounded-full border border-black/[0.1] dark:border-white/15 text-slate-800 dark:text-slate-200 hover:text-slate-950 dark:hover:text-white text-xs sm:text-sm font-heading font-medium transition-all"
+                          >
+                            {t.calcBtn}
+                          </motion.button>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                )}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
             );
           })}

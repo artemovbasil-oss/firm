@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { FAQ_ITEMS } from '../data/agencyData';
 import { TRANSLATIONS } from '../data/translations';
 
@@ -25,7 +26,7 @@ export default function Faq({ lang }) {
           </h2>
         </div>
 
-        {/* Accordion list (Minimalist Clean Luxury) */}
+        {/* Accordion list with Framer Motion */}
         <div className="divide-y divide-black/[0.08] dark:divide-white/[0.08] border-y border-black/[0.08] dark:border-white/[0.08]">
           {FAQ_ITEMS.map((item, idx) => {
             const isOpen = openIndex === idx;
@@ -37,21 +38,36 @@ export default function Faq({ lang }) {
                 <button
                   type="button"
                   onClick={() => toggle(idx)}
-                  className="w-full py-7 sm:py-8 text-left flex items-center justify-between gap-6 focus:outline-none group"
+                  className="w-full py-8 sm:py-9 text-left flex items-center justify-between gap-6 focus:outline-none group px-2 sm:px-4"
                 >
-                  <span className="font-heading font-bold text-lg sm:text-2xl text-slate-950 dark:text-white group-hover:translate-x-1 transition-transform">
+                  <span className="font-heading font-bold text-lg sm:text-2xl text-slate-950 dark:text-white group-hover:translate-x-1.5 transition-transform duration-200">
                     {question}
                   </span>
-                  <div className={`w-8 h-8 rounded-full border border-black/[0.1] dark:border-white/10 flex items-center justify-center shrink-0 transition-transform ${isOpen ? 'rotate-180 bg-slate-950 dark:bg-white text-white dark:text-slate-950' : ''}`}>
+                  <motion.div 
+                    animate={{ rotate: isOpen ? 180 : 0 }}
+                    transition={{ duration: 0.25 }}
+                    className={`w-9 h-9 rounded-full border border-black/[0.1] dark:border-white/10 flex items-center justify-center shrink-0 ${isOpen ? 'bg-slate-950 dark:bg-white text-white dark:text-slate-950' : 'text-slate-600 dark:text-slate-400'}`}
+                  >
                     <ChevronDown className="w-4 h-4" />
-                  </div>
+                  </motion.div>
                 </button>
 
-                {isOpen && (
-                  <div className="pb-8 pr-8 text-sm sm:text-base text-slate-600 dark:text-slate-400 leading-relaxed font-light animate-fadeIn">
-                    {answer}
-                  </div>
-                )}
+                <AnimatePresence initial={false}>
+                  {isOpen && (
+                    <motion.div
+                      key="faq-content"
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                      className="overflow-hidden"
+                    >
+                      <div className="pb-8 pt-1 pl-2 sm:pl-4 pr-6 sm:pr-12 text-sm sm:text-base text-slate-600 dark:text-slate-400 leading-relaxed font-light max-w-3xl">
+                        {answer}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
             );
           })}

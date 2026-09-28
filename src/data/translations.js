@@ -16,13 +16,13 @@ export const TRANSLATIONS = {
       currency: 'Валюта'
     },
     hero: {
-      badge: 'FIRM Digital Agency · 2026',
-      badgeDesc: 'Сайттар · Брендинг · Бағдарламалық қамтамасыз ету · Қаптама',
-      titleStart: 'Бизнесіңізді өсіретін',
-      titleHighlight: 'сандық өнімдер мен стратегия',
-      desc: 'Конверсиясы жоғары сайттар, айдентика, презентациялар және жеке бағдарламалық қамтамасыз ету. Бизнесті нөлден орап, SEO мен SMM арқылы сатылымды еселейміз.',
-      ctaCalc: 'Құнын есептеу',
-      ctaAudit: 'Тегін экспресс-аудит',
+      badge: 'FIRM Studio · 2026',
+      badgeDesc: 'Сайттар · Брендинг · Бағдарламалық қамтамасыз ету',
+      titleStart: 'Сандық крафт.',
+      titleHighlight: 'Нақты өсім.',
+      desc: 'Нарықты бағындыратын жоғары жылдамдықты сайттар, айдентика және жеке бағдарламалық өнімдер.',
+      ctaCalc: 'Сметаны есептеу',
+      ctaAudit: 'Тегін аудит алу',
       stats: {
         projects: '150+ жоба',
         projectsDesc: 'Іске қосылған сәтті өнімдер',
@@ -190,13 +190,13 @@ export const TRANSLATIONS = {
       currency: 'Валюта'
     },
     hero: {
-      badge: 'FIRM Digital Agency · 2026',
-      badgeDesc: 'Сайты · Брендинг · ПО · Упаковка',
-      titleStart: 'Создаем цифровые продукты и',
-      titleHighlight: 'упаковку бизнеса с измеримым ROI',
-      desc: 'Проектируем технологичные сайты, продающие лендинги, брендинг, инвест-презентации и заказное ПО. Обеспечиваем органический рост через аудит, SEO и SMM.',
-      ctaCalc: 'Рассчитать стоимость',
-      ctaAudit: 'Бесплатный экспресс-аудит',
+      badge: 'FIRM Studio · 2026',
+      badgeDesc: 'Сайты · Брендинг · Заказное ПО',
+      titleStart: 'Цифровой крафт.',
+      titleHighlight: 'Взрывной рост.',
+      desc: 'Создаем высокотехнологичные сайты, брендинг и заказное ПО, которые трансформируют внимание в продажи.',
+      ctaCalc: 'Рассчитать смету',
+      ctaAudit: 'Получить аудит',
       stats: {
         projects: '150+ проектов',
         projectsDesc: 'Успешно запущено в прод',
@@ -364,13 +364,13 @@ export const TRANSLATIONS = {
       currency: 'Currency'
     },
     hero: {
-      badge: 'FIRM Digital Agency · 2026',
-      badgeDesc: 'Web · Branding · Software · Packaging',
-      titleStart: 'Engineering digital products &',
-      titleHighlight: 'business packaging with measurable ROI',
-      desc: 'We craft high-converting web platforms, identity, software, investor pitch decks, and end-to-end business packaging. Driving organic growth via CRO audits, SEO, and social media.',
-      ctaCalc: 'Calculate Project Cost',
-      ctaAudit: 'Free Express Audit',
+      badge: 'FIRM Studio · 2026',
+      badgeDesc: 'Web · Branding · Custom Software',
+      titleStart: 'Digital Craft.',
+      titleHighlight: 'Real Impact.',
+      desc: 'High-conversion platforms, iconic identity, and scalable software engineered to dominate industries.',
+      ctaCalc: 'Estimate Scope',
+      ctaAudit: 'Request Teardown',
       stats: {
         projects: '150+ Projects',
         projectsDesc: 'Successfully deployed live',

@@ -1,5 +1,6 @@
 import React from 'react';
 import { ArrowUpRight, ArrowDown } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { TRANSLATIONS } from '../data/translations';
 
 export default function Hero({ lang, onOpenContact }) {
@@ -39,113 +40,122 @@ export default function Hero({ lang, onOpenContact }) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Live Studio Status */}
-        <div className="flex justify-center mb-8 sm:mb-12">
-          <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full border border-black/[0.06] dark:border-white/10 bg-white/70 dark:bg-white/[0.03] backdrop-blur-2xl text-xs font-mono">
+        <motion.div 
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="flex justify-center mb-8 sm:mb-12"
+        >
+          <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full border border-black/[0.06] dark:border-white/10 bg-white/70 dark:bg-white/[0.03] backdrop-blur-2xl text-xs font-mono shadow-sm">
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
             </span>
             <span className="font-semibold text-slate-900 dark:text-white uppercase tracking-wider">
-              {lang === 'en' ? 'FIRM Studio · Available for Q3 / Q4' : (lang === 'kz' ? 'FIRM Studio · Жаңа жобаларға ашық' : 'FIRM Studio · Доступны для новых проектов')}
+              {t.badge}
             </span>
+            <span className="text-slate-300 dark:text-slate-700 hidden sm:inline">|</span>
+            <span className="text-slate-500 dark:text-slate-400 hidden sm:inline">{t.badgeDesc}</span>
           </div>
-        </div>
+        </motion.div>
 
-        {/* Monumental Headline */}
-        <div className="text-center max-w-6xl mx-auto">
-          <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-heading font-black tracking-tighter text-slate-950 dark:text-white leading-[0.96] sm:leading-[0.92] uppercase">
-            {lang === 'en' ? (
-              <>
-                Digital Craft <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-slate-900 via-slate-600 to-slate-900 dark:from-white dark:via-slate-400 dark:to-white">
-                  That Dominates.
-                </span>
-              </>
-            ) : lang === 'kz' ? (
-              <>
-                Нарықты бағындыратын <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-slate-900 via-slate-600 to-slate-900 dark:from-white dark:via-slate-400 dark:to-white">
-                  цифрлық шешімдер.
-                </span>
-              </>
-            ) : (
-              <>
-                Создаем сайты и брендинг, <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-slate-900 via-slate-600 to-slate-900 dark:from-white dark:via-slate-400 dark:to-white">
-                  которые продают дорого.
-                </span>
-              </>
-            )}
-          </h1>
+        {/* Monumental Ultra-Short Headline */}
+        <div className="text-center max-w-5xl mx-auto">
+          <motion.h1 
+            initial={{ opacity: 0, y: 25 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-heading font-black tracking-tighter text-slate-950 dark:text-white leading-[0.96] sm:leading-[0.92] uppercase"
+          >
+            {t.titleStart} <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-slate-900 via-slate-600 to-slate-900 dark:from-white dark:via-slate-400 dark:to-white">
+              {t.titleHighlight}
+            </span>
+          </motion.h1>
 
           {/* Crisp 1-sentence manifesto */}
-          <p className="mt-8 sm:mt-10 text-base sm:text-xl md:text-2xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto leading-relaxed font-normal">
-            {lang === 'en' 
-              ? 'Websites, brand identity, pitch decks, and bespoke software engineered to turn attention into market dominance.'
-              : lang === 'kz'
-              ? 'Конверсиясы жоғары сайттар, сатушы лендингтер, айдентика, презентациялар және жеке бағдарламалық жасақтама.'
-              : 'Проектируем технологичные платформы, брендинг, инвестиционные презентации и заказное ПО с доказанным бизнес-результатом.'}
-          </p>
+          <motion.p 
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+            className="mt-8 sm:mt-10 text-base sm:text-xl md:text-2xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto leading-relaxed font-normal"
+          >
+            {t.desc}
+          </motion.p>
 
           {/* 2 Clean Magnetic Actions */}
-          <div className="mt-10 sm:mt-12 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a
+          <motion.div 
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
+            className="mt-10 sm:mt-12 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6"
+          >
+            <motion.a
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
               href="#calculator"
-              className="w-full sm:w-auto px-9 py-4 rounded-full bg-slate-950 dark:bg-white text-white dark:text-slate-950 font-heading font-bold text-sm sm:text-base hover:opacity-90 transition-all flex items-center justify-center gap-2 shadow-2xl active:scale-95"
+              className="w-full sm:w-auto px-9 py-4 rounded-full bg-slate-950 dark:bg-white text-white dark:text-slate-950 font-heading font-bold text-sm sm:text-base hover:opacity-90 transition-all flex items-center justify-center gap-2 shadow-2xl"
             >
               <span>{t.ctaCalc}</span>
               <ArrowUpRight className="w-4 h-4" />
-            </a>
+            </motion.a>
 
-            <a
+            <motion.a
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
               href="#cases"
               className="w-full sm:w-auto px-8 py-4 rounded-full border border-black/[0.08] dark:border-white/10 bg-white/50 dark:bg-white/[0.02] backdrop-blur-xl text-slate-800 dark:text-slate-200 hover:text-slate-950 dark:hover:text-white font-heading font-semibold text-sm sm:text-base transition-all flex items-center justify-center gap-2"
             >
               <span>{lang === 'en' ? 'Selected Cases' : (lang === 'kz' ? 'Таңдаулы кейстер' : 'Смотреть кейсы')}</span>
               <ArrowDown className="w-4 h-4" />
-            </a>
-          </div>
+            </motion.a>
+          </motion.div>
 
         </div>
 
         {/* Minimalist Pure Counter Strip (Zero Clutter, Pure Typography) */}
-        <div className="mt-24 sm:mt-32 pt-12 border-t border-black/[0.06] dark:border-white/[0.06] grid grid-cols-2 md:grid-cols-4 gap-8 sm:gap-12 text-center md:text-left">
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.35 }}
+          className="mt-24 sm:mt-32 pt-12 border-t border-black/[0.06] dark:border-white/[0.06] grid grid-cols-2 md:grid-cols-4 gap-8 sm:gap-12 text-center md:text-left"
+        >
           <div>
             <div className="text-3xl sm:text-5xl font-heading font-black tracking-tight text-slate-950 dark:text-white">
-              150+
+              {t.stats.projects}
             </div>
             <div className="text-xs sm:text-sm font-mono text-slate-500 dark:text-slate-400 mt-1 uppercase tracking-wider">
-              {lang === 'en' ? 'Digital Launches' : (lang === 'kz' ? 'Іске қосылған жоба' : 'Запущенных проектов')}
+              {t.stats.projectsDesc}
             </div>
           </div>
 
           <div>
             <div className="text-3xl sm:text-5xl font-heading font-black tracking-tight text-slate-950 dark:text-white">
-              3.4x
+              {t.stats.conversion}
             </div>
             <div className="text-xs sm:text-sm font-mono text-slate-500 dark:text-slate-400 mt-1 uppercase tracking-wider">
-              {lang === 'en' ? 'Average Conversion Surge' : (lang === 'kz' ? 'Орташа конверсия өсімі' : 'Средний рост конверсии')}
+              {t.stats.conversionDesc}
             </div>
           </div>
 
           <div>
             <div className="text-3xl sm:text-5xl font-heading font-black tracking-tight text-slate-950 dark:text-white">
-              $18M+
+              {t.stats.capital}
             </div>
             <div className="text-xs sm:text-sm font-mono text-slate-500 dark:text-slate-400 mt-1 uppercase tracking-wider">
-              {lang === 'en' ? 'Client Capital Raised' : (lang === 'kz' ? 'Тартылған инвестиция' : 'Привлечено в раундах')}
+              {t.stats.capitalDesc}
             </div>
           </div>
 
           <div>
             <div className="text-3xl sm:text-5xl font-heading font-black tracking-tight text-slate-950 dark:text-white">
-              100%
+              {t.stats.sla}
             </div>
             <div className="text-xs sm:text-sm font-mono text-slate-500 dark:text-slate-400 mt-1 uppercase tracking-wider">
-              {lang === 'en' ? 'NDA & IP Ownership' : (lang === 'kz' ? 'NDA және меншік құқығы' : 'NDA и передача прав')}
+              {t.stats.slaDesc}
             </div>
           </div>
-        </div>
+        </motion.div>
 
       </div>
 
