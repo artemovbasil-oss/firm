@@ -53,25 +53,30 @@ export default function Hero({ lang, onOpenContact }) {
   return (
     <section className="relative pt-36 pb-24 md:pt-48 md:pb-32 overflow-hidden ambient-glow-hero">
       
-      {/* Background Video Layer (No GPU Heatmap Lag, Ultra Fast & Smooth) */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none select-none z-0">
-        <video
-          ref={videoRef}
-          key="hero-video-v4"
-          autoPlay
-          loop
-          muted
-          playsInline
-          preload="auto"
-          poster="/videos/hero-surreal-v4.jpg"
-          className="w-full h-full object-cover opacity-85 dark:opacity-80 transition-opacity duration-1000 scale-105"
-        >
-          <source src="/videos/hero-surreal-v4.mp4" type="video/mp4" />
-        </video>
+      {/* Background Centered Surreal Video Portal with Feathered Black Vignette */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none select-none z-0 flex items-center justify-center">
+        {/* Compact Centered Video Container */}
+        <div className="relative w-full max-w-2xl sm:max-w-3xl md:max-w-4xl lg:max-w-5xl aspect-video -translate-y-8 sm:-translate-y-12 flex items-center justify-center">
+          <video
+            ref={videoRef}
+            key="hero-video-v4"
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="auto"
+            poster="/videos/hero-surreal-v4.jpg"
+            className="w-full h-full object-cover opacity-90 dark:opacity-90 [mask-image:radial-gradient(ellipse_70%_60%_at_50%_50%,black_15%,transparent_85%)] [-webkit-mask-image:radial-gradient(ellipse_70%_60%_at_50%_50%,black_15%,transparent_85%)] scale-105"
+          >
+            <source src="/videos/hero-surreal-v4.mp4" type="video/mp4" />
+          </video>
 
-        {/* Atmospheric Edge Blend */}
-        <div className="absolute inset-0 bg-gradient-to-b from-white/70 via-transparent to-[#fbfbfd] dark:from-[#06070a]/75 dark:via-transparent dark:to-[#06070a]"></div>
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_95%_75%_at_50%_40%,rgba(0,0,0,0)_0%,rgba(0,0,0,0.12)_65%,rgba(251,251,253,0.85)_100%)] dark:bg-[radial-gradient(ellipse_95%_75%_at_50%_40%,rgba(0,0,0,0)_0%,rgba(0,0,0,0.12)_65%,rgba(6,7,10,0.85)_100%)]"></div>
+          {/* Deep Feathered Radial Vignette for Seamless Void Merging */}
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_65%_55%_at_50%_50%,transparent_15%,#fbfbfd_80%)] dark:bg-[radial-gradient(ellipse_65%_55%_at_50%_50%,transparent_15%,#06070a_80%)] pointer-events-none"></div>
+        </div>
+
+        {/* Global Edge Fade into Page Background */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#fbfbfd]/80 via-transparent to-[#fbfbfd] dark:from-[#06070a]/80 dark:via-transparent dark:to-[#06070a] pointer-events-none"></div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
