@@ -10,11 +10,11 @@ export default function Footer({ lang, servicesList = [], onOpenContact, onOpenA
   };
 
   return (
-    <footer className="border-t border-slate-200/80 dark:border-white/10 bg-white/60 dark:bg-[#07080d] pt-20 sm:pt-24 pb-14 transition-colors">
+    <footer className="border-t border-black/[0.06] dark:border-white/[0.06] bg-black/[0.02] dark:bg-[#07080b] pt-24 sm:pt-32 pb-16 transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Top Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-12 pb-16 border-b border-slate-200/80 dark:border-white/10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-12 pb-16 border-b border-black/[0.06] dark:border-white/[0.06]">
           
           {/* Brand Info (2 cols) */}
           <div className="lg:col-span-2 space-y-5">

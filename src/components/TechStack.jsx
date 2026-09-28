@@ -1,5 +1,5 @@
 import React from 'react';
-import { Terminal, ShieldCheck, Zap, Cpu } from 'lucide-react';
+import { ShieldCheck, Zap, Cpu } from 'lucide-react';
 import { TECH_STACK } from '../data/agencyData';
 import { TRANSLATIONS } from '../data/translations';
 
@@ -7,66 +7,70 @@ export default function TechStack({ lang }) {
   const t = TRANSLATIONS[lang].tech;
 
   return (
-    <section id="stack" className="py-28 sm:py-32 relative border-t border-slate-200/80 dark:border-white/10 bg-slate-50/40 dark:bg-slate-950/40">
+    <section id="stack" className="py-32 sm:py-40 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16 sm:mb-20">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-xs text-slate-700 dark:text-slate-300 font-mono uppercase tracking-wider mb-4">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-            {t.badge}
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 sm:mb-24 gap-6">
+          <div>
+            <div className="text-xs sm:text-sm font-mono text-slate-500 uppercase tracking-widest mb-3">
+              // 06 · {lang === 'en' ? 'Stack & Infrastructure' : (lang === 'kz' ? 'Технологиялық стек' : 'Технологический стек')}
+            </div>
+            <h2 className="text-4xl sm:text-6xl md:text-7xl font-heading font-black tracking-tight text-slate-950 dark:text-white uppercase leading-[0.95]">
+              {lang === 'en' ? 'Engineered for Speed.' : (lang === 'kz' ? 'Жоғары жылдамдық.' : 'Стек без компромиссов.')}
+            </h2>
           </div>
-          <h2 className="text-3xl sm:text-5xl lg:text-6xl font-heading font-extrabold text-slate-950 dark:text-white tracking-tight sm:tracking-tighter">
-            {t.title}
-          </h2>
-          <p className="mt-4 text-slate-600 dark:text-slate-300 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
-            {t.desc}
+
+          <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 max-w-md leading-relaxed font-normal">
+            {lang === 'en'
+              ? 'Modern headless architecture, lightning-fast client runtimes, and scalable backend infrastructure.'
+              : lang === 'kz'
+              ? 'Заманауи headless архитектура, мінсіз қауіпсіздік және жүктемеге төзімді инфрақұрылым.'
+              : 'Современная headless-архитектура, микросервисы и мгновенный отклик интерфейсов.'}
           </p>
         </div>
 
-        {/* Categories Bento Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {/* Clean Spacious Bento Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
           {TECH_STACK.map((group, idx) => (
             <div
               key={idx}
-              className="card-studio-hero rounded-3xl p-7 sm:p-8 border border-slate-200/80 dark:border-white/10 bg-white/70 dark:bg-[#0c0e18]/80 backdrop-blur-xl flex flex-col justify-between hover:border-slate-400/50 dark:hover:border-white/20 transition-all"
+              className="p-8 rounded-3xl bg-black/[0.02] dark:bg-white/[0.02] border border-black/[0.06] dark:border-white/[0.06] space-y-6"
             >
-              <div>
-                <div className="flex items-center gap-3 mb-5">
-                  <div className="w-8 h-8 rounded-lg bg-slate-950 dark:bg-white text-white dark:text-slate-950 flex items-center justify-center font-mono font-bold text-xs shadow-sm">
-                    {idx + 1 < 10 ? `0${idx + 1}` : idx + 1}
-                  </div>
-                  <h3 className="font-heading font-extrabold text-slate-950 dark:text-white text-base sm:text-lg">
-                    {group.category}
-                  </h3>
-                </div>
+              <div className="flex items-center justify-between">
+                <span className="font-mono text-xs text-slate-400">
+                  0{idx + 1}
+                </span>
+                <span className="font-heading font-bold text-sm sm:text-base text-slate-950 dark:text-white uppercase tracking-wider">
+                  {group.category}
+                </span>
+              </div>
 
-                <div className="flex flex-wrap gap-2 pt-1">
-                  {group.items.map((tech, tIdx) => (
-                    <span
-                      key={tIdx}
-                      className="px-3 py-1.5 rounded-xl border border-slate-200/80 dark:border-white/10 bg-slate-50 dark:bg-slate-900/80 text-xs sm:text-sm text-slate-700 dark:text-slate-300 font-mono hover:border-slate-400 dark:hover:border-white/30 transition-colors"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
+              <div className="flex flex-wrap gap-2 pt-2">
+                {group.items.map((tech, tIdx) => (
+                  <span
+                    key={tIdx}
+                    className="px-3 py-1.5 rounded-full text-xs font-mono bg-white dark:bg-white/[0.06] border border-black/[0.06] dark:border-white/10 text-slate-800 dark:text-slate-200"
+                  >
+                    {tech}
+                  </span>
+                ))}
               </div>
             </div>
           ))}
         </div>
 
-        {/* Studio Guarantees Badges */}
-        <div className="mt-14 flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-slate-600 dark:text-slate-400 text-xs sm:text-sm font-mono">
-          <div className="flex items-center gap-2 px-4 py-2 rounded-full border border-slate-200/80 dark:border-white/10 bg-white/80 dark:bg-[#0c0e18]/80 shadow-sm">
+        {/* Guarantees */}
+        <div className="mt-16 flex flex-wrap items-center justify-center gap-6 sm:gap-10 text-xs font-mono text-slate-500 dark:text-slate-400">
+          <div className="flex items-center gap-2">
             <ShieldCheck className="w-4 h-4 text-emerald-500" />
             <span>{t.badge1}</span>
           </div>
-          <div className="flex items-center gap-2 px-4 py-2 rounded-full border border-slate-200/80 dark:border-white/10 bg-white/80 dark:bg-[#0c0e18]/80 shadow-sm">
+          <div className="flex items-center gap-2">
             <Zap className="w-4 h-4 text-amber-500" />
             <span>{t.badge2}</span>
           </div>
-          <div className="flex items-center gap-2 px-4 py-2 rounded-full border border-slate-200/80 dark:border-white/10 bg-white/80 dark:bg-[#0c0e18]/80 shadow-sm">
+          <div className="flex items-center gap-2">
             <Cpu className="w-4 h-4 text-cyan-500" />
             <span>{t.badge3}</span>
           </div>

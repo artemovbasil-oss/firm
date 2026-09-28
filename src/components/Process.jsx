@@ -1,75 +1,116 @@
 import React from 'react';
-import { CheckCircle2, Clock } from 'lucide-react';
-import { WORK_PROCESS } from '../data/agencyData';
 import { TRANSLATIONS } from '../data/translations';
 
 export default function Process({ lang }) {
-  const t = TRANSLATIONS[lang].process;
+  const steps = lang === 'en' ? [
+    {
+      num: '01',
+      title: 'Deep Research & Architecture',
+      desc: 'We dissect your market, analyze competitor blind spots, and map the customer journey before touching design.'
+    },
+    {
+      num: '02',
+      title: 'Bespoke Design Systems',
+      desc: 'Interactive Figma prototypes, high-conversion visual hierarchy, and refined micro-interactions.'
+    },
+    {
+      num: '03',
+      title: 'High-Performance Engineering',
+      desc: 'Clean modular code, sub-second page speed, and seamless integrations with CRM and payment gateways.'
+    },
+    {
+      num: '04',
+      title: 'Launch & Compounding ROI',
+      desc: 'Final stress testing, end-to-end analytics tracking, and continuous support to ensure immediate revenue.'
+    }
+  ] : lang === 'kz' ? [
+    {
+      num: '01',
+      title: 'Терең зерттеу және архитектура',
+      desc: 'Нарықты, бәсекелестерді және сатып алушы жолын (CJM) дизайнды бастамас бұрын толық зерттейміз.'
+    },
+    {
+      num: '02',
+      title: 'Жеке дизайн жүйесі',
+      desc: 'Figma-дағы интерактивті прототиптер, жоғары конверсиялық визуалды иерархия және микроанимациялар.'
+    },
+    {
+      num: '03',
+      title: 'Жоғары жылдамдықты әзірлеу',
+      desc: 'Таза модульдік код, 0.8 секундтан жылдам жүктелу және CRM мен төлемдерді мінсіз интеграциялау.'
+    },
+    {
+      num: '04',
+      title: 'Іске қосу және сатылым өсімі',
+      desc: 'Стресс-тестілеу, толық аналитика баптау және келісімшарттық SLA кепілдікпен техникалық сүйемелдеу.'
+    }
+  ] : [
+    {
+      num: '01',
+      title: 'Предпроектный анализ и архитектура',
+      desc: 'Исследуем рынок, узкие места конкурентов и карту пути клиента (CJM) до первого макета.'
+    },
+    {
+      num: '02',
+      title: 'Индивидуальная дизайн-система',
+      desc: 'Интерактивные прототипы в Figma, выверенная визуальная иерархия и продуманная микродинамика.'
+    },
+    {
+      num: '03',
+      title: 'Чистый производительный код',
+      desc: 'Быстрый стек, загрузка страниц до 0.8с, интеграция с CRM, эквайрингом и сквозной аналитикой.'
+    },
+    {
+      num: '04',
+      title: 'Релиз и рост продаж',
+      desc: 'Финальный стресс-тест, сдача всех прав, настройка целей и гарантийная техническая поддержка.'
+    }
+  ];
 
   return (
-    <section id="process" className="py-28 sm:py-32 relative border-t border-slate-200/80 dark:border-white/10">
+    <section id="process" className="py-32 sm:py-40 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16 sm:mb-20">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-900 text-xs text-slate-700 dark:text-slate-300 font-mono uppercase tracking-wider mb-4">
-            <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse"></span>
-            {t.badge}
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 sm:mb-24 gap-6">
+          <div>
+            <div className="text-xs sm:text-sm font-mono text-slate-500 uppercase tracking-widest mb-3">
+              // 04 · {lang === 'en' ? 'Methodology' : (lang === 'kz' ? 'Әдістеме' : 'Как мы работаем')}
+            </div>
+            <h2 className="text-4xl sm:text-6xl md:text-7xl font-heading font-black tracking-tight text-slate-950 dark:text-white uppercase leading-[0.95]">
+              {lang === 'en' ? 'How We Execute.' : (lang === 'kz' ? 'Жұмыс кезеңдері.' : 'Процесс работы.')}
+            </h2>
           </div>
-          <h2 className="text-3xl sm:text-5xl lg:text-6xl font-heading font-extrabold text-slate-950 dark:text-white tracking-tight sm:tracking-tighter">
-            {t.title}
-          </h2>
-          <p className="mt-4 text-slate-600 dark:text-slate-300 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
-            {t.desc}
+
+          <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 max-w-md leading-relaxed font-normal">
+            {lang === 'en'
+              ? 'Transparent two-week sprints. Constant feedback loops. Predictable timelines and guaranteed results.'
+              : lang === 'kz'
+              ? 'Екі апталық спринттер, нақты мерзім және келісім-шарт бойынша нәтижеге толық кепілдік.'
+              : 'Прозрачные двухнедельные спринты, регулярные демо и четкие дедлайны по договору.'}
           </p>
         </div>
 
-        {/* Steps Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-5">
-          {WORK_PROCESS.map((step) => {
-            const title = step.title?.[lang] || step.title?.ru || '';
-            const desc = step.desc?.[lang] || step.desc?.ru || '';
-            const time = step.time?.[lang] || step.time?.ru || '';
-            const artifact = step.artifact?.[lang] || step.artifact?.ru || '';
-
-            return (
-              <div
-                key={step.step}
-                className="card-studio-hero rounded-3xl p-6 sm:p-7 flex flex-col justify-between border border-slate-200/80 dark:border-white/10 bg-white/70 dark:bg-[#0c0e18]/80 backdrop-blur-xl hover:border-slate-400/50 dark:hover:border-white/20 transition-all group"
-              >
-                <div>
-                  <div className="flex items-center justify-between mb-5">
-                    <span className="font-heading font-black text-4xl sm:text-5xl text-slate-300 dark:text-slate-800 group-hover:text-slate-950 dark:group-hover:text-white transition-colors duration-200">
-                      {step.step}
-                    </span>
-                    <span className="flex items-center gap-1.5 text-xs font-mono font-medium text-slate-600 dark:text-slate-300 bg-slate-100 dark:bg-slate-800/90 px-3 py-1 rounded-full border border-slate-200/60 dark:border-white/5">
-                      <Clock className="w-3.5 h-3.5 text-slate-500" />
-                      {time}
-                    </span>
-                  </div>
-
-                  <h3 className="text-base sm:text-lg font-heading font-bold text-slate-950 dark:text-white mb-2 leading-snug">
-                    {title}
-                  </h3>
-
-                  <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-6">
-                    {desc}
-                  </p>
-                </div>
-
-                <div className="pt-4 border-t border-slate-100 dark:border-white/10">
-                  <div className="text-[10px] uppercase font-mono tracking-wider text-slate-400 mb-1">
-                    {t.artifactLabel}
-                  </div>
-                  <div className="text-xs sm:text-sm font-semibold text-slate-950 dark:text-slate-200 flex items-center gap-1.5">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
-                    <span className="truncate">{artifact}</span>
-                  </div>
-                </div>
-
+        {/* Typographic Progression Grid (Clean, Breathable, High-End) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-12">
+          {steps.map((step) => (
+            <div 
+              key={step.num}
+              className="space-y-4 pt-8 border-t border-black/[0.08] dark:border-white/[0.08] group"
+            >
+              <div className="font-mono text-xs sm:text-sm font-bold text-slate-400 dark:text-slate-600 group-hover:text-slate-950 dark:group-hover:text-white transition-colors">
+                // {step.num}
               </div>
-            );
-          })}
+
+              <h3 className="text-xl sm:text-2xl font-heading font-extrabold tracking-tight text-slate-950 dark:text-white leading-snug">
+                {step.title}
+              </h3>
+
+              <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed font-normal">
+                {step.desc}
+              </p>
+            </div>
+          ))}
         </div>
 
       </div>

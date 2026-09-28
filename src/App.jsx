@@ -144,7 +144,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#fbfbfd] dark:bg-[#090a0f] text-slate-900 dark:text-slate-100 flex flex-col font-sans transition-colors duration-200">
+    <div className="min-h-screen bg-[#fbfbfd] dark:bg-[#06070a] text-slate-900 dark:text-slate-100 flex flex-col font-sans transition-colors duration-200">
       
       {/* Toast notification */}
       {toastMessage && (

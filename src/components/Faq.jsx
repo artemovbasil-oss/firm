@@ -12,50 +12,43 @@ export default function Faq({ lang }) {
   };
 
   return (
-    <section id="faq" className="py-28 sm:py-32 relative border-t border-slate-200/80 dark:border-white/10">
+    <section id="faq" className="py-32 sm:py-40 relative">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="text-center mb-16 sm:mb-20">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-900 text-xs text-slate-700 dark:text-slate-300 font-mono uppercase tracking-wider mb-4">
-            <span className="w-1.5 h-1.5 rounded-full bg-violet-500 animate-pulse"></span>
-            {t.badge}
+        <div className="text-center mb-16 sm:mb-24">
+          <div className="text-xs sm:text-sm font-mono text-slate-500 uppercase tracking-widest mb-3">
+            // 08 · {lang === 'en' ? 'Direct Answers' : (lang === 'kz' ? 'Сұрақ-жауап' : 'Частые вопросы')}
           </div>
-          <h2 className="text-3xl sm:text-5xl lg:text-6xl font-heading font-extrabold text-slate-950 dark:text-white tracking-tight sm:tracking-tighter">
-            {t.title}
+          <h2 className="text-4xl sm:text-6xl md:text-7xl font-heading font-black tracking-tight text-slate-950 dark:text-white uppercase leading-[0.95]">
+            {lang === 'en' ? 'F.A.Q.' : (lang === 'kz' ? 'Жиі қойылатын сұрақтар' : 'Вопросы и ответы')}
           </h2>
-          <p className="mt-4 text-slate-600 dark:text-slate-300 text-base sm:text-lg max-w-xl mx-auto">
-            {t.desc}
-          </p>
         </div>
 
-        {/* Accordion list */}
-        <div className="space-y-4">
+        {/* Accordion list (Minimalist Clean Luxury) */}
+        <div className="divide-y divide-black/[0.08] dark:divide-white/[0.08] border-y border-black/[0.08] dark:border-white/[0.08]">
           {FAQ_ITEMS.map((item, idx) => {
             const isOpen = openIndex === idx;
             const question = item.question?.[lang] || item.question?.ru || '';
             const answer = item.answer?.[lang] || item.answer?.ru || '';
 
             return (
-              <div
-                key={idx}
-                className="card-studio-hero rounded-2xl sm:rounded-3xl overflow-hidden border border-slate-200/80 dark:border-white/10 bg-white/70 dark:bg-[#0c0e18]/80 backdrop-blur-xl transition-all duration-200"
-              >
+              <div key={idx} className="transition-colors duration-150">
                 <button
                   type="button"
                   onClick={() => toggle(idx)}
-                  className="w-full p-6 sm:p-7 text-left flex items-center justify-between gap-6 focus:outline-none group"
+                  className="w-full py-7 sm:py-8 text-left flex items-center justify-between gap-6 focus:outline-none group"
                 >
-                  <span className="font-heading font-bold text-base sm:text-lg text-slate-950 dark:text-white group-hover:text-slate-700 dark:group-hover:text-slate-200 transition-colors">
+                  <span className="font-heading font-bold text-lg sm:text-2xl text-slate-950 dark:text-white group-hover:translate-x-1 transition-transform">
                     {question}
                   </span>
-                  <div className={`w-8 h-8 rounded-full border border-slate-200 dark:border-white/10 flex items-center justify-center shrink-0 transition-transform ${isOpen ? 'rotate-180 bg-slate-100 dark:bg-slate-800' : ''}`}>
-                    <ChevronDown className="w-4 h-4 text-slate-500" />
+                  <div className={`w-8 h-8 rounded-full border border-black/[0.1] dark:border-white/10 flex items-center justify-center shrink-0 transition-transform ${isOpen ? 'rotate-180 bg-slate-950 dark:bg-white text-white dark:text-slate-950' : ''}`}>
+                    <ChevronDown className="w-4 h-4" />
                   </div>
                 </button>
 
                 {isOpen && (
-                  <div className="px-6 sm:px-7 pb-6 sm:pb-7 pt-2 text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed border-t border-slate-100 dark:border-white/10 animate-fadeIn">
+                  <div className="pb-8 pr-8 text-sm sm:text-base text-slate-600 dark:text-slate-400 leading-relaxed font-light animate-fadeIn">
                     {answer}
                   </div>
                 )}

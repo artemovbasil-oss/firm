@@ -1,23 +1,18 @@
 import React, { useState } from 'react';
-import { 
-  Calculator as CalcIcon, CheckCircle2, Clock, 
-  Send, AlertCircle, ArrowRight, ShieldCheck 
-} from 'lucide-react';
+import { CheckCircle2, ArrowRight, ShieldCheck, Zap } from 'lucide-react';
 import { TRANSLATIONS } from '../data/translations';
 
 export default function Calculator({ 
   lang,
   currency, 
-  servicesList = [],
+  servicesList = [], 
   selectedServices, 
   onToggleService, 
   onSuccessLead 
 }) {
   const [scale, setScale] = useState('business');
   const [urgency, setUrgency] = useState('standard');
-  const [clientName, setClientName] = useState('');
   const [clientContact, setClientContact] = useState('');
-  const [clientComment, setClientComment] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null);
 
@@ -31,7 +26,7 @@ export default function Calculator({
 
   const scaleNames = {
     start: lang === 'en' ? 'Startup / MVP' : (lang === 'kz' ? 'Стартап / MVP' : 'Стартап / MVP'),
-    business: lang === 'en' ? 'Business / Standard' : (lang === 'kz' ? 'Бизнес / Стандарт' : 'Бизнес / Стандарт'),
+    business: lang === 'en' ? 'Standard / Growth' : (lang === 'kz' ? 'Бизнес / Стандарт' : 'Бизнес / Стандарт'),
     enterprise: lang === 'en' ? 'Enterprise / Scale' : (lang === 'kz' ? 'Enterprise / Ауқымды' : 'Enterprise / Масштаб')
   };
 
@@ -92,14 +87,10 @@ export default function Calculator({
 
     const payload = {
       type: 'CALCULATOR_ESTIMATE',
-      name: clientName || (lang === 'en' ? 'Not specified' : (lang === 'kz' ? 'Көрсетілмеген' : 'Не указано')),
-      contact: clientContact,
-      comment: clientComment,
+      contact: clientContact.trim(),
       currency,
       scale: scaleNames[scale],
-      urgency: urgency === 'express' 
-        ? (lang === 'en' ? 'Express (-35% timeline)' : (lang === 'kz' ? 'Жедел (-35% мерзім)' : 'Срочно (-35% срок)'))
-        : (lang === 'en' ? 'Standard' : 'Стандарт'),
+      urgency: urgency === 'express' ? 'Express' : 'Standard',
       selectedServices: selectedServices.map(id => {
         const s = servicesList.find(item => item.id === id);
         return s ? (s.title?.[lang] || s.title?.ru || id) : id;
@@ -118,9 +109,7 @@ export default function Calculator({
       });
       if (res.ok) {
         setSubmitStatus('success');
-        setClientName('');
         setClientContact('');
-        setClientComment('');
         if (onSuccessLead) onSuccessLead();
       } else {
         setSubmitStatus('error');
@@ -133,41 +122,42 @@ export default function Calculator({
   };
 
   return (
-    <section id="calculator" className="py-28 relative bg-slate-50/50 dark:bg-slate-900/30 border-t border-slate-200/80 dark:border-white/10 ambient-spotlight">
+    <section id="calculator" className="py-32 sm:py-40 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="text-center max-w-4xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-slate-200/80 dark:border-white/10 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl text-xs sm:text-sm text-slate-700 dark:text-slate-300 font-mono uppercase tracking-wider mb-4 shadow-sm">
-            <span className="w-1.5 h-1.5 rounded-full bg-slate-900 dark:bg-white"></span>
-            <span>{t.badge}</span>
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 sm:mb-24 gap-6">
+          <div>
+            <div className="text-xs sm:text-sm font-mono text-slate-500 uppercase tracking-widest mb-3">
+              // 05 · {lang === 'en' ? 'Transparent Pricing' : (lang === 'kz' ? 'Баға калькуляторы' : 'Оценка бюджета')}
+            </div>
+            <h2 className="text-4xl sm:text-6xl md:text-7xl font-heading font-black tracking-tight text-slate-950 dark:text-white uppercase leading-[0.95]">
+              {lang === 'en' ? 'Estimate Scope.' : (lang === 'kz' ? 'Жоба құны.' : 'Расчет сметы.')}
+            </h2>
           </div>
-          <h2 className="text-3xl sm:text-5xl lg:text-6xl font-heading font-extrabold text-slate-950 dark:text-white tracking-tight leading-[1.08]">
-            {t.title}
-          </h2>
-          <p className="mt-4 text-base sm:text-lg lg:text-xl text-slate-600 dark:text-slate-300 max-w-2xl mx-auto leading-relaxed">
-            {t.desc}
+
+          <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 max-w-md leading-relaxed font-normal">
+            {lang === 'en'
+              ? 'Select your disciplines and scale. Get an instant realistic baseline and lock in bundle terms.'
+              : lang === 'kz'
+              ? 'Қажетті бағыттар мен жоба ауқымын таңдаңыз. Нақты баға мен мерзімді бірден біліңіз.'
+              : 'Выберите направления и масштаб бизнеса. Узнайте честную стоимость без скрытых платежей.'}
           </p>
         </div>
 
-        {/* Calculator Body */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        {/* Minimalist 2-Column Cockpit */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 sm:gap-16 items-start">
           
-          {/* Left Configuration Panel (7 cols) */}
-          <div className="lg:col-span-7 space-y-8 card-studio-hero p-7 sm:p-10 rounded-3xl">
+          {/* Left Controls (7 cols) */}
+          <div className="lg:col-span-7 space-y-10">
             
-            {/* Step 1: Services Selection */}
+            {/* 1. Services Chips */}
             <div>
-              <div className="flex items-center justify-between mb-4">
-                <span className="text-xs sm:text-sm font-mono font-bold uppercase tracking-wider text-slate-950 dark:text-white">
-                  {t.step1}
-                </span>
-                <span className="text-xs sm:text-sm text-slate-500 font-mono">
-                  {t.selectedCount.replace('{count}', selectedServices.length).replace('{total}', servicesList.length)}
-                </span>
+              <div className="text-xs font-mono uppercase tracking-wider text-slate-500 mb-4">
+                01 / {lang === 'en' ? 'Select Project Disciplines' : (lang === 'kz' ? 'Бағыттарды таңдаңыз' : 'Выберите направления')}
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="flex flex-wrap gap-2.5">
                 {servicesList.map((s) => {
                   const isChecked = selectedServices.includes(s.id);
                   const title = s.title?.[lang] || s.title?.ru || s.id;
@@ -179,218 +169,154 @@ export default function Calculator({
                       key={s.id}
                       type="button"
                       onClick={() => onToggleService(s.id)}
-                      className={`p-4 rounded-2xl border text-left btn-studio transition-all flex items-center justify-between gap-3 ${
+                      className={`px-4 sm:px-5 py-3 rounded-full text-xs sm:text-sm font-heading font-semibold transition-all flex items-center gap-2.5 ${
                         isChecked
-                          ? 'border-slate-950 dark:border-white bg-slate-100 dark:bg-slate-800 text-slate-950 dark:text-white font-semibold shadow-sm'
-                          : 'border-slate-200/90 dark:border-white/10 bg-white/70 dark:bg-slate-950/70 text-slate-700 dark:text-slate-300 hover:border-slate-400'
+                          ? 'bg-slate-950 dark:bg-white text-white dark:text-slate-950 shadow-md scale-[1.02]'
+                          : 'border border-black/[0.08] dark:border-white/10 bg-white/40 dark:bg-white/[0.02] text-slate-700 dark:text-slate-300 hover:border-slate-400'
                       }`}
                     >
-                      <div className="min-w-0">
-                        <div className="text-xs sm:text-sm font-semibold truncate">{title}</div>
-                        <div className="text-xs text-slate-500 font-mono mt-1">
-                          {lang === 'en' ? 'from ' : 'от '}{price} {curSymbol}
-                        </div>
-                      </div>
-                      <div className={`w-5 h-5 rounded-lg border flex items-center justify-center shrink-0 transition-colors ${
-                        isChecked ? 'bg-slate-950 dark:bg-white border-slate-950 dark:border-white text-white dark:text-slate-950' : 'border-slate-300 dark:border-slate-700'
-                      }`}>
-                        {isChecked && <CheckCircle2 className="w-4 h-4" />}
-                      </div>
+                      <span>{title}</span>
+                      <span className={`text-[11px] font-mono opacity-60 ${isChecked ? 'text-white dark:text-slate-950' : ''}`}>
+                        +{price} {curSymbol}
+                      </span>
                     </button>
                   );
                 })}
               </div>
             </div>
 
-            {/* Step 2: Scale selection */}
+            {/* 2. Scale Selector */}
             <div>
-              <div className="mb-4">
-                <span className="text-xs sm:text-sm font-mono font-bold uppercase tracking-wider text-slate-950 dark:text-white">
-                  {t.step2}
-                </span>
+              <div className="text-xs font-mono uppercase tracking-wider text-slate-500 mb-4">
+                02 / {lang === 'en' ? 'Company Scale' : (lang === 'kz' ? 'Жоба ауқымы' : 'Масштаб проекта')}
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div className="grid grid-cols-3 gap-3">
                 {[
-                  { id: 'start', title: scaleNames.start, desc: lang === 'en' ? 'MVP & core features' : (lang === 'kz' ? 'Базалық MVP функционал' : 'Базовый MVP функционал') },
-                  { id: 'business', title: scaleNames.business, desc: lang === 'en' ? 'Full design & integrations' : (lang === 'kz' ? 'Оптимум, интеграциялар, CRM' : 'Оптимум, интеграции, CRM') },
-                  { id: 'enterprise', title: scaleNames.enterprise, desc: lang === 'en' ? 'Highload & brand system' : (lang === 'kz' ? 'Highload, микросервистер' : 'Highload, микросервисы') }
+                  { id: 'start', label: 'Startup' },
+                  { id: 'business', label: 'Standard' },
+                  { id: 'enterprise', label: 'Enterprise' }
                 ].map((item) => (
                   <button
                     key={item.id}
                     type="button"
                     onClick={() => setScale(item.id)}
-                    className={`p-4 sm:p-5 rounded-2xl border text-left btn-studio transition-all ${
+                    className={`py-3.5 px-4 rounded-2xl text-xs sm:text-sm font-heading font-bold transition-all text-center ${
                       scale === item.id
-                        ? 'border-slate-950 dark:border-white bg-slate-100 dark:bg-slate-800 text-slate-950 dark:text-white shadow-sm'
-                        : 'border-slate-200/90 dark:border-white/10 bg-white/70 dark:bg-slate-950/70 text-slate-600 dark:text-slate-400 hover:border-slate-400'
+                        ? 'bg-slate-950 dark:bg-white text-white dark:text-slate-950 shadow-md'
+                        : 'border border-black/[0.08] dark:border-white/10 bg-white/40 dark:bg-white/[0.02] text-slate-600 dark:text-slate-400 hover:border-slate-400'
                     }`}
                   >
-                    <div className="text-xs sm:text-sm font-bold text-slate-950 dark:text-white mb-1">{item.title}</div>
-                    <div className="text-xs text-slate-500 leading-snug">{item.desc}</div>
+                    {item.label}
                   </button>
                 ))}
               </div>
             </div>
 
-            {/* Step 3: Urgency */}
+            {/* 3. Speed Toggle */}
             <div>
-              <div className="mb-4">
-                <span className="text-xs sm:text-sm font-mono font-bold uppercase tracking-wider text-slate-950 dark:text-white">
-                  {t.step3}
-                </span>
+              <div className="text-xs font-mono uppercase tracking-wider text-slate-500 mb-4">
+                03 / {lang === 'en' ? 'Launch Velocity' : (lang === 'kz' ? 'Орындау қарқыны' : 'Скорость релиза')}
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="grid grid-cols-2 gap-3">
                 <button
                   type="button"
                   onClick={() => setUrgency('standard')}
-                  className={`p-4 sm:p-5 rounded-2xl border text-left btn-studio transition-all ${
+                  className={`py-3.5 px-4 rounded-2xl text-xs sm:text-sm font-heading font-semibold transition-all ${
                     urgency === 'standard'
-                      ? 'border-slate-950 dark:border-white bg-slate-100 dark:bg-slate-800 text-slate-950 dark:text-white shadow-sm'
-                      : 'border-slate-200/90 dark:border-white/10 bg-white/70 dark:bg-slate-950/70 text-slate-600 dark:text-slate-400 hover:border-slate-400'
+                      ? 'bg-slate-950 dark:bg-white text-white dark:text-slate-950 shadow-md'
+                      : 'border border-black/[0.08] dark:border-white/10 bg-white/40 dark:bg-white/[0.02] text-slate-600 dark:text-slate-400'
                   }`}
                 >
-                  <div className="text-xs sm:text-sm font-bold text-slate-950 dark:text-white mb-1">{t.standardSpeed}</div>
-                  <div className="text-xs text-slate-500">{t.standardSpeedDesc}</div>
+                  {t.standardSpeed}
                 </button>
 
                 <button
                   type="button"
                   onClick={() => setUrgency('express')}
-                  className={`p-4 sm:p-5 rounded-2xl border text-left btn-studio transition-all ${
+                  className={`py-3.5 px-4 rounded-2xl text-xs sm:text-sm font-heading font-semibold transition-all flex items-center justify-center gap-1.5 ${
                     urgency === 'express'
-                      ? 'border-slate-950 dark:border-white bg-slate-100 dark:bg-slate-800 text-slate-950 dark:text-white shadow-sm'
-                      : 'border-slate-200/90 dark:border-white/10 bg-white/70 dark:bg-slate-950/70 text-slate-600 dark:text-slate-400 hover:border-slate-400'
+                      ? 'bg-slate-950 dark:bg-white text-white dark:text-slate-950 shadow-md'
+                      : 'border border-black/[0.08] dark:border-white/10 bg-white/40 dark:bg-white/[0.02] text-slate-600 dark:text-slate-400'
                   }`}
                 >
-                  <div className="text-xs sm:text-sm font-bold text-slate-950 dark:text-white mb-1">{t.expressSpeed}</div>
-                  <div className="text-xs text-slate-500">{t.expressSpeedDesc}</div>
+                  <Zap className="w-3.5 h-3.5 text-amber-500" />
+                  <span>{t.expressSpeed}</span>
                 </button>
               </div>
             </div>
 
           </div>
 
-          {/* Right Summary & Proposal Panel (5 cols) */}
-          <div className="lg:col-span-5 card-studio-hero p-7 sm:p-10 rounded-3xl sticky top-28">
+          {/* Right Live Estimate Output (5 cols) */}
+          <div className="lg:col-span-5 p-8 sm:p-12 rounded-3xl bg-slate-950 text-white relative overflow-hidden shadow-2xl border border-white/10 space-y-6">
             
-            {/* Top Badge */}
-            <div className="flex items-center justify-between pb-4 border-b border-slate-200/80 dark:border-white/10 mb-6">
-              <span className="text-xs sm:text-sm font-mono uppercase tracking-widest text-slate-500 font-semibold">{t.summaryTitle}</span>
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-mono uppercase tracking-wider text-slate-400">
+                {t.summaryTitle}
+              </span>
               {bundleDiscount > 0 && (
-                <span className="px-3 py-1 rounded-full text-xs font-mono font-bold bg-slate-950 dark:bg-white text-white dark:text-slate-950 shadow-sm">
-                  {t.discountBadge.replace('{percent}', bundleDiscount * 100)}
+                <span className="px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                  -{bundleDiscount * 100}% Bundle
                 </span>
               )}
             </div>
 
-            {/* Monumental Price Display */}
-            <div className="mb-6">
-              <div className="text-xs sm:text-sm text-slate-500 font-mono uppercase tracking-wider mb-1.5">{t.budgetLabel}</div>
-              <div className="text-4xl sm:text-5xl lg:text-6xl font-heading font-extrabold text-slate-950 dark:text-white tracking-tight">
-                {selectedServices.length > 0 ? formatCurrency(calculatedPrice) : (lang === 'en' ? 'Select services' : (lang === 'kz' ? 'Қызметтерді таңдаңыз' : 'Выберите услуги'))}
+            {/* Giant Price */}
+            <div>
+              <div className="text-4xl sm:text-6xl font-heading font-black text-white tracking-tighter">
+                {formatCurrency(calculatedPrice)}
               </div>
-              <div className="mt-3 flex items-center gap-3 text-xs sm:text-sm text-slate-500 font-medium">
-                <span className="flex items-center gap-1.5">
-                  <Clock className="w-4 h-4 text-slate-400" />
-                  {t.timelineLabel} <strong className="text-slate-900 dark:text-white">{selectedServices.length > 0 ? `~${estimatedDays} ${t.daysUnit}` : '—'}</strong>
-                </span>
-                <span>•</span>
-                <span>{t.tierLabel} <strong className="text-slate-900 dark:text-white">{scaleNames[scale]}</strong></span>
+              <div className="text-xs sm:text-sm font-mono text-slate-400 mt-2">
+                {t.timelineLabel} ~{estimatedDays} {t.daysUnit} · {scaleNames[scale]}
               </div>
             </div>
 
-            {/* Selected deliverables list */}
-            <div className="space-y-2 mb-6 p-4 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-slate-50/80 dark:bg-slate-900/60 text-xs sm:text-sm text-slate-700 dark:text-slate-300">
-              <div className="font-semibold text-slate-950 dark:text-white mb-2">{t.includedTitle}</div>
-              {selectedServices.length === 0 ? (
-                <div className="italic text-slate-400">{t.emptyServices}</div>
-              ) : (
-                selectedServices.map(id => {
-                  const s = servicesList.find(item => item.id === id);
-                  const title = s?.title?.[lang] || s?.title?.ru || id;
-                  return (
-                    <div key={id} className="flex items-center gap-2.5">
-                      <CheckCircle2 className="w-4 h-4 text-slate-900 dark:text-emerald-400 shrink-0" />
-                      <span className="truncate">{title}</span>
-                    </div>
-                  );
-                })
-              )}
-            </div>
-
-            {/* Form */}
-            <form onSubmit={handleSubmitEstimate} className="space-y-3.5">
-              <div className="text-xs sm:text-sm font-semibold text-slate-950 dark:text-white">
-                {t.formTitle}
-              </div>
-
-              <div>
-                <input
-                  type="text"
-                  placeholder={t.namePlaceholder}
-                  value={clientName}
-                  onChange={(e) => setClientName(e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl input-studio text-xs sm:text-sm placeholder-slate-400"
-                />
-              </div>
-
-              <div>
-                <input
-                  type="text"
-                  required
-                  placeholder={t.contactPlaceholder}
-                  value={clientContact}
-                  onChange={(e) => setClientContact(e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl input-studio text-xs sm:text-sm placeholder-slate-400"
-                />
-              </div>
-
-              <div>
-                <textarea
-                  rows="2"
-                  placeholder={t.commentPlaceholder}
-                  value={clientComment}
-                  onChange={(e) => setClientComment(e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl input-studio text-xs sm:text-sm placeholder-slate-400 resize-none"
-                ></textarea>
-              </div>
+            {/* Fast 1-Click Inquiry */}
+            <form onSubmit={handleSubmitEstimate} className="space-y-3 pt-4 border-t border-white/10">
+              <input
+                type="text"
+                required
+                placeholder={lang === 'en' ? 'Telegram @username or WhatsApp' : (lang === 'kz' ? 'Telegram немесе телефон *' : 'Telegram или телефон *')}
+                value={clientContact}
+                onChange={(e) => setClientContact(e.target.value)}
+                className="w-full px-5 py-3.5 rounded-xl bg-white/10 text-white placeholder-slate-400 text-sm focus:outline-none border border-white/10"
+              />
 
               <button
                 type="submit"
-                disabled={isSubmitting || selectedServices.length === 0}
-                className="w-full py-4 rounded-xl bg-slate-950 dark:bg-white text-white dark:text-slate-950 font-heading font-bold text-xs sm:text-sm btn-studio flex items-center justify-center gap-2.5 disabled:opacity-50 shadow-xl hover:shadow-2xl"
+                disabled={isSubmitting}
+                className="w-full py-4 rounded-xl bg-white text-slate-950 font-heading font-bold text-xs sm:text-sm hover:bg-slate-200 transition-all flex items-center justify-center gap-2 active:scale-95 disabled:opacity-50"
               >
                 {isSubmitting ? (
-                  <span>{t.submitting}</span>
+                  <span>...</span>
                 ) : (
                   <>
-                    <Send className="w-4 h-4" />
                     <span>{t.submitBtn}</span>
+                    <ArrowRight className="w-4 h-4" />
                   </>
                 )}
               </button>
 
               {submitStatus === 'success' && (
-                <div className="p-3 rounded-xl border border-emerald-300 dark:border-emerald-800 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 text-xs sm:text-sm flex items-center gap-2.5">
-                  <CheckCircle2 className="w-4 h-4 shrink-0" />
+                <div className="p-3 rounded-xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-200 text-xs flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
                   <span>{t.successMsg}</span>
                 </div>
               )}
 
               {submitStatus === 'error' && (
-                <div className="p-3 rounded-xl border border-rose-300 dark:border-rose-800 bg-rose-50 dark:bg-rose-950/40 text-rose-800 dark:text-rose-300 text-xs sm:text-sm flex items-center gap-2.5">
-                  <AlertCircle className="w-4 h-4 shrink-0" />
+                <div className="p-3 rounded-xl bg-rose-500/20 border border-rose-500/40 text-rose-200 text-xs flex items-center gap-2">
                   <span>{t.errorMsg}</span>
                 </div>
               )}
-
-              <div className="flex items-center gap-1.5 justify-center text-xs text-slate-400 pt-2 font-mono">
-                <ShieldCheck className="w-3.5 h-3.5" />
-                <span>{t.privacyNote}</span>
-              </div>
             </form>
+
+            <div className="flex items-center gap-2 text-xs font-mono text-slate-500 pt-2">
+              <ShieldCheck className="w-4 h-4 text-indigo-400" />
+              <span>{t.privacyNote}</span>
+            </div>
 
           </div>
 

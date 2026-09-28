@@ -5,18 +5,18 @@
 @layer base {
   :root {
     --bg-main: #fbfbfd;
-    --text-main: #0f172a;
+    --text-main: #0a0c12;
     --card-bg: #ffffff;
-    --card-border: #e2e8f0;
+    --card-border: rgba(0, 0, 0, 0.06);
     --subtext: #64748b;
   }
 
   html.dark {
-    --bg-main: #090a0f;
+    --bg-main: #06070a;
     --text-main: #f8fafc;
-    --card-bg: #111420;
-    --card-border: #1e2638;
-    --subtext: #94a3b8;
+    --card-bg: #0c0e14;
+    --card-border: rgba(255, 255, 255, 0.07);
+    --subtext: #8e95a5;
   }
   
   html {
@@ -34,34 +34,34 @@
 
 /* Subtle Architectural Grid */
 .bg-grid-subtle {
-  background-size: 32px 32px;
+  background-size: 48px 48px;
   background-image: 
-    linear-gradient(to right, rgba(148, 163, 184, 0.08) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(148, 163, 184, 0.08) 1px, transparent 1px);
+    linear-gradient(to right, rgba(148, 163, 184, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(148, 163, 184, 0.05) 1px, transparent 1px);
 }
 
 .dark .bg-grid-subtle {
   background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+    linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
 }
 
-/* Clean calm card styles */
+/* Luxury Editorial Studio Card */
 .card-studio {
   background: var(--card-bg);
   border: 1px solid var(--card-border);
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04), 0 1px 2px -1px rgba(0, 0, 0, 0.04);
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 24px -2px rgba(0, 0, 0, 0.03);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .card-studio:hover {
-  border-color: rgba(100, 116, 139, 0.35);
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+  border-color: rgba(100, 116, 139, 0.3);
+  box-shadow: 0 12px 32px -8px rgba(0, 0, 0, 0.06);
 }
 
 .dark .card-studio:hover {
-  border-color: rgba(255, 255, 255, 0.15);
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+  border-color: rgba(255, 255, 255, 0.16);
+  box-shadow: 0 20px 48px -12px rgba(0, 0, 0, 0.7);
 }
 
 /* Tactile Inputs & Studio Form Elements */
