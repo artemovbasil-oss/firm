@@ -4,6 +4,7 @@ import React, { useEffect, useRef } from 'react';
  * CardShaderHover
  * Ultra-elegant WebGL Thermal Heatmap with analog film grain,
  * dynamic fluid convection, and mathematical SDF corner radius matching.
+ * Tuned for rich chromatic saturation and high-contrast typography readability.
  * Runs ONLY on hover, 0% CPU/GPU when idle.
  */
 export default function CardShaderHover({ 
@@ -25,52 +26,52 @@ export default function CardShaderHover({
     radius: borderRadius
   });
 
-  // Exquisite thermal heatmap palettes
+  // Exquisite thermal heatmap palettes calibrated for high contrast with white text
   const PALETTES = {
-    // 1. Thermal Infrared (Classic Awwwards Luxury Heatmap)
+    // 1. Thermal Infrared (Classic Awwwards Luxury Heatmap - rich velvet, magenta & warm amber)
     thermal: {
-      c0: [0.03, 0.04, 0.12], // Deep night void
-      c1: [0.12, 0.14, 0.65], // Royal cobalt
-      c2: [0.72, 0.08, 0.68], // Electric magenta
-      c3: [0.98, 0.38, 0.10], // Solar vermillion
-      c4: [0.99, 0.86, 0.18], // Luminous gold
-      c5: [1.00, 0.98, 0.94], // Incandescent core
+      c0: [0.02, 0.03, 0.09], // Deep nocturnal obsidian
+      c1: [0.10, 0.12, 0.58], // Royal cobalt
+      c2: [0.58, 0.05, 0.60], // Electric magenta
+      c3: [0.86, 0.22, 0.08], // Solar vermillion
+      c4: [0.96, 0.58, 0.10], // Luminous amber
+      c5: [1.00, 0.82, 0.50], // Warm solar gold core (no white blowout)
     },
-    // 2. Cyber Oceanic (Data & Traffic Flow Heatmap)
+    // 2. Cyber Oceanic (Data & Traffic Flow Heatmap - deep slate, electric cyan & emerald mint)
     cyber: {
-      c0: [0.02, 0.06, 0.09], // Deep dark slate
-      c1: [0.06, 0.24, 0.75], // Deep sapphire
-      c2: [0.03, 0.75, 0.82], // Electric cyan
-      c3: [0.10, 0.92, 0.58], // Neon emerald mint
-      c4: [0.75, 0.98, 0.35], // Chartreuse
-      c5: [0.96, 1.00, 0.98], // Superheated cyan-white
+      c0: [0.02, 0.05, 0.08], // Deep dark slate
+      c1: [0.04, 0.20, 0.65], // Deep sapphire
+      c2: [0.02, 0.62, 0.70], // Electric cyan
+      c3: [0.06, 0.78, 0.45], // Neon emerald mint
+      c4: [0.60, 0.88, 0.25], // Chartreuse
+      c5: [0.84, 0.96, 0.82], // Warm mint highlight
     },
-    // 3. Ultraviolet Amethyst (Deep Space / Cosmic Heatmap)
+    // 3. Ultraviolet Amethyst (Deep Space / Cosmic Heatmap - obsidian, violet & rose coral)
     ultraviolet: {
-      c0: [0.05, 0.02, 0.10], // Deep void
-      c1: [0.24, 0.08, 0.68], // Electric indigo
-      c2: [0.82, 0.14, 0.75], // Neon fuchsia
-      c3: [0.98, 0.28, 0.55], // Hot coral-rose
-      c4: [0.99, 0.76, 0.68], // Luminous peach
-      c5: [1.00, 0.96, 0.98], // White lavender
+      c0: [0.04, 0.02, 0.08], // Deep space void
+      c1: [0.18, 0.06, 0.58], // Electric indigo
+      c2: [0.68, 0.08, 0.65], // Neon fuchsia
+      c3: [0.85, 0.20, 0.45], // Hot coral-rose
+      c4: [0.94, 0.60, 0.55], // Luminous peach
+      c5: [0.96, 0.84, 0.88], // Lavender highlight
     },
-    // 4. Solar Magma (Volcanic / High Energy Heatmap)
+    // 4. Solar Magma (Volcanic / High Energy Heatmap - basalt, crimson & molten gold)
     magma: {
-      c0: [0.06, 0.03, 0.02], // Basalt void
-      c1: [0.55, 0.06, 0.14], // Deep crimson
-      c2: [0.92, 0.20, 0.06], // Fiery vermillion
-      c3: [0.99, 0.58, 0.06], // Solar tangerine
-      c4: [0.99, 0.88, 0.24], // Molten gold
-      c5: [1.00, 0.98, 0.92], // White-hot magma
+      c0: [0.05, 0.02, 0.02], // Basalt void
+      c1: [0.45, 0.05, 0.12], // Deep crimson
+      c2: [0.80, 0.15, 0.05], // Fiery vermillion
+      c3: [0.90, 0.45, 0.05], // Solar tangerine
+      c4: [0.96, 0.74, 0.16], // Molten gold
+      c5: [1.00, 0.88, 0.55], // Solar flare
     },
-    // 5. Cobalt Azure (Arctic / Deep Azure Heatmap)
+    // 5. Cobalt Azure (Arctic / Deep Azure Heatmap - midnight abyss, azure & ice)
     cobalt: {
-      c0: [0.02, 0.04, 0.14], // Midnight abyss
-      c1: [0.08, 0.22, 0.78], // Royal cobalt
-      c2: [0.12, 0.52, 0.95], // Electric azure
-      c3: [0.18, 0.85, 0.96], // Brilliant cyan
-      c4: [0.65, 0.95, 0.99], // Luminous ice
-      c5: [0.98, 1.00, 1.00], // Arctic flare
+      c0: [0.02, 0.03, 0.12], // Midnight abyss
+      c1: [0.06, 0.18, 0.68], // Royal cobalt
+      c2: [0.10, 0.42, 0.85], // Electric azure
+      c3: [0.14, 0.72, 0.85], // Brilliant cyan
+      c4: [0.50, 0.85, 0.92], // Luminous ice
+      c5: [0.82, 0.94, 0.96], // Arctic highlight
     }
   };
 
@@ -196,11 +197,11 @@ export default function CardShaderHover({
         } else if (t < 0.70) {
           float f = (t - 0.45) / 0.25;
           return mix(c2, c3, smoothstep(0.0, 1.0, f));
-        } else if (t < 0.90) {
-          float f = (t - 0.70) / 0.20;
+        } else if (t < 0.88) {
+          float f = (t - 0.70) / 0.18;
           return mix(c3, c4, smoothstep(0.0, 1.0, f));
         } else {
-          float f = clamp((t - 0.90) / 0.18, 0.0, 1.0);
+          float f = clamp((t - 0.88) / 0.12, 0.0, 1.0);
           return mix(c4, c5, smoothstep(0.0, 1.0, f));
         }
       }
@@ -226,36 +227,40 @@ export default function CardShaderHover({
         vec2 uv = vec2((st.x - 0.5) * aspect, st.y - 0.5);
         vec2 mouseUv = vec2((u_mouse.x - 0.5) * aspect, u_mouse.y - 0.5);
 
-        float t = u_time * 0.35;
+        float t = u_time * 0.32;
 
         // 3. Fluid Convection Warping
         vec2 warp = vec2(
-          fbm(uv * 2.2 + vec2(t * 0.28, -t * 0.18)),
-          fbm(uv * 2.2 + vec2(-t * 0.22, t * 0.32) + vec2(4.2, 7.8))
+          fbm(uv * 2.2 + vec2(t * 0.26, -t * 0.16)),
+          fbm(uv * 2.2 + vec2(-t * 0.20, t * 0.30) + vec2(4.2, 7.8))
         );
 
         vec2 fineWarp = vec2(
-          snoise(uv * 4.2 + warp * 1.1 + vec2(0.0, t * 0.38)),
-          snoise(uv * 4.2 - warp * 1.1 + vec2(t * 0.38, 0.0))
+          snoise(uv * 4.0 + warp * 1.1 + vec2(0.0, t * 0.35)),
+          snoise(uv * 4.0 - warp * 1.1 + vec2(t * 0.35, 0.0))
         );
 
         // 4. Dynamic Mouse Heat Emitter
-        float dMouse = length(uv + warp * 0.14 + fineWarp * 0.05 - mouseUv);
-        float mouseHeat = exp(-dMouse * 3.4) * 1.15 + exp(-dMouse * 1.4) * 0.35;
+        // Focused thermal emission at cursor, with smooth decaying falloff
+        float dMouse = length(uv + warp * 0.12 + fineWarp * 0.04 - mouseUv);
+        float mouseHeat = exp(-dMouse * 3.8) * 0.70 + exp(-dMouse * 1.8) * 0.24;
+        // Tight, pinpoint epicenter directly at the cursor tip
+        float pinpointCore = exp(-dMouse * 8.5) * 0.32;
 
-        // 5. Drifting Ambient Thermal Nodes (Server traffic / network activity simulation)
+        // 5. Drifting Ambient Thermal Nodes (gentle, never overpowering)
         vec2 node1Pos = vec2(sin(t * 0.65) * 0.32 * aspect, cos(t * 0.85) * 0.22);
         vec2 node2Pos = vec2(cos(t * 0.55 + 2.0) * 0.35 * aspect, sin(t * 0.75 + 1.2) * 0.25);
-        float dNode1 = length(uv + warp * 0.1 - node1Pos);
-        float dNode2 = length(uv + warp * 0.1 - node2Pos);
-        float nodeHeat = exp(-dNode1 * 3.5) * 0.32 + exp(-dNode2 * 3.8) * 0.26;
+        float dNode1 = length(uv + warp * 0.08 - node1Pos);
+        float dNode2 = length(uv + warp * 0.08 - node2Pos);
+        float nodeHeat = exp(-dNode1 * 3.8) * 0.20 + exp(-dNode2 * 4.0) * 0.16;
 
         // 6. Ambient Convective Fluid Heat Field
-        float ambientFluid = fbm(uv * 1.6 + warp * 0.45 + vec2(t * 0.12)) * 0.22;
+        float ambientFluid = fbm(uv * 1.5 + warp * 0.4 + vec2(t * 0.10)) * 0.18;
 
         // 7. Composite Thermal Intensity Field (T)
-        float temp = mouseHeat + nodeHeat + ambientFluid;
-        temp = clamp(temp, 0.0, 1.25);
+        // Scaled so average surface remains in deep rich chromatic spectrum (0.2..0.7)
+        float temp = mouseHeat + pinpointCore + nodeHeat + ambientFluid;
+        temp = clamp(temp, 0.0, 1.0);
 
         // 8. Thermal Spectral Color Mapping
         vec3 color = getThermalColor(temp, u_c0, u_c1, u_c2, u_c3, u_c4, u_c5);
@@ -263,19 +268,19 @@ export default function CardShaderHover({
         // 9. Subtle Isothermal Contour Rings (Scientific / High-Tech Topographic Data Aesthetic)
         float contourWave = fract(temp * 4.5);
         float contour = smoothstep(0.04, 0.0, abs(contourWave - 0.5));
-        float contourMask = smoothstep(0.18, 0.40, temp) * smoothstep(1.05, 0.85, temp);
-        color += vec3(0.14) * contour * contourMask;
+        float contourMask = smoothstep(0.20, 0.45, temp) * smoothstep(1.0, 0.80, temp);
+        color += vec3(0.12) * contour * contourMask;
 
         // 10. Analog Film Grain / Sensor Noise
         float grain = fract(sin(dot(gl_FragCoord.xy + fract(u_time * 2.0), vec2(12.9898, 78.233))) * 43758.5453);
-        color += (grain - 0.5) * 0.07;
+        color += (grain - 0.5) * 0.06;
 
         // 11. Soft Specular Caustic at Cursor Center
-        float cursorGlow = exp(-length(uv - mouseUv) * 3.8) * 0.28;
+        float cursorGlow = exp(-length(uv - mouseUv) * 4.2) * 0.22;
         color += vec3(cursorGlow);
 
         // 12. Final Subpixel Masked Alpha
-        float alpha = u_hover * 0.88 * cornerAlpha;
+        float alpha = u_hover * 0.82 * cornerAlpha;
         gl_FragColor = vec4(color, alpha);
       }
     `;
@@ -435,7 +440,7 @@ export default function CardShaderHover({
     <canvas
       ref={canvasRef}
       style={{ borderRadius: `${borderRadius}px` }}
-      className="absolute inset-0 pointer-events-none z-0 w-full h-full rounded-[inherit] overflow-hidden mix-blend-screen opacity-90 transition-opacity duration-300"
+      className="absolute inset-0 pointer-events-none z-0 w-full h-full rounded-[inherit] overflow-hidden mix-blend-screen opacity-85 transition-opacity duration-300"
     />
   );
 }

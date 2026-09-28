@@ -64,38 +64,41 @@ function CaseCard({ item, idx, lang, onOpenContact, t, getLocalized }) {
           borderRadius={24}
         />
 
+        {/* Contrast Scrim Protection Overlay: guarantees strong AAA contrast for all text */}
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-black/35 to-slate-950/60 pointer-events-none z-[2]" />
+
+        {/* Subtle Grid Pattern Accent */}
+        <div className="absolute inset-0 bg-grid-subtle opacity-15 pointer-events-none z-[3]"></div>
+
         {/* Top Bar with category tag & status */}
-        <div className="flex items-center justify-between z-10 gap-3">
-          <span className="font-mono text-xs text-white/70 uppercase tracking-widest truncate">
+        <div className="flex items-center justify-between z-10 gap-3 relative">
+          <span className="font-mono text-xs font-semibold text-white uppercase tracking-widest truncate drop-shadow-[0_2px_4px_rgba(0,0,0,0.95)]">
             {client} · 2026
           </span>
-          <span className="px-3 py-1 rounded-full text-xs font-mono font-bold bg-white/95 text-slate-950 shadow-lg shrink-0">
+          <span className="px-3.5 py-1 rounded-full text-xs font-mono font-bold bg-white text-slate-950 shadow-xl shrink-0">
             {badge}
           </span>
         </div>
 
         {/* Monumental Hero Metric */}
-        <div className="my-auto z-10 py-6">
-          <div className="text-4xl sm:text-6xl lg:text-7xl font-heading font-black text-white tracking-tighter">
+        <div className="my-auto z-10 py-6 relative">
+          <div className="text-4xl sm:text-6xl lg:text-7xl font-heading font-black text-white tracking-tighter drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)] drop-shadow-[0_1px_3px_rgba(0,0,0,0.95)]">
             {heroMetric ? heroMetric.value : '+340%'}
           </div>
-          <div className="text-xs sm:text-sm font-mono text-white/70 uppercase tracking-wider mt-2">
+          <div className="text-xs sm:text-sm font-mono font-bold text-white/95 uppercase tracking-wider mt-2 drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]">
             {heroMetric ? getLocalized(heroMetric.label) : (lang === 'en' ? 'Organic Revenue Surge' : (lang === 'kz' ? 'Органикалық өсім' : 'Рост выручки'))}
           </div>
         </div>
 
         {/* Bottom client mark */}
-        <div className="flex items-center justify-between z-10 pt-4 border-t border-white/10 gap-4">
-          <span className="text-sm font-heading font-bold text-white tracking-wide truncate">
+        <div className="flex items-center justify-between z-10 pt-4 border-t border-white/15 gap-4 relative">
+          <span className="text-sm sm:text-base font-heading font-bold text-white tracking-wide truncate drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]">
             {title}
           </span>
-          <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-white group-hover:bg-white group-hover:text-slate-950 transition-colors shrink-0">
+          <div className="w-8 h-8 rounded-full bg-white/15 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white group-hover:bg-white group-hover:text-slate-950 transition-all shrink-0 shadow-lg">
             <ArrowUpRight className="w-4 h-4" />
           </div>
         </div>
-
-        {/* Subtle Grid Pattern Accent */}
-        <div className="absolute inset-0 bg-grid-subtle opacity-20 pointer-events-none z-[1]"></div>
       </motion.div>
 
       {/* Minimalist Bottom Info with Proper Margins */}

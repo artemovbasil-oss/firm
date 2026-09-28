@@ -81,8 +81,11 @@ export default function ExpressAudit({ lang, onSuccessLead }) {
             borderRadius={24}
           />
           
+          {/* Contrast Protection Scrim Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/50 to-slate-950/70 pointer-events-none z-[2]" />
+
           {/* Subtle Ambient Glow */}
-          <div className="absolute top-0 right-0 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
+          <div className="absolute top-0 right-0 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none z-[1]"></div>
 
           <div className="relative z-10 max-w-4xl mx-auto text-center space-y-6">
             
