@@ -18,8 +18,8 @@ export const TRANSLATIONS = {
     hero: {
       badge: 'FIRM Studio · 2026',
       badgeDesc: 'Сайттар · Брендинг · Бағдарламалық қамтамасыз ету',
-      titleStart: 'Сандық крафт.',
-      titleHighlight: 'Нақты өсім.',
+      titleStart: 'Сайттар. Брендинг.',
+      titleHighlight: 'Софт.',
       desc: 'Нарықты бағындыратын жоғары жылдамдықты сайттар, айдентика және жеке бағдарламалық өнімдер.',
       ctaCalc: 'Сметаны есептеу',
       ctaAudit: 'Тегін аудит алу',
@@ -192,8 +192,8 @@ export const TRANSLATIONS = {
     hero: {
       badge: 'FIRM Studio · 2026',
       badgeDesc: 'Сайты · Брендинг · Заказное ПО',
-      titleStart: 'Цифровой крафт.',
-      titleHighlight: 'Взрывной рост.',
+      titleStart: 'Сайты. Брендинг.',
+      titleHighlight: 'Софт.',
       desc: 'Создаем высокотехнологичные сайты, брендинг и заказное ПО, которые трансформируют внимание в продажи.',
       ctaCalc: 'Рассчитать смету',
       ctaAudit: 'Получить аудит',
@@ -366,8 +366,8 @@ export const TRANSLATIONS = {
     hero: {
       badge: 'FIRM Studio · 2026',
       badgeDesc: 'Web · Branding · Custom Software',
-      titleStart: 'Digital Craft.',
-      titleHighlight: 'Real Impact.',
+      titleStart: 'Web. Brand.',
+      titleHighlight: 'Software.',
       desc: 'High-conversion platforms, iconic identity, and scalable software engineered to dominate industries.',
       ctaCalc: 'Estimate Scope',
       ctaAudit: 'Request Teardown',

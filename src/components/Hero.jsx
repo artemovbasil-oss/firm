@@ -2,6 +2,7 @@ import React from 'react';
 import { ArrowUpRight, ArrowDown } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { TRANSLATIONS } from '../data/translations';
+import HeroCanvas from './HeroCanvas';
 
 export default function Hero({ lang, onOpenContact }) {
   const t = TRANSLATIONS[lang].hero;
@@ -37,6 +38,29 @@ export default function Hero({ lang, onOpenContact }) {
 
   return (
     <section className="relative pt-36 pb-24 md:pt-48 md:pb-32 overflow-hidden ambient-glow-hero">
+      
+      {/* Background Video & Interactive Hover Canvas Layer */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none select-none z-0">
+        {/* Thematic Cinematic Fluid Video Loop */}
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          poster="/videos/hero-poster.jpg"
+          className="w-full h-full object-cover opacity-55 dark:opacity-40 transition-opacity duration-1000 scale-105"
+        >
+          <source src="/videos/hero-bg.mp4" type="video/mp4" />
+        </video>
+
+        {/* Interactive Mouse Hover Canvas Effect */}
+        <HeroCanvas />
+
+        {/* Dual Mode Atmospheric Gradient Overlay for 100% Readability */}
+        <div className="absolute inset-0 bg-gradient-to-b from-white/80 via-white/50 to-white dark:from-[#08090d]/85 dark:via-[#08090d]/60 dark:to-[#08090d]"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_75%_55%_at_50%_35%,rgba(0,0,0,0)_0%,var(--tw-gradient-stops))] from-transparent to-white dark:to-[#08090d]"></div>
+      </div>
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Live Studio Status */}
@@ -59,15 +83,15 @@ export default function Hero({ lang, onOpenContact }) {
           </div>
         </motion.div>
 
-        {/* Monumental Ultra-Short Headline */}
+        {/* Monumental Ultra-Short Headline (2-3 Words, No Awkward 4-Line Breaks) */}
         <div className="text-center max-w-5xl mx-auto">
           <motion.h1 
             initial={{ opacity: 0, y: 25 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-heading font-black tracking-tighter text-slate-950 dark:text-white leading-[0.96] sm:leading-[0.92] uppercase"
+            className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-heading font-black tracking-tight text-slate-950 dark:text-white leading-[1.04] sm:leading-[1.0] uppercase"
           >
-            {t.titleStart} <br />
+            <span>{t.titleStart}</span>{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-slate-900 via-slate-600 to-slate-900 dark:from-white dark:via-slate-400 dark:to-white">
               {t.titleHighlight}
             </span>
