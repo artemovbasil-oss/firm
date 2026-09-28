@@ -286,7 +286,7 @@ export default function AdminPanel({ isOpen, onClose, lang = 'ru' }) {
                 placeholder="Пароль администратора (по умолч.: firm2026)"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-3 rounded-xl bg-slate-900 border border-slate-800 text-white text-sm focus:outline-none focus:border-slate-600 transition-colors"
+                className="w-full px-4 py-3 rounded-xl input-studio text-sm focus:border-slate-400"
               />
 
               {authError && (
@@ -297,7 +297,7 @@ export default function AdminPanel({ isOpen, onClose, lang = 'ru' }) {
 
               <button
                 type="submit"
-                className="w-full py-3 rounded-xl bg-white hover:bg-slate-200 text-slate-950 font-bold text-sm transition-colors"
+                className="w-full py-3 rounded-xl bg-white hover:bg-slate-200 text-slate-950 font-bold text-sm btn-studio transition-colors"
               >
                 Войти в CRM
               </button>
@@ -525,11 +525,11 @@ export default function AdminPanel({ isOpen, onClose, lang = 'ru' }) {
                             value={newNote}
                             onChange={(e) => setNewNote(e.target.value)}
                             onKeyDown={(e) => e.key === 'Enter' && addLeadNote(selectedLead.id)}
-                            className="flex-1 px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-xs text-white placeholder-slate-500 focus:outline-none"
+                            className="flex-1 px-3 py-1.5 rounded-lg input-studio text-xs placeholder-slate-500"
                           />
                           <button
                             onClick={() => addLeadNote(selectedLead.id)}
-                            className="px-3 py-1.5 rounded-lg bg-white text-slate-950 font-bold text-xs"
+                            className="px-3 py-1.5 rounded-lg bg-white text-slate-950 font-bold text-xs btn-studio"
                           >
                             Записать
                           </button>
@@ -584,14 +584,18 @@ export default function AdminPanel({ isOpen, onClose, lang = 'ru' }) {
                       const newId = Date.now();
                       const newC = {
                         id: newId,
-                        title: { ru: 'Новый кейс', en: 'New Case Study' },
-                        client: { ru: 'Клиент', en: 'Client Name' },
-                        badge: { ru: 'Результат', en: 'Result Metric' },
-                        summary: { ru: 'Краткое описание проекта и достигнутых результатов.', en: 'Project summary and quantifiable outcomes achieved.' },
+                        title: { ru: 'Новый кейс', en: 'New Case Study', kz: 'Жаңа кейс' },
+                        client: { ru: 'Клиент', en: 'Client Name', kz: 'Клиент' },
+                        badge: { ru: 'Результат', en: 'Result Metric', kz: 'Нәтиже' },
+                        summary: { 
+                          ru: 'Краткое описание проекта и достигнутых результатов.', 
+                          en: 'Project summary and quantifiable outcomes achieved.',
+                          kz: 'Жобаның қысқаша сипаттамасы мен қол жеткізілген нәтижелер.'
+                        },
                         metrics: [
-                          { label: { ru: 'Метрика', en: 'Metric' }, value: '+100%' }
+                          { label: { ru: 'Метрика', en: 'Metric', kz: 'Метрика' }, value: '+100%' }
                         ],
-                        services: { ru: ['Разработка сайтов'], en: ['Web Development'] },
+                        services: { ru: ['Разработка сайтов'], en: ['Web Development'], kz: ['Сайттар әзірлеу'] },
                         tags: ['Websites'],
                         published: true
                       };
@@ -688,7 +692,7 @@ export default function AdminPanel({ isOpen, onClose, lang = 'ru' }) {
                         </button>
                       </div>
 
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                         <div>
                           <label className="block text-xs font-mono text-slate-400 mb-1">Название (RU):</label>
                           <input
@@ -698,7 +702,7 @@ export default function AdminPanel({ isOpen, onClose, lang = 'ru' }) {
                               ...editingCase,
                               title: { ...editingCase.title, ru: e.target.value }
                             })}
-                            className="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-800 text-xs text-white focus:outline-none"
+                            className="w-full px-3 py-2 rounded-xl input-studio text-xs text-white"
                           />
                         </div>
 
@@ -711,12 +715,25 @@ export default function AdminPanel({ isOpen, onClose, lang = 'ru' }) {
                               ...editingCase,
                               title: { ...editingCase.title, en: e.target.value }
                             })}
-                            className="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-800 text-xs text-white focus:outline-none"
+                            className="w-full px-3 py-2 rounded-xl input-studio text-xs text-white"
+                          />
+                        </div>
+
+                        <div>
+                          <label className="block text-xs font-mono text-slate-400 mb-1">Атауы (KZ):</label>
+                          <input
+                            type="text"
+                            value={editingCase.title?.kz || ''}
+                            onChange={(e) => setEditingCase({
+                              ...editingCase,
+                              title: { ...editingCase.title, kz: e.target.value }
+                            })}
+                            className="w-full px-3 py-2 rounded-xl input-studio text-xs text-white"
                           />
                         </div>
                       </div>
 
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                         <div>
                           <label className="block text-xs font-mono text-slate-400 mb-1">Бейдж / Результат (RU):</label>
                           <input
@@ -726,7 +743,7 @@ export default function AdminPanel({ isOpen, onClose, lang = 'ru' }) {
                               ...editingCase,
                               badge: { ...editingCase.badge, ru: e.target.value }
                             })}
-                            className="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-800 text-xs text-white focus:outline-none"
+                            className="w-full px-3 py-2 rounded-xl input-studio text-xs text-white"
                           />
                         </div>
 
@@ -739,35 +756,63 @@ export default function AdminPanel({ isOpen, onClose, lang = 'ru' }) {
                               ...editingCase,
                               badge: { ...editingCase.badge, en: e.target.value }
                             })}
-                            className="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-800 text-xs text-white focus:outline-none"
+                            className="w-full px-3 py-2 rounded-xl input-studio text-xs text-white"
+                          />
+                        </div>
+
+                        <div>
+                          <label className="block text-xs font-mono text-slate-400 mb-1">Бейдж / Нәтиже (KZ):</label>
+                          <input
+                            type="text"
+                            value={editingCase.badge?.kz || ''}
+                            onChange={(e) => setEditingCase({
+                              ...editingCase,
+                              badge: { ...editingCase.badge, kz: e.target.value }
+                            })}
+                            className="w-full px-3 py-2 rounded-xl input-studio text-xs text-white"
                           />
                         </div>
                       </div>
 
-                      <div>
-                        <label className="block text-xs font-mono text-slate-400 mb-1">Описание (RU):</label>
-                        <textarea
-                          rows="3"
-                          value={editingCase.summary?.ru || ''}
-                          onChange={(e) => setEditingCase({
-                            ...editingCase,
-                            summary: { ...editingCase.summary, ru: e.target.value }
-                          })}
-                          className="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-800 text-xs text-white focus:outline-none resize-none"
-                        ></textarea>
-                      </div>
+                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                        <div>
+                          <label className="block text-xs font-mono text-slate-400 mb-1">Описание (RU):</label>
+                          <textarea
+                            rows="3"
+                            value={editingCase.summary?.ru || ''}
+                            onChange={(e) => setEditingCase({
+                              ...editingCase,
+                              summary: { ...editingCase.summary, ru: e.target.value }
+                            })}
+                            className="w-full px-3 py-2 rounded-xl input-studio text-xs text-white resize-none"
+                          ></textarea>
+                        </div>
 
-                      <div>
-                        <label className="block text-xs font-mono text-slate-400 mb-1">Summary (EN):</label>
-                        <textarea
-                          rows="3"
-                          value={editingCase.summary?.en || ''}
-                          onChange={(e) => setEditingCase({
-                            ...editingCase,
-                            summary: { ...editingCase.summary, en: e.target.value }
-                          })}
-                          className="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-800 text-xs text-white focus:outline-none resize-none"
-                        ></textarea>
+                        <div>
+                          <label className="block text-xs font-mono text-slate-400 mb-1">Summary (EN):</label>
+                          <textarea
+                            rows="3"
+                            value={editingCase.summary?.en || ''}
+                            onChange={(e) => setEditingCase({
+                              ...editingCase,
+                              summary: { ...editingCase.summary, en: e.target.value }
+                            })}
+                            className="w-full px-3 py-2 rounded-xl input-studio text-xs text-white resize-none"
+                          ></textarea>
+                        </div>
+
+                        <div>
+                          <label className="block text-xs font-mono text-slate-400 mb-1">Сипаттамасы (KZ):</label>
+                          <textarea
+                            rows="3"
+                            value={editingCase.summary?.kz || ''}
+                            onChange={(e) => setEditingCase({
+                              ...editingCase,
+                              summary: { ...editingCase.summary, kz: e.target.value }
+                            })}
+                            className="w-full px-3 py-2 rounded-xl input-studio text-xs text-white resize-none"
+                          ></textarea>
+                        </div>
                       </div>
 
                       <div className="pt-3 border-t border-slate-800 flex justify-end gap-3">

@@ -2,27 +2,40 @@ export const INITIAL_SERVICES = [
   {
     id: 'websites',
     title: {
+      kz: 'Сайттар мен веб-сервистерді әзірлеу',
       ru: 'Разработка сайтов и веб-сервисов',
       en: 'Websites & Web Platform Engineering'
     },
     tagline: {
+      kz: 'Жоғары жылдамдық пен конверсиясы бар корпоративтік порталдар мен сервистер',
       ru: 'Корпоративные сайты, каталоги и платформы с безупречной скоростью и конверсией',
       en: 'Corporate portals, catalogs and platforms with flawless speed and conversion'
     },
     category: {
+      kz: 'Әзірлеу',
       ru: 'Разработка',
       en: 'Engineering'
     },
     icon: 'Globe',
     badge: {
+      kz: 'Флагман',
       ru: 'Флагман',
       en: 'Core Service'
     },
     description: {
+      kz: 'Кез келген ауқымдағы технологиялық сайттар: имидждік порталдардан күрделі e-commerce шешімдерге дейін. Толық бейімделу, SEO-архитектура, микроанимациялар және таза код.',
       ru: 'Проектируем и запускаем технологичные сайты любого масштаба: от имиджевых корпоративных порталов до нагруженных e-commerce решений. Полная адаптивность, SEO-friendly архитектура, микроанимации и чистый код.',
       en: 'We engineer robust digital platforms: from premium corporate websites to high-volume e-commerce. Flawless responsiveness, SEO-optimized markup, subtle animations, and clean modular code.'
     },
     deliverables: {
+      kz: [
+        'Терең алдын ала талдау және CJM картасы',
+        'Figma-да жеке интерактивті дизайн жүйесі',
+        'Mobile First бейімді верстка және интерфейс микроанимациялары',
+        'CMS / Headless / жеке API интеграциясы',
+        'Төлем жүйелері, CRM және аналитика (GA4, Метрика)',
+        'Google PageSpeed көрсеткіші 90+'
+      ],
       ru: [
         'Глубокий предпроектный анализ и CJM пользователя',
         'Индивидуальный интерактивный дизайн в Figma',
@@ -41,6 +54,7 @@ export const INITIAL_SERVICES = [
       ]
     },
     timeline: {
+      kz: '14 күннен бастап',
       ru: 'от 14 дней',
       en: 'from 14 days'
     },
@@ -51,6 +65,7 @@ export const INITIAL_SERVICES = [
     },
     popular: true,
     targetAudience: {
+      kz: 'Цифрлық көшбасшылыққа ұмтылған кез келген ауқымдағы компаниялар.',
       ru: 'Компании любого масштаба, которым нужен технологичный цифровой флагман бизнеса.',
       en: 'Companies of any scale requiring a cutting-edge digital flagship.'
     }
@@ -58,27 +73,40 @@ export const INITIAL_SERVICES = [
   {
     id: 'branding',
     title: {
+      kz: 'Брендинг және визуалды айдентика',
       ru: 'Брендинг и визуальная айдентика',
       en: 'Brand Strategy & Visual Identity'
     },
     tagline: {
+      kz: 'Сенім ұялататын, есте қалатын және қымбат сататын бренд бейнесі',
       ru: 'Создаем образ бренда, который запоминается, внушает доверие и продает дороже',
       en: 'Memorable brand systems that build instant trust and command higher pricing'
     },
     category: {
+      kz: 'Дизайн & Мағына',
       ru: 'Дизайн & Смыслы',
       en: 'Design & Identity'
     },
     icon: 'Palette',
     badge: {
+      kz: 'Премиум',
       ru: 'Премиум',
       en: 'Premium'
     },
     description: {
+      kz: 'Миссия мен Tone of Voice-тан бастап логотип, қаріптер жүйесі, брендбук және стиль тасымалдаушыларына дейін кешенді бренд жасаймыз.',
       ru: 'Разрабатываем комплексный бренд: от формулирования миссии и Tone of Voice до логотипа, шрифтовой системы, брендбука и всех носителей стиля.',
       en: 'End-to-end brand architecture: from mission statement and Tone of Voice to logo design, typographic hierarchy, guidelines, and branded assets.'
     },
     deliverables: {
+      kz: [
+        'Бәсекелестерді зерттеу және нарықтағы позициялау',
+        'Логотип тұжырымдамасы (таңдау үшін 3 ерекше нұсқа)',
+        'Түстер палитрасы, фирмалық типографика және паттерндер',
+        'Толық Брендбук және нұсқаулық (PDF + Figma)',
+        'Іскери құжаттама, мерч, баннерлер және полиграфия дизайны',
+        'Сайт пен әлеуметтік желілерге арналған цифрлық ассеттер'
+      ],
       ru: [
         'Анализ конкурентной среды и позиционирование бренда',
         'Концепция логотипа (3 уникальных вектора на выбор)',
@@ -97,6 +125,7 @@ export const INITIAL_SERVICES = [
       ]
     },
     timeline: {
+      kz: '12 күннен бастап',
       ru: 'от 12 дней',
       en: 'from 12 days'
     },
@@ -107,6 +136,7 @@ export const INITIAL_SERVICES = [
     },
     popular: false,
     targetAudience: {
+      kz: 'Жаңа брендтер және ребрендинг жасайтын өркендеуші компаниялар.',
       ru: 'Новые бренды, а также компании на этапе масштабирования и ребрендинга.',
       en: 'Ambitious startups and established firms scaling or undergoing rebranding.'
     }
@@ -114,27 +144,40 @@ export const INITIAL_SERVICES = [
   {
     id: 'landings',
     title: {
+      kz: 'Сатушы лендингтер (High-Conversion)',
       ru: 'Продающие лендинги (High-Conversion)',
       en: 'High-Converting Landing Pages'
     },
     tagline: {
+      kz: 'Аудитория қажеттілігіне дәл тиетін 8–22% конверсиялы парақшалар',
       ru: 'Одностраничники с конверсией 8–22%, бьющие точно в боли и желания вашей аудитории',
       en: 'Landing pages achieving 8–22% conversion rates engineered for immediate ROI'
     },
     category: {
+      kz: 'Маркетинг & Сатылым',
       ru: 'Маркетинг & Продажи',
       en: 'Growth & Sales'
     },
     icon: 'Sparkles',
     badge: {
+      kz: 'Хит',
       ru: 'Хит продаж',
       en: 'Top Seller'
     },
     description: {
+      kz: 'Біз жай ғана беттер жасамаймыз — лидтер тартатын маркетингтік жүйе құрамыз: сенім триггерлері, сатушы мәтіндер және квиздер.',
       ru: 'Мы не просто «рисуем страницы» — мы создаем маркетинговые машины генерации лидов. Выверенная структура смыслов, триггеры доверия, продающий копирайтинг и интерактивные квизы.',
       en: 'We craft high-performance lead generation engines. Precise messaging hierarchy, conversion psychology, persuasive copywriting, and interactive onboarding quizzes.'
     },
     deliverables: {
+      kz: [
+        'Мақсатты аудитория мен бәсекелестерді маркетингтік зерттеу',
+        'Қарсылықтарды сейілтетін сатушы копирайтинг',
+        'Заманауи эстетикалық UX/UI дизайн',
+        'Лидтерді жылытуға арналған интерактивті квиздер',
+        'A/B сплит-тестілеу',
+        'Telegram, WhatsApp және CRM-мен жылдам синхрондау'
+      ],
       ru: [
         'Маркетинговый аудит ЦА и офферов конкурентов',
         'Сильный продающий копирайтинг с отработкой возражений',
@@ -153,6 +196,7 @@ export const INITIAL_SERVICES = [
       ]
     },
     timeline: {
+      kz: '7 күннен бастап',
       ru: 'от 7 дней',
       en: 'from 7 days'
     },
@@ -163,6 +207,7 @@ export const INITIAL_SERVICES = [
     },
     popular: true,
     targetAudience: {
+      kz: 'Жаңа өнімді іске қосу, трафик тарту, жедел лидогенерация.',
       ru: 'Запуск новых продуктов, сбор предзаказов, платный трафик, лидогенерация.',
       en: 'Product launches, paid advertising campaigns, pre-orders, and scalable lead gen.'
     }
@@ -170,27 +215,40 @@ export const INITIAL_SERVICES = [
   {
     id: 'presentations',
     title: {
+      kz: 'Презентациялар және Pitch Decks',
       ru: 'Презентации и Pitch Decks',
       en: 'Investor Pitch Decks & B2B Decks'
     },
     tagline: {
+      kz: 'Миллиондаған инвестиция тартып, ірі мәмілелерді жабатын презентациялар',
       ru: 'Инвестиционные и коммерческие презентации, привлекающие миллионы и закрывающие сделки',
       en: 'Decks that secure venture capital and win high-ticket B2B contracts'
     },
     category: {
+      kz: 'Дизайн & Стратегия',
       ru: 'Дизайн & Смыслы',
       en: 'Decks & Strategy'
     },
     icon: 'Presentation',
     badge: {
+      kz: 'High Impact',
       ru: 'High Impact',
       en: 'High Impact'
     },
     description: {
+      kz: 'Күрделі өнімдерді инвесторлар мен ірі клиенттер үшін қарапайым әрі көрнекі слайдтарға жинақтаймыз. $500K-дан $10M-ға дейін раундтар тарту тәжірибесі бар.',
       ru: 'Упаковываем сложные продукты в понятные и визуально убедительные слайды. Делали питч-деки для стартапов, поднявших раунды от $500K до $10M, а также КП для B2B-контрактов.',
       en: 'We distill complex business models into compelling narratives. Proven track record helping founders raise Seed to Series B rounds ($500K to $10M+) and enterprise B2B closes.'
     },
     deliverables: {
+      kz: [
+        'Жобаның қаржылық моделі мен трекшенін құрылымдау',
+        'Инвесторлар мен шешім қабылдаушыларға арналған копирайтинг',
+        'Премиум графикалық дизайн, инфографика және диаграммалар',
+        'Интерактивті PDF + Figma / Keynote / PowerPoint файлдары',
+        'Басып шығару нұсқасы және мобильді дайджест',
+        'Питчинг пен сөз сөйлеуге арналған ұсынымдар'
+      ],
       ru: [
         'Структурирование сути проекта, финансовой модели и трекшена',
         'Копирайтинг для инвесторов и корпоративных ЛПР',
@@ -209,6 +267,7 @@ export const INITIAL_SERVICES = [
       ]
     },
     timeline: {
+      kz: '5 күннен бастап',
       ru: 'от 5 дней',
       en: 'from 5 days'
     },
@@ -219,6 +278,7 @@ export const INITIAL_SERVICES = [
     },
     popular: false,
     targetAudience: {
+      kz: 'Стартап негізін қалаушылар, B2B компаниялар, сатылым бөлімдері.',
       ru: 'Фаундеры стартапов, B2B-компании, спикеры конференций, отделы продаж.',
       en: 'Tech founders, B2B enterprise sales teams, conference keynote speakers.'
     }
@@ -226,27 +286,40 @@ export const INITIAL_SERVICES = [
   {
     id: 'software',
     title: {
+      kz: 'Арнайы БҚ (ПО) және SaaS әзірлеу',
       ru: 'Разработка кастомного ПО и SaaS',
       en: 'Custom Software & SaaS Development'
     },
     tagline: {
+      kz: 'Жеке тапсырмаларға арналған цифрлық өнімдер, веб-сервистер мен интеграциялар',
       ru: 'Цифровые продукты, автоматизация, веб-сервисы и интеграции под индивидуальные задачи',
       en: 'Tailored web apps, SaaS platforms, Telegram Web Apps and custom backend APIs'
     },
     category: {
+      kz: 'Инжиниринг',
       ru: 'Инжиниринг',
       en: 'Engineering'
     },
     icon: 'Code2',
     badge: {
+      kz: 'Tech Core',
       ru: 'Tech Core',
       en: 'Tech Core'
     },
     description: {
+      kz: 'Сенімді веб-қосымшалар, жеке кабинеттер, SaaS-платформалар, Telegram Web Apps және ішкі CRM/ERP жүйелерін әзірлейміз.',
       ru: 'Разрабатываем отказоустойчивые веб-приложения, личные кабинеты, SaaS-платформы, Telegram Web Apps и внутренние CRM/ERP системы с чистой архитектурой.',
       en: 'We architect and build scalable web platforms, client portals, SaaS applications, Telegram mini apps, and workflow automation systems built with clean, modern code.'
     },
     deliverables: {
+      kz: [
+        'Техникалық сипаттама, сәулет жоспары және деректер моделі',
+        'Full-stack әзірлеу (React, Next.js, Node.js, Python, PostgreSQL, Redis)',
+        'Банктермен, CRM, 1C және сыртқы API-мен интеграция',
+        'Қауіпсіздік тестілеуі, жүктемелік стресс-тесттер',
+        'Docker контейнерлеу, CI/CD және бұлтқа үздіксіз деплой',
+        '30 күндік кепілдік қолдау, бастапқы код пен құжаттаманы тапсыру'
+      ],
       ru: [
         'Техническое задание, архитектурный план и модель данных',
         'Разработка frontend (React, Next.js, Vue) и backend (Node.js, Python, Go)',
@@ -265,6 +338,7 @@ export const INITIAL_SERVICES = [
       ]
     },
     timeline: {
+      kz: '20 күннен бастап',
       ru: 'от 20 дней',
       en: 'from 20 days'
     },
@@ -275,6 +349,7 @@ export const INITIAL_SERVICES = [
     },
     popular: true,
     targetAudience: {
+      kz: 'Жеке процестері бар бизнестер, стартаптар, сервистік платформалар.',
       ru: 'Бизнесы с нестандартными бизнес-процессами, стартапы, сервисные платформы.',
       en: 'Growing businesses requiring bespoke workflow automation or proprietary IP.'
     }
@@ -282,27 +357,40 @@ export const INITIAL_SERVICES = [
   {
     id: 'seo_audit',
     title: {
+      kz: 'Аудит және SEO-оңтайландыру',
       ru: 'Аудит и SEO-оптимизация',
       en: 'SEO Dominance & Conversion Audit'
     },
     tagline: {
+      kz: 'Сайтты терең талдау, қателерді жою және тұрақты органикалық трафик ағыны',
       ru: 'Глубокий аудит сайта, устранение ошибок и стабильный поток органического трафика',
       en: 'In-depth CRO audits, technical fixes, and predictable organic search traffic'
     },
     category: {
+      kz: 'Маркетинг & SEO',
       ru: 'Маркетинг & Аналитика',
       en: 'Marketing & SEO'
     },
     icon: 'Search',
     badge: {
+      kz: '3-5x Өсім',
       ru: 'Рост в 3-5x',
       en: '3-5x Growth'
     },
     description: {
+      kz: 'Ресурсыңыздың кешенді техникалық және іздеу аудиті. Бюджетті жейтін қателерді анықтап, сайтты Google және Яндекс ТОП-3-ке шығарамыз.',
       ru: 'Комплексный технический и поисковый аудит вашего ресурса. Выявляем критические ошибки, съедающие бюджет, собираем полное семантическое ядро и выводим проект в ТОП-3 выдачи.',
       en: 'Holistic technical and organic search optimization. Eliminating silent conversion killers, mapping keyword clusters, and securing dominant top-ranking search positions.'
     },
     deliverables: {
+      kz: [
+        'Техникалық жай-күйдің толық аудиті (жылдамдық, индекс, көшірмелер)',
+        'Конверсия UX/UI аудиті (CRO) және қолданушылар картасы',
+        'Іздеу сұраныстарының толық семантикалық ядросын жинау',
+        'Ішкі оңтайландыру (метатегтер, микробелгілер, сілтемелер)',
+        'Контент-жоспар және сенімді сілтемелік массаны өсіру',
+        'Позициялар мен трафик динамикасы бойынша ай сайынғы ашық есептер'
+      ],
       ru: [
         'Полный аудит технического состояния (скорость, дубли, индексация)',
         'UX/UI аудит конверсии (CRO) и карта кликов пользователей',
@@ -321,6 +409,7 @@ export const INITIAL_SERVICES = [
       ]
     },
     timeline: {
+      kz: '10 күннен бастап',
       ru: 'от 10 дней',
       en: 'from 10 days'
     },
@@ -331,6 +420,7 @@ export const INITIAL_SERVICES = [
     },
     popular: false,
     targetAudience: {
+      kz: 'Жұмыс істеп тұрған сайттар, интернет-дүкендер, трафик бағасын төмендеткісі келетіндер.',
       ru: 'Действующие сайты, интернет-магазины, компании с дорогим платным кликом.',
       en: 'Live web platforms, e-commerce stores, and brands seeking cheaper organic CAC.'
     }
@@ -338,27 +428,40 @@ export const INITIAL_SERVICES = [
   {
     id: 'smm',
     title: {
+      kz: 'Әлеуметтік желілерді жүргізу және SMM',
       ru: 'Ведение соцсетей и контент-маркетинг',
       en: 'Social Media Management & Video SMM'
     },
     tagline: {
+      kz: 'Сараптамалық визуал, вирустық Reels/Shorts және өтінімдер ағыны',
       ru: 'Экспертный визуал, виральные Reels/Shorts и прогревы, формирующие поток заявок',
       en: 'Authoritative visuals, viral Reels/Shorts, and high-engagement content funnels'
     },
     category: {
+      kz: 'SMM & Видео',
       ru: 'Маркетинг & Продажи',
       en: 'Social & Video'
     },
     icon: 'Share2',
     badge: {
+      kz: 'Қамту & Лид',
       ru: 'Охваты & Лиды',
       en: 'Reach & Leads'
     },
     description: {
+      kz: 'Әлеуметтік желілерді тұрақты клиент тарту көзіне айналдырамыз. Авторлық стиль, сценарийлер, Reels монтажы және таргет.',
       ru: 'Трансформируем социальные сети в регулярный канал генерации клиентов. Создаем сильный авторский стиль, пишем сценарии, монтируем цепляющие рилсы и выстраиваем воронки вовлечения.',
       en: 'We convert social channels into steady client pipelines. Signature art direction, viral short-form video production, expert ghostwriting, and community management.'
     },
     deliverables: {
+      kz: [
+        'Сегментке бейімделген контент-стратегия мен жариялау жоспары',
+        'Парақшаның біртұтас визуалды стилі (тор, мұқабалар, Highlights)',
+        'Reels / Shorts бейнероликтерінің сценарийлері мен өндірісі',
+        'Тартымды сатушы жазбалар копирайтингі',
+        'Комьюнити-менеджмент және директ өтінімдерін өңдеу',
+        'Таргеттік жарнаманы реттеу және блогерлермен интеграция'
+      ],
       ru: [
         'Разработка контент-стратегии и рубрикатора под ваш сегмент',
         'Создание единого визуального стиля профиля (сетка, обложки, Highlights)',
@@ -377,6 +480,7 @@ export const INITIAL_SERVICES = [
       ]
     },
     timeline: {
+      kz: '1 айдан бастап',
       ru: 'от 1 месяца',
       en: 'from 1 month'
     },
@@ -387,6 +491,7 @@ export const INITIAL_SERVICES = [
     },
     popular: false,
     targetAudience: {
+      kz: 'Сарапшылар, ритейл, қызмет көрсету саласы, B2C және B2B брендтер.',
       ru: 'Эксперты, ритейл, сфера услуг, B2C бренды и B2B компании, строящие бренд.',
       en: 'Founders, retail brands, high-ticket service companies, and B2B executives.'
     }
@@ -394,27 +499,40 @@ export const INITIAL_SERVICES = [
   {
     id: 'packaging',
     title: {
+      kz: 'Бизнесті толық 360° қаптау',
       ru: 'Комплексная упаковка бизнеса под ключ',
       en: 'Turnkey Business Packaging 360°'
     },
     tagline: {
+      kz: 'Бизнесті біртұтас жинаймыз: мықты мағыналар, дизайн және сату воронкасы',
       ru: 'Собираем бизнес воедино: сильные смыслы, премиальный дизайн и сквозная воронка',
       en: 'Unifying your business: undeniable positioning, world-class design, and sales funnels'
     },
     category: {
+      kz: '360° Стратегия',
       ru: 'Стратегия 360°',
       en: '360° Transformation'
     },
     icon: 'PackageCheck',
     badge: {
+      kz: 'All Inclusive',
       ru: 'All Inclusive',
       en: 'All Inclusive'
     },
     description: {
+      kz: 'Нарық көшбасшыларына арналған кешенді формат: позициялау мен стратегиядан бастап сайтқа, мерчке және сату сценарийлеріне дейін.',
       ru: 'Флагманский формат для лидеров рынка. Мы берем ваш бизнес и упаковываем каждую точку контакта: от позиционирования и маркетинговой стратегии до сайта, фирстиля, соцсетей и скриптов продаж.',
       en: 'Our premier flagship engagement. We audit and transform every single brand touchpoint: positioning, visual identity, digital platforms, sales decks, social assets, and sales enablement.'
     },
     deliverables: {
+      kz: [
+        'Терең зерттеу, CustDev сұхбаттары және ерекше сауда ұсынысы (УТП)',
+        'Фирмалық стиль мен көлемді Брендбукті толық жасау',
+        'Негізгі бағыттар бойынша сатушы сайт немесе экосистема',
+        'Маркетинг-кит, коммерциялық ұсыныстар және компания презентациясы',
+        'Әлеуметтік желілерді қаптау және лидогенерация жүйесі',
+        'Клиент жолын цифрландыру және түпкілікті аналитика'
+      ],
       ru: [
         'Глубинное исследование рынка, CustDev интервью и выжимка УТП',
         'Полная разработка корпоративного стиля и брендбука',
@@ -433,6 +551,7 @@ export const INITIAL_SERVICES = [
       ]
     },
     timeline: {
+      kz: '25 күннен бастап',
       ru: 'от 25 дней',
       en: 'from 25 days'
     },
@@ -443,6 +562,7 @@ export const INITIAL_SERVICES = [
     },
     popular: true,
     targetAudience: {
+      kz: 'Жаңа бағыттарды іске қосатын немесе сапалық секіріс жасайтын бизнес иелері.',
       ru: 'Собственники бизнеса, запускающие новые направления или делающие квантовый скачок.',
       en: 'Business owners launching major new product lines or scaling to market leadership.'
     }
@@ -453,29 +573,34 @@ export const INITIAL_CASES = [
   {
     id: 1,
     title: {
+      kz: 'FinCore — Финтех платформасы және B2B SaaS',
       ru: 'FinCore — Финтех платформа и B2B SaaS',
       en: 'FinCore — FinTech Platform & B2B SaaS'
     },
     client: {
-      ru: 'FinCore Technologies (UK / International)',
+      kz: 'FinCore Technologies (Ұлыбритания / Халықаралық)',
+      ru: 'FinCore Technologies (Великобритания / СНГ)',
       en: 'FinCore Technologies (UK / International)'
     },
     services: {
+      kz: ['Бағдарлама әзірлеу', 'Брендинг', 'Презентация'],
       ru: ['Разработка ПО', 'Брендинг', 'Презентация'],
       en: ['Software Dev', 'Branding', 'Pitch Deck']
     },
     badge: {
+      kz: '+340% лид өсімі',
       ru: '+340% лидов',
       en: '+340% Inbound Leads'
     },
     summary: {
+      kz: 'Жеке кабинет веб-қосымшасын әзірлеп, ребрендинг өткіздік және $3.2M көлемінде Series A раундын жабуға көмектескен Pitch Deck жасадық.',
       ru: 'Разработали веб-приложение личного кабинета, провели ребрендинг и создали Pitch Deck, который помог закрыть инвестиционный раунд Series A на $3.2M.',
       en: 'Engineered a client portal dashboard, refreshed brand architecture, and authored an investor deck that secured a $3.2M Series A round.'
     },
     metrics: [
-      { label: { ru: 'Привлечено инвестиций', en: 'Capital Raised' }, value: '$3.2M' },
-      { label: { ru: 'Рост конверсии', en: 'Conversion Boost' }, value: '+340%' },
-      { label: { ru: 'Срок реализации', en: 'Time to Market' }, value: '38 d' }
+      { label: { kz: 'Тартылған инвестиция', ru: 'Привлечено инвестиций', en: 'Capital Raised' }, value: '$3.2M' },
+      { label: { kz: 'Конверсия өсімі', ru: 'Рост конверсии', en: 'Conversion Boost' }, value: '+340%' },
+      { label: { kz: 'Іске асыру мерзімі', ru: 'Срок реализации', en: 'Time to Market' }, value: '38 к.' }
     ],
     tags: ['SaaS', 'FinTech', 'React', 'Pitch Deck'],
     published: true
@@ -483,29 +608,34 @@ export const INITIAL_CASES = [
   {
     id: 2,
     title: {
+      kz: 'Aura Living — Премиум жылжымайтын мүлік',
       ru: 'Aura Living — Премиальный девелопмент',
       en: 'Aura Living — Luxury Real Estate Development'
     },
     client: {
+      kz: 'Aura Real Estate Group',
       ru: 'Aura Real Estate Group',
       en: 'Aura Real Estate Group'
     },
     services: {
+      kz: ['Сатушы лендингтер', 'Брендинг', 'Презентациялар'],
       ru: ['Продающие лендинги', 'Брендинг', 'Презентации'],
       en: ['Landing Pages', 'Branding', 'Decks']
     },
     badge: {
+      kz: 'CPL 2.8 есе азайды',
       ru: 'CPL снижен в 2.8 раза',
       en: 'CPL Reduced 64%'
     },
     summary: {
+      kz: '3D-турлары, пәтер таңдау квизі және инвесторларға арналған сандық каталогы бар тұрғын үй кешенінің промо-парақшасын жасадық.',
       ru: 'Создали интерактивную промо-страницу жилого комплекса бизнес-класса с 3D-турами, квизом подбора планировки и премиальным каталогом для инвесторов.',
       en: 'Created an interactive luxury residential landing page with 3D tours, apartment selector quiz, and an investor-facing digital catalog.'
     },
     metrics: [
-      { label: { ru: 'Стоимость лида (CPL)', en: 'Cost Per Lead' }, value: '-64%' },
-      { label: { ru: 'Броней за 1 месяц', en: 'Pre-sales Month 1' }, value: '47 units' },
-      { label: { ru: 'Конверсия страницы', en: 'Page Conversion' }, value: '11.4%' }
+      { label: { kz: 'Лид құны (CPL)', ru: 'Стоимость лида (CPL)', en: 'Cost Per Lead' }, value: '-64%' },
+      { label: { kz: '1 айдағы броньдар', ru: 'Броней за 1 месяц', en: 'Pre-sales Month 1' }, value: '47 дана' },
+      { label: { kz: 'Парақша конверсиясы', ru: 'Конверсия страницы', en: 'Page Conversion' }, value: '11.4%' }
     ],
     tags: ['Landing Page', 'Branding', 'Real Estate'],
     published: true
@@ -513,29 +643,34 @@ export const INITIAL_CASES = [
   {
     id: 3,
     title: {
+      kz: 'PromEquip — Өндірістік жабдық жеткізушісі',
       ru: 'PromEquip — Федеральный B2B поставщик',
       en: 'PromEquip — Industrial B2B Equipment'
     },
     client: {
+      kz: 'ПромЭквип Инжиниринг',
       ru: 'ПромЭквип Инжиниринг',
       en: 'PromEquip Engineering'
     },
     services: {
+      kz: ['Сайт әзірлеу', 'SEO оңтайландыру', 'Бизнесті қаптау'],
       ru: ['Разработка сайтов', 'SEO-оптимизация', 'Упаковка бизнеса'],
       en: ['Web Platform', 'SEO Optimization', 'Business Packaging']
     },
     badge: {
+      kz: 'Трафик x5.2',
       ru: 'Трафик x5.2',
       en: 'Organic Traffic x5.2'
     },
     summary: {
+      kz: '18 000+ тауары бар жабдықтар каталогы, 1С интеграциясы және терең SEO. Іздеу жүйелерінің ТОП-3-іне 650-ден астам сұраныс шықты.',
       ru: 'Каталог оборудования на 18 000+ SKU с умным фильтром, полной интеграцией 1С и глубоким SEO. Вывели более 650 высокочастотных запросов в ТОП-3 поисковиков.',
       en: '18,000+ SKU industrial catalog with smart filtering, live ERP sync, and structural SEO ranking 650+ high-intent commercial keywords in Top 3.'
     },
     metrics: [
-      { label: { ru: 'Рост SEO-трафика', en: 'Organic Traffic' }, value: '+520%' },
-      { label: { ru: 'Запросов в ТОП-3', en: 'Keywords in Top 3' }, value: '650+' },
-      { label: { ru: 'Окупаемость проекта', en: 'Payback Period' }, value: '2.5 mo' }
+      { label: { kz: 'SEO-трафик өсімі', ru: 'Рост SEO-трафика', en: 'Organic Traffic' }, value: '+520%' },
+      { label: { kz: 'ТОП-3 сұраныстар', ru: 'Запросов в ТОП-3', en: 'Keywords in Top 3' }, value: '650+' },
+      { label: { kz: 'Өзін-өзі ақтау мерзімі', ru: 'Окупаемость проекта', en: 'Payback Period' }, value: '2.5 ай' }
     ],
     tags: ['Websites', 'SEO Optimization', 'Full Packaging'],
     published: true
@@ -543,29 +678,34 @@ export const INITIAL_CASES = [
   {
     id: 4,
     title: {
+      kz: 'Nordic Clinic — Жеке клиникалар желісі',
       ru: 'Nordic Clinic — Сеть медицинских центров',
       en: 'Nordic Clinic — Private Healthcare Chain'
     },
     client: {
+      kz: 'Nordic Health Group',
       ru: 'Nordic Health Group',
       en: 'Nordic Health Group'
     },
     services: {
+      kz: ['Бизнесті қаптау', 'SMM жүргізу', 'Сайт әзірлеу'],
       ru: ['Упаковка бизнеса', 'Ведение соцсетей', 'Разработка сайтов'],
       en: ['Business Packaging', 'SMM', 'Websites']
     },
     badge: {
+      kz: '+210% жазылу',
       ru: '+210% записей',
       en: '+210% Patient Bookings'
     },
     summary: {
+      kz: '5 филиалды толық қаптау: дәрігерге онлайн жазылу, сараптамалық Reels контенті, фирмалық стиль және пациенттердің үздіксіз ағыны.',
       ru: 'Полная упаковка 5 филиалов: онлайн-запись к врачам, контент-стратегия с экспертными Reels, обновленный фирменный стиль и сквозная воронка пациентов.',
       en: 'End-to-end transformation of 5 clinic branches: doctor appointment scheduling, expert short-form video funnels, unified brand identity, and patient CJM.'
     },
     metrics: [
-      { label: { ru: 'Первичных записей', en: 'New Bookings' }, value: '+210%' },
-      { label: { ru: 'Охват в соцсетях', en: 'Social Reach' }, value: '480K / mo' },
-      { label: { ru: 'Средний чек', en: 'Average Ticket' }, value: '+35%' }
+      { label: { kz: 'Алғашқы жазылулар', ru: 'Первичных записей', en: 'New Bookings' }, value: '+210%' },
+      { label: { kz: 'Желілердегі қамту', ru: 'Охват в соцсетях', en: 'Social Reach' }, value: '480K / ай' },
+      { label: { kz: 'Орташа чек', ru: 'Средний чек', en: 'Average Ticket' }, value: '+35%' }
     ],
     tags: ['Full Packaging', 'SMM', 'Websites'],
     published: true
@@ -573,29 +713,34 @@ export const INITIAL_CASES = [
   {
     id: 5,
     title: {
+      kz: 'DataPulse — AI-аналитика платформасы',
       ru: 'DataPulse — Платформа AI-аналитики',
       en: 'DataPulse — AI Analytics SaaS'
     },
     client: {
+      kz: 'DataPulse Analytics',
       ru: 'DataPulse Analytics',
       en: 'DataPulse Analytics'
     },
     services: {
+      kz: ['Бағдарлама әзірлеу', 'Сатушы лендингтер', 'Аудит'],
       ru: ['Разработка ПО', 'Продающие лендинги', 'Аудит'],
       en: ['Software Dev', 'Landing Page', 'Audit']
     },
     badge: {
+      kz: 'MVP 21 күнде',
       ru: 'MVP за 21 день',
       en: 'MVP in 21 Days'
     },
     summary: {
+      kz: 'Жоғары деректер ағынын өңдейтін AI негізіндегі аналитикалық дашборд үшін интерфейсті жобалап, ауқымды MVP жасадық.',
       ru: 'Спроектировали интерфейс и разработали масштабируемый MVP для аналитического дашборда на базе AI с высокой пропускной способностью данных.',
       en: 'Designed and deployed a high-throughput AI dashboard MVP with modern analytics visualizations and multi-tenant security in 21 days.'
     },
     metrics: [
-      { label: { ru: 'Срок запуска MVP', en: 'MVP Timeline' }, value: '21 d' },
-      { label: { ru: 'NPS пользователей', en: 'User NPS' }, value: '94 / 100' },
-      { label: { ru: 'Uptime системы', en: 'Uptime SLA' }, value: '99.98%' }
+      { label: { kz: 'Іске қосу мерзімі', ru: 'Срок запуска MVP', en: 'MVP Timeline' }, value: '21 күн' },
+      { label: { kz: 'Пайдаланушы NPS', ru: 'NPS пользователей', en: 'User NPS' }, value: '94 / 100' },
+      { label: { kz: 'Uptime тұрақтылығы', ru: 'Uptime системы', en: 'Uptime SLA' }, value: '99.98%' }
     ],
     tags: ['SaaS', 'Software Dev', 'Landing Page'],
     published: true
@@ -603,29 +748,34 @@ export const INITIAL_CASES = [
   {
     id: 6,
     title: {
+      kz: 'Vogue Craft — Зергерлік ателье',
       ru: 'Vogue Craft — Ювелирное ателье',
       en: 'Vogue Craft — Bespoke Jewelry Atelier'
     },
     client: {
+      kz: 'Vogue Craft Atelier',
       ru: 'Vogue Craft Atelier',
       en: 'Vogue Craft Atelier'
     },
     services: {
+      kz: ['Брендинг', 'SMM жүргізу', 'Бизнесті қаптау'],
       ru: ['Брендинг', 'Ведение соцсетей', 'Упаковка бизнеса'],
       en: ['Branding', 'SMM', 'Business Packaging']
     },
     badge: {
+      kz: 'ROAS 6.4x',
       ru: 'ROAS 6.4x',
       en: 'ROAS 6.4x'
     },
     summary: {
+      kz: 'Нөлден жасалған айдентика, топтаманы қаптау, сатушы визуал және жарнаманың 640% өзін-өзі ақтауымен таргетингтік науқан.',
       ru: 'Айдентика с нуля, упаковка коллекции, продающий визуал и таргетированная кампания в социальных сетях с окупаемостью рекламы 640%.',
       en: 'Zero-to-one visual identity, high-end collection styling, and performance social campaigns delivering a 6.4x Return on Ad Spend (ROAS).'
     },
     metrics: [
-      { label: { ru: 'Окупаемость рекламы', en: 'ROAS' }, value: '6.4x' },
-      { label: { ru: 'Новых клиентов', en: 'New Clients' }, value: '1,200+' },
-      { label: { ru: 'Узнаваемость бренда', en: 'Brand Recall' }, value: '+180%' }
+      { label: { kz: 'Жарнама окупаемость (ROAS)', ru: 'Окупаемость рекламы', en: 'ROAS' }, value: '6.4x' },
+      { label: { kz: 'Жаңа сатып алушылар', ru: 'Новых клиентов', en: 'New Clients' }, value: '1,200+' },
+      { label: { kz: 'Бренд танымалдығы', ru: 'Узнаваемость бренда', en: 'Brand Recall' }, value: '+180%' }
     ],
     tags: ['Branding', 'SMM', 'Full Packaging'],
     published: true
@@ -635,53 +785,58 @@ export const INITIAL_CASES = [
 export const WORK_PROCESS = [
   {
     step: '01',
-    title: { ru: 'Брифинг & Аудит', en: 'Briefing & Discovery' },
+    title: { kz: 'Брифинг & Зерттеу', ru: 'Брифинг & Аудит', en: 'Briefing & Discovery' },
     desc: {
+      kz: 'Бизнесіңіздің көрсеткіштерін, бәсекелестерді зерттеп, мақсаттарды нақтылаймыз және жобаның басты кезеңдерін бекітеміз.',
       ru: 'Погружаемся в ваш бизнес, проводим исследование конкурентов, оцифровываем цели, фиксируем ключевые метрики и формируем дорожную карту.',
       en: 'We immerse into your unit economics, analyze competitor landscapes, define KPIs, and chart a milestone-backed project roadmap.'
     },
-    time: { ru: '1–2 дня', en: '1–2 days' },
-    artifact: { ru: 'MindMap проекта & ТЗ', en: 'Product Specs & MindMap' }
+    time: { kz: '1–2 күн', ru: '1–2 дня', en: '1–2 days' },
+    artifact: { kz: 'Жоба MindMap & ТЗ', ru: 'MindMap проекта & ТЗ', en: 'Product Specs & MindMap' }
   },
   {
     step: '02',
-    title: { ru: 'Архитектура & Смыслы', en: 'Architecture & Strategy' },
+    title: { kz: 'Архитектура & Мағына', ru: 'Архитектура & Смыслы', en: 'Architecture & Strategy' },
     desc: {
+      kz: 'Сатушы құрылым жасаймыз, мағыналы копирайтинг жазамыз және барынша конверсияға бағытталған интерактивті прототип құрамыз.',
       ru: 'Формируем продающую структуру, пишем сильный копирайтинг, проектируем UX-прототип и выстраиваем путь пользователя к покупке.',
       en: 'We structure the narrative hierarchy, craft compelling copy, and produce interactive wireframe flows designed for maximum conversion.'
     },
-    time: { ru: '3–5 дней', en: '3–5 days' },
-    artifact: { ru: 'Кликабельный прототип', en: 'Interactive Prototype' }
+    time: { kz: '3–5 күн', ru: '3–5 дней', en: '3–5 days' },
+    artifact: { kz: 'Интерактивті прототип', ru: 'Кликабельный прототип', en: 'Interactive Prototype' }
   },
   {
     step: '03',
-    title: { ru: 'Дизайн & Айдентика', en: 'Design & Visual Identity' },
+    title: { kz: 'Дизайн & Айдентика', ru: 'Дизайн & Айдентика', en: 'Design & Visual Identity' },
     desc: {
+      kz: 'Ерекше көрнекі тұжырымдама, дизайн-жүйе, барлық экрандардың макеттері мен әсем микроанимацияларды әзірлейміз.',
       ru: 'Создаем уникальную визуальную концепцию, дизайн-систему, адаптивные макеты всех экранов и микроанимации, вызывающие эмоции.',
       en: 'We craft distinct art directions, responsive layout systems in Figma, design tokens, and fluid UI micro-interactions.'
     },
-    time: { ru: '5–8 дней', en: '5–8 days' },
-    artifact: { ru: 'UI Kit & Figma макеты', en: 'Design System & UI Kit' }
+    time: { kz: '5–8 күн', ru: '5–8 дней', en: '5–8 days' },
+    artifact: { kz: 'UI Kit & Figma макеттері', ru: 'UI Kit & Figma макеты', en: 'Design System & UI Kit' }
   },
   {
     step: '04',
-    title: { ru: 'Инжиниринг & Интеграции', en: 'Engineering & Integration' },
+    title: { kz: 'Инжиниринг & Интеграция', ru: 'Инжиниринг & Интеграции', en: 'Engineering & Integration' },
     desc: {
+      kz: 'Таза модульді код жазамыз, деректер қорын баптаймыз, CRM, төлемдер мен API қосып, автоматты түрде тестілейміз.',
       ru: 'Пишем чистый модульный код, настраиваем базы данных, интегрируем CRM, платежи и сторонние API. Проводим кросс-браузерное тестирование.',
       en: 'Clean modular code, database schemas, payment gateways, and CRM API integrations accompanied by automated testing.'
     },
-    time: { ru: '7–15 дней', en: '7–15 days' },
-    artifact: { ru: 'Рабочий боевой билд', en: 'Staging & Production Build' }
+    time: { kz: '7–15 күн', ru: '7–15 дней', en: '7–15 days' },
+    artifact: { kz: 'Жұмыс істейтін билд', ru: 'Рабочий боевой билд', en: 'Staging & Production Build' }
   },
   {
     step: '05',
-    title: { ru: 'SEO, Запуск & Масштабирование', en: 'SEO, Launch & Growth' },
+    title: { kz: 'SEO, Іске қосу & Өсім', ru: 'SEO, Запуск & Масштабирование', en: 'SEO, Launch & Growth' },
     desc: {
+      kz: 'Аналитиканы реттейміз, жобаны бұлтты серверге шығарамыз, SEO оңтайландырып, сіздің командаңызды оқытамыз.',
       ru: 'Настраиваем аналитику, выкатываем проект в прод, проводим SEO-оптимизацию, запускаем трафик и обучаем вашу команду управлению.',
       en: 'Configuring analytics, rolling out to cloud infrastructure, executing SEO indexing, and empowering your team with operational handoffs.'
     },
-    time: { ru: 'от 2 дней', en: 'from 2 days' },
-    artifact: { ru: 'Релиз & Гарантийная поддержка', en: 'Release & 30-Day Warranty' }
+    time: { kz: '2 күннен', ru: 'от 2 дней', en: 'from 2 days' },
+    artifact: { kz: 'Релиз & 30 күндік кепілдік', ru: 'Релиз & Гарантийная поддержка', en: 'Release & 30-Day Warranty' }
   }
 ];
 
@@ -694,97 +849,112 @@ export const TECH_STACK = [
 
 export const TESTIMONIALS = [
   {
-    name: { ru: 'Александр Громов', en: 'Alexander Gromov' },
-    role: { ru: 'CEO & Основатель', en: 'Founder & CEO' },
+    name: { kz: 'Александр Громов', ru: 'Александр Громов', en: 'Alexander Gromov' },
+    role: { kz: 'CEO & Негізін қалаушы', ru: 'CEO & Основатель', en: 'Founder & CEO' },
     company: 'FinCore Tech',
     text: {
+      kz: 'FIRM командасы керемет жұмыс жасады: бір ай ішінде өнімді қайта жинақтап, презентация мен платформаны толық жаңарттық. Нәтижесінде $3.2M раундын 3 аптада жаптық.',
       ru: 'Команда FIRM сделала невозможное: за месяц мы полностью пересобрали продукт, переделали презентацию и платформу. На демо-дне инвесторы сразу отметили качество подачи. Результат — раунд закрыт за 3 недели.',
       en: 'The FIRM squad delivered extraordinary work: within a single month, our platform, deck, and brand were completely rebuilt. Investors praised our execution and we closed our round in 3 weeks.'
     },
     avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=160&q=80',
-    outcome: { ru: 'Раунд $3.2M', en: '$3.2M Seed Round' }
+    outcome: { kz: '$3.2M Раунды', ru: 'Раунд $3.2M', en: '$3.2M Seed Round' }
   },
   {
-    name: { ru: 'Елена Васильева', en: 'Elena Vasilyeva' },
-    role: { ru: 'Коммерческий директор', en: 'Chief Commercial Officer' },
+    name: { kz: 'Елена Васильева', ru: 'Елена Васильева', en: 'Elena Vasilyeva' },
+    role: { kz: 'Коммерциялық директор', ru: 'Коммерческий директор', en: 'Chief Commercial Officer' },
     company: 'Aura Development',
     text: {
+      kz: 'FIRM элиталық жылжымайтын мүліктің ерекшелігін өте жақсы түсінеді. Жарнамадан келген конверсия 3 есе өсті, ал менеджерлердің сату циклі қысқарды.',
       ru: 'Искали агентство, которое понимает специфику премиальной недвижимости. Лендинг от FIRM превзошел ожидания: конверсия из рекламы выросла почти в 3 раза, а менеджеры наконец перестали тратить часы на объяснения.',
       en: 'FIRM deeply understands the high-net-worth real estate market. Our advertising conversion tripled, while our inbound sales cycle shortened dramatically.'
     },
     avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=160&q=80',
-    outcome: { ru: '-64% стоимость лида', en: '-64% Cost Per Lead' }
+    outcome: { kz: '-64% лид құны', ru: '-64% стоимость лида', en: '-64% Cost Per Lead' }
   },
   {
-    name: { ru: 'Тимур Рахимов', en: 'Timur Rakhimov' },
-    role: { ru: 'Управляющий партнер', en: 'Managing Partner' },
+    name: { kz: 'Тимур Рахимов', ru: 'Тимур Рахимов', en: 'Timur Rakhimov' },
+    role: { kz: 'Басқарушы серіктес', ru: 'Управляющий партнер', en: 'Managing Partner' },
     company: 'Nordic Health Group',
     text: {
+      kz: 'Бизнесті толық қаптау біздің үлкен мәселемізді шешті. Біз сайт, фирмалық стиль, әлеуметтік желілер және пациенттердің тұрақты ағынынан тұратын дайын жүйе алдық.',
       ru: 'Полная упаковка бизнеса сняла с нас колоссальную головную боль. Мы получили готовую систему: сайт, фирстиль, живые соцсети и поток пациентов. Рекомендую как надежных партнеров на долгий срок.',
       en: 'Their turnkey business packaging solved our scaling bottleneck. We received a complete commercial engine: website, identity, video marketing, and predictable patient flow.'
     },
     avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=160&q=80',
-    outcome: { ru: '+210% записей', en: '+210% Bookings' }
+    outcome: { kz: '+210% жазылу', ru: '+210% записей', en: '+210% Bookings' }
   }
 ];
 
 export const FAQ_ITEMS = [
   {
     question: {
+      kz: 'Жобаны әзірлеу және қаптау орташа есеппен қанша тұрады?',
       ru: 'Сколько в среднем стоит разработка и упаковка проекта?',
       en: 'What is the typical investment for a project?'
     },
     answer: {
+      kz: 'Құны тапсырмалар мен ауқымға байланысты. Лендинг немесе питч-дек 400 000 – 500 000 ₸ ($850 – $1 100), кешенді сайт немесе брендинг 700 000 – 950 000 ₸ ($1 500 – $2 000), ал арнайы бағдарламалық қамтамасыз ету немесе бизнесті 360° толық қаптау 1 550 000 – 2 200 000 ₸ ($3 300 – $4 800) басталады. Интерактивті калькулятор арқылы нақты есеп ала аласыз.',
       ru: 'Стоимость зависит от состава задач и масштаба. Лендинг или питч-дек стартуют от 75 000 – 95 000 ₽ ($850 – $1 100), комплексный сайт или брендинг — от 130 000 – 180 000 ₽ ($1 500 – $2 000), а кастомная разработка ПО или комплексная упаковка бизнеса под ключ — от 290 000 – 420 000 ₽ ($3 300 – $4 800). Точную смету можно рассчитать на нашем калькуляторе.',
       en: 'Pricing depends on scope and technical complexity. Landing pages and pitch decks start at $850 – $1,100; comprehensive corporate platforms and visual identity start at $1,500 – $2,000; bespoke software development and turnkey 360° business packaging range from $3,300 – $4,800+. Use our interactive calculator for an exact transparent quote.'
     }
   },
   {
     question: {
+      kz: 'Жобаны орындаудың нақты мерзімдері қандай?',
       ru: 'Каковы реальные сроки реализации?',
       en: 'What are the realistic production timelines?'
     },
     answer: {
+      kz: 'Біз спринттермен жұмыс істейміз. Лендинг немесе презентация 5–10 жұмыс күнінде. Фирмалық стиль 10–14 күнде. Корпоративтік сайт немесе арнайы веб-бағдарлама 14-тен 35 күнге дейін созылады, мерзім шартта қатаң бекітіледі.',
       ru: 'Мы работаем спринтами. Лендинг или презентация делаются за 5–10 рабочих дней. Фирменный стиль — 10–14 дней. Корпоративный сайт или кастомное веб-приложение — от 14 до 35 дней. В договоре мы всегда фиксируем жесткий дедлайн с финансовой гарантией.',
       en: 'We execute in agile sprints. A high-converting landing page or pitch deck is typically delivered in 5–10 business days. Brand identity in 10–14 days. Custom software or corporate portals take 14–35 business days, guaranteed by strict contractual milestones.'
     }
   },
   {
     question: {
+      kz: 'Ресми келісім-шарт және NDA бойынша жұмыс істейсіздер ме?',
       ru: 'Работаете ли вы по официальному договору и NDA?',
       en: 'Do you sign formal agreements and mutual NDAs?'
     },
     answer: {
+      kz: 'Иә, міндетті түрде. Біз заңды және жеке тұлғалармен ресми түрде жұмыс істейміз (теңге, доллар, еуро немесе рубльде), жабу құжаттарын, шот-фактураларды ұсынамыз және жұмысты бастамас бұрын құпиялылық туралы келісімге (NDA) қол қоямыз.',
       ru: 'Да, обязательно. Мы работаем официально с юридическими и физическими лицами (в рублях, долларах или тенге), предоставляем закрывающие документы, акты и подписываем соглашение о неразглашении (NDA) до старта работ.',
       en: 'Yes, absolutely. We work under formal commercial contracts with companies worldwide (in USD, EUR, RUB, or KZT), provide verified invoices/accounting documents, and execute mutual non-disclosure agreements (NDA) prior to project kickoff.'
     }
   },
   {
     question: {
+      kz: 'Бастапқы код пен дизайн макеттерінің авторлық құқықтары кімге тиесілі?',
       ru: 'Кому принадлежат права на исходный код и дизайн-макеты?',
       en: 'Who retains intellectual property rights to code and designs?'
     },
     answer: {
+      kz: 'Дизайн, графика, верстка және бағдарлама кодына барлық 100% айрықша құқықтар қорытынды есеп айырысудан кейін толығымен сізге өтеді. Figma бастапқы файлдарын, Git репозиторийін және құжаттаманы тапсырамыз.',
       ru: 'Все 100% исключительных прав на дизайн, графику, верстку и программный код переходят к вам сразу после финального расчета. Мы передаем исходники в Figma, Git-репозиторий и документацию.',
       en: '100% of exclusive intellectual property rights for design files, codebases, and brand assets transfer to you upon completion. We hand over Figma source files, Git repositories, and documentation.'
     }
   },
   {
     question: {
+      kz: 'Жоба іске қосылғаннан кейін қандай қолдау көрсетіледі?',
       ru: 'Что происходит после запуска проекта?',
       en: 'What support is provided post-launch?'
     },
     answer: {
+      kz: 'Әрбір жобаға 30 күндік тегін кепілдік қадағалау және кез келген кемшіліктерді жою ұсынылады. Сондай-ақ біз ай сайынғы сервистік сүйемелдеу, SEO және жарнама жүргізу қызметтерін ұсынамыз.',
       ru: 'На каждый проект предоставляется 30 дней бесплатного гарантийного надзора и устранения любых неточностей. Также мы предлагаем ежемесячное сервисное сопровождение, SEO-поддержку и ведение рекламы.',
       en: 'Every release includes a 30-day comprehensive warranty covering maintenance, bug fixes, and performance tuning. We also offer ongoing retainer support, SEO growth, and media buying.'
     }
   },
   {
     question: {
+      kz: 'Жобаны қалай іске қосамыз?',
       ru: 'Как запустить проект в работу?',
       en: 'How do we kick off a collaboration?'
     },
     answer: {
+      kz: 'Сайтта өтінім қалдырыңыз немесе бізге Telegram @artemov_basil арқылы жазыңыз. Біз 20 минуттық қоңырау немесе экспресс-аудит өткізіп, 24 сағат ішінде нақты смета мен стратегия ұсынамыз.',
       ru: 'Оставьте заявку на сайте через форму или напишите нам в Telegram @artemov_basil. Мы проведем бесплатный 20-минутный созвон или аудит вашей текущей ситуации, подготовим смету и презентацию решения в течение 24 часов.',
       en: 'Submit an inquiry through our site or contact us directly on Telegram @artemov_basil. We schedule a concise 20-minute discovery call, conduct an initial audit, and present a clear proposal within 24 hours.'
     }

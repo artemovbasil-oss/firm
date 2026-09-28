@@ -12,7 +12,7 @@ export default function ContactModal({
 }) {
   const [name, setName] = useState('');
   const [contact, setContact] = useState('');
-  const [selectedService, setSelectedService] = useState(initialService || (lang === 'en' ? 'Full Packaging 360°' : 'Комплексный проект / Упаковка'));
+  const [selectedService, setSelectedService] = useState(initialService || (lang === 'en' ? 'Full Packaging 360°' : (lang === 'kz' ? '360° Кешенді қаптама' : 'Комплексный проект / Упаковка')));
   const [budget, setBudget] = useState('150k-300k');
   const [message, setMessage] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -51,7 +51,7 @@ export default function ContactModal({
 
     const payload = {
       type: 'GENERAL_CONTACT_REQUEST',
-      name: name.trim() || 'Not specified',
+      name: name.trim() || (lang === 'en' ? 'Not specified' : (lang === 'kz' ? 'Көрсетілмеген' : 'Не указано')),
       contact: contact.trim(),
       service: selectedService,
       budget,
@@ -143,10 +143,10 @@ export default function ContactModal({
             </label>
             <input
               type="text"
-              placeholder={lang === 'en' ? 'John Doe / Acme Corp' : 'Как к вам обращаться'}
+              placeholder={lang === 'en' ? 'John Doe / Acme Corp' : (lang === 'kz' ? 'Есіміңіз немесе Компания атауы' : 'Как к вам обращаться')}
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-xs focus:outline-none focus:border-slate-400"
+              className="w-full px-3 py-2 rounded-xl input-studio text-xs placeholder-slate-400"
             />
           </div>
 
@@ -160,7 +160,7 @@ export default function ContactModal({
               placeholder="@username, phone or email"
               value={contact}
               onChange={(e) => setContact(e.target.value)}
-              className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-xs focus:outline-none focus:border-slate-400"
+              className="w-full px-3 py-2 rounded-xl input-studio text-xs placeholder-slate-400"
             />
           </div>
 
@@ -172,10 +172,10 @@ export default function ContactModal({
               <select
                 value={selectedService}
                 onChange={(e) => setSelectedService(e.target.value)}
-                className="w-full px-2.5 py-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-xs focus:outline-none focus:border-slate-400"
+                className="w-full px-2.5 py-2 rounded-xl input-studio text-xs"
               >
-                <option value={lang === 'en' ? 'Full Packaging 360°' : 'Комплексный проект / Упаковка'}>
-                  {lang === 'en' ? 'Turnkey Packaging 360°' : 'Комплексный проект / Упаковка'}
+                <option value={lang === 'en' ? 'Full Packaging 360°' : (lang === 'kz' ? '360° Кешенді қаптама' : 'Комплексный проект / Упаковка')}>
+                  {lang === 'en' ? 'Turnkey Packaging 360°' : (lang === 'kz' ? '360° Кешенді қаптама' : 'Комплексный проект / Упаковка')}
                 </option>
                 {servicesList.map(s => {
                   const title = s.title?.[lang] || s.title?.ru || s.id;
@@ -191,12 +191,12 @@ export default function ContactModal({
               <select
                 value={budget}
                 onChange={(e) => setBudget(e.target.value)}
-                className="w-full px-2.5 py-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-xs focus:outline-none focus:border-slate-400"
+                className="w-full px-2.5 py-2 rounded-xl input-studio text-xs"
               >
-                <option value="<$1,000">&lt; $1,000 (до 100 000 ₽)</option>
-                <option value="$1,500 - $3,500">$1,500 – $3,500 (150k – 300k ₽)</option>
-                <option value="$3,500 - $7,000">$3,500 – $7,000 (300k – 600k ₽)</option>
-                <option value=">$7,000+">&gt; $7,000+ (от 600k ₽+)</option>
+                <option value="<$1,000">&lt; $1,000 (до 100k ₽ / 500k ₸)</option>
+                <option value="$1,500 - $3,500">$1,500 – $3,500 (150k – 300k ₽ / 1.5M ₸)</option>
+                <option value="$3,500 - $7,000">$3,500 – $7,000 (300k – 600k ₽ / 3M ₸)</option>
+                <option value=">$7,000+">&gt; $7,000+ (от 600k ₽ / 3.5M ₸+)</option>
               </select>
             </div>
           </div>
@@ -207,17 +207,17 @@ export default function ContactModal({
             </label>
             <textarea
               rows="3"
-              placeholder={lang === 'en' ? 'Describe your challenge, timeline or send website link...' : 'Расскажите о целях, сроках или пришлите ссылку на текущий сайт...'}
+              placeholder={lang === 'en' ? 'Describe your challenge, timeline or send website link...' : (lang === 'kz' ? 'Мақсатыңыз, мерзім немесе қазіргі сайт сілтемесі...' : 'Расскажите о целях, сроках или пришлите ссылку на текущий сайт...')}
               value={message}
               onChange={(e) => setMessage(e.target.value)}
-              className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-xs focus:outline-none focus:border-slate-400 resize-none"
+              className="w-full px-3 py-2 rounded-xl input-studio text-xs placeholder-slate-400 resize-none"
             ></textarea>
           </div>
 
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full py-3 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-950 font-bold text-xs shadow-sm transition-all flex items-center justify-center gap-2 disabled:opacity-50"
+            className="w-full py-3 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-950 font-bold text-xs shadow-sm btn-studio flex items-center justify-center gap-2 disabled:opacity-50"
           >
             {isSubmitting ? (
               <span>{t.submitting}</span>

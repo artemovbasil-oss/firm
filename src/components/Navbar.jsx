@@ -82,6 +82,16 @@ export default function Navbar({
             {/* Language Switcher */}
             <div className="flex items-center rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 p-0.5 text-xs font-mono">
               <button
+                onClick={() => setLang('kz')}
+                className={`px-2 py-1 rounded transition-colors ${
+                  lang === 'kz' 
+                    ? 'bg-white dark:bg-slate-800 text-slate-950 dark:text-white font-bold shadow-sm' 
+                    : 'text-slate-500 hover:text-slate-900 dark:hover:text-white'
+                }`}
+              >
+                KZ
+              </button>
+              <button
                 onClick={() => setLang('ru')}
                 className={`px-2 py-1 rounded transition-colors ${
                   lang === 'ru' 
@@ -141,7 +151,7 @@ export default function Navbar({
             {/* Primary Action Button */}
             <button
               onClick={() => onOpenContact(t.cta)}
-              className="px-4 py-2 rounded-lg bg-slate-900 dark:bg-white text-white dark:text-slate-950 text-xs font-semibold hover:bg-slate-800 dark:hover:bg-slate-100 transition-all flex items-center gap-1.5 shadow-sm"
+              className="px-4 py-2 rounded-lg bg-slate-900 dark:bg-white text-white dark:text-slate-950 text-xs font-semibold hover:bg-slate-800 dark:hover:bg-slate-100 transition-all flex items-center gap-1.5 shadow-sm active:scale-[0.98]"
             >
               <span>{t.cta}</span>
               <ArrowUpRight className="w-3.5 h-3.5" />
@@ -157,8 +167,12 @@ export default function Navbar({
               {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
             </button>
             <button
-              onClick={() => setLang(lang === 'ru' ? 'en' : 'ru')}
+              onClick={() => {
+                const nextLang = lang === 'kz' ? 'ru' : lang === 'ru' ? 'en' : 'kz';
+                setLang(nextLang);
+              }}
               className="px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-800 text-xs font-mono font-bold"
+              title="Тіл ауыстыру / Сменить язык / Change language"
             >
               {lang.toUpperCase()}
             </button>
@@ -189,6 +203,23 @@ export default function Navbar({
             </div>
 
             <div className="pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+              <span className="text-xs text-slate-500 font-mono">Тіл / Язык:</span>
+              <div className="flex gap-1">
+                {['kz', 'ru', 'en'].map(l => (
+                  <button
+                    key={l}
+                    onClick={() => setLang(l)}
+                    className={`px-2.5 py-1 rounded text-xs uppercase font-mono ${
+                      lang === l ? 'bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold' : 'text-slate-500'
+                    }`}
+                  >
+                    {l}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="pt-2 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
               <span className="text-xs text-slate-500 font-mono">Валюта:</span>
               <div className="flex gap-1">
                 {['rub', 'usd', 'kzt'].map(cur => (

@@ -48,13 +48,19 @@ export default function App() {
   // Update lang & SEO title/meta
   useEffect(() => {
     localStorage.setItem('firm_lang', lang);
-    document.documentElement.setAttribute('lang', lang);
+    document.documentElement.setAttribute('lang', lang === 'kz' ? 'kk' : lang);
 
     if (lang === 'en') {
       document.title = 'FIRM — Digital Production & Growth Agency | Web, Branding, Software, SEO';
       const metaDesc = document.querySelector('meta[name="description"]');
       if (metaDesc) {
         metaDesc.setAttribute('content', 'Full-cycle digital production agency. We engineer high-converting web platforms, branding, software, investor pitch decks, SEO dominance, and turnkey business packaging.');
+      }
+    } else if (lang === 'kz') {
+      document.title = 'FIRM — Сандық шешімдер агенттігі | Сайттар, Брендинг, Бағдарламалық қамтамасыз ету, SEO';
+      const metaDesc = document.querySelector('meta[name="description"]');
+      if (metaDesc) {
+        metaDesc.setAttribute('content', 'Конверсиясы жоғары сайттар, сатушы лендингтер, айдентика, презентациялар және жеке бағдарламалық қамтамасыз ету. Бизнесті 360° орап, SEO мен SMM арқылы сатылымды еселейміз.');
       }
     } else {
       document.title = 'FIRM — Агентство цифровых решений | Сайты, Брендинг, ПО, SEO и Упаковка бизнеса';
@@ -128,6 +134,15 @@ export default function App() {
     }, 5000);
   };
 
+  const handleSetLang = (newLang) => {
+    setLang(newLang);
+    if (newLang === 'kz' && currency === 'rub') {
+      setCurrency('kzt');
+    } else if (newLang === 'en' && currency === 'rub') {
+      setCurrency('usd');
+    }
+  };
+
   return (
     <div className="min-h-screen bg-[#fbfbfd] dark:bg-[#090a0f] text-slate-900 dark:text-slate-100 flex flex-col font-sans transition-colors duration-200">
       
@@ -142,7 +157,7 @@ export default function App() {
       {/* Header */}
       <Navbar
         lang={lang}
-        setLang={setLang}
+        setLang={handleSetLang}
         theme={theme}
         setTheme={setTheme}
         currency={currency}
@@ -172,7 +187,7 @@ export default function App() {
           servicesList={servicesList}
           selectedServices={selectedServices}
           onToggleService={handleToggleService}
-          onSuccessLead={() => showToast(lang === 'en' ? 'Estimate saved! Our strategist will reach out within 20 minutes.' : 'Расчет зафиксирован! Менеджер подготовит КП в течение 20 минут.')}
+          onSuccessLead={() => showToast(lang === 'en' ? 'Estimate saved! Our strategist will reach out within 20 minutes.' : (lang === 'kz' ? 'Есеп сақталды! Маман 20 минут ішінде хабарласады.' : 'Расчет зафиксирован! Менеджер подготовит КП в течение 20 минут.'))}
         />
 
         <Cases 
@@ -183,7 +198,7 @@ export default function App() {
 
         <ExpressAudit 
           lang={lang}
-          onSuccessLead={() => showToast(lang === 'en' ? 'Audit inquiry confirmed! We will deliver it within 24h.' : 'Заявка на экспресс-аудит принята! Отчет будет готов за 24 часа.')}
+          onSuccessLead={() => showToast(lang === 'en' ? 'Audit inquiry confirmed! We will deliver it within 24h.' : (lang === 'kz' ? 'Өтінім қабылданды! Аудит 24 сағат ішінде дайын болады.' : 'Заявка на экспресс-аудит принята! Отчет будет готов за 24 часа.'))}
         />
 
         <Process 
@@ -220,7 +235,7 @@ export default function App() {
         initialService={contactInitialService}
         onSuccessLead={() => {
           handleCloseContact();
-          showToast(lang === 'en' ? 'Thank you! We are already analyzing your project.' : 'Спасибо за обращение! Мы уже изучаем ваш проект.');
+          showToast(lang === 'en' ? 'Thank you! We are already analyzing your project.' : (lang === 'kz' ? 'Рақмет! Біз сіздің жобаңызды қарастырып жатырмыз.' : 'Спасибо за обращение! Мы уже изучаем ваш проект.'));
         }}
       />
 

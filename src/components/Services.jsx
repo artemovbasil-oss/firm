@@ -48,6 +48,11 @@ export default function Services({
   const formatPrice = (priceObj) => {
     if (!priceObj) return '';
     const val = priceObj[currency] || priceObj.rub;
+    if (lang === 'kz') {
+      if (currency === 'kzt') return `${val.toLocaleString('ru-RU')} ₸ бастап`;
+      if (currency === 'usd') return `$${val.toLocaleString('en-US')} бастап`;
+      return `${val.toLocaleString('ru-RU')} ₽ бастап`;
+    }
     const prefix = lang === 'en' ? 'from ' : 'от ';
     if (currency === 'rub') {
       return `${prefix}${val.toLocaleString('ru-RU')} ₽`;
@@ -194,13 +199,13 @@ export default function Services({
                   <div className="flex gap-2">
                     <button
                       onClick={() => onSelectForCalculator(service.id)}
-                      className="flex-1 py-2 px-3 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 text-xs font-medium text-slate-700 dark:text-slate-300 transition-colors text-center"
+                      className="flex-1 py-2 px-3 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 text-xs font-medium text-slate-700 dark:text-slate-300 btn-studio transition-colors text-center"
                     >
                       {t.calcBtn}
                     </button>
                     <button
                       onClick={() => onOrderService(title)}
-                      className="py-2 px-3 rounded-lg bg-slate-900 dark:bg-white text-white dark:text-slate-950 text-xs font-bold transition-colors flex items-center justify-center"
+                      className="py-2 px-3 rounded-lg bg-slate-900 dark:bg-white text-white dark:text-slate-950 text-xs font-bold btn-studio transition-colors flex items-center justify-center"
                       title={t.orderBtn}
                     >
                       <ArrowRight className="w-3.5 h-3.5" />

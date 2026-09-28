@@ -19,6 +19,13 @@ export default function ExpressAudit({ lang, onSuccessLead }) {
     { id: 'smm', label: 'Social media not driving sales (weak engagement funnels)' },
     { id: 'software', label: 'Need custom software, CRM, SaaS or Telegram Web App' },
     { id: 'presentation', label: 'Weak investor pitch deck / B2B sales presentation' },
+  ] : lang === 'kz' ? [
+    { id: 'conversion', label: 'Төмен конверсия (кірушілер бар, өтінім аз)' },
+    { id: 'seo', label: 'Іздеуде төмен орын (Google / Яндекс SEO)' },
+    { id: 'design', label: 'Ескірген дизайн және әлсіз визуалды қаптама' },
+    { id: 'smm', label: 'Әлеуметтік желілер сатпайды (воронка жоқ)' },
+    { id: 'software', label: 'Жеке бағдарлама, CRM, SaaS немесе Telegram Web App қажет' },
+    { id: 'presentation', label: 'Инвесторлар немесе B2B үшін әлсіз презентация' },
   ] : [
     { id: 'conversion', label: 'Низкая конверсия (трафик есть, заявок мало)' },
     { id: 'seo', label: 'Нет позиций в поиске (Яндекс / Google SEO)' },
@@ -37,7 +44,7 @@ export default function ExpressAudit({ lang, onSuccessLead }) {
 
     const payload = {
       type: 'EXPRESS_AUDIT_REQUEST',
-      targetUrl: targetUrl.trim() || 'Not specified',
+      targetUrl: targetUrl.trim() || (lang === 'en' ? 'Not specified' : (lang === 'kz' ? 'Көрсетілмеген' : 'Не указан')),
       issue: issues.find(i => i.id === selectedIssue)?.label || selectedIssue,
       contact: contact.trim(),
       notes: notes.trim(),
@@ -141,7 +148,7 @@ export default function ExpressAudit({ lang, onSuccessLead }) {
                     placeholder="https://example.com"
                     value={targetUrl}
                     onChange={(e) => setTargetUrl(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-xs focus:outline-none focus:border-slate-400"
+                    className="w-full px-3 py-2 rounded-xl input-studio text-xs"
                   />
                 </div>
 
@@ -152,7 +159,7 @@ export default function ExpressAudit({ lang, onSuccessLead }) {
                   <select
                     value={selectedIssue}
                     onChange={(e) => setSelectedIssue(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-xs focus:outline-none focus:border-slate-400"
+                    className="w-full px-3 py-2 rounded-xl input-studio text-xs"
                   >
                     {issues.map(iss => (
                       <option key={iss.id} value={iss.id} className="bg-white dark:bg-slate-900 text-slate-900 dark:text-white">
@@ -172,7 +179,7 @@ export default function ExpressAudit({ lang, onSuccessLead }) {
                     placeholder="@telegram_login, WhatsApp or email"
                     value={contact}
                     onChange={(e) => setContact(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-xs focus:outline-none focus:border-slate-400"
+                    className="w-full px-3 py-2 rounded-xl input-studio text-xs"
                   />
                 </div>
 
@@ -182,17 +189,17 @@ export default function ExpressAudit({ lang, onSuccessLead }) {
                   </label>
                   <input
                     type="text"
-                    placeholder={lang === 'en' ? 'Any specific goals...' : 'Например: запуск нового тарифа...'}
+                    placeholder={lang === 'en' ? 'Any specific goals...' : (lang === 'kz' ? 'Мысалы: жаңа тарифті іске қосу...' : 'Например: запуск нового тарифа...')}
                     value={notes}
                     onChange={(e) => setNotes(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-xs focus:outline-none focus:border-slate-400"
+                    className="w-full px-3 py-2 rounded-xl input-studio text-xs"
                   />
                 </div>
 
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full py-3 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-950 font-bold text-xs shadow-sm flex items-center justify-center gap-2 disabled:opacity-50"
+                  className="w-full py-3 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-950 font-bold text-xs btn-studio shadow-sm flex items-center justify-center gap-2 disabled:opacity-50"
                 >
                   {isSubmitting ? (
                     <span>{t.submitting}</span>

@@ -30,9 +30,9 @@ export default function Calculator({
   };
 
   const scaleNames = {
-    start: lang === 'en' ? 'Startup / MVP' : 'Стартап / MVP',
-    business: lang === 'en' ? 'Business / Standard' : 'Бизнес / Стандарт',
-    enterprise: lang === 'en' ? 'Enterprise / Scale' : 'Enterprise / Масштаб'
+    start: lang === 'en' ? 'Startup / MVP' : (lang === 'kz' ? 'Стартап / MVP' : 'Стартап / MVP'),
+    business: lang === 'en' ? 'Business / Standard' : (lang === 'kz' ? 'Бизнес / Стандарт' : 'Бизнес / Стандарт'),
+    enterprise: lang === 'en' ? 'Enterprise / Scale' : (lang === 'kz' ? 'Enterprise / Ауқымды' : 'Enterprise / Масштаб')
   };
 
   const urgencyMultipliers = {
@@ -92,12 +92,14 @@ export default function Calculator({
 
     const payload = {
       type: 'CALCULATOR_ESTIMATE',
-      name: clientName || 'Не указано',
+      name: clientName || (lang === 'en' ? 'Not specified' : (lang === 'kz' ? 'Көрсетілмеген' : 'Не указано')),
       contact: clientContact,
       comment: clientComment,
       currency,
       scale: scaleNames[scale],
-      urgency: urgency === 'express' ? 'Express (-35% timeline)' : 'Standard',
+      urgency: urgency === 'express' 
+        ? (lang === 'en' ? 'Express (-35% timeline)' : (lang === 'kz' ? 'Жедел (-35% мерзім)' : 'Срочно (-35% срок)'))
+        : (lang === 'en' ? 'Standard' : 'Стандарт'),
       selectedServices: selectedServices.map(id => {
         const s = servicesList.find(item => item.id === id);
         return s ? (s.title?.[lang] || s.title?.ru || id) : id;
@@ -329,7 +331,7 @@ export default function Calculator({
                   placeholder={t.namePlaceholder}
                   value={clientName}
                   onChange={(e) => setClientName(e.target.value)}
-                  className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 text-slate-900 dark:text-white placeholder-slate-400 text-xs focus:outline-none focus:border-slate-400"
+                  className="w-full px-3 py-2 rounded-xl input-studio text-xs placeholder-slate-400"
                 />
               </div>
 
@@ -340,7 +342,7 @@ export default function Calculator({
                   placeholder={t.contactPlaceholder}
                   value={clientContact}
                   onChange={(e) => setClientContact(e.target.value)}
-                  className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 text-slate-900 dark:text-white placeholder-slate-400 text-xs focus:outline-none focus:border-slate-400"
+                  className="w-full px-3 py-2 rounded-xl input-studio text-xs placeholder-slate-400"
                 />
               </div>
 
@@ -350,14 +352,14 @@ export default function Calculator({
                   placeholder={t.commentPlaceholder}
                   value={clientComment}
                   onChange={(e) => setClientComment(e.target.value)}
-                  className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 text-slate-900 dark:text-white placeholder-slate-400 text-xs focus:outline-none focus:border-slate-400 resize-none"
+                  className="w-full px-3 py-2 rounded-xl input-studio text-xs placeholder-slate-400 resize-none"
                 ></textarea>
               </div>
 
               <button
                 type="submit"
                 disabled={isSubmitting || selectedServices.length === 0}
-                className="w-full py-3 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-950 font-bold text-xs transition-all flex items-center justify-center gap-2 disabled:opacity-50"
+                className="w-full py-3 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-950 font-bold text-xs btn-studio flex items-center justify-center gap-2 disabled:opacity-50 shadow-sm"
               >
                 {isSubmitting ? (
                   <span>{t.submitting}</span>
