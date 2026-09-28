@@ -1,15 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Globe, Send, CheckCircle2, AlertCircle, ArrowRight, ShieldCheck, Zap, Lock } from 'lucide-react';
 import { TRANSLATIONS } from '../data/translations';
+import CardShaderHover from './CardShaderHover';
 
 export default function ExpressAudit({ lang, onSuccessLead }) {
   const [targetUrl, setTargetUrl] = useState('');
   const [contact, setContact] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [status, setStatus] = useState(null);
+  const [isHovered, setIsHovered] = useState(false);
+  const [mousePos, setMousePos] = useState({ x: 0.5, y: 0.5 });
+  const cardRef = useRef(null);
 
   const t = TRANSLATIONS[lang].audit;
+
+  const handleMouseMove = (e) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    if (rect.width > 0 && rect.height > 0) {
+      const x = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+      const y = Math.max(0, Math.min(1, (e.clientY - rect.top) / rect.height));
+      setMousePos({ x, y });
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -50,10 +64,22 @@ export default function ExpressAudit({ lang, onSuccessLead }) {
     <section id="audit" className="py-32 sm:py-40 relative">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Luxury Studio Diagnostic Card */}
-        <div className="p-8 sm:p-14 lg:p-20 rounded-3xl bg-slate-950 text-white relative overflow-hidden shadow-2xl border border-white/10">
+        {/* Luxury Studio Diagnostic Card with WebGL Shader Caustics & Film Noise on Hover */}
+        <div 
+          ref={cardRef}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+          onMouseMove={handleMouseMove}
+          className="p-8 sm:p-14 lg:p-20 rounded-3xl bg-slate-950 text-white relative overflow-hidden shadow-2xl border border-white/10"
+        >
+          {/* Subtle Dynamic WebGL Caustics & Film Noise on Hover */}
+          <CardShaderHover 
+            colorMode="indigo" 
+            isHovered={isHovered} 
+            mousePos={mousePos} 
+          />
           
-          {/* Subtle Glow */}
+          {/* Subtle Ambient Glow */}
           <div className="absolute top-0 right-0 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
           <div className="relative z-10 max-w-4xl mx-auto text-center space-y-6">

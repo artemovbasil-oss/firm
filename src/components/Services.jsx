@@ -97,7 +97,11 @@ export default function Services({
                     <motion.div 
                       animate={{ rotate: isSelected ? 45 : 0 }}
                       transition={{ duration: 0.2 }}
-                      className={`w-8 h-8 rounded-full border border-black/[0.1] dark:border-white/15 flex items-center justify-center text-slate-900 dark:text-white shrink-0 ${isSelected ? 'bg-slate-950 dark:bg-white text-white dark:text-slate-950' : 'group-hover:scale-110'}`}
+                      className={`w-8 h-8 rounded-full border border-black/[0.1] dark:border-white/15 flex items-center justify-center shrink-0 transition-all duration-200 ${
+                        isSelected 
+                          ? 'bg-slate-950 dark:bg-white text-white dark:text-slate-950 shadow-sm' 
+                          : 'text-slate-900 dark:text-white group-hover:scale-110 group-hover:border-slate-400 dark:group-hover:border-white/40'
+                      }`}
                     >
                       <ArrowUpRight className="w-4 h-4" />
                     </motion.div>
