@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
-import { 
-  Search, ShieldAlert, CheckCircle2, Send, 
-  Sparkles, FileText, Video, TrendingUp, AlertCircle 
-} from 'lucide-react';
+import { Search, CheckCircle2, FileText, Video, TrendingUp, AlertCircle } from 'lucide-react';
+import { TRANSLATIONS } from '../data/translations';
 
-export default function ExpressAudit({ onSuccessLead }) {
+export default function ExpressAudit({ lang, onSuccessLead }) {
   const [targetUrl, setTargetUrl] = useState('');
   const [selectedIssue, setSelectedIssue] = useState('conversion');
   const [contact, setContact] = useState('');
@@ -12,7 +10,16 @@ export default function ExpressAudit({ onSuccessLead }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [status, setStatus] = useState(null);
 
-  const issues = [
+  const t = TRANSLATIONS[lang].audit;
+
+  const issues = lang === 'en' ? [
+    { id: 'conversion', label: 'Low conversion rate (traffic exists, few inquiries)' },
+    { id: 'seo', label: 'Poor organic search visibility (Google / Search SEO)' },
+    { id: 'design', label: 'Outdated design & unconvincing visual identity' },
+    { id: 'smm', label: 'Social media not driving sales (weak engagement funnels)' },
+    { id: 'software', label: 'Need custom software, CRM, SaaS or Telegram Web App' },
+    { id: 'presentation', label: 'Weak investor pitch deck / B2B sales presentation' },
+  ] : [
     { id: 'conversion', label: 'Низкая конверсия (трафик есть, заявок мало)' },
     { id: 'seo', label: 'Нет позиций в поиске (Яндекс / Google SEO)' },
     { id: 'design', label: 'Устаревший дизайн и слабая визуальная упаковка' },
@@ -30,7 +37,7 @@ export default function ExpressAudit({ onSuccessLead }) {
 
     const payload = {
       type: 'EXPRESS_AUDIT_REQUEST',
-      targetUrl: targetUrl.trim() || 'Не указан',
+      targetUrl: targetUrl.trim() || 'Not specified',
       issue: issues.find(i => i.id === selectedIssue)?.label || selectedIssue,
       contact: contact.trim(),
       notes: notes.trim(),
@@ -60,60 +67,55 @@ export default function ExpressAudit({ onSuccessLead }) {
   };
 
   return (
-    <section id="audit" className="py-24 relative bg-dark-900/40">
+    <section id="audit" className="py-20 relative border-t border-slate-200 dark:border-slate-800/80">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        <div className="glass-panel rounded-3xl p-8 sm:p-12 border-primary-500/20 overflow-hidden relative">
-          
-          {/* Ambient blur */}
-          <div className="absolute top-0 right-0 w-96 h-96 bg-primary-600/10 rounded-full blur-3xl pointer-events-none"></div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+        <div className="card-studio rounded-3xl p-6 sm:p-10 border-slate-200 dark:border-slate-800">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             
             {/* Left explanation column */}
-            <div className="lg:col-span-6 space-y-6">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-accent-emerald/10 border border-accent-emerald/20 text-xs text-accent-emerald font-mono uppercase tracking-wider">
-                Бесплатно за 24 часа
+            <div className="lg:col-span-6 space-y-5">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 text-xs text-slate-600 dark:text-slate-400 font-mono uppercase tracking-wider">
+                {t.badge}
               </div>
 
-              <h2 className="text-3xl sm:text-4xl font-heading font-extrabold text-white tracking-tight">
-                Получите персональный <br />
-                <span className="text-gradient-primary">экспресс-аудит проекта</span>
+              <h2 className="text-2xl sm:text-3xl font-heading font-extrabold text-slate-900 dark:text-white tracking-tight">
+                {t.title}
               </h2>
 
-              <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
-                Отправьте ссылку на ваш действующий сайт, соцсети или продукт. Наши ведущие эксперты разберут узкие места, которые сливают ваш бюджет, и покажут, где спрятаны +100-300% к прибыли.
+              <p className="text-slate-600 dark:text-slate-400 text-xs sm:text-sm leading-relaxed">
+                {t.desc}
               </p>
 
               {/* What client gets */}
               <div className="space-y-3 pt-2">
                 <div className="flex items-start gap-3">
-                  <div className="p-2 rounded-lg bg-primary-500/10 text-primary-400 mt-0.5">
-                    <Video className="w-4 h-4" />
+                  <div className="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white mt-0.5">
+                    <Video className="w-3.5 h-3.5" />
                   </div>
                   <div>
-                    <div className="text-sm font-semibold text-white">Видео-разбор экрана (10–15 минут)</div>
-                    <div className="text-xs text-slate-400">Наглядно покажем ошибки в UX, текстах, коде или позиционировании.</div>
+                    <div className="text-xs font-bold text-slate-900 dark:text-white">{t.feature1Title}</div>
+                    <div className="text-[11px] text-slate-500">{t.feature1Desc}</div>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <div className="p-2 rounded-lg bg-accent-emerald/10 text-accent-emerald mt-0.5">
-                    <FileText className="w-4 h-4" />
+                  <div className="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white mt-0.5">
+                    <FileText className="w-3.5 h-3.5" />
                   </div>
                   <div>
-                    <div className="text-sm font-semibold text-white">PDF-отчет с 10+ точками роста</div>
-                    <div className="text-xs text-slate-400">Конкретные рекомендации по SEO-оптимизации, конверсии и офферам.</div>
+                    <div className="text-xs font-bold text-slate-900 dark:text-white">{t.feature2Title}</div>
+                    <div className="text-[11px] text-slate-500">{t.feature2Desc}</div>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <div className="p-2 rounded-lg bg-accent-cyan/10 text-accent-cyan mt-0.5">
-                    <TrendingUp className="w-4 h-4" />
+                  <div className="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white mt-0.5">
+                    <TrendingUp className="w-3.5 h-3.5" />
                   </div>
                   <div>
-                    <div className="text-sm font-semibold text-white">Пошаговая дорожная карта внедрения</div>
-                    <div className="text-xs text-slate-400">План действий и смета без скрытых переплат и навязанных услуг.</div>
+                    <div className="text-xs font-bold text-slate-900 dark:text-white">{t.feature3Title}</div>
+                    <div className="text-[11px] text-slate-500">{t.feature3Desc}</div>
                   </div>
                 </div>
               </div>
@@ -121,40 +123,39 @@ export default function ExpressAudit({ onSuccessLead }) {
             </div>
 
             {/* Right Form column */}
-            <div className="lg:col-span-6 bg-dark-950/80 p-6 sm:p-8 rounded-2xl border border-white/10 shadow-2xl">
-              <h3 className="text-lg font-heading font-bold text-white mb-2">
-                Заполните форму для проведения аудита
+            <div className="lg:col-span-6 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950">
+              <h3 className="text-sm font-heading font-bold text-slate-900 dark:text-white mb-1">
+                {t.formHeading}
               </h3>
-              <p className="text-xs text-slate-400 mb-6">
-                Аудит проводится вручную senior-специалистами агентства.
+              <p className="text-[11px] text-slate-500 mb-4">
+                {t.formSubheading}
               </p>
 
-              <form onSubmit={handleSubmit} className="space-y-4">
-                
+              <form onSubmit={handleSubmit} className="space-y-3">
                 <div>
-                  <label className="block text-xs font-mono text-slate-300 mb-1">
-                    Ссылка на сайт, профиль в соцсети или проект:
+                  <label className="block text-[11px] font-mono text-slate-600 dark:text-slate-400 mb-1">
+                    {t.urlLabel}
                   </label>
                   <input
                     type="text"
-                    placeholder="https://example.com или @username"
+                    placeholder="https://example.com"
                     value={targetUrl}
                     onChange={(e) => setTargetUrl(e.target.value)}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-dark-900 border border-white/10 text-white placeholder-slate-500 text-xs sm:text-sm focus:outline-none focus:border-primary-500 transition-colors"
+                    className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-xs focus:outline-none focus:border-slate-400"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-mono text-slate-300 mb-1">
-                    Главная проблема или приоритетная задача:
+                  <label className="block text-[11px] font-mono text-slate-600 dark:text-slate-400 mb-1">
+                    {t.issueLabel}
                   </label>
                   <select
                     value={selectedIssue}
                     onChange={(e) => setSelectedIssue(e.target.value)}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-dark-900 border border-white/10 text-white text-xs sm:text-sm focus:outline-none focus:border-primary-500 transition-colors"
+                    className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-xs focus:outline-none focus:border-slate-400"
                   >
                     {issues.map(iss => (
-                      <option key={iss.id} value={iss.id} className="bg-dark-900 text-white">
+                      <option key={iss.id} value={iss.id} className="bg-white dark:bg-slate-900 text-slate-900 dark:text-white">
                         {iss.label}
                       </option>
                     ))}
@@ -162,58 +163,58 @@ export default function ExpressAudit({ onSuccessLead }) {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-mono text-slate-300 mb-1">
-                    Куда прислать готовый аудит (Telegram / Телефон / Email) *:
+                  <label className="block text-[11px] font-mono text-slate-600 dark:text-slate-400 mb-1">
+                    {t.contactLabel}
                   </label>
                   <input
                     type="text"
                     required
-                    placeholder="@telegram_login или +7 (999) 000-00-00"
+                    placeholder="@telegram_login, WhatsApp or email"
                     value={contact}
                     onChange={(e) => setContact(e.target.value)}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-dark-900 border border-white/10 text-white placeholder-slate-500 text-xs sm:text-sm focus:outline-none focus:border-primary-500 transition-colors"
+                    className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-xs focus:outline-none focus:border-slate-400"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-mono text-slate-300 mb-1">
-                    Дополнительные пожелания (опционально):
+                  <label className="block text-[11px] font-mono text-slate-600 dark:text-slate-400 mb-1">
+                    {t.notesLabel}
                   </label>
                   <input
                     type="text"
-                    placeholder="Например: смотрим выход на рынок ОАЭ / запуск нового B2B тарифа"
+                    placeholder={lang === 'en' ? 'Any specific goals...' : 'Например: запуск нового тарифа...'}
                     value={notes}
                     onChange={(e) => setNotes(e.target.value)}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-dark-900 border border-white/10 text-white placeholder-slate-500 text-xs sm:text-sm focus:outline-none focus:border-primary-500 transition-colors"
+                    className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-xs focus:outline-none focus:border-slate-400"
                   />
                 </div>
 
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full py-3.5 rounded-xl bg-gradient-to-r from-accent-emerald via-teal-500 to-accent-cyan hover:opacity-95 text-dark-950 font-bold text-xs sm:text-sm shadow-xl shadow-accent-emerald/20 transition-all flex items-center justify-center gap-2 disabled:opacity-50"
+                  className="w-full py-3 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-950 font-bold text-xs shadow-sm flex items-center justify-center gap-2 disabled:opacity-50"
                 >
                   {isSubmitting ? (
-                    <span>Анализируем данные...</span>
+                    <span>{t.submitting}</span>
                   ) : (
                     <>
-                      <Search className="w-4 h-4" />
-                      <span>Получить бесплатный экспресс-аудит</span>
+                      <Search className="w-3.5 h-3.5" />
+                      <span>{t.submitBtn}</span>
                     </>
                   )}
                 </button>
 
                 {status === 'success' && (
-                  <div className="p-3 rounded-xl bg-accent-emerald/20 border border-accent-emerald/30 text-accent-emerald text-xs flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 shrink-0" />
-                    <span>Заявка принята! Подготовим и пришлем аудит в течение 24 часов.</span>
+                  <div className="p-2.5 rounded-lg border border-emerald-300 dark:border-emerald-800 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 text-xs flex items-center gap-2">
+                    <CheckCircle2 className="w-3.5 h-3.5 shrink-0" />
+                    <span>{t.successMsg}</span>
                   </div>
                 )}
 
                 {status === 'error' && (
-                  <div className="p-3 rounded-xl bg-accent-rose/20 border border-accent-rose/30 text-rose-300 text-xs flex items-center gap-2">
-                    <AlertCircle className="w-4 h-4 shrink-0" />
-                    <span>Произошла ошибка. Напишите нам в Telegram @artemov_basil</span>
+                  <div className="p-2.5 rounded-lg border border-rose-300 dark:border-rose-800 bg-rose-50 dark:bg-rose-950/40 text-rose-800 dark:text-rose-300 text-xs flex items-center gap-2">
+                    <AlertCircle className="w-3.5 h-3.5 shrink-0" />
+                    <span>{t.errorMsg}</span>
                   </div>
                 )}
 

@@ -1,18 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  X, Send, CheckCircle2, AlertCircle, 
-  MessageSquare, ShieldCheck, ArrowRight, Phone 
-} from 'lucide-react';
-import { SERVICES } from '../data/agencyData';
+import { X, Send, CheckCircle2, AlertCircle, MessageSquare, ShieldCheck } from 'lucide-react';
+import { TRANSLATIONS } from '../data/translations';
 
-export default function ContactModal({ isOpen, onClose, initialService, onSuccessLead }) {
+export default function ContactModal({ 
+  lang,
+  servicesList = [],
+  isOpen, 
+  onClose, 
+  initialService, 
+  onSuccessLead 
+}) {
   const [name, setName] = useState('');
   const [contact, setContact] = useState('');
-  const [selectedService, setSelectedService] = useState(initialService || 'Комплексный проект');
+  const [selectedService, setSelectedService] = useState(initialService || (lang === 'en' ? 'Full Packaging 360°' : 'Комплексный проект / Упаковка'));
   const [budget, setBudget] = useState('150k-300k');
   const [message, setMessage] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [status, setStatus] = useState(null);
+
+  const t = TRANSLATIONS[lang].modal;
 
   useEffect(() => {
     if (initialService) {
@@ -45,7 +51,7 @@ export default function ContactModal({ isOpen, onClose, initialService, onSucces
 
     const payload = {
       type: 'GENERAL_CONTACT_REQUEST',
-      name: name.trim() || 'Не указано',
+      name: name.trim() || 'Not specified',
       contact: contact.trim(),
       service: selectedService,
       budget,
@@ -79,164 +85,167 @@ export default function ContactModal({ isOpen, onClose, initialService, onSucces
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
       {/* Backdrop */}
       <div 
-        className="fixed inset-0 bg-dark-950/80 backdrop-blur-md transition-opacity"
+        className="fixed inset-0 bg-black/60 dark:bg-black/80 backdrop-blur-sm transition-opacity"
         onClick={onClose}
       ></div>
 
       {/* Modal Dialog Content */}
-      <div className="relative w-full max-w-xl bg-dark-900 border border-white/10 rounded-3xl p-6 sm:p-8 shadow-2xl z-10 animate-scaleUp">
+      <div className="relative w-full max-w-lg bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl z-10 animate-scaleUp">
         
         {/* Close button */}
         <button
           onClick={onClose}
-          className="absolute top-5 right-5 p-2 rounded-full bg-dark-850 hover:bg-dark-800 text-slate-400 hover:text-white transition-colors border border-white/5"
+          className="absolute top-5 right-5 p-2 rounded-full border border-slate-200 dark:border-slate-800 text-slate-500 hover:text-slate-950 dark:hover:text-white transition-colors"
         >
-          <X className="w-5 h-5" />
+          <X className="w-4 h-4" />
         </button>
 
         {/* Modal Header */}
-        <div className="mb-6">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary-500/10 text-primary-400 text-xs font-mono uppercase mb-2">
-            <span>Обсудить задачу</span>
+        <div className="mb-5">
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 text-slate-600 dark:text-slate-400 text-xs font-mono uppercase mb-2">
+            <span>{t.badge}</span>
           </div>
-          <h3 className="text-2xl font-heading font-extrabold text-white">
-            Давайте создадим нечто выдающееся
+          <h3 className="text-xl sm:text-2xl font-heading font-extrabold text-slate-950 dark:text-white">
+            {t.title}
           </h3>
-          <p className="text-xs sm:text-sm text-slate-400 mt-1">
-            Заполните форму, и мы свяжемся с вами в Telegram или по телефону в течение 20 минут.
+          <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+            {t.desc}
           </p>
         </div>
 
-        {/* Quick messenger triggers */}
-        <div className="mb-6 flex gap-3">
+        {/* Quick Messengers */}
+        <div className="mb-5 flex gap-2.5">
           <a
             href="https://t.me/artemov_basil"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex-1 p-3 rounded-xl bg-cyan-950/40 hover:bg-cyan-900/50 border border-cyan-800/40 text-cyan-300 text-xs font-semibold flex items-center justify-center gap-2 transition-colors"
+            className="flex-1 p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 hover:border-slate-400 text-xs font-medium flex items-center justify-center gap-1.5 transition-colors"
           >
-            <Send className="w-4 h-4" />
-            <span>Написать в Telegram</span>
+            <Send className="w-3.5 h-3.5 text-cyan-500" />
+            <span>{t.tgDirect}</span>
           </a>
           <a
-            href="https://wa.me/?text=Здравствуйте!%20Хочу%20обсудить%20проект%20в%20агентстве%20FIRM"
+            href="https://wa.me/?text=Hello!%20I%20would%20like%20to%20discuss%20a%20project%20with%20FIRM%20agency"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex-1 p-3 rounded-xl bg-emerald-950/40 hover:bg-emerald-900/50 border border-emerald-800/40 text-emerald-300 text-xs font-semibold flex items-center justify-center gap-2 transition-colors"
+            className="flex-1 p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 hover:border-slate-400 text-xs font-medium flex items-center justify-center gap-1.5 transition-colors"
           >
-            <MessageSquare className="w-4 h-4" />
-            <span>WhatsApp диалог</span>
+            <MessageSquare className="w-3.5 h-3.5 text-emerald-500" />
+            <span>{t.waDirect}</span>
           </a>
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-3.5">
           <div>
-            <label className="block text-xs font-mono text-slate-300 mb-1">
-              Ваше имя / Компания:
+            <label className="block text-xs font-mono text-slate-600 dark:text-slate-400 mb-1">
+              {t.nameLabel}
             </label>
             <input
               type="text"
-              placeholder="Как к вам обращаться"
+              placeholder={lang === 'en' ? 'John Doe / Acme Corp' : 'Как к вам обращаться'}
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full px-3.5 py-2.5 rounded-xl bg-dark-950 border border-white/10 text-white placeholder-slate-500 text-xs sm:text-sm focus:outline-none focus:border-primary-500 transition-colors"
+              className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-xs focus:outline-none focus:border-slate-400"
             />
           </div>
 
           <div>
-            <label className="block text-xs font-mono text-slate-300 mb-1">
-              Telegram / Телефон / Email *:
+            <label className="block text-xs font-mono text-slate-600 dark:text-slate-400 mb-1">
+              {t.contactLabel}
             </label>
             <input
               type="text"
               required
-              placeholder="@username или +7 (999) 000-00-00"
+              placeholder="@username, phone or email"
               value={contact}
               onChange={(e) => setContact(e.target.value)}
-              className="w-full px-3.5 py-2.5 rounded-xl bg-dark-950 border border-white/10 text-white placeholder-slate-500 text-xs sm:text-sm focus:outline-none focus:border-primary-500 transition-colors"
+              className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-xs focus:outline-none focus:border-slate-400"
             />
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-mono text-slate-300 mb-1">
-                Интересующая услуга:
+              <label className="block text-xs font-mono text-slate-600 dark:text-slate-400 mb-1">
+                {t.serviceLabel}
               </label>
               <select
                 value={selectedService}
                 onChange={(e) => setSelectedService(e.target.value)}
-                className="w-full px-3 py-2 rounded-xl bg-dark-950 border border-white/10 text-white text-xs focus:outline-none focus:border-primary-500"
+                className="w-full px-2.5 py-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-xs focus:outline-none focus:border-slate-400"
               >
-                <option value="Комплексный проект">Комплексный проект / Упаковка</option>
-                {SERVICES.map(s => (
-                  <option key={s.id} value={s.title}>{s.title}</option>
-                ))}
+                <option value={lang === 'en' ? 'Full Packaging 360°' : 'Комплексный проект / Упаковка'}>
+                  {lang === 'en' ? 'Turnkey Packaging 360°' : 'Комплексный проект / Упаковка'}
+                </option>
+                {servicesList.map(s => {
+                  const title = s.title?.[lang] || s.title?.ru || s.id;
+                  return <option key={s.id} value={title}>{title}</option>;
+                })}
               </select>
             </div>
 
             <div>
-              <label className="block text-xs font-mono text-slate-300 mb-1">
-                Планируемый бюджет:
+              <label className="block text-xs font-mono text-slate-600 dark:text-slate-400 mb-1">
+                {t.budgetLabel}
               </label>
               <select
                 value={budget}
                 onChange={(e) => setBudget(e.target.value)}
-                className="w-full px-3 py-2 rounded-xl bg-dark-950 border border-white/10 text-white text-xs focus:outline-none focus:border-primary-500"
+                className="w-full px-2.5 py-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-xs focus:outline-none focus:border-slate-400"
               >
-                <option value="до 100 000 ₽">до 100 000 ₽ ($1 000)</option>
-                <option value="150 000 – 300 000 ₽">150 000 – 300 000 ₽ ($1 500 – $3 500)</option>
-                <option value="300 000 – 600 000 ₽">300 000 – 600 000 ₽ ($3 500 – $7 000)</option>
-                <option value="от 600 000 ₽+">от 600 000 ₽+ ($7 000+)</option>
+                <option value="<$1,000">&lt; $1,000 (до 100 000 ₽)</option>
+                <option value="$1,500 - $3,500">$1,500 – $3,500 (150k – 300k ₽)</option>
+                <option value="$3,500 - $7,000">$3,500 – $7,000 (300k – 600k ₽)</option>
+                <option value=">$7,000+">&gt; $7,000+ (от 600k ₽+)</option>
               </select>
             </div>
           </div>
 
           <div>
-            <label className="block text-xs font-mono text-slate-300 mb-1">
-              Кратко о задаче (или ссылка):
+            <label className="block text-xs font-mono text-slate-600 dark:text-slate-400 mb-1">
+              {t.messageLabel}
             </label>
             <textarea
               rows="3"
-              placeholder="Расскажите о целях, сроках или пришлите ссылку на текущий сайт / референсы"
+              placeholder={lang === 'en' ? 'Describe your challenge, timeline or send website link...' : 'Расскажите о целях, сроках или пришлите ссылку на текущий сайт...'}
               value={message}
               onChange={(e) => setMessage(e.target.value)}
-              className="w-full px-3.5 py-2 rounded-xl bg-dark-950 border border-white/10 text-white placeholder-slate-500 text-xs sm:text-sm focus:outline-none focus:border-primary-500 transition-colors resize-none"
+              className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-xs focus:outline-none focus:border-slate-400 resize-none"
             ></textarea>
           </div>
 
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full py-3.5 rounded-xl bg-gradient-to-r from-primary-600 via-primary-500 to-accent-violet hover:from-primary-500 hover:to-accent-violet text-white font-semibold text-xs sm:text-sm shadow-xl shadow-primary-500/25 transition-all flex items-center justify-center gap-2 disabled:opacity-50"
+            className="w-full py-3 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-950 font-bold text-xs shadow-sm transition-all flex items-center justify-center gap-2 disabled:opacity-50"
           >
             {isSubmitting ? (
-              <span>Отправляем заявку...</span>
+              <span>{t.submitting}</span>
             ) : (
               <>
-                <Send className="w-4 h-4" />
-                <span>Отправить заявку в агентство</span>
+                <Send className="w-3.5 h-3.5" />
+                <span>{t.submitBtn}</span>
               </>
             )}
           </button>
 
           {status === 'success' && (
-            <div className="p-3 rounded-xl bg-accent-emerald/20 border border-accent-emerald/30 text-accent-emerald text-xs flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 shrink-0" />
-              <span>Заявка успешно отправлена! Скоро свяжемся с вами.</span>
+            <div className="p-2.5 rounded-lg border border-emerald-300 dark:border-emerald-800 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 text-xs flex items-center gap-2">
+              <CheckCircle2 className="w-3.5 h-3.5 shrink-0" />
+              <span>{t.successMsg}</span>
             </div>
           )}
 
           {status === 'error' && (
-            <div className="p-3 rounded-xl bg-accent-rose/20 border border-accent-rose/30 text-rose-300 text-xs flex items-center gap-2">
-              <AlertCircle className="w-4 h-4 shrink-0" />
-              <span>Не удалось отправить форму. Напишите напрямую в Telegram @artemov_basil</span>
+            <div className="p-2.5 rounded-lg border border-rose-300 dark:border-rose-800 bg-rose-50 dark:bg-rose-950/40 text-rose-800 dark:text-rose-300 text-xs flex items-center gap-2">
+              <AlertCircle className="w-3.5 h-3.5 shrink-0" />
+              <span>{t.errorMsg}</span>
             </div>
           )}
 
-          <div className="flex items-center justify-center gap-2 text-[11px] text-slate-500 pt-1">
-            <ShieldCheck className="w-3.5 h-3.5 text-slate-400" />
-            <span>Конфиденциально · Официальный договор · NDA</span>
+          <div className="flex items-center justify-center gap-1.5 text-[10px] text-slate-400 pt-1">
+            <ShieldCheck className="w-3 h-3" />
+            <span>{t.footerNote}</span>
           </div>
 
         </form>

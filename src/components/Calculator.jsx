@@ -1,25 +1,27 @@
-import React, { useState, useId } from 'react';
+import React, { useState } from 'react';
 import { 
   Calculator as CalcIcon, CheckCircle2, Clock, 
-  Send, Sparkles, AlertCircle, ArrowRight, ShieldCheck 
+  Send, AlertCircle, ArrowRight, ShieldCheck 
 } from 'lucide-react';
-import { SERVICES } from '../data/agencyData';
+import { TRANSLATIONS } from '../data/translations';
 
 export default function Calculator({ 
+  lang,
   currency, 
+  servicesList = [],
   selectedServices, 
   onToggleService, 
   onSuccessLead 
 }) {
-  const [scale, setScale] = useState('business'); // start | business | enterprise
-  const [urgency, setUrgency] = useState('standard'); // standard | express
-  
-  // Lead submission form
+  const [scale, setScale] = useState('business');
+  const [urgency, setUrgency] = useState('standard');
   const [clientName, setClientName] = useState('');
   const [clientContact, setClientContact] = useState('');
   const [clientComment, setClientComment] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState(null); // 'success' | 'error' | null
+  const [submitStatus, setSubmitStatus] = useState(null);
+
+  const t = TRANSLATIONS[lang].calculator;
 
   const scaleMultipliers = {
     start: 0.8,
@@ -28,9 +30,9 @@ export default function Calculator({
   };
 
   const scaleNames = {
-    start: 'Стартап / MVP',
-    business: 'Бизнес / Стандарт',
-    enterprise: 'Enterprise / Лидер рынка'
+    start: lang === 'en' ? 'Startup / MVP' : 'Стартап / MVP',
+    business: lang === 'en' ? 'Business / Standard' : 'Бизнес / Стандарт',
+    enterprise: lang === 'en' ? 'Enterprise / Scale' : 'Enterprise / Масштаб'
   };
 
   const urgencyMultipliers = {
@@ -40,27 +42,24 @@ export default function Calculator({
 
   // Calculate pricing
   const baseTotal = selectedServices.reduce((sum, serviceId) => {
-    const s = SERVICES.find(item => item.id === serviceId);
+    const s = servicesList.find(item => item.id === serviceId);
     if (!s) return sum;
     return sum + (s.basePrice[currency] || s.basePrice.rub);
   }, 0);
 
-  // Bundle discount
   let bundleDiscount = 0;
   if (selectedServices.length >= 4) {
-    bundleDiscount = 0.15; // 15% discount for 4+ services
+    bundleDiscount = 0.15;
   } else if (selectedServices.length >= 2) {
-    bundleDiscount = 0.10; // 10% discount for 2-3 services
+    bundleDiscount = 0.10;
   }
 
   const calculatedPrice = Math.round(
     baseTotal * scaleMultipliers[scale] * urgencyMultipliers[urgency] * (1 - bundleDiscount)
   );
 
-  // Calculate estimated days
   const baseDays = selectedServices.length === 0 ? 0 : Math.max(
     ...selectedServices.map(id => {
-      const s = SERVICES.find(item => item.id === id);
       if (id === 'packaging') return 28;
       if (id === 'software') return 25;
       if (id === 'websites') return 18;
@@ -98,13 +97,13 @@ export default function Calculator({
       comment: clientComment,
       currency,
       scale: scaleNames[scale],
-      urgency: urgency === 'express' ? 'Срочно (Фаст-трек)' : 'Стандарт',
+      urgency: urgency === 'express' ? 'Express (-35% timeline)' : 'Standard',
       selectedServices: selectedServices.map(id => {
-        const s = SERVICES.find(item => item.id === id);
-        return s ? s.title : id;
+        const s = servicesList.find(item => item.id === id);
+        return s ? (s.title?.[lang] || s.title?.ru || id) : id;
       }),
       estimatedPrice: formatCurrency(calculatedPrice),
-      estimatedDays: `${estimatedDays} рабочих дней`,
+      estimatedDays: `${estimatedDays} ${t.daysUnit}`,
       discount: bundleDiscount > 0 ? `${bundleDiscount * 100}%` : '0%',
       timestamp: new Date().toISOString()
     };
@@ -132,19 +131,19 @@ export default function Calculator({
   };
 
   return (
-    <section id="calculator" className="py-24 relative overflow-hidden bg-radial-gradient">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <section id="calculator" className="py-20 relative bg-slate-50/50 dark:bg-slate-900/30 border-t border-slate-200 dark:border-slate-800/80">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-14">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-accent-violet/10 border border-accent-violet/20 text-xs text-accent-violet font-mono uppercase tracking-wider mb-4">
-            Интерактивный расчет проекта
+        <div className="text-center max-w-3xl mx-auto mb-12">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-xs text-slate-600 dark:text-slate-400 font-mono uppercase tracking-wider mb-3">
+            {t.badge}
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-heading font-extrabold text-white tracking-tight">
-            Калькулятор стоимости и <span className="text-gradient-primary">сроков реализации</span>
+          <h2 className="text-2xl sm:text-4xl font-heading font-extrabold text-slate-900 dark:text-white tracking-tight">
+            {t.title}
           </h2>
-          <p className="mt-4 text-slate-300 text-base sm:text-lg">
-            Соберите нужный стек услуг, выберите масштаб задачи и получите прозрачную смету с детализацией за 1 минуту.
+          <p className="mt-3 text-slate-600 dark:text-slate-400 text-sm sm:text-base">
+            {t.desc}
           </p>
         </div>
 
@@ -152,44 +151,47 @@ export default function Calculator({
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
           {/* Left Configuration Panel (7 cols) */}
-          <div className="lg:col-span-7 space-y-8 glass-panel p-6 sm:p-8 rounded-3xl">
+          <div className="lg:col-span-7 space-y-6 card-studio p-6 sm:p-8 rounded-3xl">
             
             {/* Step 1: Services Selection */}
             <div>
-              <div className="flex items-center justify-between mb-4">
-                <span className="text-sm font-heading font-bold text-white uppercase tracking-wider flex items-center gap-2">
-                  <span className="w-6 h-6 rounded-full bg-primary-600 text-white flex items-center justify-center text-xs">1</span>
-                  Выберите необходимые услуги:
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-xs font-mono font-bold uppercase tracking-wider text-slate-900 dark:text-white">
+                  {t.step1}
                 </span>
-                <span className="text-xs text-slate-400">
-                  Выбрано: {selectedServices.length} из {SERVICES.length}
+                <span className="text-xs text-slate-500 font-mono">
+                  {t.selectedCount.replace('{count}', selectedServices.length).replace('{total}', servicesList.length)}
                 </span>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {SERVICES.map((s) => {
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                {servicesList.map((s) => {
                   const isChecked = selectedServices.includes(s.id);
+                  const title = s.title?.[lang] || s.title?.ru || s.id;
+                  const price = s.basePrice[currency]?.toLocaleString('ru-RU');
+                  const curSymbol = currency === 'rub' ? '₽' : currency === 'usd' ? '$' : '₸';
+
                   return (
                     <button
                       key={s.id}
                       type="button"
                       onClick={() => onToggleService(s.id)}
-                      className={`p-3.5 rounded-xl border text-left transition-all flex items-center justify-between gap-3 ${
+                      className={`p-3 rounded-xl border text-left transition-all flex items-center justify-between gap-3 ${
                         isChecked
-                          ? 'bg-primary-600/15 border-primary-500 text-white shadow-md shadow-primary-500/10'
-                          : 'bg-dark-900/60 border-white/5 text-slate-300 hover:border-white/20'
+                          ? 'border-slate-900 dark:border-white bg-slate-100 dark:bg-slate-800 text-slate-950 dark:text-white font-medium'
+                          : 'border-slate-200 dark:border-slate-800/80 bg-white dark:bg-slate-950 text-slate-600 dark:text-slate-400 hover:border-slate-400'
                       }`}
                     >
                       <div className="min-w-0">
-                        <div className="text-xs sm:text-sm font-medium truncate">{s.title}</div>
-                        <div className="text-[11px] text-slate-400">
-                          от {s.basePrice[currency]?.toLocaleString('ru-RU')} {currency === 'rub' ? '₽' : currency === 'usd' ? '$' : '₸'}
+                        <div className="text-xs font-medium truncate">{title}</div>
+                        <div className="text-[10px] text-slate-500 font-mono mt-0.5">
+                          {lang === 'en' ? 'from ' : 'от '}{price} {curSymbol}
                         </div>
                       </div>
-                      <div className={`w-5 h-5 rounded-md border flex items-center justify-center shrink-0 ${
-                        isChecked ? 'bg-primary-600 border-primary-500 text-white' : 'border-slate-600'
+                      <div className={`w-4 h-4 rounded border flex items-center justify-center shrink-0 ${
+                        isChecked ? 'bg-slate-900 dark:bg-white border-slate-900 dark:border-white text-white dark:text-slate-950' : 'border-slate-300 dark:border-slate-700'
                       }`}>
-                        {isChecked && <CheckCircle2 className="w-4 h-4" />}
+                        {isChecked && <CheckCircle2 className="w-3.5 h-3.5" />}
                       </div>
                     </button>
                   );
@@ -199,31 +201,30 @@ export default function Calculator({
 
             {/* Step 2: Scale selection */}
             <div>
-              <div className="mb-4">
-                <span className="text-sm font-heading font-bold text-white uppercase tracking-wider flex items-center gap-2">
-                  <span className="w-6 h-6 rounded-full bg-primary-600 text-white flex items-center justify-center text-xs">2</span>
-                  Масштаб и сложность решения:
+              <div className="mb-3">
+                <span className="text-xs font-mono font-bold uppercase tracking-wider text-slate-900 dark:text-white">
+                  {t.step2}
                 </span>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
                 {[
-                  { id: 'start', title: 'Стартап / MVP', desc: 'Базовый функционал, быстрый запуск' },
-                  { id: 'business', title: 'Бизнес / Оптимум', desc: 'Комплексный дизайн, интеграции, CRM' },
-                  { id: 'enterprise', title: 'Enterprise', desc: 'Highload, микросервисы, бренд-система' }
+                  { id: 'start', title: scaleNames.start, desc: lang === 'en' ? 'MVP & core features' : 'Базовый MVP функционал' },
+                  { id: 'business', title: scaleNames.business, desc: lang === 'en' ? 'Full design & integrations' : 'Оптимум, интеграции, CRM' },
+                  { id: 'enterprise', title: scaleNames.enterprise, desc: lang === 'en' ? 'Highload & brand system' : 'Highload, микросервисы' }
                 ].map((item) => (
                   <button
                     key={item.id}
                     type="button"
                     onClick={() => setScale(item.id)}
-                    className={`p-4 rounded-xl border text-left transition-all ${
+                    className={`p-3.5 rounded-xl border text-left transition-all ${
                       scale === item.id
-                        ? 'bg-accent-violet/15 border-accent-violet text-white shadow-md shadow-accent-violet/10'
-                        : 'bg-dark-900/60 border-white/5 text-slate-400 hover:border-white/20'
+                        ? 'border-slate-900 dark:border-white bg-slate-100 dark:bg-slate-800 text-slate-950 dark:text-white'
+                        : 'border-slate-200 dark:border-slate-800/80 bg-white dark:bg-slate-950 text-slate-600 dark:text-slate-400'
                     }`}
                   >
-                    <div className="text-xs sm:text-sm font-bold text-white mb-1">{item.title}</div>
-                    <div className="text-[11px] text-slate-400">{item.desc}</div>
+                    <div className="text-xs font-bold text-slate-900 dark:text-white mb-0.5">{item.title}</div>
+                    <div className="text-[10px] text-slate-500 leading-tight">{item.desc}</div>
                   </button>
                 ))}
               </div>
@@ -231,41 +232,37 @@ export default function Calculator({
 
             {/* Step 3: Urgency */}
             <div>
-              <div className="mb-4">
-                <span className="text-sm font-heading font-bold text-white uppercase tracking-wider flex items-center gap-2">
-                  <span className="w-6 h-6 rounded-full bg-primary-600 text-white flex items-center justify-center text-xs">3</span>
-                  Приоритет срочности:
+              <div className="mb-3">
+                <span className="text-xs font-mono font-bold uppercase tracking-wider text-slate-900 dark:text-white">
+                  {t.step3}
                 </span>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                 <button
                   type="button"
                   onClick={() => setUrgency('standard')}
-                  className={`p-4 rounded-xl border text-left transition-all ${
+                  className={`p-3.5 rounded-xl border text-left transition-all ${
                     urgency === 'standard'
-                      ? 'bg-primary-600/15 border-primary-500 text-white'
-                      : 'bg-dark-900/60 border-white/5 text-slate-400'
+                      ? 'border-slate-900 dark:border-white bg-slate-100 dark:bg-slate-800 text-slate-950 dark:text-white'
+                      : 'border-slate-200 dark:border-slate-800/80 bg-white dark:bg-slate-950 text-slate-600 dark:text-slate-400'
                   }`}
                 >
-                  <div className="text-xs sm:text-sm font-bold text-white mb-1">Стандартный темп</div>
-                  <div className="text-[11px] text-slate-400">Плановые спринты, максимальная глубина проработки</div>
+                  <div className="text-xs font-bold text-slate-900 dark:text-white mb-0.5">{t.standardSpeed}</div>
+                  <div className="text-[10px] text-slate-500">{t.standardSpeedDesc}</div>
                 </button>
 
                 <button
                   type="button"
                   onClick={() => setUrgency('express')}
-                  className={`p-4 rounded-xl border text-left transition-all ${
+                  className={`p-3.5 rounded-xl border text-left transition-all ${
                     urgency === 'express'
-                      ? 'bg-accent-rose/15 border-accent-rose text-white'
-                      : 'bg-dark-900/60 border-white/5 text-slate-400'
+                      ? 'border-slate-900 dark:border-white bg-slate-100 dark:bg-slate-800 text-slate-950 dark:text-white'
+                      : 'border-slate-200 dark:border-slate-800/80 bg-white dark:bg-slate-950 text-slate-600 dark:text-slate-400'
                   }`}
                 >
-                  <div className="text-xs sm:text-sm font-bold text-white mb-1 flex items-center gap-1.5">
-                    <span>Фаст-трек (Срочно)</span>
-                    <span className="text-[10px] px-1.5 py-0.5 rounded bg-accent-rose/30 text-rose-300 font-mono">-35% дней</span>
-                  </div>
-                  <div className="text-[11px] text-slate-400">Выделенная команда, параллельные спринты (+25% к стоимости)</div>
+                  <div className="text-xs font-bold text-slate-900 dark:text-white mb-0.5">{t.expressSpeed}</div>
+                  <div className="text-[10px] text-slate-500">{t.expressSpeedDesc}</div>
                 </button>
               </div>
             </div>
@@ -273,65 +270,66 @@ export default function Calculator({
           </div>
 
           {/* Right Summary & Proposal Panel (5 cols) */}
-          <div className="lg:col-span-5 glass-panel p-6 sm:p-8 rounded-3xl border-primary-500/20 relative shadow-2xl">
+          <div className="lg:col-span-5 card-studio p-6 sm:p-8 rounded-3xl sticky top-24">
             
             {/* Top Badge */}
-            <div className="flex items-center justify-between pb-4 border-b border-white/10 mb-6">
-              <span className="text-xs font-mono uppercase tracking-widest text-slate-400">Предварительная смета</span>
+            <div className="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800 mb-5">
+              <span className="text-xs font-mono uppercase tracking-widest text-slate-500">{t.summaryTitle}</span>
               {bundleDiscount > 0 && (
-                <span className="px-2.5 py-1 rounded-full text-xs font-mono font-bold bg-accent-emerald/20 text-accent-emerald border border-accent-emerald/30 animate-pulse">
-                  Скидка пакета -{bundleDiscount * 100}%
+                <span className="px-2 py-0.5 rounded text-[11px] font-mono font-bold bg-slate-900 dark:bg-white text-white dark:text-slate-950">
+                  {t.discountBadge.replace('{percent}', bundleDiscount * 100)}
                 </span>
               )}
             </div>
 
-            {/* Big Price Display */}
-            <div className="mb-6">
-              <div className="text-xs text-slate-400 mb-1">Ориентировочный бюджет:</div>
-              <div className="text-3xl sm:text-4xl font-heading font-extrabold text-white">
-                {selectedServices.length > 0 ? formatCurrency(calculatedPrice) : 'Выберите услуги'}
+            {/* Price Display */}
+            <div className="mb-5">
+              <div className="text-xs text-slate-500 mb-1">{t.budgetLabel}</div>
+              <div className="text-3xl font-heading font-extrabold text-slate-950 dark:text-white">
+                {selectedServices.length > 0 ? formatCurrency(calculatedPrice) : (lang === 'en' ? 'Select services' : 'Выберите услуги')}
               </div>
-              <div className="mt-2 flex items-center gap-4 text-xs text-slate-400">
-                <span className="flex items-center gap-1.5">
-                  <Clock className="w-3.5 h-3.5 text-primary-400" />
-                  Срок: <strong className="text-white">{selectedServices.length > 0 ? `~${estimatedDays} раб. дней` : '—'}</strong>
+              <div className="mt-2 flex items-center gap-3 text-xs text-slate-500">
+                <span className="flex items-center gap-1">
+                  <Clock className="w-3.5 h-3.5" />
+                  {t.timelineLabel} <strong className="text-slate-800 dark:text-slate-200">{selectedServices.length > 0 ? `~${estimatedDays} ${t.daysUnit}` : '—'}</strong>
                 </span>
                 <span>•</span>
-                <span>Тариф: <strong className="text-white">{scaleNames[scale]}</strong></span>
+                <span>{t.tierLabel} <strong className="text-slate-800 dark:text-slate-200">{scaleNames[scale]}</strong></span>
               </div>
             </div>
 
-            {/* Deliverables summary */}
-            <div className="space-y-2 mb-6 p-4 rounded-xl bg-dark-900/70 border border-white/5 text-xs text-slate-300">
-              <div className="font-semibold text-white mb-2">Включено в расчет:</div>
+            {/* Selected deliverables list */}
+            <div className="space-y-1.5 mb-5 p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-900/60 text-xs text-slate-600 dark:text-slate-400">
+              <div className="font-semibold text-slate-900 dark:text-white mb-1.5">{t.includedTitle}</div>
               {selectedServices.length === 0 ? (
-                <div className="text-slate-500 italic">Пока не выбрано ни одной услуги</div>
+                <div className="italic text-slate-400">{t.emptyServices}</div>
               ) : (
                 selectedServices.map(id => {
-                  const s = SERVICES.find(item => item.id === id);
+                  const s = servicesList.find(item => item.id === id);
+                  const title = s?.title?.[lang] || s?.title?.ru || id;
                   return (
                     <div key={id} className="flex items-center gap-2">
-                      <CheckCircle2 className="w-3.5 h-3.5 text-accent-emerald shrink-0" />
-                      <span className="truncate">{s?.title}</span>
+                      <CheckCircle2 className="w-3.5 h-3.5 text-slate-800 dark:text-emerald-400 shrink-0" />
+                      <span className="truncate">{title}</span>
                     </div>
                   );
                 })
               )}
             </div>
 
-            {/* Direct Lead Form to Lock Estimate */}
-            <form onSubmit={handleSubmitEstimate} className="space-y-3.5">
-              <div className="text-xs font-medium text-slate-200">
-                Зафиксировать расчет и получить развернутое КП:
+            {/* Form */}
+            <form onSubmit={handleSubmitEstimate} className="space-y-3">
+              <div className="text-xs font-semibold text-slate-900 dark:text-white">
+                {t.formTitle}
               </div>
 
               <div>
                 <input
                   type="text"
-                  placeholder="Ваше имя / Компания"
+                  placeholder={t.namePlaceholder}
                   value={clientName}
                   onChange={(e) => setClientName(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-dark-950/80 border border-white/10 text-white placeholder-slate-500 text-xs sm:text-sm focus:outline-none focus:border-primary-500 transition-colors"
+                  className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 text-slate-900 dark:text-white placeholder-slate-400 text-xs focus:outline-none focus:border-slate-400"
                 />
               </div>
 
@@ -339,55 +337,55 @@ export default function Calculator({
                 <input
                   type="text"
                   required
-                  placeholder="Telegram (@username) или Телефон *"
+                  placeholder={t.contactPlaceholder}
                   value={clientContact}
                   onChange={(e) => setClientContact(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-dark-950/80 border border-white/10 text-white placeholder-slate-500 text-xs sm:text-sm focus:outline-none focus:border-primary-500 transition-colors"
+                  className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 text-slate-900 dark:text-white placeholder-slate-400 text-xs focus:outline-none focus:border-slate-400"
                 />
               </div>
 
               <div>
                 <textarea
                   rows="2"
-                  placeholder="Комментарий к задаче или ссылка на текущий проект"
+                  placeholder={t.commentPlaceholder}
                   value={clientComment}
                   onChange={(e) => setClientComment(e.target.value)}
-                  className="w-full px-3.5 py-2 rounded-xl bg-dark-950/80 border border-white/10 text-white placeholder-slate-500 text-xs sm:text-sm focus:outline-none focus:border-primary-500 transition-colors resize-none"
+                  className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 text-slate-900 dark:text-white placeholder-slate-400 text-xs focus:outline-none focus:border-slate-400 resize-none"
                 ></textarea>
               </div>
 
               <button
                 type="submit"
                 disabled={isSubmitting || selectedServices.length === 0}
-                className="w-full py-3.5 rounded-xl bg-gradient-to-r from-primary-600 via-primary-500 to-accent-violet hover:from-primary-500 hover:to-accent-violet text-white font-semibold text-xs sm:text-sm shadow-xl shadow-primary-500/25 transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full py-3 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-950 font-bold text-xs transition-all flex items-center justify-center gap-2 disabled:opacity-50"
               >
                 {isSubmitting ? (
-                  <span>Отправка данных...</span>
+                  <span>{t.submitting}</span>
                 ) : (
                   <>
-                    <Send className="w-4 h-4" />
-                    <span>Получить КП и зафиксировать скидку</span>
+                    <Send className="w-3.5 h-3.5" />
+                    <span>{t.submitBtn}</span>
                   </>
                 )}
               </button>
 
               {submitStatus === 'success' && (
-                <div className="p-3 rounded-xl bg-accent-emerald/20 border border-accent-emerald/30 text-accent-emerald text-xs flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 shrink-0" />
-                  <span>Расчет успешно отправлен! Мы свяжемся с вами в течение 20 минут.</span>
+                <div className="p-2.5 rounded-lg border border-emerald-300 dark:border-emerald-800 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 text-xs flex items-center gap-2">
+                  <CheckCircle2 className="w-3.5 h-3.5 shrink-0" />
+                  <span>{t.successMsg}</span>
                 </div>
               )}
 
               {submitStatus === 'error' && (
-                <div className="p-3 rounded-xl bg-accent-rose/20 border border-accent-rose/30 text-rose-300 text-xs flex items-center gap-2">
-                  <AlertCircle className="w-4 h-4 shrink-0" />
-                  <span>Ошибка при отправке. Напишите нам напрямую в Telegram @artemov_basil</span>
+                <div className="p-2.5 rounded-lg border border-rose-300 dark:border-rose-800 bg-rose-50 dark:bg-rose-950/40 text-rose-800 dark:text-rose-300 text-xs flex items-center gap-2">
+                  <AlertCircle className="w-3.5 h-3.5 shrink-0" />
+                  <span>{t.errorMsg}</span>
                 </div>
               )}
 
-              <div className="flex items-center gap-2 justify-center text-[11px] text-slate-500 pt-1">
-                <ShieldCheck className="w-3.5 h-3.5 text-slate-400" />
-                <span>Конфиденциальность гарантируется. Без спама.</span>
+              <div className="flex items-center gap-1.5 justify-center text-[10px] text-slate-400 pt-1">
+                <ShieldCheck className="w-3 h-3" />
+                <span>{t.privacyNote}</span>
               </div>
             </form>
 

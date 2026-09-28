@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+  darkMode: 'class',
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
@@ -7,25 +8,24 @@ export default {
   theme: {
     extend: {
       colors: {
-        dark: {
-          950: '#07080c',
-          900: '#0c0e15',
-          850: '#111420',
-          800: '#161b2b',
-          700: '#22293f',
+        studio: {
+          50: '#f8fafc',
+          100: '#f1f5f9',
+          200: '#e2e8f0',
+          300: '#cbd5e1',
+          400: '#94a3b8',
+          500: '#64748b',
+          600: '#475569',
+          700: '#334155',
+          800: '#1e293b',
+          900: '#0f172a',
+          950: '#090d16',
         },
         primary: {
-          50: '#eef2ff',
-          100: '#e0e7ff',
-          400: '#818cf8',
-          500: '#6366f1',
-          600: '#4f46e5',
-        },
-        accent: {
-          cyan: '#06b6d4',
-          emerald: '#10b981',
-          violet: '#8b5cf6',
-          rose: '#f43f5e',
+          DEFAULT: '#18181b', // Calm graphite/black
+          dark: '#09090b',
+          light: '#27272a',
+          accent: '#3b82f6', // restrained cobalt blue for subtle focus
         }
       },
       fontFamily: {
@@ -33,16 +33,6 @@ export default {
         heading: ['Space Grotesk', 'Inter', 'sans-serif'],
         mono: ['JetBrains Mono', 'monospace'],
       },
-      animation: {
-        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-        'float': 'float 6s ease-in-out infinite',
-      },
-      keyframes: {
-        float: {
-          '0%, 100%': { transform: 'translateY(0)' },
-          '50%': { transform: 'translateY(-10px)' },
-        }
-      }
     },
   },
   plugins: [],
