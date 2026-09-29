@@ -80,7 +80,7 @@ export default function ExpressAudit({ lang, onSuccessLead }) {
           {/* Subtle Dynamic WebGL Thermal Heatmap & Film Noise on Hover */}
           <CardShaderHover 
             colorMode="thermal" 
-            variant="radar"
+            variant="isothermal"
             anchor={{ x: 0.5, y: 0.3 }}
             isHovered={isHovered} 
             mousePos={mousePos} 

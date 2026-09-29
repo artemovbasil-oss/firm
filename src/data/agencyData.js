@@ -715,7 +715,7 @@ export const INITIAL_CASES = [
       "SEO Optimization"
     ],
     "colorMode": "cyber",
-    "shaderVariant": "prismatic",
+    "shaderVariant": "convective",
     "anchor": { "x": 0.20, "y": 0.78 },
     "seed": 1.85,
     "published": true
@@ -794,7 +794,7 @@ export const INITIAL_CASES = [
       "SEO Optimization"
     ],
     "colorMode": "ultraviolet",
-    "shaderVariant": "plasma",
+    "shaderVariant": "quantum",
     "anchor": { "x": 0.75, "y": 0.38 },
     "seed": 3.14,
     "published": true
@@ -872,7 +872,7 @@ export const INITIAL_CASES = [
       "Full Packaging"
     ],
     "colorMode": "cyber",
-    "shaderVariant": "radar",
+    "shaderVariant": "isothermal",
     "anchor": { "x": 0.22, "y": 0.28 },
     "seed": 4.62,
     "published": true
@@ -926,7 +926,7 @@ export const INITIAL_CASES = [
           "ru": "Корпоративных клиентов",
           "en": "Corporate Clients"
         },
-        "value": "45+ компаний"
+        "value": "45+ B2B"
       },
       {
         "label": {
@@ -1028,7 +1028,7 @@ export const INITIAL_CASES = [
       "SaaS"
     ],
     "colorMode": "cyber",
-    "shaderVariant": "infrared",
+    "shaderVariant": "isothermal",
     "anchor": { "x": 0.20, "y": 0.50 },
     "seed": 7.28,
     "published": true

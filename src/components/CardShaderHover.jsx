@@ -2,14 +2,10 @@ import React, { useEffect, useRef } from 'react';
 
 /**
  * CardShaderHover
- * Ultra-elegant WebGL Thermal Heatmap with 7 specialized scientific/artistic variants:
- * 0. Isothermal: Topographic contour lines & elevation relief
- * 1. Prismatic: Refractive optical dispersion & lens chromatic aberration
- * 2. Plasma: Coronal magnetic vortex & swirling plasma filaments
- * 3. Radar: Concentric telemetry sonar pulses & rotating radar sweep
- * 4. Convective: Atmospheric laminar flow & rising geothermal plume
- * 5. Infrared: FLIR industrial thermography, dual-pole sensor & raster grid
- * 6. Quantum: Cellular particulate dispersion & radiant dermal glow
+ * Ultra-elegant WebGL Thermal Heatmap with the 3 curated scientific variants:
+ * 0. Isothermal: Topographic elevation contour lines & organic relief (Casa Italia)
+ * 1. Convective: Smooth atmospheric laminar flow & rising fluid plumes (Français Pro)
+ * 2. Quantum: Cellular particulate matrix & radiant dermal glow (Pure Esthétique)
  * 
  * Features:
  * - Mathematical SDF corner radius matching (0 border clip distortion)
@@ -20,12 +16,13 @@ import React, { useEffect, useRef } from 'react';
 
 const VARIANT_MAP = {
   isothermal: 0.0,
+  convective: 1.0,
+  quantum: 2.0,
+  // Backwards-compatible aliases
   prismatic: 1.0,
-  plasma: 2.0,
-  radar: 3.0,
-  convective: 4.0,
-  infrared: 5.0,
-  quantum: 6.0,
+  plasma: 0.0,
+  radar: 0.0,
+  infrared: 1.0,
 };
 
 export default function CardShaderHover({ 
@@ -58,9 +55,8 @@ export default function CardShaderHover({
   });
 
   // Exquisite thermal heatmap palettes calibrated for high contrast with white typography
-  // Coherent palettes grounded in Solar Amber / Atmospheric Cyan aesthetic
   const PALETTES = {
-    // 1. Solar Amber Horizon (Hero Sun: Deep Obsidian -> Midnight Sapphire -> Vermillion -> Radiant Amber -> Solar Gold)
+    // 1. Solar Amber Horizon (Casa Italia, Français Pro)
     thermal: {
       c0: [0.02, 0.03, 0.07], // Deep nocturnal obsidian
       c1: [0.08, 0.12, 0.42], // Deep midnight cosmic navy
@@ -69,7 +65,7 @@ export default function CardShaderHover({
       c4: [0.96, 0.62, 0.12], // Radiant amber
       c5: [1.00, 0.84, 0.45], // Solar gold core
     },
-    // 2. Cosmic Atmospheric Cyan (Hero Atmosphere: Deep Obsidian -> Sapphire -> Deep Azure -> Electric Cyan -> Luminous Sky)
+    // 2. Cosmic Atmospheric Cyan (Ottica Milano, Bazarum, FinCore DS)
     cyber: {
       c0: [0.02, 0.03, 0.08], // Deep space obsidian
       c1: [0.04, 0.14, 0.48], // Deep sapphire
@@ -78,7 +74,7 @@ export default function CardShaderHover({
       c4: [0.45, 0.84, 0.96], // Brilliant sky
       c5: [0.85, 0.95, 0.98], // Luminous ice highlight
     },
-    // 3. Deep Astral Ultraviolet & Solar Corona (Nebula Violet -> Crimson Flame -> Radiant Amber -> Corona Gold)
+    // 3. Deep Astral Ultraviolet & Solar Corona (Astraea)
     ultraviolet: {
       c0: [0.03, 0.02, 0.08],
       c1: [0.14, 0.06, 0.38],
@@ -87,7 +83,7 @@ export default function CardShaderHover({
       c4: [0.96, 0.64, 0.18],
       c5: [1.00, 0.88, 0.60],
     },
-    // 4. Radiant Magma & Rose Gold (Basalt -> Plum -> Ruby -> Rose Vermillion -> Champagne Gold)
+    // 4. Radiant Magma & Rose Gold (Pure Esthétique)
     magma: {
       c0: [0.03, 0.02, 0.06],
       c1: [0.18, 0.06, 0.24],
@@ -171,7 +167,7 @@ export default function CardShaderHover({
       uniform float u_time;
       uniform float u_hover;
       uniform float u_radius;
-      uniform float u_variant;
+      uniform float u_variant; // 0.0: isothermal, 1.0: convective, 2.0: quantum
       uniform float u_seed;
       uniform vec3 u_c0;
       uniform vec3 u_c1;
@@ -284,9 +280,10 @@ export default function CardShaderHover({
         float temp = 0.0;
 
         if (u_variant < 0.5) {
-          // -------------------------------------------------------------
+          // =============================================================
           // VARIANT 0: ISOTHERMAL CONTOURS (Topographic Elevation Lines)
-          // -------------------------------------------------------------
+          // As featured on Casa Italia
+          // =============================================================
           float dAnchor = length(uv + warp * 0.12 - anchorUv);
           float anchorHeat = exp(-dAnchor * 2.6) * 0.72 + exp(-dAnchor * 1.3) * 0.24;
           float ambient = fbm(uv * 1.5 + warp * 0.35 + vec2(t * 0.10)) * 0.18;
@@ -302,80 +299,10 @@ export default function CardShaderHover({
           color += vec3(0.18, 0.14, 0.08) * (contour + subContour) * contourMask;
 
         } else if (u_variant < 1.5) {
-          // -------------------------------------------------------------
-          // VARIANT 1: PRISMATIC OPTICAL (Lens Refraction / Chromatic Aberration)
-          // -------------------------------------------------------------
-          vec2 dOptic = uv - anchorUv;
-          float rDist = length(dOptic);
-          vec2 opticDir = (rDist > 0.001) ? (dOptic / rDist) : vec2(0.0);
-          vec2 disp = opticDir * (0.035 + 0.015 * sin(t * 1.8));
-
-          // Sample heat spectrum at R, G, B chromatic spatial offsets
-          float dR = length(uv + disp + warp * 0.08 - anchorUv);
-          float dG = length(uv + warp * 0.08 - anchorUv);
-          float dB = length(uv - disp * 0.9 + warp * 0.08 - anchorUv);
-
-          float tR = clamp(exp(-dR * 2.7) * 0.75 + exp(-length(uv + disp - mouseUv) * 3.6) * 0.6 + fbm(uv * 1.4) * 0.16, 0.0, 1.0);
-          float tG = clamp(exp(-dG * 2.7) * 0.75 + exp(-length(uv - mouseUv) * 3.6) * 0.6 + fbm(uv * 1.4) * 0.16, 0.0, 1.0);
-          float tB = clamp(exp(-dB * 2.7) * 0.75 + exp(-length(uv - disp * 0.9 - mouseUv) * 3.6) * 0.6 + fbm(uv * 1.4) * 0.16, 0.0, 1.0);
-
-          vec3 colR = getThermalColor(tR, u_c0, u_c1, u_c2, u_c3, u_c4, u_c5);
-          vec3 colG = getThermalColor(tG, u_c0, u_c1, u_c2, u_c3, u_c4, u_c5);
-          vec3 colB = getThermalColor(tB, u_c0, u_c1, u_c2, u_c3, u_c4, u_c5);
-          color = vec3(colR.r, colG.g, colB.b);
-
-          // Specular lens flare ring around optical focal center
-          float lensRing = smoothstep(0.035, 0.0, abs(rDist - (0.42 + 0.12 * sin(t * 0.9))));
-          color += vec3(0.10, 0.22, 0.32) * lensRing * exp(-rDist * 1.4);
-          temp = tG;
-
-        } else if (u_variant < 2.5) {
-          // -------------------------------------------------------------
-          // VARIANT 2: CORONAL PLASMA VORTEX (Swirling Magnetic Spiral Arms)
-          // -------------------------------------------------------------
-          vec2 dVortex = uv - anchorUv;
-          float r = length(dVortex);
-          float theta = atan(dVortex.y, dVortex.x);
-          float swirl = theta + (1.3 / (r + 0.30)) * sin(t * 0.7) + t * 0.65;
-          vec2 twistedUv = anchorUv + vec2(cos(swirl), sin(swirl)) * r;
-          vec2 warpVortex = vec2(fbm(twistedUv * 2.8 + vec2(t * 0.25)), fbm(twistedUv * 2.8 - vec2(t * 0.20) + vec2(5.1, 2.3)));
-
-          float vortexHeat = exp(-r * 2.3) * 0.75 + fbm(twistedUv * 1.8 + warpVortex) * 0.30;
-          temp = clamp(vortexHeat + mouseHeat + pinpointCore, 0.0, 1.0);
-          color = getThermalColor(temp, u_c0, u_c1, u_c2, u_c3, u_c4, u_c5);
-
-          // Twisted plasma filament spiral arms
-          float filament = pow(abs(sin(swirl * 2.0 + r * 9.0 - t * 2.0)), 5.0);
-          color += vec3(0.24, 0.16, 0.08) * filament * exp(-r * 2.2);
-
-        } else if (u_variant < 3.5) {
-          // -------------------------------------------------------------
-          // VARIANT 3: RADAR TELEMETRY PULSE (Expanding Sonar Wavefronts)
-          // -------------------------------------------------------------
-          vec2 dRadar = uv - anchorUv;
-          float d = length(dRadar);
-          float angle = atan(dRadar.y, dRadar.x);
-
-          // Expanding concentric sonar wavefronts
-          float pulse = fract(d * 3.6 - t * 0.85);
-          float sonarRing = smoothstep(0.10, 0.0, pulse) * exp(-d * 1.5);
-
-          // Rotating telemetry radar beam sweep
-          float sweepBeam = fract((angle + 3.14159) / 6.28318 + t * 0.40);
-          sweepBeam = pow(sweepBeam, 10.0) * exp(-d * 1.6) * 0.45;
-
-          float baseHeat = exp(-d * 2.5) * 0.65 + exp(-d * 1.2) * 0.20;
-          temp = clamp(baseHeat + mouseHeat + pinpointCore + sonarRing * 0.25 + sweepBeam * 0.25, 0.0, 1.0);
-          color = getThermalColor(temp, u_c0, u_c1, u_c2, u_c3, u_c4, u_c5);
-
-          // High-tech reticle telemetry rings
-          float reticle = smoothstep(0.018, 0.0, abs(fract(d * 4.2) - 0.5)) * exp(-d * 2.0);
-          color += vec3(0.06, 0.20, 0.26) * (reticle + sweepBeam * 1.2);
-
-        } else if (u_variant < 4.5) {
-          // -------------------------------------------------------------
-          // VARIANT 4: CONVECTIVE LAMINAR PLUME (Geothermal Rising Plume)
-          // -------------------------------------------------------------
+          // =============================================================
+          // VARIANT 1: CONVECTIVE LAMINAR (Atmospheric Fluid Convection & Rising Plume)
+          // As featured on Français Pro
+          // =============================================================
           float xDist = uv.x - anchorUv.x;
           float yDist = uv.y - anchorUv.y;
           // Ascending buoyant thermal plume
@@ -392,36 +319,11 @@ export default function CardShaderHover({
           // Soft convection eddy wisps
           color += vec3(0.14, 0.10, 0.05) * smoothstep(0.60, 0.85, laminar);
 
-        } else if (u_variant < 5.5) {
-          // -------------------------------------------------------------
-          // VARIANT 5: FLIR INFRARED SENSOR (Dual-Pole Thermography & Sensor Grid)
-          // -------------------------------------------------------------
-          float dHot = length(uv + warp * 0.08 - anchorUv);
-          vec2 coldSink = vec2(-anchorUv.x * 0.8, -anchorUv.y * 0.8);
-          float dCold = length(uv + warp * 0.08 - coldSink);
-
-          float hotSpot = exp(-dHot * 2.8) * 0.80;
-          float coldZone = exp(-dCold * 2.4) * 0.30;
-          float ambientFLIR = fbm(uv * 2.4 + vec2(t * 0.15)) * 0.22;
-
-          temp = clamp(hotSpot - coldZone + mouseHeat + pinpointCore + ambientFLIR, 0.0, 1.0);
-          color = getThermalColor(temp, u_c0, u_c1, u_c2, u_c3, u_c4, u_c5);
-
-          // FLIR thermal boundary high-contrast gradient
-          float eps = 0.016;
-          float f0 = fbm(uv * 2.4 + vec2(t * 0.12));
-          float fx = fbm((uv + vec2(eps, 0.0)) * 2.4 + vec2(t * 0.12));
-          float fy = fbm((uv + vec2(0.0, eps)) * 2.4 + vec2(t * 0.12));
-          float edgeGrad = length(vec2(fx - f0, fy - f0)) / eps;
-
-          // Sensor scanlines raster
-          float scanline = sin(gl_FragCoord.y * 1.8) * 0.03;
-          color += scanline + vec3(0.06, 0.16, 0.20) * smoothstep(1.6, 3.4, edgeGrad);
-
         } else {
-          // -------------------------------------------------------------
-          // VARIANT 6: QUANTUM CELLULAR DISPERSION (Particulate Matrix & Dermal Glow)
-          // -------------------------------------------------------------
+          // =============================================================
+          // VARIANT 2: QUANTUM PARTICULATE (Cellular Particulate Matrix & Radiant Glow)
+          // As featured on Pure Esthétique
+          // =============================================================
           vec2 dQ = uv - anchorUv;
           float rQ = length(dQ);
 

@@ -5,7 +5,7 @@ import { TRANSLATIONS } from '../data/translations';
 import CardShaderHover from './CardShaderHover';
 
 const CASE_PRESETS = [
-  // 1. Casa Italia (ID 1): Luxury Italian furniture — Topographic elevation contour lines
+  // 1. Casa Italia (ID 1): Luxury Italian furniture — Topographic elevation contour lines (Variant 1)
   {
     variant: 'isothermal',
     anchor: { x: 0.80, y: 0.25 }, // Top-Right radiant warmth
@@ -14,34 +14,34 @@ const CASE_PRESETS = [
     grad: 'from-[#0b0e19] via-[#1e1308]/90 to-[#07090f]',
     hoverBorder: 'group-hover:border-amber-400/50 dark:group-hover:border-amber-400/60'
   },
-  // 2. Ottica Milano (ID 2): Optical lenses — Prismatic chromatic dispersion
+  // 2. Ottica Milano (ID 2): Optical lenses — Smooth atmospheric fluid convection (Variant 2)
   {
-    variant: 'prismatic',
-    anchor: { x: 0.20, y: 0.78 }, // Bottom-Left optical focal point
+    variant: 'convective',
+    anchor: { x: 0.20, y: 0.78 }, // Bottom-Left atmospheric convection
     seed: 1.85,
     colorMode: 'cyber',
     grad: 'from-[#080d19] via-[#091a2e]/90 to-[#060810]',
     hoverBorder: 'group-hover:border-cyan-400/50 dark:group-hover:border-cyan-400/60'
   },
-  // 3. Astraea (ID 3): European astrology — Swirling coronal plasma vortex
+  // 3. Astraea (ID 3): European astrology — Cellular particulate radiance (Variant 3)
   {
-    variant: 'plasma',
-    anchor: { x: 0.75, y: 0.38 }, // Center-Right celestial vortex
+    variant: 'quantum',
+    anchor: { x: 0.75, y: 0.38 }, // Center-Right celestial radiance
     seed: 3.14,
     colorMode: 'ultraviolet',
     grad: 'from-[#0c0919] via-[#1d0e2e]/90 to-[#07050e]',
     hoverBorder: 'group-hover:border-purple-400/50 dark:group-hover:border-purple-400/60'
   },
-  // 4. Bazarum (ID 4): Azerbaijan marketplace — Radar telemetry & sonar pulse
+  // 4. Bazarum (ID 4): Azerbaijan marketplace — Topographic elevation contour lines (Variant 1)
   {
-    variant: 'radar',
-    anchor: { x: 0.22, y: 0.28 }, // Top-Left logistics radar beacon
+    variant: 'isothermal',
+    anchor: { x: 0.22, y: 0.28 }, // Top-Left topographic elevation
     seed: 4.62,
     colorMode: 'cyber',
     grad: 'from-[#080d1a] via-[#081a29]/90 to-[#060810]',
     hoverBorder: 'group-hover:border-cyan-400/50 dark:group-hover:border-cyan-400/60'
   },
-  // 5. Français Pro (ID 5): Executive EdTech — Fluid laminar knowledge convection
+  // 5. Français Pro (ID 5): Executive EdTech — Smooth atmospheric laminar convection (Variant 2)
   {
     variant: 'convective',
     anchor: { x: 0.50, y: 0.82 }, // Bottom-Center ascending thermal plume
@@ -50,16 +50,16 @@ const CASE_PRESETS = [
     grad: 'from-[#0b0e19] via-[#1e1409]/90 to-[#07090f]',
     hoverBorder: 'group-hover:border-amber-400/50 dark:group-hover:border-amber-400/60'
   },
-  // 6. FinCore DS (ID 6): Tier-1 Bank design system — FLIR industrial thermography
+  // 6. FinCore DS (ID 6): Tier-1 Bank design system — Topographic elevation contour lines (Variant 1)
   {
-    variant: 'infrared',
-    anchor: { x: 0.20, y: 0.50 }, // Center-Left structural node
+    variant: 'isothermal',
+    anchor: { x: 0.20, y: 0.50 }, // Center-Left structured elevation
     seed: 7.28,
     colorMode: 'cyber',
     grad: 'from-[#080e1c] via-[#08182b]/90 to-[#060810]',
     hoverBorder: 'group-hover:border-cyan-400/50 dark:group-hover:border-cyan-400/60'
   },
-  // 7. Pure Esthétique (ID 7): Luxury beauty flagship — Quantum cellular dispersion
+  // 7. Pure Esthétique (ID 7): Luxury beauty flagship — Cellular particulate dispersion (Variant 3)
   {
     variant: 'quantum',
     anchor: { x: 0.80, y: 0.75 }, // Bottom-Right dermal radiance
