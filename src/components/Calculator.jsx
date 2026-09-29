@@ -73,11 +73,14 @@ export default function Calculator({
     : baseDays;
 
   const formatCurrency = (val) => {
-    if (currency === 'rub') return `${val.toLocaleString('ru-RU')} ₽`;
+    if (currency === 'rub') return `${val.toLocaleString('ru-RU')}\u00A0₽`;
     if (currency === 'usd') return `$${val.toLocaleString('en-US')}`;
-    if (currency === 'kzt') return `${val.toLocaleString('ru-RU')} ₸`;
-    return `${val} ₽`;
+    if (currency === 'kzt') return `${val.toLocaleString('ru-RU')}\u00A0₸`;
+    return `${val}\u00A0₽`;
   };
+
+  const formattedPrice = formatCurrency(calculatedPrice);
+  const priceLen = formattedPrice.length;
 
   const handleSubmitEstimate = async (e) => {
     e.preventDefault();
@@ -179,7 +182,7 @@ export default function Calculator({
                     >
                       <span className="truncate min-w-0">{title}</span>
                       <span className={`text-[10px] sm:text-[11px] font-mono shrink-0 tabular-nums whitespace-nowrap ${isChecked ? 'text-slate-900 font-bold' : 'text-slate-400'}`}>
-                        +{price} {curSymbol}
+                        +{price}&nbsp;{curSymbol}
                       </span>
                     </motion.button>
                   );
@@ -255,7 +258,7 @@ export default function Calculator({
           </div>
 
           {/* Right Live Estimate Output (5 cols) */}
-          <div className="lg:col-span-5 p-6 sm:p-10 lg:p-12 rounded-2xl sm:rounded-3xl bg-slate-50/90 dark:bg-slate-950 text-slate-950 dark:text-white relative overflow-hidden shadow-xl dark:shadow-2xl border border-slate-200/90 dark:border-white/10 space-y-6 sm:space-y-8">
+          <div className="lg:col-span-5 p-6 sm:p-8 lg:p-9 xl:p-10 rounded-2xl sm:rounded-3xl bg-slate-50/90 dark:bg-slate-950 text-slate-950 dark:text-white relative overflow-hidden shadow-xl dark:shadow-2xl border border-slate-200/90 dark:border-white/10 space-y-6 sm:space-y-8">
             
             <div className="flex items-center justify-between">
               <span className="text-xs font-mono uppercase tracking-wider text-slate-500 dark:text-slate-400">
@@ -268,10 +271,19 @@ export default function Calculator({
               )}
             </div>
 
-            {/* Giant Price with robust overflow protection */}
+            {/* Giant Price with guaranteed single-line fit & auto-scaling */}
             <div className="min-w-0">
-              <div className="text-3xl sm:text-5xl lg:text-6xl font-heading font-black text-slate-950 dark:text-white tracking-tight tabular-nums break-words min-w-0 leading-tight">
-                {formatCurrency(calculatedPrice)}
+              <div 
+                className="font-heading font-black text-slate-950 dark:text-white tracking-tight tabular-nums whitespace-nowrap min-w-0 leading-none"
+                style={{
+                  fontSize: priceLen > 12 
+                    ? 'clamp(1.75rem, 3.2vw, 2.5rem)' 
+                    : priceLen > 9 
+                      ? 'clamp(2rem, 3.8vw, 3.25rem)' 
+                      : 'clamp(2.35rem, 4.5vw, 3.75rem)'
+                }}
+              >
+                {formattedPrice}
               </div>
               <div className="text-xs sm:text-sm font-mono text-slate-500 dark:text-slate-400 mt-3">
                 {t.timelineLabel} ~{estimatedDays} {t.daysUnit} · {scaleNames[scale]}

@@ -267,8 +267,8 @@ export default function ContactModal({
                 />
               </div>
 
-              {/* Modern Studio Selects: Service & Budget in a spacious grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {/* Modern Studio Selects: 1 select per row so options never truncate */}
+              <div className="space-y-4">
                 <StudioSelect
                   label={t.serviceLabel}
                   value={selectedService}

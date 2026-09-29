@@ -141,7 +141,7 @@ export default function StudioSelect({
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 4, scale: 0.98 }}
             transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
-            className="hidden sm:block absolute left-0 right-0 top-full mt-2 z-50 rounded-2xl bg-white/95 dark:bg-[#0c0e18]/95 backdrop-blur-2xl border border-slate-200 dark:border-white/15 shadow-2xl p-2 space-y-1 max-h-72 overflow-y-auto"
+            className="hidden sm:block absolute left-0 right-0 top-full mt-2 z-[60] rounded-2xl bg-white/95 dark:bg-[#0c0e18]/95 backdrop-blur-2xl border border-slate-200 dark:border-white/15 shadow-2xl p-2 space-y-1 max-h-80 overflow-y-auto"
             role="listbox"
           >
             {normalizedOptions.map((opt) => {
@@ -159,11 +159,11 @@ export default function StudioSelect({
                   }`}
                 >
                   <div className="min-w-0 flex-1">
-                    <div className="font-heading font-semibold text-sm truncate">
+                    <div className="font-heading font-semibold text-sm leading-snug">
                       {opt.label}
                     </div>
                     {opt.desc && (
-                      <div className="text-xs font-mono text-slate-500 dark:text-slate-400 truncate mt-0.5">
+                      <div className="text-xs font-mono text-slate-500 dark:text-slate-400 leading-snug mt-0.5">
                         {opt.desc}
                       </div>
                     )}

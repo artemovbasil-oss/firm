@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { ArrowUpRight, ArrowRight } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { TRANSLATIONS } from '../data/translations';
 import CardShaderHover from './CardShaderHover';
@@ -11,7 +11,6 @@ function CaseCard({ item, idx, lang, onOpenContact, t, getLocalized }) {
 
   const title = getLocalized(item.title);
   const client = getLocalized(item.client);
-  const summary = getLocalized(item.summary);
   const badge = getLocalized(item.badge);
   const heroMetric = item.metrics && item.metrics[0];
 
@@ -90,7 +89,7 @@ function CaseCard({ item, idx, lang, onOpenContact, t, getLocalized }) {
 
         {/* Bottom client mark */}
         <div className="flex items-center justify-between z-10 pt-4 border-t border-white/15 gap-4 relative">
-          <span className="text-sm sm:text-base font-heading font-bold text-white tracking-wide truncate drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]">
+          <span className="text-sm sm:text-base font-heading font-bold text-white tracking-wide leading-snug drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)] line-clamp-2">
             {title}
           </span>
           <div className="w-8 h-8 rounded-full bg-white/15 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white group-hover:bg-white group-hover:text-slate-950 transition-all shrink-0 shadow-lg">
@@ -98,22 +97,6 @@ function CaseCard({ item, idx, lang, onOpenContact, t, getLocalized }) {
           </div>
         </div>
       </motion.div>
-
-      {/* Minimalist Bottom Info with Proper Margins */}
-      <div className="pt-6 sm:pt-8 flex flex-col sm:flex-row sm:items-baseline justify-between gap-4">
-        <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 max-w-md leading-relaxed font-normal">
-          {summary}
-        </p>
-
-        <button
-          onClick={() => onOpenContact(`${title} Case Discussion`)}
-          className="text-xs sm:text-sm font-heading font-bold text-slate-950 dark:text-white hover:underline flex items-center gap-1.5 shrink-0"
-        >
-          <span>{t.similarBtn}</span>
-          <ArrowRight className="w-3.5 h-3.5" />
-        </button>
-      </div>
-
     </motion.div>
   );
 }
