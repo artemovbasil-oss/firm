@@ -793,7 +793,7 @@ export default function AdminPanel({
                 {/* Case Edit Modal */}
                 {editingCase && (
                   <div className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4">
-                    <div className="w-full max-w-3xl bg-slate-950 border border-slate-800 rounded-3xl p-6 sm:p-8 space-y-6 max-h-[90vh] overflow-y-auto shadow-2xl">
+                    <div className="w-full max-w-3xl bg-slate-950 border border-slate-800 rounded-3xl p-6 sm:p-8 space-y-6 max-h-[90vh] overflow-y-auto modal-scrollbar shadow-2xl">
                       <div className="flex items-center justify-between pb-4 border-b border-slate-800">
                         <div>
                           <h4 className="text-lg font-heading font-bold text-white">
@@ -1475,7 +1475,7 @@ export default function AdminPanel({
                         </button>
                       </div>
 
-                      <div className="space-y-4 max-h-[70vh] overflow-y-auto pr-1">
+                      <div className="space-y-4 max-h-[70vh] overflow-y-auto modal-scrollbar pr-1">
                         {/* Author Name */}
                         <div>
                           <label className="block text-xs font-mono text-slate-400 mb-1">Имя автора (RU / KZ / EN):</label>

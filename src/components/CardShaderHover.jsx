@@ -447,8 +447,12 @@ export default function CardShaderHover({
   return (
     <canvas
       ref={canvasRef}
-      style={{ borderRadius: `${borderRadius}px` }}
-      className="absolute inset-0 pointer-events-none z-0 w-full h-full rounded-[inherit] overflow-hidden mix-blend-screen opacity-85 transition-opacity duration-300"
+      style={{ 
+        borderRadius: `${borderRadius}px`,
+        WebkitMaskImage: '-webkit-radial-gradient(white, black)',
+        maskImage: 'radial-gradient(white, black)'
+      }}
+      className="absolute inset-0 pointer-events-none z-0 w-full h-full rounded-3xl rounded-[inherit] overflow-hidden mix-blend-screen opacity-85 transition-opacity duration-300"
     />
   );
 }

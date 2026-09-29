@@ -174,38 +174,45 @@ export default function ContactModal({
             onClick={onClose}
           />
 
-          {/* Modal Dialog Content */}
+          {/* Modal Dialog Content Shell */}
           <motion.div 
             initial={{ opacity: 0, scale: 0.95, y: 16 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 16 }}
             transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
-            className="relative w-full max-w-xl max-h-[92vh] overflow-y-auto bg-white/95 dark:bg-[#0c0e18]/95 backdrop-blur-2xl border border-slate-200/90 dark:border-white/15 rounded-3xl p-5 sm:p-8 md:p-10 shadow-2xl z-10 my-auto"
+            style={{ 
+              borderRadius: '28px',
+              WebkitMaskImage: '-webkit-radial-gradient(white, black)',
+              maskImage: 'radial-gradient(white, black)'
+            }}
+            className="relative w-full max-w-xl max-h-[90vh] flex flex-col bg-white/95 dark:bg-[#0c0e18]/95 backdrop-blur-2xl border border-slate-200/90 dark:border-white/15 rounded-3xl shadow-2xl z-10 my-auto overflow-hidden"
           >
-            
-            {/* Close button */}
+            {/* Close button - fixed inside top-right of the modal shell */}
             <motion.button
               whileHover={{ scale: 1.1, rotate: 90 }}
               whileTap={{ scale: 0.9 }}
               onClick={onClose}
-              className="absolute top-5 right-5 w-10 h-10 rounded-full border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-500 hover:text-slate-950 dark:hover:text-white transition-colors"
+              className="absolute top-4 right-4 sm:top-5 sm:right-5 z-20 w-10 h-10 rounded-full border border-slate-200 dark:border-white/10 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md flex items-center justify-center text-slate-500 hover:text-slate-950 dark:hover:text-white transition-colors shadow-sm"
             >
               <X className="w-4 h-4" />
             </motion.button>
 
-            {/* Modal Header */}
-            <div className="mb-6 sm:mb-8 pr-10">
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-slate-200 dark:border-white/10 bg-slate-100/80 dark:bg-white/[0.04] text-slate-700 dark:text-slate-300 text-xs font-mono uppercase mb-3">
-                <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span>
-                <span>{t.badge}</span>
+            {/* Inner Scrollable Body with Contained Scrollbar */}
+            <div className="overflow-y-auto w-full flex-1 p-5 sm:p-8 md:p-10 modal-scrollbar">
+              
+              {/* Modal Header */}
+              <div className="mb-6 sm:mb-8 pr-12">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-slate-200 dark:border-white/10 bg-slate-100/80 dark:bg-white/[0.04] text-slate-700 dark:text-slate-300 text-xs font-mono uppercase mb-3">
+                  <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span>
+                  <span>{t.badge}</span>
+                </div>
+                <h3 className="text-2xl sm:text-3xl font-heading font-black text-slate-950 dark:text-white tracking-tight uppercase leading-tight">
+                  {t.title}
+                </h3>
+                <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-2 leading-relaxed">
+                  {t.desc}
+                </p>
               </div>
-              <h3 className="text-2xl sm:text-3xl font-heading font-black text-slate-950 dark:text-white tracking-tight uppercase leading-tight">
-                {t.title}
-              </h3>
-              <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-2 leading-relaxed">
-                {t.desc}
-              </p>
-            </div>
 
             {/* Quick 1-Click Messengers */}
             <div className="mb-6 grid grid-cols-2 gap-3">
@@ -360,7 +367,8 @@ export default function ContactModal({
               </div>
 
             </form>
-
+            
+            </div>
           </motion.div>
         </div>
       )}

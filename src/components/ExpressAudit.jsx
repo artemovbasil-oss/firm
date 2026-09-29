@@ -70,8 +70,15 @@ export default function ExpressAudit({ lang, onSuccessLead }) {
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
           onMouseMove={handleMouseMove}
-          style={{ borderRadius: '24px' }}
-          className="p-6 sm:p-12 lg:p-16 rounded-2xl sm:rounded-3xl bg-slate-50/90 dark:bg-slate-950 text-slate-950 dark:text-white relative overflow-hidden shadow-xl dark:shadow-2xl border border-slate-200/90 dark:border-white/10 isolate transform-gpu"
+          style={{ 
+            borderRadius: '24px',
+            WebkitMaskImage: '-webkit-radial-gradient(white, black)',
+            maskImage: 'radial-gradient(white, black)',
+            WebkitBackfaceVisibility: 'hidden',
+            backfaceVisibility: 'hidden',
+            transform: 'translateZ(0)'
+          }}
+          className="p-6 sm:p-12 lg:p-16 rounded-3xl bg-slate-50/90 dark:bg-slate-950 text-slate-950 dark:text-white relative overflow-hidden shadow-xl dark:shadow-2xl border border-slate-200/90 dark:border-white/10"
         >
           {/* Subtle Dynamic WebGL Thermal Heatmap & Film Noise on Hover */}
           <CardShaderHover 
@@ -82,7 +89,10 @@ export default function ExpressAudit({ lang, onSuccessLead }) {
           />
           
           {/* Contrast Protection Scrim Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-50/95 via-slate-50/60 to-slate-50/80 dark:from-slate-950/85 dark:via-slate-950/50 dark:to-slate-950/70 pointer-events-none z-[2]" />
+          <div 
+            style={{ borderRadius: '24px' }}
+            className="absolute inset-0 rounded-3xl bg-gradient-to-t from-slate-50/95 via-slate-50/60 to-slate-50/80 dark:from-slate-950/85 dark:via-slate-950/50 dark:to-slate-950/70 pointer-events-none z-[2]" 
+          />
 
           {/* Subtle Ambient Glow */}
           <div className="absolute top-0 right-0 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none z-[1]"></div>

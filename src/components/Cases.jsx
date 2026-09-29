@@ -39,7 +39,7 @@ function CaseCard({ item, idx, lang, onOpenContact, t, getLocalized }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-50px' }}
       transition={{ duration: 0.5, delay: idx * 0.1 }}
-      className="group flex flex-col justify-between"
+      className="group w-full"
     >
       {/* Visual Showcase Card with Motion Hover & WebGL Thermal Heatmap */}
       <motion.div 
@@ -50,8 +50,15 @@ function CaseCard({ item, idx, lang, onOpenContact, t, getLocalized }) {
         onClick={() => onOpenContact(`${title} Case Discussion`)}
         whileHover={{ y: -6 }}
         transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
-        style={{ borderRadius: '24px' }}
-        className={`w-full aspect-[16/10] rounded-3xl bg-gradient-to-br ${activeGrad} p-6 sm:p-10 flex flex-col justify-between relative overflow-hidden shadow-2xl border border-black/[0.06] dark:border-white/10 cursor-pointer isolate transform-gpu`}
+        style={{ 
+          borderRadius: '24px',
+          WebkitMaskImage: '-webkit-radial-gradient(white, black)',
+          maskImage: 'radial-gradient(white, black)',
+          WebkitBackfaceVisibility: 'hidden',
+          backfaceVisibility: 'hidden',
+          transform: 'translateZ(0)'
+        }}
+        className={`w-full aspect-[16/10] rounded-3xl bg-gradient-to-br ${activeGrad} p-6 sm:p-10 flex flex-col justify-between relative overflow-hidden shadow-2xl border border-black/[0.06] dark:border-white/10 cursor-pointer`}
       >
         {/* Dynamic WebGL Thermal Heatmap + Analog Film Grain Noise on Hover */}
         <CardShaderHover 
@@ -62,10 +69,16 @@ function CaseCard({ item, idx, lang, onOpenContact, t, getLocalized }) {
         />
 
         {/* Contrast Scrim Protection Overlay: guarantees strong AAA contrast for all text */}
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-black/35 to-slate-950/60 pointer-events-none z-[2]" />
+        <div 
+          style={{ borderRadius: '24px' }}
+          className="absolute inset-0 rounded-3xl bg-gradient-to-t from-slate-950/85 via-black/35 to-slate-950/60 pointer-events-none z-[2]" 
+        />
 
         {/* Subtle Grid Pattern Accent */}
-        <div className="absolute inset-0 bg-grid-subtle opacity-15 pointer-events-none z-[3]"></div>
+        <div 
+          style={{ borderRadius: '24px' }}
+          className="absolute inset-0 rounded-3xl bg-grid-subtle opacity-15 pointer-events-none z-[3]" 
+        />
 
         {/* Top Bar with category tag & status */}
         <div className="flex items-center justify-between z-10 gap-3 relative">
