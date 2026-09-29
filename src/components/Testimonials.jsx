@@ -6,23 +6,23 @@ export default function Testimonials({ lang }) {
   const t = TRANSLATIONS[lang].testimonials;
 
   return (
-    <section className="py-32 sm:py-40 relative">
+    <section className="py-20 sm:py-28 lg:py-32 relative w-full max-w-full overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 sm:mb-24 gap-6">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 sm:mb-16 lg:mb-20 gap-6">
           <div>
             <div className="text-xs sm:text-sm font-mono text-slate-500 uppercase tracking-widest mb-3">
               {lang === 'en' ? 'Client Feedback' : (lang === 'kz' ? 'Пікірлер' : 'Доверие клиентов')}
             </div>
-            <h2 className="text-4xl sm:text-6xl md:text-7xl font-heading font-black tracking-tight text-slate-950 dark:text-white uppercase leading-[0.95]">
+            <h2 className="text-3xl sm:text-5xl lg:text-6xl font-heading font-black tracking-tight text-slate-950 dark:text-white uppercase leading-[0.98]">
               {lang === 'en' ? 'Trusted by Leaders.' : (lang === 'kz' ? 'Тапсырыс берушілер.' : 'Нам доверяют лидеры.')}
             </h2>
           </div>
         </div>
 
         {/* Testimonials Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 sm:gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
           {TESTIMONIALS.map((item, idx) => {
             const name = item.name?.[lang] || item.name?.ru || '';
             const role = item.role?.[lang] || item.role?.ru || '';
@@ -32,7 +32,7 @@ export default function Testimonials({ lang }) {
             return (
               <div
                 key={idx}
-                className="p-8 sm:p-10 rounded-3xl bg-black/[0.02] dark:bg-white/[0.02] border border-black/[0.06] dark:border-white/[0.06] flex flex-col justify-between"
+                className="p-6 sm:p-8 lg:p-10 rounded-2xl sm:rounded-3xl bg-black/[0.02] dark:bg-white/[0.02] border border-black/[0.06] dark:border-white/[0.06] flex flex-col justify-between"
               >
                 <div>
                   <div className="flex items-center justify-between mb-6">

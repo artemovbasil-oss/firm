@@ -144,7 +144,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#fbfbfd] dark:bg-[#06070a] text-slate-900 dark:text-slate-100 flex flex-col font-sans transition-colors duration-200">
+    <div className="min-h-screen bg-[#fbfbfd] dark:bg-[#06070a] text-slate-900 dark:text-slate-100 flex flex-col font-sans transition-colors duration-200 w-full max-w-full overflow-x-hidden">
       
       {/* Toast notification */}
       {toastMessage && (
@@ -167,7 +167,7 @@ export default function App() {
       />
 
       {/* Main Content */}
-      <main className="flex-1">
+      <main className="flex-1 w-full max-w-full overflow-x-hidden">
         <Hero 
           lang={lang}
           onOpenContact={handleOpenContact} 
@@ -244,6 +244,8 @@ export default function App() {
         isOpen={isAdminOpen}
         onClose={() => setIsAdminOpen(false)}
         lang={lang}
+        casesList={casesList}
+        onUpdateCases={(newCases) => setCasesList(newCases)}
       />
 
     </div>

@@ -81,11 +81,11 @@ function CaseCard({ item, idx, lang, onOpenContact, t, getLocalized }) {
         </div>
 
         {/* Monumental Hero Metric */}
-        <div className="my-auto z-10 py-6 relative">
-          <div className="text-4xl sm:text-6xl lg:text-7xl font-heading font-black text-white tracking-tighter drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)] drop-shadow-[0_1px_3px_rgba(0,0,0,0.95)]">
+        <div className="my-auto z-10 py-4 sm:py-6 relative min-w-0">
+          <div className="text-3xl sm:text-5xl lg:text-6xl font-heading font-black text-white tracking-tight tabular-nums truncate drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)] drop-shadow-[0_1px_3px_rgba(0,0,0,0.95)]">
             {heroMetric ? heroMetric.value : '+340%'}
           </div>
-          <div className="text-xs sm:text-sm font-mono font-bold text-white/95 uppercase tracking-wider mt-2 drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]">
+          <div className="text-xs sm:text-sm font-mono font-bold text-white/95 uppercase tracking-wider mt-2 drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)] line-clamp-2">
             {heroMetric ? getLocalized(heroMetric.label) : (lang === 'en' ? 'Organic Revenue Surge' : (lang === 'kz' ? 'Органикалық өсім' : 'Рост выручки'))}
           </div>
         </div>
@@ -138,27 +138,27 @@ export default function Cases({ lang, casesList = [], onOpenContact }) {
   };
 
   return (
-    <section id="cases" className="py-32 sm:py-40 relative">
+    <section id="cases" className="py-20 sm:py-28 lg:py-32 relative w-full max-w-full overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 sm:mb-24 gap-6">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 sm:mb-16 lg:mb-20 gap-6">
           <div>
             <div className="text-xs sm:text-sm font-mono text-slate-500 uppercase tracking-widest mb-3">
               {lang === 'en' ? 'Proof of Work' : (lang === 'kz' ? 'Нәтижелер' : 'Кейсы и цифры')}
             </div>
-            <h2 className="text-4xl sm:text-6xl md:text-7xl font-heading font-black tracking-tight text-slate-950 dark:text-white uppercase leading-[0.95]">
+            <h2 className="text-3xl sm:text-5xl lg:text-6xl font-heading font-black tracking-tight text-slate-950 dark:text-white uppercase leading-[0.98]">
               {lang === 'en' ? 'Selected Cases.' : (lang === 'kz' ? 'Таңдаулы жобалар.' : 'Избранные кейсы.')}
             </h2>
           </div>
 
           {/* Minimalist Filter Pills */}
-          <div className="flex flex-wrap gap-2.5">
+          <div className="flex flex-wrap gap-2 sm:gap-2.5">
             {tags.map((tag) => (
               <button
                 key={tag}
                 onClick={() => setSelectedTag(tag)}
-                className={`px-4 py-2 rounded-full text-xs font-mono transition-all ${
+                className={`px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs font-mono transition-all ${
                   selectedTag === tag
                     ? 'bg-slate-950 dark:bg-white text-white dark:text-slate-950 font-bold shadow-sm'
                     : 'border border-black/[0.08] dark:border-white/10 text-slate-600 dark:text-slate-400 hover:text-slate-950 dark:hover:text-white'
@@ -171,7 +171,7 @@ export default function Cases({ lang, casesList = [], onOpenContact }) {
         </div>
 
         {/* Grand 2-Column Showcase */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 sm:gap-16">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16">
           {filteredCases.map((item, idx) => (
             <CaseCard
               key={item.id}
@@ -186,7 +186,7 @@ export default function Cases({ lang, casesList = [], onOpenContact }) {
         </div>
 
         {/* Confidential NDA Advisory Strip with Healthy Breathing Room */}
-        <div className="mt-20 sm:mt-28 p-8 sm:p-12 rounded-3xl border border-black/[0.08] dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02] flex flex-col md:flex-row md:items-center justify-between gap-6 sm:gap-8">
+        <div className="mt-12 sm:mt-16 p-6 sm:p-10 rounded-2xl sm:rounded-3xl border border-black/[0.08] dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02] flex flex-col md:flex-row md:items-center justify-between gap-6 sm:gap-8">
           <div className="max-w-xl">
             <h3 className="text-xl sm:text-2xl font-heading font-extrabold text-slate-950 dark:text-white tracking-tight">
               {t.requestNicheTitle}
@@ -200,7 +200,7 @@ export default function Cases({ lang, casesList = [], onOpenContact }) {
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
             onClick={() => onOpenContact('Confidential Portfolio Request')}
-            className="px-8 py-4 rounded-full bg-slate-950 dark:bg-white text-white dark:text-slate-950 font-heading font-bold text-xs sm:text-sm hover:opacity-90 transition-all shrink-0 shadow-lg"
+            className="px-6 sm:px-8 py-3.5 sm:py-4 rounded-full bg-slate-950 dark:bg-white text-white dark:text-slate-950 font-heading font-bold text-xs sm:text-sm hover:opacity-90 transition-all shrink-0 shadow-lg"
           >
             {t.requestNicheBtn}
           </motion.button>

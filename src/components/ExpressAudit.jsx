@@ -61,7 +61,7 @@ export default function ExpressAudit({ lang, onSuccessLead }) {
   };
 
   return (
-    <section id="audit" className="py-32 sm:py-40 relative">
+    <section id="audit" className="py-20 sm:py-28 lg:py-32 relative w-full max-w-full overflow-hidden">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Luxury Studio Diagnostic Card with WebGL Thermal Heatmap & Film Noise on Hover */}
@@ -71,7 +71,7 @@ export default function ExpressAudit({ lang, onSuccessLead }) {
           onMouseLeave={() => setIsHovered(false)}
           onMouseMove={handleMouseMove}
           style={{ borderRadius: '24px' }}
-          className="p-8 sm:p-14 lg:p-20 rounded-3xl bg-slate-950 text-white relative overflow-hidden shadow-2xl border border-white/10 isolate transform-gpu"
+          className="p-6 sm:p-12 lg:p-16 rounded-2xl sm:rounded-3xl bg-slate-950 text-white relative overflow-hidden shadow-2xl border border-white/10 isolate transform-gpu"
         >
           {/* Subtle Dynamic WebGL Thermal Heatmap & Film Noise on Hover */}
           <CardShaderHover 
@@ -94,7 +94,7 @@ export default function ExpressAudit({ lang, onSuccessLead }) {
               <span>{lang === 'en' ? 'Diagnostic Teardown' : (lang === 'kz' ? 'Экспресс-аудит' : 'Экспресс-аудит')}</span>
             </div>
 
-            <h2 className="text-3xl sm:text-5xl lg:text-6xl font-heading font-black tracking-tight text-white uppercase leading-[1.02]">
+            <h2 className="text-2xl sm:text-4xl lg:text-5xl font-heading font-black tracking-tight text-white uppercase leading-[1.05]">
               {lang === 'en' ? (
                 <>Want to know why your <br className="hidden sm:inline" />platform isn't converting?</>
               ) : lang === 'kz' ? (

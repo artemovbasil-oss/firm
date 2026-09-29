@@ -7,7 +7,7 @@ import {
   Phone, Send, MessageSquare, ArrowLeft, Eye, EyeOff
 } from 'lucide-react';
 
-export default function AdminPanel({ isOpen, onClose, lang = 'ru' }) {
+export default function AdminPanel({ isOpen, onClose, lang = 'ru', casesList = [], onUpdateCases }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [password, setPassword] = useState('');
   const [authError, setAuthError] = useState('');
@@ -21,10 +21,16 @@ export default function AdminPanel({ isOpen, onClose, lang = 'ru' }) {
   const [newNote, setNewNote] = useState('');
 
   // Content state
-  const [cases, setCases] = useState([]);
+  const [cases, setCases] = useState(() => (Array.isArray(casesList) && casesList.length > 0 ? casesList : []));
   const [services, setServices] = useState([]);
   const [editingCase, setEditingCase] = useState(null);
   const [saveSuccess, setSaveSuccess] = useState(false);
+
+  useEffect(() => {
+    if (Array.isArray(casesList) && casesList.length > 0 && cases.length === 0) {
+      setCases(casesList);
+    }
+  }, [casesList]);
 
   useEffect(() => {
     const token = localStorage.getItem('firm_admin_token');
@@ -75,8 +81,13 @@ export default function AdminPanel({ isOpen, onClose, lang = 'ru' }) {
       const contentRes = await fetch('/api/content');
       if (contentRes.ok) {
         const content = await contentRes.json();
-        if (content.cases) setCases(content.cases);
-        if (content.services) setServices(content.services);
+        if (Array.isArray(content.cases) && content.cases.length > 0) {
+          setCases(content.cases);
+          if (onUpdateCases) onUpdateCases(content.cases);
+        }
+        if (Array.isArray(content.services) && content.services.length > 0) {
+          setServices(content.services);
+        }
       }
     } catch (err) {
       console.error('Failed to load admin data:', err);
@@ -144,9 +155,16 @@ export default function AdminPanel({ isOpen, onClose, lang = 'ru' }) {
 
   const saveAllContent = async (updatedCases, updatedServices) => {
     try {
+      const casesToSave = updatedCases || cases;
+      const servicesToSave = updatedServices || services;
+
+      if (updatedCases && onUpdateCases) {
+        onUpdateCases(casesToSave);
+      }
+
       const payload = {
-        cases: updatedCases || cases,
-        services: updatedServices || services,
+        cases: casesToSave,
+        services: servicesToSave,
         updatedAt: new Date().toISOString()
       };
       const res = await fetch('/api/content', {
@@ -593,20 +611,20 @@ export default function AdminPanel({ isOpen, onClose, lang = 'ru' }) {
                         id: newId,
                         title: { ru: 'Новый кейс', en: 'New Case Study', kz: 'Жаңа кейс' },
                         client: { ru: 'Клиент', en: 'Client Name', kz: 'Клиент' },
-                        badge: { ru: 'Результат', en: 'Result Metric', kz: 'Нәтиже' },
+                        badge: { ru: '+300% ROI', en: '+300% ROI', kz: '+300% ROI' },
                         summary: { 
                           ru: 'Краткое описание проекта и достигнутых результатов.', 
                           en: 'Project summary and quantifiable outcomes achieved.',
                           kz: 'Жобаның қысқаша сипаттамасы мен қол жеткізілген нәтижелер.'
                         },
                         metrics: [
-                          { label: { ru: 'Метрика', en: 'Metric', kz: 'Метрика' }, value: '+100%' }
+                          { label: { ru: 'Рост выручки', en: 'Revenue Surge', kz: 'Табыс өсімі' }, value: '+300%' }
                         ],
                         services: { ru: ['Разработка сайтов'], en: ['Web Development'], kz: ['Сайттар әзірлеу'] },
-                        tags: ['Websites'],
+                        tags: ['SaaS', 'Branding'],
+                        colorMode: 'thermal',
                         published: true
                       };
-                      setCases([newC, ...cases]);
                       setEditingCase(newC);
                     }}
                     className="px-4 py-2 rounded-xl bg-white hover:bg-slate-200 text-slate-950 font-semibold text-xs flex items-center gap-1.5 transition-colors"
@@ -625,204 +643,439 @@ export default function AdminPanel({ isOpen, onClose, lang = 'ru' }) {
 
                 {/* Cases List */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {cases.map((c) => (
-                    <div
-                      key={c.id}
-                      className="p-5 rounded-2xl bg-slate-950 border border-slate-800 space-y-4 flex flex-col justify-between"
-                    >
-                      <div className="space-y-2">
-                        <div className="flex items-center justify-between">
-                          <span className="text-xs font-mono font-bold text-white bg-slate-800 px-2 py-0.5 rounded">
-                            {c.badge?.[lang] || c.badge?.ru || 'Результат'}
-                          </span>
+                  {cases.map((c) => {
+                    const heroMetric = c.metrics && c.metrics[0];
+                    return (
+                      <div
+                        key={c.id}
+                        className="p-5 rounded-2xl bg-slate-950 border border-slate-800 space-y-4 flex flex-col justify-between"
+                      >
+                        <div className="space-y-3">
+                          <div className="flex items-center justify-between">
+                            <span className="text-xs font-mono font-bold text-white bg-slate-800 px-2 py-0.5 rounded">
+                              {c.badge?.[lang] || c.badge?.ru || 'Результат'}
+                            </span>
+                            <div className="flex items-center gap-2">
+                              <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-slate-900 border border-slate-700 text-slate-400">
+                                {c.colorMode || 'thermal'}
+                              </span>
+                              <button
+                                onClick={() => {
+                                  const updated = cases.map(it => it.id === c.id ? { ...it, published: it.published === false ? true : false } : it);
+                                  setCases(updated);
+                                  saveAllContent(updated);
+                                }}
+                                className={`p-1 rounded ${c.published !== false ? 'text-emerald-400' : 'text-slate-600'}`}
+                                title={c.published !== false ? 'Опубликован' : 'Черновик'}
+                              >
+                                {c.published !== false ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
+                              </button>
+                            </div>
+                          </div>
+
+                          <div>
+                            <div className="text-[11px] font-mono text-cyan-400 uppercase tracking-wider">
+                              {c.client?.[lang] || c.client?.ru || 'Клиент'}
+                            </div>
+                            <h4 className="text-base font-bold text-white mt-0.5">
+                              {c.title?.[lang] || c.title?.ru || 'Без названия'}
+                            </h4>
+                          </div>
+
+                          {/* Hero Metric Pill */}
+                          <div className="p-2.5 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center justify-between">
+                            <span className="text-lg font-heading font-black text-white tabular-nums">
+                              {heroMetric ? heroMetric.value : '+340%'}
+                            </span>
+                            <span className="text-[11px] font-mono text-slate-400 truncate max-w-[140px]">
+                              {heroMetric ? (heroMetric.label?.[lang] || heroMetric.label?.ru || 'Метрика') : 'Рост'}
+                            </span>
+                          </div>
+
+                          <p className="text-xs text-slate-300 line-clamp-2 leading-relaxed">
+                            {c.summary?.[lang] || c.summary?.ru || ''}
+                          </p>
+
+                          {/* Tags */}
+                          {c.tags && c.tags.length > 0 && (
+                            <div className="flex flex-wrap gap-1 pt-1">
+                              {c.tags.map((t, tidx) => (
+                                <span key={tidx} className="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-900 text-slate-400 border border-slate-800">
+                                  {t}
+                                </span>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+
+                        <div className="pt-3 border-t border-slate-800 flex items-center justify-between">
+                          <button
+                            onClick={() => setEditingCase(c)}
+                            className="px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-700 text-xs text-white flex items-center gap-1.5"
+                          >
+                            <Edit3 className="w-3.5 h-3.5" />
+                            <span>Редактировать</span>
+                          </button>
+
                           <button
                             onClick={() => {
-                              const updated = cases.map(it => it.id === c.id ? { ...it, published: !it.published } : it);
+                              if (!confirm('Удалить этот кейс?')) return;
+                              const updated = cases.filter(it => it.id !== c.id);
                               setCases(updated);
                               saveAllContent(updated);
                             }}
-                            className={`p-1 rounded ${c.published !== false ? 'text-emerald-400' : 'text-slate-600'}`}
-                            title={c.published !== false ? 'Опубликован' : 'Черновик'}
+                            className="text-xs text-rose-400 hover:text-rose-300 p-1"
                           >
-                            {c.published !== false ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
+                            <Trash2 className="w-3.5 h-3.5" />
                           </button>
                         </div>
-
-                        <h4 className="text-base font-bold text-white">
-                          {c.title?.[lang] || c.title?.ru || 'Без названия'}
-                        </h4>
-
-                        <div className="text-xs text-slate-400">
-                          {c.client?.[lang] || c.client?.ru || ''}
-                        </div>
-
-                        <p className="text-xs text-slate-300 line-clamp-3 leading-relaxed">
-                          {c.summary?.[lang] || c.summary?.ru || ''}
-                        </p>
                       </div>
-
-                      <div className="pt-3 border-t border-slate-800 flex items-center justify-between">
-                        <button
-                          onClick={() => setEditingCase(c)}
-                          className="px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-700 text-xs text-white flex items-center gap-1.5"
-                        >
-                          <Edit3 className="w-3.5 h-3.5" />
-                          <span>Редактировать</span>
-                        </button>
-
-                        <button
-                          onClick={() => {
-                            if (!confirm('Удалить этот кейс?')) return;
-                            const updated = cases.filter(it => it.id !== c.id);
-                            setCases(updated);
-                            saveAllContent(updated);
-                          }}
-                          className="text-xs text-rose-400 hover:text-rose-300"
-                        >
-                          <Trash2 className="w-3.5 h-3.5" />
-                        </button>
-                      </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
 
                 {/* Case Edit Modal */}
                 {editingCase && (
                   <div className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4">
-                    <div className="w-full max-w-2xl bg-slate-950 border border-slate-800 rounded-3xl p-6 space-y-4 max-h-[90vh] overflow-y-auto">
-                      <div className="flex items-center justify-between pb-3 border-b border-slate-800">
-                        <h4 className="text-base font-heading font-bold text-white">
-                          Редактирование кейса
-                        </h4>
-                        <button onClick={() => setEditingCase(null)} className="text-slate-400 hover:text-white">
+                    <div className="w-full max-w-3xl bg-slate-950 border border-slate-800 rounded-3xl p-6 sm:p-8 space-y-6 max-h-[90vh] overflow-y-auto shadow-2xl">
+                      <div className="flex items-center justify-between pb-4 border-b border-slate-800">
+                        <div>
+                          <h4 className="text-lg font-heading font-bold text-white">
+                            {editingCase.title?.ru || 'Редактирование кейса'}
+                          </h4>
+                          <span className="text-xs text-slate-400 font-mono">ID: {editingCase.id}</span>
+                        </div>
+                        <button onClick={() => setEditingCase(null)} className="text-slate-400 hover:text-white p-1">
                           <X className="w-5 h-5" />
                         </button>
                       </div>
 
-                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                        <div>
-                          <label className="block text-xs font-mono text-slate-400 mb-1">Название (RU):</label>
-                          <input
-                            type="text"
-                            value={editingCase.title?.ru || ''}
-                            onChange={(e) => setEditingCase({
-                              ...editingCase,
-                              title: { ...editingCase.title, ru: e.target.value }
-                            })}
-                            className="w-full px-3 py-2 rounded-xl input-studio text-xs text-white"
-                          />
+                      {/* 1. Client & Titles */}
+                      <div className="space-y-3">
+                        <div className="text-xs font-mono uppercase tracking-wider text-slate-400">1. Заказчик и Название проекта</div>
+                        
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                          <div>
+                            <label className="block text-xs font-mono text-slate-400 mb-1">Клиент (RU):</label>
+                            <input
+                              type="text"
+                              value={editingCase.client?.ru || ''}
+                              onChange={(e) => setEditingCase({
+                                ...editingCase,
+                                client: { ...editingCase.client, ru: e.target.value }
+                              })}
+                              className="w-full px-3 py-2 rounded-xl input-studio text-xs text-white"
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-xs font-mono text-slate-400 mb-1">Client (EN):</label>
+                            <input
+                              type="text"
+                              value={editingCase.client?.en || ''}
+                              onChange={(e) => setEditingCase({
+                                ...editingCase,
+                                client: { ...editingCase.client, en: e.target.value }
+                              })}
+                              className="w-full px-3 py-2 rounded-xl input-studio text-xs text-white"
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-xs font-mono text-slate-400 mb-1">Тапсырыс беруші (KZ):</label>
+                            <input
+                              type="text"
+                              value={editingCase.client?.kz || ''}
+                              onChange={(e) => setEditingCase({
+                                ...editingCase,
+                                client: { ...editingCase.client, kz: e.target.value }
+                              })}
+                              className="w-full px-3 py-2 rounded-xl input-studio text-xs text-white"
+                            />
+                          </div>
                         </div>
 
-                        <div>
-                          <label className="block text-xs font-mono text-slate-400 mb-1">Title (EN):</label>
-                          <input
-                            type="text"
-                            value={editingCase.title?.en || ''}
-                            onChange={(e) => setEditingCase({
-                              ...editingCase,
-                              title: { ...editingCase.title, en: e.target.value }
-                            })}
-                            className="w-full px-3 py-2 rounded-xl input-studio text-xs text-white"
-                          />
-                        </div>
-
-                        <div>
-                          <label className="block text-xs font-mono text-slate-400 mb-1">Атауы (KZ):</label>
-                          <input
-                            type="text"
-                            value={editingCase.title?.kz || ''}
-                            onChange={(e) => setEditingCase({
-                              ...editingCase,
-                              title: { ...editingCase.title, kz: e.target.value }
-                            })}
-                            className="w-full px-3 py-2 rounded-xl input-studio text-xs text-white"
-                          />
-                        </div>
-                      </div>
-
-                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                        <div>
-                          <label className="block text-xs font-mono text-slate-400 mb-1">Бейдж / Результат (RU):</label>
-                          <input
-                            type="text"
-                            value={editingCase.badge?.ru || ''}
-                            onChange={(e) => setEditingCase({
-                              ...editingCase,
-                              badge: { ...editingCase.badge, ru: e.target.value }
-                            })}
-                            className="w-full px-3 py-2 rounded-xl input-studio text-xs text-white"
-                          />
-                        </div>
-
-                        <div>
-                          <label className="block text-xs font-mono text-slate-400 mb-1">Badge (EN):</label>
-                          <input
-                            type="text"
-                            value={editingCase.badge?.en || ''}
-                            onChange={(e) => setEditingCase({
-                              ...editingCase,
-                              badge: { ...editingCase.badge, en: e.target.value }
-                            })}
-                            className="w-full px-3 py-2 rounded-xl input-studio text-xs text-white"
-                          />
-                        </div>
-
-                        <div>
-                          <label className="block text-xs font-mono text-slate-400 mb-1">Бейдж / Нәтиже (KZ):</label>
-                          <input
-                            type="text"
-                            value={editingCase.badge?.kz || ''}
-                            onChange={(e) => setEditingCase({
-                              ...editingCase,
-                              badge: { ...editingCase.badge, kz: e.target.value }
-                            })}
-                            className="w-full px-3 py-2 rounded-xl input-studio text-xs text-white"
-                          />
-                        </div>
-                      </div>
-
-                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                        <div>
-                          <label className="block text-xs font-mono text-slate-400 mb-1">Описание (RU):</label>
-                          <textarea
-                            rows="3"
-                            value={editingCase.summary?.ru || ''}
-                            onChange={(e) => setEditingCase({
-                              ...editingCase,
-                              summary: { ...editingCase.summary, ru: e.target.value }
-                            })}
-                            className="w-full px-3 py-2 rounded-xl input-studio text-xs text-white resize-none"
-                          ></textarea>
-                        </div>
-
-                        <div>
-                          <label className="block text-xs font-mono text-slate-400 mb-1">Summary (EN):</label>
-                          <textarea
-                            rows="3"
-                            value={editingCase.summary?.en || ''}
-                            onChange={(e) => setEditingCase({
-                              ...editingCase,
-                              summary: { ...editingCase.summary, en: e.target.value }
-                            })}
-                            className="w-full px-3 py-2 rounded-xl input-studio text-xs text-white resize-none"
-                          ></textarea>
-                        </div>
-
-                        <div>
-                          <label className="block text-xs font-mono text-slate-400 mb-1">Сипаттамасы (KZ):</label>
-                          <textarea
-                            rows="3"
-                            value={editingCase.summary?.kz || ''}
-                            onChange={(e) => setEditingCase({
-                              ...editingCase,
-                              summary: { ...editingCase.summary, kz: e.target.value }
-                            })}
-                            className="w-full px-3 py-2 rounded-xl input-studio text-xs text-white resize-none"
-                          ></textarea>
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                          <div>
+                            <label className="block text-xs font-mono text-slate-400 mb-1">Название (RU):</label>
+                            <input
+                              type="text"
+                              value={editingCase.title?.ru || ''}
+                              onChange={(e) => setEditingCase({
+                                ...editingCase,
+                                title: { ...editingCase.title, ru: e.target.value }
+                              })}
+                              className="w-full px-3 py-2 rounded-xl input-studio text-xs text-white"
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-xs font-mono text-slate-400 mb-1">Title (EN):</label>
+                            <input
+                              type="text"
+                              value={editingCase.title?.en || ''}
+                              onChange={(e) => setEditingCase({
+                                ...editingCase,
+                                title: { ...editingCase.title, en: e.target.value }
+                              })}
+                              className="w-full px-3 py-2 rounded-xl input-studio text-xs text-white"
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-xs font-mono text-slate-400 mb-1">Атауы (KZ):</label>
+                            <input
+                              type="text"
+                              value={editingCase.title?.kz || ''}
+                              onChange={(e) => setEditingCase({
+                                ...editingCase,
+                                title: { ...editingCase.title, kz: e.target.value }
+                              })}
+                              className="w-full px-3 py-2 rounded-xl input-studio text-xs text-white"
+                            />
+                          </div>
                         </div>
                       </div>
 
-                      <div className="pt-3 border-t border-slate-800 flex justify-end gap-3">
+                      {/* 2. Hero Metric & Badge */}
+                      <div className="space-y-3 pt-3 border-t border-slate-800">
+                        <div className="text-xs font-mono uppercase tracking-wider text-slate-400">2. Монументальная метрика и Бейдж</div>
+
+                        <div className="grid grid-cols-1 sm:grid-cols-4 gap-3">
+                          <div>
+                            <label className="block text-xs font-mono text-amber-400 mb-1">Главная цифра:</label>
+                            <input
+                              type="text"
+                              placeholder="+340%"
+                              value={editingCase.metrics?.[0]?.value || ''}
+                              onChange={(e) => {
+                                const val = e.target.value;
+                                const curMetrics = editingCase.metrics || [{}];
+                                const updatedMetrics = [{ ...curMetrics[0], value: val }, ...curMetrics.slice(1)];
+                                setEditingCase({ ...editingCase, metrics: updatedMetrics });
+                              }}
+                              className="w-full px-3 py-2 rounded-xl input-studio text-xs text-white font-bold"
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-xs font-mono text-slate-400 mb-1">Подпись метрики (RU):</label>
+                            <input
+                              type="text"
+                              placeholder="Рост выручки"
+                              value={editingCase.metrics?.[0]?.label?.ru || (typeof editingCase.metrics?.[0]?.label === 'string' ? editingCase.metrics[0].label : '')}
+                              onChange={(e) => {
+                                const val = e.target.value;
+                                const curMetrics = editingCase.metrics || [{}];
+                                const curLabel = typeof curMetrics[0].label === 'object' ? curMetrics[0].label : {};
+                                const updatedMetrics = [{ ...curMetrics[0], label: { ...curLabel, ru: val } }, ...curMetrics.slice(1)];
+                                setEditingCase({ ...editingCase, metrics: updatedMetrics });
+                              }}
+                              className="w-full px-3 py-2 rounded-xl input-studio text-xs text-white"
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-xs font-mono text-slate-400 mb-1">Metric label (EN):</label>
+                            <input
+                              type="text"
+                              placeholder="Revenue Growth"
+                              value={editingCase.metrics?.[0]?.label?.en || ''}
+                              onChange={(e) => {
+                                const val = e.target.value;
+                                const curMetrics = editingCase.metrics || [{}];
+                                const curLabel = typeof curMetrics[0].label === 'object' ? curMetrics[0].label : {};
+                                const updatedMetrics = [{ ...curMetrics[0], label: { ...curLabel, en: val } }, ...curMetrics.slice(1)];
+                                setEditingCase({ ...editingCase, metrics: updatedMetrics });
+                              }}
+                              className="w-full px-3 py-2 rounded-xl input-studio text-xs text-white"
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-xs font-mono text-slate-400 mb-1">Метрика сипаттамасы (KZ):</label>
+                            <input
+                              type="text"
+                              placeholder="Табыс өсімі"
+                              value={editingCase.metrics?.[0]?.label?.kz || ''}
+                              onChange={(e) => {
+                                const val = e.target.value;
+                                const curMetrics = editingCase.metrics || [{}];
+                                const curLabel = typeof curMetrics[0].label === 'object' ? curMetrics[0].label : {};
+                                const updatedMetrics = [{ ...curMetrics[0], label: { ...curLabel, kz: val } }, ...curMetrics.slice(1)];
+                                setEditingCase({ ...editingCase, metrics: updatedMetrics });
+                              }}
+                              className="w-full px-3 py-2 rounded-xl input-studio text-xs text-white"
+                            />
+                          </div>
+                        </div>
+
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                          <div>
+                            <label className="block text-xs font-mono text-slate-400 mb-1">Бейдж карточки (RU):</label>
+                            <input
+                              type="text"
+                              value={editingCase.badge?.ru || ''}
+                              onChange={(e) => setEditingCase({
+                                ...editingCase,
+                                badge: { ...editingCase.badge, ru: e.target.value }
+                              })}
+                              className="w-full px-3 py-2 rounded-xl input-studio text-xs text-white"
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-xs font-mono text-slate-400 mb-1">Badge (EN):</label>
+                            <input
+                              type="text"
+                              value={editingCase.badge?.en || ''}
+                              onChange={(e) => setEditingCase({
+                                ...editingCase,
+                                badge: { ...editingCase.badge, en: e.target.value }
+                              })}
+                              className="w-full px-3 py-2 rounded-xl input-studio text-xs text-white"
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-xs font-mono text-slate-400 mb-1">Бейдж (KZ):</label>
+                            <input
+                              type="text"
+                              value={editingCase.badge?.kz || ''}
+                              onChange={(e) => setEditingCase({
+                                ...editingCase,
+                                badge: { ...editingCase.badge, kz: e.target.value }
+                              })}
+                              className="w-full px-3 py-2 rounded-xl input-studio text-xs text-white"
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* 3. Summary Descriptions */}
+                      <div className="space-y-3 pt-3 border-t border-slate-800">
+                        <div className="text-xs font-mono uppercase tracking-wider text-slate-400">3. Описание и результаты</div>
+
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                          <div>
+                            <label className="block text-xs font-mono text-slate-400 mb-1">Описание (RU):</label>
+                            <textarea
+                              rows="3"
+                              value={editingCase.summary?.ru || ''}
+                              onChange={(e) => setEditingCase({
+                                ...editingCase,
+                                summary: { ...editingCase.summary, ru: e.target.value }
+                              })}
+                              className="w-full px-3 py-2 rounded-xl input-studio text-xs text-white resize-none"
+                            ></textarea>
+                          </div>
+                          <div>
+                            <label className="block text-xs font-mono text-slate-400 mb-1">Summary (EN):</label>
+                            <textarea
+                              rows="3"
+                              value={editingCase.summary?.en || ''}
+                              onChange={(e) => setEditingCase({
+                                ...editingCase,
+                                summary: { ...editingCase.summary, en: e.target.value }
+                              })}
+                              className="w-full px-3 py-2 rounded-xl input-studio text-xs text-white resize-none"
+                            ></textarea>
+                          </div>
+                          <div>
+                            <label className="block text-xs font-mono text-slate-400 mb-1">Сипаттамасы (KZ):</label>
+                            <textarea
+                              rows="3"
+                              value={editingCase.summary?.kz || ''}
+                              onChange={(e) => setEditingCase({
+                                ...editingCase,
+                                summary: { ...editingCase.summary, kz: e.target.value }
+                              })}
+                              className="w-full px-3 py-2 rounded-xl input-studio text-xs text-white resize-none"
+                            ></textarea>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* 4. Shader Theme & Tags */}
+                      <div className="space-y-3 pt-3 border-t border-slate-800">
+                        <div className="text-xs font-mono uppercase tracking-wider text-slate-400">4. Шейдерная тема и Теги фильтрации</div>
+
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                          {/* Shader Color Mode */}
+                          <div>
+                            <label className="block text-xs font-mono text-slate-400 mb-1.5">Тема шейдера тепловой карты:</label>
+                            <div className="grid grid-cols-2 gap-2">
+                              {[
+                                { id: 'thermal', label: '🔥 Thermal' },
+                                { id: 'cyber', label: '⚡ Cyber' },
+                                { id: 'ultraviolet', label: '🔮 Ultraviolet' },
+                                { id: 'magma', label: '🌋 Magma' }
+                              ].map(m => (
+                                <button
+                                  type="button"
+                                  key={m.id}
+                                  onClick={() => setEditingCase({ ...editingCase, colorMode: m.id })}
+                                  className={`py-2 px-3 rounded-xl text-xs font-mono transition-all text-left flex items-center justify-between ${
+                                    (editingCase.colorMode || 'thermal') === m.id
+                                      ? 'bg-white text-slate-950 font-bold shadow'
+                                      : 'bg-slate-900 border border-slate-800 text-slate-400 hover:text-white'
+                                  }`}
+                                >
+                                  <span>{m.label}</span>
+                                </button>
+                              ))}
+                            </div>
+                          </div>
+
+                          {/* Quick Tags Toggle */}
+                          <div>
+                            <label className="block text-xs font-mono text-slate-400 mb-1.5">Теги рубрикатора (фильтры):</label>
+                            <div className="flex flex-wrap gap-1.5 mb-2">
+                              {['SaaS', 'Branding', 'Landing Page', 'SEO Optimization', 'Full Packaging', 'Websites'].map(tag => {
+                                const currentTags = editingCase.tags || [];
+                                const hasTag = currentTags.includes(tag);
+                                return (
+                                  <button
+                                    type="button"
+                                    key={tag}
+                                    onClick={() => {
+                                      const updatedTags = hasTag
+                                        ? currentTags.filter(t => t !== tag)
+                                        : [...currentTags, tag];
+                                      setEditingCase({ ...editingCase, tags: updatedTags });
+                                    }}
+                                    className={`px-2.5 py-1 rounded-lg text-[11px] font-mono transition-all ${
+                                      hasTag
+                                        ? 'bg-cyan-500/20 border border-cyan-500 text-cyan-300 font-bold'
+                                        : 'bg-slate-900 border border-slate-800 text-slate-500 hover:text-white'
+                                    }`}
+                                  >
+                                    {tag} {hasTag ? '✓' : '+'}
+                                  </button>
+                                );
+                              })}
+                            </div>
+                            <input
+                              type="text"
+                              placeholder="Теги через запятую (напр: SaaS, Branding)"
+                              value={(editingCase.tags || []).join(', ')}
+                              onChange={(e) => {
+                                const splitTags = e.target.value.split(',').map(s => s.trim()).filter(Boolean);
+                                setEditingCase({ ...editingCase, tags: splitTags });
+                              }}
+                              className="w-full px-3 py-2 rounded-xl input-studio text-xs text-white"
+                            />
+                          </div>
+                        </div>
+
+                        {/* Published Toggle */}
+                        <div className="pt-2 flex items-center justify-between">
+                          <label className="flex items-center gap-2 cursor-pointer">
+                            <input
+                              type="checkbox"
+                              checked={editingCase.published !== false}
+                              onChange={(e) => setEditingCase({ ...editingCase, published: e.target.checked })}
+                              className="w-4 h-4 rounded text-emerald-500 focus:ring-0 bg-slate-900 border-slate-700"
+                            />
+                            <span className="text-xs font-heading font-semibold text-white">
+                              Опубликован на сайте (активен в витрине кейсов)
+                            </span>
+                          </label>
+                        </div>
+                      </div>
+
+                      <div className="pt-4 border-t border-slate-800 flex justify-end gap-3">
                         <button
                           onClick={() => setEditingCase(null)}
                           className="px-4 py-2 rounded-xl bg-slate-900 text-xs text-slate-400 hover:text-white"
@@ -831,12 +1084,14 @@ export default function AdminPanel({ isOpen, onClose, lang = 'ru' }) {
                         </button>
                         <button
                           onClick={() => {
-                            const updated = cases.map(it => it.id === editingCase.id ? editingCase : it);
+                            const updated = cases.some(it => it.id === editingCase.id)
+                              ? cases.map(it => it.id === editingCase.id ? editingCase : it)
+                              : [editingCase, ...cases];
                             setCases(updated);
                             saveAllContent(updated);
                             setEditingCase(null);
                           }}
-                          className="px-5 py-2 rounded-xl bg-white text-slate-950 font-bold text-xs"
+                          className="px-6 py-2.5 rounded-xl bg-white hover:bg-slate-200 text-slate-950 font-heading font-bold text-xs shadow-lg transition-all"
                         >
                           Сохранить кейс
                         </button>

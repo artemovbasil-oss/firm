@@ -13,15 +13,15 @@ export default function Faq({ lang }) {
   };
 
   return (
-    <section id="faq" className="py-32 sm:py-40 relative">
+    <section id="faq" className="py-20 sm:py-28 lg:py-32 relative w-full max-w-full overflow-hidden">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="text-center mb-16 sm:mb-24">
+        <div className="text-center mb-12 sm:mb-16 lg:mb-20">
           <div className="text-xs sm:text-sm font-mono text-slate-500 uppercase tracking-widest mb-3">
             {lang === 'en' ? 'Direct Answers' : (lang === 'kz' ? 'Сұрақ-жауап' : 'Частые вопросы')}
           </div>
-          <h2 className="text-4xl sm:text-6xl md:text-7xl font-heading font-black tracking-tight text-slate-950 dark:text-white uppercase leading-[0.95]">
+          <h2 className="text-3xl sm:text-5xl lg:text-6xl font-heading font-black tracking-tight text-slate-950 dark:text-white uppercase leading-[0.98]">
             {lang === 'en' ? 'F.A.Q.' : (lang === 'kz' ? 'Жиі қойылатын сұрақтар' : 'Вопросы и ответы')}
           </h2>
         </div>
@@ -38,9 +38,9 @@ export default function Faq({ lang }) {
                 <button
                   type="button"
                   onClick={() => toggle(idx)}
-                  className="w-full py-8 sm:py-9 text-left flex items-center justify-between gap-6 focus:outline-none group px-2 sm:px-4"
+                  className="w-full py-6 sm:py-8 text-left flex items-center justify-between gap-4 sm:gap-6 focus:outline-none group px-1 sm:px-4"
                 >
-                  <span className="font-heading font-bold text-lg sm:text-2xl text-slate-950 dark:text-white group-hover:translate-x-1.5 transition-transform duration-200">
+                  <span className="font-heading font-bold text-base sm:text-xl lg:text-2xl text-slate-950 dark:text-white group-hover:translate-x-1.5 transition-transform duration-200">
                     {question}
                   </span>
                   <motion.div 

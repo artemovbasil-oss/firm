@@ -123,16 +123,16 @@ export default function Calculator({
   };
 
   return (
-    <section id="calculator" className="py-32 sm:py-40 relative">
+    <section id="calculator" className="py-20 sm:py-28 lg:py-32 relative w-full max-w-full overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 sm:mb-24 gap-6">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 sm:mb-16 lg:mb-20 gap-6">
           <div>
             <div className="text-xs sm:text-sm font-mono text-slate-500 uppercase tracking-widest mb-3">
               {lang === 'en' ? 'Transparent Pricing' : (lang === 'kz' ? 'Баға калькуляторы' : 'Оценка бюджета')}
             </div>
-            <h2 className="text-4xl sm:text-6xl md:text-7xl font-heading font-black tracking-tight text-slate-950 dark:text-white uppercase leading-[0.95]">
+            <h2 className="text-3xl sm:text-5xl lg:text-6xl font-heading font-black tracking-tight text-slate-950 dark:text-white uppercase leading-[0.98]">
               {lang === 'en' ? 'Estimate Scope.' : (lang === 'kz' ? 'Жоба құны.' : 'Расчет сметы.')}
             </h2>
           </div>
@@ -147,18 +147,18 @@ export default function Calculator({
         </div>
 
         {/* Minimalist 2-Column Cockpit with Healthy Breathing Room */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 sm:gap-16 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12 lg:gap-16 items-start">
           
           {/* Left Controls (7 cols) */}
-          <div className="lg:col-span-7 space-y-12">
+          <div className="lg:col-span-7 space-y-8 sm:space-y-12">
             
             {/* 1. Services Chips */}
             <div>
-              <div className="text-xs font-mono uppercase tracking-wider text-slate-500 mb-5">
+              <div className="text-xs font-mono uppercase tracking-wider text-slate-500 mb-4 sm:mb-5">
                 {lang === 'en' ? 'Select Project Disciplines' : (lang === 'kz' ? 'Бағыттарды таңдаңыз' : 'Выберите направления')}
               </div>
 
-              <div className="flex flex-wrap gap-3">
+              <div className="flex flex-wrap gap-2 sm:gap-3">
                 {servicesList.map((s) => {
                   const isChecked = selectedServices.includes(s.id);
                   const title = s.title?.[lang] || s.title?.ru || s.id;
@@ -171,14 +171,14 @@ export default function Calculator({
                       key={s.id}
                       type="button"
                       onClick={() => onToggleService(s.id)}
-                      className={`px-5 py-3.5 rounded-full text-xs sm:text-sm font-heading font-semibold transition-all flex items-center justify-between gap-4 ${
+                      className={`max-w-full px-3.5 sm:px-5 py-2.5 sm:py-3 rounded-full text-xs sm:text-sm font-heading font-semibold transition-all flex items-center justify-between gap-2.5 sm:gap-4 ${
                         isChecked
-                          ? 'bg-slate-950 dark:bg-white text-white dark:text-slate-950 shadow-md scale-[1.02]'
+                          ? 'bg-slate-950 dark:bg-white text-white dark:text-slate-950 shadow-md scale-[1.01]'
                           : 'border border-black/[0.08] dark:border-white/10 bg-white/40 dark:bg-white/[0.02] text-slate-700 dark:text-slate-300 hover:border-slate-400'
                       }`}
                     >
-                      <span className="truncate">{title}</span>
-                      <span className={`text-[11px] font-mono shrink-0 ${isChecked ? 'text-white/80 dark:text-slate-900/80' : 'text-slate-400'}`}>
+                      <span className="truncate min-w-0">{title}</span>
+                      <span className={`text-[10px] sm:text-[11px] font-mono shrink-0 tabular-nums whitespace-nowrap ${isChecked ? 'text-white/80 dark:text-slate-900/80' : 'text-slate-400'}`}>
                         +{price} {curSymbol}
                       </span>
                     </motion.button>
@@ -189,11 +189,11 @@ export default function Calculator({
 
             {/* 2. Scale Selector */}
             <div>
-              <div className="text-xs font-mono uppercase tracking-wider text-slate-500 mb-5">
+              <div className="text-xs font-mono uppercase tracking-wider text-slate-500 mb-4 sm:mb-5">
                 {lang === 'en' ? 'Company Scale' : (lang === 'kz' ? 'Жоба ауқымы' : 'Масштаб проекта')}
               </div>
 
-              <div className="grid grid-cols-3 gap-3.5">
+              <div className="grid grid-cols-3 gap-2 sm:gap-3.5">
                 {[
                   { id: 'start', label: 'Startup' },
                   { id: 'business', label: 'Standard' },
@@ -204,7 +204,7 @@ export default function Calculator({
                     key={item.id}
                     type="button"
                     onClick={() => setScale(item.id)}
-                    className={`py-4 px-4 rounded-2xl text-xs sm:text-sm font-heading font-bold transition-all text-center ${
+                    className={`py-3 sm:py-4 px-2 sm:px-4 rounded-xl sm:rounded-2xl text-[11px] sm:text-sm font-heading font-bold transition-all text-center truncate ${
                       scale === item.id
                         ? 'bg-slate-950 dark:bg-white text-white dark:text-slate-950 shadow-md'
                         : 'border border-black/[0.08] dark:border-white/10 bg-white/40 dark:bg-white/[0.02] text-slate-600 dark:text-slate-400 hover:border-slate-400'
@@ -218,16 +218,16 @@ export default function Calculator({
 
             {/* 3. Speed Toggle */}
             <div>
-              <div className="text-xs font-mono uppercase tracking-wider text-slate-500 mb-5">
+              <div className="text-xs font-mono uppercase tracking-wider text-slate-500 mb-4 sm:mb-5">
                 {lang === 'en' ? 'Launch Velocity' : (lang === 'kz' ? 'Орындау қарқыны' : 'Скорость релиза')}
               </div>
 
-              <div className="grid grid-cols-2 gap-3.5">
+              <div className="grid grid-cols-2 gap-2 sm:gap-3.5">
                 <motion.button
                   whileTap={{ scale: 0.97 }}
                   type="button"
                   onClick={() => setUrgency('standard')}
-                  className={`py-4 px-4 rounded-2xl text-xs sm:text-sm font-heading font-semibold transition-all ${
+                  className={`py-3 sm:py-4 px-3 sm:px-4 rounded-xl sm:rounded-2xl text-xs sm:text-sm font-heading font-semibold transition-all ${
                     urgency === 'standard'
                       ? 'bg-slate-950 dark:bg-white text-white dark:text-slate-950 shadow-md'
                       : 'border border-black/[0.08] dark:border-white/10 bg-white/40 dark:bg-white/[0.02] text-slate-600 dark:text-slate-400'
@@ -240,7 +240,7 @@ export default function Calculator({
                   whileTap={{ scale: 0.97 }}
                   type="button"
                   onClick={() => setUrgency('express')}
-                  className={`py-4 px-4 rounded-2xl text-xs sm:text-sm font-heading font-semibold transition-all flex items-center justify-center gap-2 ${
+                  className={`py-3 sm:py-4 px-3 sm:px-4 rounded-xl sm:rounded-2xl text-xs sm:text-sm font-heading font-semibold transition-all flex items-center justify-center gap-2 ${
                     urgency === 'express'
                       ? 'bg-slate-950 dark:bg-white text-white dark:text-slate-950 shadow-md'
                       : 'border border-black/[0.08] dark:border-white/10 bg-white/40 dark:bg-white/[0.02] text-slate-600 dark:text-slate-400'
@@ -255,7 +255,7 @@ export default function Calculator({
           </div>
 
           {/* Right Live Estimate Output (5 cols) */}
-          <div className="lg:col-span-5 p-8 sm:p-12 rounded-3xl bg-slate-950 text-white relative overflow-hidden shadow-2xl border border-white/10 space-y-8">
+          <div className="lg:col-span-5 p-6 sm:p-10 lg:p-12 rounded-2xl sm:rounded-3xl bg-slate-950 text-white relative overflow-hidden shadow-2xl border border-white/10 space-y-6 sm:space-y-8">
             
             <div className="flex items-center justify-between">
               <span className="text-xs font-mono uppercase tracking-wider text-slate-400">
@@ -268,9 +268,9 @@ export default function Calculator({
               )}
             </div>
 
-            {/* Giant Price */}
-            <div>
-              <div className="text-4xl sm:text-6xl font-heading font-black text-white tracking-tighter">
+            {/* Giant Price with robust overflow protection */}
+            <div className="min-w-0">
+              <div className="text-3xl sm:text-5xl lg:text-6xl font-heading font-black text-white tracking-tight tabular-nums break-words min-w-0 leading-tight">
                 {formatCurrency(calculatedPrice)}
               </div>
               <div className="text-xs sm:text-sm font-mono text-slate-400 mt-3">

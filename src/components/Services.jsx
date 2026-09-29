@@ -34,16 +34,16 @@ export default function Services({
   };
 
   return (
-    <section id="services" className="py-32 sm:py-40 relative">
+    <section id="services" className="py-20 sm:py-28 lg:py-32 relative w-full max-w-full overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 sm:mb-24 gap-6">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 sm:mb-16 lg:mb-20 gap-6">
           <div>
             <div className="text-xs sm:text-sm font-mono text-slate-500 uppercase tracking-widest mb-3">
               {lang === 'en' ? 'Core Capabilities' : (lang === 'kz' ? 'Негізгі бағыттар' : 'Экспертиза и стек')}
             </div>
-            <h2 className="text-4xl sm:text-6xl md:text-7xl font-heading font-black tracking-tight text-slate-950 dark:text-white uppercase leading-[0.95]">
+            <h2 className="text-3xl sm:text-5xl lg:text-6xl font-heading font-black tracking-tight text-slate-950 dark:text-white uppercase leading-[0.98]">
               {lang === 'en' ? 'What We Build.' : (lang === 'kz' ? 'Біз не жасаймыз.' : 'Что мы создаем.')}
             </h2>
           </div>
@@ -77,20 +77,20 @@ export default function Services({
                 <button
                   type="button"
                   onClick={() => setActiveService(isSelected ? null : service.id)}
-                  className="w-full py-8 sm:py-10 text-left flex flex-col md:flex-row md:items-center justify-between gap-4 sm:gap-6 focus:outline-none group px-2 sm:px-4"
+                  className="w-full py-6 sm:py-8 lg:py-10 text-left flex flex-col md:flex-row md:items-center justify-between gap-3 sm:gap-6 focus:outline-none group px-1 sm:px-4"
                 >
-                  <div className="flex items-center gap-6 sm:gap-10 min-w-0 flex-1">
-                    <h3 className="text-2xl sm:text-4xl md:text-5xl font-heading font-extrabold tracking-tight text-slate-950 dark:text-white group-hover:translate-x-2 transition-transform duration-200 truncate sm:whitespace-normal">
+                  <div className="flex items-center gap-4 sm:gap-8 min-w-0 flex-1">
+                    <h3 className="text-xl sm:text-3xl md:text-4xl lg:text-5xl font-heading font-extrabold tracking-tight text-slate-950 dark:text-white group-hover:translate-x-2 transition-transform duration-200 truncate sm:whitespace-normal">
                       {title}
                     </h3>
                   </div>
 
-                  <div className="flex items-center justify-between md:justify-end gap-6 sm:gap-10 shrink-0 pl-10 md:pl-0">
+                  <div className="flex items-center justify-between md:justify-end gap-3 sm:gap-8 shrink-0 w-full md:w-auto">
                     <span className="text-xs sm:text-sm font-mono text-slate-500 uppercase tracking-wider hidden lg:inline">
                       [{category}]
                     </span>
 
-                    <span className="text-sm sm:text-base font-mono font-bold text-slate-950 dark:text-white whitespace-nowrap">
+                    <span className="text-xs sm:text-sm md:text-base font-mono font-bold text-slate-950 dark:text-white whitespace-nowrap tabular-nums">
                       {formatPrice(service.basePrice)}
                     </span>
 
@@ -119,13 +119,13 @@ export default function Services({
                       transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
                       className="overflow-hidden"
                     >
-                      <div className="pb-10 pl-10 sm:pl-16 pr-4 sm:pr-8 space-y-6 pt-2">
-                        <p className="text-base sm:text-xl text-slate-700 dark:text-slate-300 leading-relaxed font-light max-w-4xl">
+                      <div className="pb-8 sm:pb-10 pl-2 sm:pl-8 lg:pl-12 pr-2 sm:pr-8 space-y-5 pt-2">
+                        <p className="text-sm sm:text-lg lg:text-xl text-slate-700 dark:text-slate-300 leading-relaxed font-light max-w-4xl">
                           {tagline}
                         </p>
 
                         {/* Clean Deliverable Tags with Healthy Gaps */}
-                        <div className="flex flex-wrap gap-2.5 pt-2">
+                        <div className="flex flex-wrap gap-2 pt-1">
                           {deliverables.slice(0, 4).map((d, dIdx) => (
                             <span 
                               key={dIdx}

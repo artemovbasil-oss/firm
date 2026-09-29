@@ -7,16 +7,16 @@ export default function TechStack({ lang }) {
   const t = TRANSLATIONS[lang].tech;
 
   return (
-    <section id="stack" className="py-32 sm:py-40 relative">
+    <section id="stack" className="py-20 sm:py-28 lg:py-32 relative w-full max-w-full overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 sm:mb-24 gap-6">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 sm:mb-16 lg:mb-20 gap-6">
           <div>
             <div className="text-xs sm:text-sm font-mono text-slate-500 uppercase tracking-widest mb-3">
               {lang === 'en' ? 'Stack & Infrastructure' : (lang === 'kz' ? 'Технологиялық стек' : 'Технологический стек')}
             </div>
-            <h2 className="text-4xl sm:text-6xl md:text-7xl font-heading font-black tracking-tight text-slate-950 dark:text-white uppercase leading-[0.95]">
+            <h2 className="text-3xl sm:text-5xl lg:text-6xl font-heading font-black tracking-tight text-slate-950 dark:text-white uppercase leading-[0.98]">
               {lang === 'en' ? 'Engineered for Speed.' : (lang === 'kz' ? 'Жоғары жылдамдық.' : 'Стек без компромиссов.')}
             </h2>
           </div>
@@ -35,7 +35,7 @@ export default function TechStack({ lang }) {
           {TECH_STACK.map((group, idx) => (
             <div
               key={idx}
-              className="p-8 rounded-3xl bg-black/[0.02] dark:bg-white/[0.02] border border-black/[0.06] dark:border-white/[0.06] space-y-6"
+              className="p-6 sm:p-8 rounded-2xl sm:rounded-3xl bg-black/[0.02] dark:bg-white/[0.02] border border-black/[0.06] dark:border-white/[0.06] space-y-5"
             >
               <div className="flex items-center justify-between">
                 <span className="font-heading font-bold text-sm sm:text-base text-slate-950 dark:text-white uppercase tracking-wider">
@@ -58,7 +58,7 @@ export default function TechStack({ lang }) {
         </div>
 
         {/* Guarantees */}
-        <div className="mt-16 flex flex-wrap items-center justify-center gap-6 sm:gap-10 text-xs font-mono text-slate-500 dark:text-slate-400">
+        <div className="mt-12 sm:mt-16 flex flex-wrap items-center justify-center gap-6 sm:gap-10 text-xs font-mono text-slate-500 dark:text-slate-400">
           <div className="flex items-center gap-2">
             <ShieldCheck className="w-4 h-4 text-emerald-500" />
             <span>{t.badge1}</span>

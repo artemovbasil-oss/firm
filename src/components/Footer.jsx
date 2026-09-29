@@ -10,7 +10,7 @@ export default function Footer({ lang, servicesList = [], onOpenContact, onOpenA
   };
 
   return (
-    <footer className="border-t border-black/[0.06] dark:border-white/[0.06] bg-black/[0.02] dark:bg-[#07080b] pt-24 sm:pt-32 pb-16 transition-colors">
+    <footer className="border-t border-black/[0.06] dark:border-white/[0.06] bg-black/[0.02] dark:bg-[#07080b] pt-16 sm:pt-20 lg:pt-24 pb-12 sm:pb-16 transition-colors w-full max-w-full overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Top Grid */}
