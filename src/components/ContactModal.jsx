@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Send, CheckCircle2, AlertCircle, ShieldCheck } from 'lucide-react';
+import { X, Send, CheckCircle2, AlertCircle, ShieldCheck, Sparkles, DollarSign } from 'lucide-react';
 import { TRANSLATIONS } from '../data/translations';
 import StudioSelect from './ui/StudioSelect';
 
