@@ -12,7 +12,7 @@ import Faq from './components/Faq';
 import Footer from './components/Footer';
 import ContactModal from './components/ContactModal';
 import AdminPanel from './components/AdminPanel';
-import { INITIAL_SERVICES, INITIAL_CASES } from './data/agencyData';
+import { INITIAL_SERVICES, INITIAL_CASES, TECH_STACK, TESTIMONIALS } from './data/agencyData';
 import { TRANSLATIONS } from './data/translations';
 import { CheckCircle2 } from 'lucide-react';
 
@@ -20,11 +20,15 @@ export default function App() {
   // Localization & Theming
   const [lang, setLang] = useState(() => localStorage.getItem('firm_lang') || 'ru');
   const [theme, setTheme] = useState(() => localStorage.getItem('firm_theme') || 'dark');
-  const [currency, setCurrency] = useState(() => (lang === 'en' ? 'usd' : 'rub'));
+  
+  // Currency strictly tied to language: KZ -> KZT, RU -> RUB, EN -> USD
+  const currency = lang === 'kz' ? 'kzt' : lang === 'en' ? 'usd' : 'rub';
 
   // Content state (hydrated with backend if available)
   const [servicesList, setServicesList] = useState(INITIAL_SERVICES);
   const [casesList, setCasesList] = useState(INITIAL_CASES);
+  const [techStackList, setTechStackList] = useState(TECH_STACK);
+  const [testimonialsList, setTestimonialsList] = useState(TESTIMONIALS);
 
   // Modals & Panels
   const [selectedServices, setSelectedServices] = useState(['websites', 'landings']);
@@ -108,6 +112,12 @@ export default function App() {
           if (Array.isArray(data.services) && data.services.length > 0) {
             setServicesList(data.services);
           }
+          if (Array.isArray(data.techStack) && data.techStack.length > 0) {
+            setTechStackList(data.techStack);
+          }
+          if (Array.isArray(data.testimonials) && data.testimonials.length > 0) {
+            setTestimonialsList(data.testimonials);
+          }
         }
       } catch {
         // Fallback to static initial data
@@ -151,15 +161,6 @@ export default function App() {
     }, 5000);
   };
 
-  const handleSetLang = (newLang) => {
-    setLang(newLang);
-    if (newLang === 'kz' && currency === 'rub') {
-      setCurrency('kzt');
-    } else if (newLang === 'en' && currency === 'rub') {
-      setCurrency('usd');
-    }
-  };
-
   return (
     <div className="min-h-screen bg-[#fbfbfd] dark:bg-[#06070a] text-slate-900 dark:text-slate-100 flex flex-col font-sans transition-colors duration-200 w-full max-w-full overflow-x-hidden">
       
@@ -174,11 +175,9 @@ export default function App() {
       {/* Header */}
       <Navbar
         lang={lang}
-        setLang={handleSetLang}
+        setLang={setLang}
         theme={theme}
         setTheme={setTheme}
-        currency={currency}
-        setCurrency={setCurrency}
         onOpenContact={handleOpenContact}
         onOpenAdmin={() => setIsAdminOpen(true)}
       />
@@ -224,10 +223,12 @@ export default function App() {
 
         <TechStack 
           lang={lang} 
+          techStackList={techStackList}
         />
 
         <Testimonials 
           lang={lang} 
+          testimonialsList={testimonialsList}
         />
 
         <Faq 
@@ -263,6 +264,10 @@ export default function App() {
         lang={lang}
         casesList={casesList}
         onUpdateCases={(newCases) => setCasesList(newCases)}
+        techStackList={techStackList}
+        onUpdateTechStack={(newStack) => setTechStackList(newStack)}
+        testimonialsList={testimonialsList}
+        onUpdateTestimonials={(newTestimonials) => setTestimonialsList(newTestimonials)}
       />
 
     </div>

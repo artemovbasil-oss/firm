@@ -2,8 +2,9 @@ import React from 'react';
 import { TESTIMONIALS } from '../data/agencyData';
 import { TRANSLATIONS } from '../data/translations';
 
-export default function Testimonials({ lang }) {
+export default function Testimonials({ lang, testimonialsList }) {
   const t = TRANSLATIONS[lang].testimonials;
+  const list = Array.isArray(testimonialsList) && testimonialsList.length > 0 ? testimonialsList : TESTIMONIALS;
 
   return (
     <section className="py-20 sm:py-28 lg:py-32 relative w-full max-w-full overflow-hidden">
@@ -23,7 +24,7 @@ export default function Testimonials({ lang }) {
 
         {/* Testimonials Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
-          {TESTIMONIALS.map((item, idx) => {
+          {list.map((item, idx) => {
             const name = item.name?.[lang] || item.name?.ru || '';
             const role = item.role?.[lang] || item.role?.ru || '';
             const text = item.text?.[lang] || item.text?.ru || '';

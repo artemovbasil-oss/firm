@@ -8,11 +8,21 @@ import {
 } from 'lucide-react';
 import StudioSelect from './ui/StudioSelect';
 
-export default function AdminPanel({ isOpen, onClose, lang = 'ru', casesList = [], onUpdateCases }) {
+export default function AdminPanel({ 
+  isOpen, 
+  onClose, 
+  lang = 'ru', 
+  casesList = [], 
+  onUpdateCases,
+  techStackList = [],
+  onUpdateTechStack,
+  testimonialsList = [],
+  onUpdateTestimonials
+}) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [password, setPassword] = useState('');
   const [authError, setAuthError] = useState('');
-  const [activeTab, setActiveTab] = useState('crm'); // 'crm' | 'cases' | 'services' | 'settings'
+  const [activeTab, setActiveTab] = useState('crm'); // 'crm' | 'cases' | 'stack' | 'testimonials' | 'settings'
 
   // Leads CRM state
   const [leads, setLeads] = useState([]);
@@ -24,7 +34,10 @@ export default function AdminPanel({ isOpen, onClose, lang = 'ru', casesList = [
   // Content state
   const [cases, setCases] = useState(() => (Array.isArray(casesList) && casesList.length > 0 ? casesList : []));
   const [services, setServices] = useState([]);
+  const [techStack, setTechStack] = useState(() => (Array.isArray(techStackList) && techStackList.length > 0 ? techStackList : []));
+  const [testimonials, setTestimonials] = useState(() => (Array.isArray(testimonialsList) && testimonialsList.length > 0 ? testimonialsList : []));
   const [editingCase, setEditingCase] = useState(null);
+  const [editingTestimonial, setEditingTestimonial] = useState(null);
   const [saveSuccess, setSaveSuccess] = useState(false);
 
   useEffect(() => {
@@ -32,6 +45,18 @@ export default function AdminPanel({ isOpen, onClose, lang = 'ru', casesList = [
       setCases(casesList);
     }
   }, [casesList]);
+
+  useEffect(() => {
+    if (Array.isArray(techStackList) && techStackList.length > 0 && techStack.length === 0) {
+      setTechStack(techStackList);
+    }
+  }, [techStackList]);
+
+  useEffect(() => {
+    if (Array.isArray(testimonialsList) && testimonialsList.length > 0 && testimonials.length === 0) {
+      setTestimonials(testimonialsList);
+    }
+  }, [testimonialsList]);
 
   useEffect(() => {
     const token = localStorage.getItem('firm_admin_token');
@@ -88,6 +113,14 @@ export default function AdminPanel({ isOpen, onClose, lang = 'ru', casesList = [
         }
         if (Array.isArray(content.services) && content.services.length > 0) {
           setServices(content.services);
+        }
+        if (Array.isArray(content.techStack) && content.techStack.length > 0) {
+          setTechStack(content.techStack);
+          if (onUpdateTechStack) onUpdateTechStack(content.techStack);
+        }
+        if (Array.isArray(content.testimonials) && content.testimonials.length > 0) {
+          setTestimonials(content.testimonials);
+          if (onUpdateTestimonials) onUpdateTestimonials(content.testimonials);
         }
       }
     } catch (err) {
@@ -154,18 +187,28 @@ export default function AdminPanel({ isOpen, onClose, lang = 'ru', casesList = [
     }
   };
 
-  const saveAllContent = async (updatedCases, updatedServices) => {
+  const saveAllContent = async (updatedCases, updatedServices, updatedTechStack, updatedTestimonials) => {
     try {
       const casesToSave = updatedCases || cases;
       const servicesToSave = updatedServices || services;
+      const techStackToSave = updatedTechStack || techStack;
+      const testimonialsToSave = updatedTestimonials || testimonials;
 
       if (updatedCases && onUpdateCases) {
         onUpdateCases(casesToSave);
+      }
+      if (updatedTechStack && onUpdateTechStack) {
+        onUpdateTechStack(techStackToSave);
+      }
+      if (updatedTestimonials && onUpdateTestimonials) {
+        onUpdateTestimonials(testimonialsToSave);
       }
 
       const payload = {
         cases: casesToSave,
         services: servicesToSave,
+        techStack: techStackToSave,
+        testimonials: testimonialsToSave,
         updatedAt: new Date().toISOString()
       };
       const res = await fetch('/api/content', {
@@ -268,6 +311,22 @@ export default function AdminPanel({ isOpen, onClose, lang = 'ru', casesList = [
                 }`}
               >
                 Портфолио
+              </button>
+              <button
+                onClick={() => setActiveTab('stack')}
+                className={`px-3 py-1.5 rounded-md font-medium transition-colors ${
+                  activeTab === 'stack' ? 'bg-slate-800 text-white shadow-sm' : 'text-slate-400 hover:text-white'
+                }`}
+              >
+                Стек технологий ({techStack.length})
+              </button>
+              <button
+                onClick={() => setActiveTab('testimonials')}
+                className={`px-3 py-1.5 rounded-md font-medium transition-colors ${
+                  activeTab === 'testimonials' ? 'bg-slate-800 text-white shadow-sm' : 'text-slate-400 hover:text-white'
+                }`}
+              >
+                Отзывы ({testimonials.length})
               </button>
               <button
                 onClick={() => setActiveTab('settings')}
@@ -1091,6 +1150,524 @@ export default function AdminPanel({ isOpen, onClose, lang = 'ru', casesList = [
                           className="px-6 py-2.5 rounded-xl bg-white hover:bg-slate-200 text-slate-950 font-heading font-bold text-xs shadow-lg transition-all"
                         >
                           Сохранить кейс
+                        </button>
+                      </div>
+
+                    </div>
+                  </div>
+                )}
+
+              </div>
+            )}
+
+            {/* TAB: TECH STACK */}
+            {activeTab === 'stack' && (
+              <div className="space-y-6">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-5 sm:p-6 rounded-3xl bg-slate-950 border border-slate-800 shadow-xl">
+                  <div>
+                    <h3 className="text-base sm:text-lg font-heading font-bold text-white flex items-center gap-2">
+                      <span>Стек технологий</span>
+                      <span className="text-xs font-mono px-2 py-0.5 rounded-full bg-slate-900 text-slate-300 border border-slate-800">
+                        {techStack.length} категорий
+                      </span>
+                    </h3>
+                    <p className="text-xs text-slate-400 mt-1">
+                      Редактируйте категории и теги инструментов, отображаемые в блоке «Стек без компромиссов».
+                    </p>
+                  </div>
+
+                  <div className="flex items-center gap-2.5">
+                    <button
+                      onClick={() => {
+                        const updated = [...techStack, { category: 'Новая категория', items: ['Инструмент 1', 'Инструмент 2'] }];
+                        setTechStack(updated);
+                        saveAllContent(cases, services, updated, testimonials);
+                      }}
+                      className="px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-700 text-xs font-heading font-semibold flex items-center gap-1.5 transition-colors"
+                    >
+                      <Plus className="w-3.5 h-3.5 text-amber-400" />
+                      <span>Добавить категорию</span>
+                    </button>
+
+                    <button
+                      onClick={() => saveAllContent(cases, services, techStack, testimonials)}
+                      className="px-4 py-2 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-heading font-bold text-xs flex items-center gap-1.5 shadow-md shadow-amber-400/20 transition-all"
+                    >
+                      <Save className="w-3.5 h-3.5" />
+                      <span>{saveSuccess ? 'Сохранено!' : 'Сохранить изменения'}</span>
+                    </button>
+                  </div>
+                </div>
+
+                {/* Grid of Categories */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {techStack.map((group, groupIdx) => (
+                    <div 
+                      key={groupIdx}
+                      className="p-5 sm:p-6 rounded-3xl bg-slate-950 border border-slate-800/90 shadow-lg space-y-4"
+                    >
+                      <div className="flex items-center justify-between gap-3">
+                        <div className="flex-1">
+                          <label className="block text-[10px] font-mono text-slate-500 uppercase tracking-wider mb-1">
+                            Название категории #{groupIdx + 1}
+                          </label>
+                          <input
+                            type="text"
+                            value={group.category}
+                            onChange={(e) => {
+                              const updated = [...techStack];
+                              updated[groupIdx] = { ...updated[groupIdx], category: e.target.value };
+                              setTechStack(updated);
+                            }}
+                            className="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-800 text-sm font-heading font-bold text-white focus:border-amber-400 focus:outline-none"
+                          />
+                        </div>
+
+                        {techStack.length > 1 && (
+                          <button
+                            onClick={() => {
+                              if (confirm(`Удалить категорию "${group.category}"?`)) {
+                                const updated = techStack.filter((_, idx) => idx !== groupIdx);
+                                setTechStack(updated);
+                                saveAllContent(cases, services, updated, testimonials);
+                              }
+                            }}
+                            title="Удалить категорию"
+                            className="p-2 text-rose-400 hover:text-rose-300 hover:bg-rose-950/30 rounded-lg transition-colors mt-4"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </button>
+                        )}
+                      </div>
+
+                      {/* Current tags chip list */}
+                      <div>
+                        <label className="block text-[10px] font-mono text-slate-500 uppercase tracking-wider mb-2">
+                          Теги инструментов ({group.items.length}):
+                        </label>
+                        <div className="flex flex-wrap gap-2 min-h-[44px] p-2.5 rounded-xl bg-slate-900/70 border border-slate-800/80">
+                          {group.items.map((tag, tagIdx) => (
+                            <span
+                              key={tagIdx}
+                              className="group/tag inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono bg-slate-800 border border-slate-700 text-slate-200"
+                            >
+                              <span>{tag}</span>
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  const updatedItems = group.items.filter((_, idx) => idx !== tagIdx);
+                                  const updated = [...techStack];
+                                  updated[groupIdx] = { ...updated[groupIdx], items: updatedItems };
+                                  setTechStack(updated);
+                                }}
+                                className="w-3.5 h-3.5 rounded-full hover:bg-rose-500/20 text-slate-400 hover:text-rose-400 flex items-center justify-center transition-colors"
+                              >
+                                ×
+                              </button>
+                            </span>
+                          ))}
+                          {group.items.length === 0 && (
+                            <span className="text-xs text-slate-600 font-mono italic">Нет тегов</span>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* Add single tag input */}
+                      <div className="flex gap-2">
+                        <input
+                          type="text"
+                          id={`new-tag-${groupIdx}`}
+                          placeholder="Новый тег (напр. GraphQL, Docker)"
+                          onKeyDown={(e) => {
+                            if (e.key === 'Enter') {
+                              e.preventDefault();
+                              const val = e.target.value.trim();
+                              if (val && !group.items.includes(val)) {
+                                const updated = [...techStack];
+                                updated[groupIdx] = { ...updated[groupIdx], items: [...group.items, val] };
+                                setTechStack(updated);
+                                e.target.value = '';
+                              }
+                            }
+                          }}
+                          className="flex-1 px-3 py-2 rounded-xl bg-slate-900 border border-slate-800 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-400"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const input = document.getElementById(`new-tag-${groupIdx}`);
+                            if (input) {
+                              const val = input.value.trim();
+                              if (val && !group.items.includes(val)) {
+                                const updated = [...techStack];
+                                updated[groupIdx] = { ...updated[groupIdx], items: [...group.items, val] };
+                                setTechStack(updated);
+                                input.value = '';
+                              }
+                            }
+                          }}
+                          className="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs font-mono font-medium transition-colors"
+                        >
+                          + Добавить
+                        </button>
+                      </div>
+
+                      {/* Bulk edit comma separated */}
+                      <div className="pt-2 border-t border-slate-900">
+                        <details className="text-xs text-slate-400 cursor-pointer">
+                          <summary className="text-[11px] font-mono text-slate-500 hover:text-slate-300">
+                            Быстрое редактирование списком (через запятую)
+                          </summary>
+                          <textarea
+                            rows="2"
+                            value={group.items.join(', ')}
+                            onChange={(e) => {
+                              const parsed = e.target.value.split(',').map(s => s.trim()).filter(Boolean);
+                              const updated = [...techStack];
+                              updated[groupIdx] = { ...updated[groupIdx], items: parsed };
+                              setTechStack(updated);
+                            }}
+                            className="w-full mt-2 p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-xs font-mono text-slate-300 focus:outline-none focus:border-amber-400 resize-none"
+                          />
+                        </details>
+                      </div>
+
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* TAB: TESTIMONIALS */}
+            {activeTab === 'testimonials' && (
+              <div className="space-y-6">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-5 sm:p-6 rounded-3xl bg-slate-950 border border-slate-800 shadow-xl">
+                  <div>
+                    <h3 className="text-base sm:text-lg font-heading font-bold text-white flex items-center gap-2">
+                      <span>Отзывы клиентов</span>
+                      <span className="text-xs font-mono px-2 py-0.5 rounded-full bg-slate-900 text-slate-300 border border-slate-800">
+                        {testimonials.length} отзывов
+                      </span>
+                    </h3>
+                    <p className="text-xs text-slate-400 mt-1">
+                      Редактируйте отзывы лидеров, бейджи результатов, авторов и фото в блоке «Нам доверяют лидеры».
+                    </p>
+                  </div>
+
+                  <div className="flex items-center gap-2.5">
+                    <button
+                      onClick={() => {
+                        const newT = {
+                          id: Date.now(),
+                          name: { ru: 'Новый автор', kz: 'Жаңа автор', en: 'New Author' },
+                          role: { ru: 'CEO & Основатель', kz: 'Негізін қалаушы', en: 'Founder & CEO' },
+                          company: 'Компания Tech',
+                          text: {
+                            ru: 'Отличная работа команды, проект превзошел ожидания и увеличил конверсию.',
+                            kz: 'Команда тамаша жұмыс істеді, жоба сатылым мен конверсияны арттырды.',
+                            en: 'Outstanding delivery, the project exceeded all expectations.'
+                          },
+                          avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=160&q=80',
+                          outcome: { ru: '+150% продаж', kz: '+150% сатылым', en: '+150% Sales' }
+                        };
+                        setEditingTestimonial(newT);
+                      }}
+                      className="px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-700 text-xs font-heading font-semibold flex items-center gap-1.5 transition-colors"
+                    >
+                      <Plus className="w-3.5 h-3.5 text-amber-400" />
+                      <span>Добавить отзыв</span>
+                    </button>
+
+                    <button
+                      onClick={() => saveAllContent(cases, services, techStack, testimonials)}
+                      className="px-4 py-2 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-heading font-bold text-xs flex items-center gap-1.5 shadow-md shadow-amber-400/20 transition-all"
+                    >
+                      <Save className="w-3.5 h-3.5" />
+                      <span>{saveSuccess ? 'Сохранено!' : 'Сохранить изменения'}</span>
+                    </button>
+                  </div>
+                </div>
+
+                {/* Testimonials List */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {testimonials.map((item, tIdx) => {
+                    const name = item.name?.ru || item.name?.en || item.name || '';
+                    const role = item.role?.ru || item.role?.en || item.role || '';
+                    const outcome = item.outcome?.ru || item.outcome?.en || item.outcome || '';
+                    const text = item.text?.ru || item.text?.en || item.text || '';
+
+                    return (
+                      <div
+                        key={tIdx}
+                        className="p-5 sm:p-6 rounded-3xl bg-slate-950 border border-slate-800/90 shadow-lg flex flex-col justify-between space-y-4"
+                      >
+                        <div>
+                          <div className="flex items-center justify-between mb-3">
+                            <span className="text-xs font-mono font-bold px-2.5 py-0.5 rounded-full bg-slate-900 text-amber-400 border border-amber-400/30">
+                              {outcome}
+                            </span>
+                            <span className="text-xs font-mono text-amber-500">★★★★★</span>
+                          </div>
+
+                          <p className="text-xs text-slate-300 line-clamp-4 italic mb-4 leading-relaxed">
+                            "{text}"
+                          </p>
+                        </div>
+
+                        <div className="pt-4 border-t border-slate-800 flex items-center justify-between">
+                          <div className="flex items-center gap-3 min-w-0 flex-1">
+                            <img
+                              src={item.avatar}
+                              alt={name}
+                              className="w-10 h-10 rounded-full object-cover border border-slate-700 shrink-0"
+                            />
+                            <div className="min-w-0 flex-1">
+                              <div className="text-xs font-heading font-bold text-white truncate">
+                                {name}
+                              </div>
+                              <div className="text-[11px] font-mono text-slate-400 truncate">
+                                {role}, {item.company}
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="flex items-center gap-1 shrink-0 ml-2">
+                            <button
+                              onClick={() => setEditingTestimonial(JSON.parse(JSON.stringify(item)))}
+                              className="p-1.5 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"
+                              title="Редактировать"
+                            >
+                              <Edit3 className="w-4 h-4" />
+                            </button>
+                            <button
+                              onClick={() => {
+                                if (confirm(`Удалить отзыв "${name}"?`)) {
+                                  const updated = testimonials.filter((_, idx) => idx !== tIdx);
+                                  setTestimonials(updated);
+                                  saveAllContent(cases, services, techStack, updated);
+                                }
+                              }}
+                              className="p-1.5 text-rose-400 hover:text-rose-300 hover:bg-rose-950/30 rounded-lg transition-colors"
+                              title="Удалить"
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                {/* Testimonial Edit Modal */}
+                {editingTestimonial && (
+                  <div className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4 overflow-y-auto">
+                    <div className="max-w-2xl w-full bg-slate-950 border border-slate-800 rounded-3xl p-6 sm:p-8 space-y-5 my-8 shadow-2xl">
+                      <div className="flex items-center justify-between pb-3 border-b border-slate-800">
+                        <h4 className="text-base font-heading font-bold text-white">
+                          Редактирование отзыва
+                        </h4>
+                        <button
+                          onClick={() => setEditingTestimonial(null)}
+                          className="p-1 text-slate-400 hover:text-white"
+                        >
+                          <X className="w-5 h-5" />
+                        </button>
+                      </div>
+
+                      <div className="space-y-4 max-h-[70vh] overflow-y-auto pr-1">
+                        {/* Author Name */}
+                        <div>
+                          <label className="block text-xs font-mono text-slate-400 mb-1">Имя автора (RU / KZ / EN):</label>
+                          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                            <input
+                              type="text"
+                              placeholder="RU (Александр)"
+                              value={editingTestimonial.name?.ru || ''}
+                              onChange={(e) => setEditingTestimonial({
+                                ...editingTestimonial,
+                                name: { ...editingTestimonial.name, ru: e.target.value }
+                              })}
+                              className="px-3 py-2 rounded-xl bg-slate-900 border border-slate-800 text-xs text-white"
+                            />
+                            <input
+                              type="text"
+                              placeholder="KZ (Александр)"
+                              value={editingTestimonial.name?.kz || ''}
+                              onChange={(e) => setEditingTestimonial({
+                                ...editingTestimonial,
+                                name: { ...editingTestimonial.name, kz: e.target.value }
+                              })}
+                              className="px-3 py-2 rounded-xl bg-slate-900 border border-slate-800 text-xs text-white"
+                            />
+                            <input
+                              type="text"
+                              placeholder="EN (Alexander)"
+                              value={editingTestimonial.name?.en || ''}
+                              onChange={(e) => setEditingTestimonial({
+                                ...editingTestimonial,
+                                name: { ...editingTestimonial.name, en: e.target.value }
+                              })}
+                              className="px-3 py-2 rounded-xl bg-slate-900 border border-slate-800 text-xs text-white"
+                            />
+                          </div>
+                        </div>
+
+                        {/* Role & Company */}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                          <div>
+                            <label className="block text-xs font-mono text-slate-400 mb-1">Должность (RU):</label>
+                            <input
+                              type="text"
+                              placeholder="CEO & Основатель"
+                              value={editingTestimonial.role?.ru || ''}
+                              onChange={(e) => setEditingTestimonial({
+                                ...editingTestimonial,
+                                role: { ...editingTestimonial.role, ru: e.target.value }
+                              })}
+                              className="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-800 text-xs text-white"
+                            />
+                          </div>
+
+                          <div>
+                            <label className="block text-xs font-mono text-slate-400 mb-1">Компания:</label>
+                            <input
+                              type="text"
+                              placeholder="FinCore Tech"
+                              value={editingTestimonial.company || ''}
+                              onChange={(e) => setEditingTestimonial({
+                                ...editingTestimonial,
+                                company: e.target.value
+                              })}
+                              className="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-800 text-xs text-white"
+                            />
+                          </div>
+                        </div>
+
+                        {/* Outcome badge */}
+                        <div>
+                          <label className="block text-xs font-mono text-slate-400 mb-1">Метка результата / Бейдж (RU / KZ / EN):</label>
+                          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                            <input
+                              type="text"
+                              placeholder="RU: Раунд $3.2M"
+                              value={editingTestimonial.outcome?.ru || ''}
+                              onChange={(e) => setEditingTestimonial({
+                                ...editingTestimonial,
+                                outcome: { ...editingTestimonial.outcome, ru: e.target.value }
+                              })}
+                              className="px-3 py-2 rounded-xl bg-slate-900 border border-slate-800 text-xs text-white"
+                            />
+                            <input
+                              type="text"
+                              placeholder="KZ: $3.2M Раунды"
+                              value={editingTestimonial.outcome?.kz || ''}
+                              onChange={(e) => setEditingTestimonial({
+                                ...editingTestimonial,
+                                outcome: { ...editingTestimonial.outcome, kz: e.target.value }
+                              })}
+                              className="px-3 py-2 rounded-xl bg-slate-900 border border-slate-800 text-xs text-white"
+                            />
+                            <input
+                              type="text"
+                              placeholder="EN: $3.2M Seed Round"
+                              value={editingTestimonial.outcome?.en || ''}
+                              onChange={(e) => setEditingTestimonial({
+                                ...editingTestimonial,
+                                outcome: { ...editingTestimonial.outcome, en: e.target.value }
+                              })}
+                              className="px-3 py-2 rounded-xl bg-slate-900 border border-slate-800 text-xs text-white"
+                            />
+                          </div>
+                        </div>
+
+                        {/* Avatar URL with preview */}
+                        <div>
+                          <label className="block text-xs font-mono text-slate-400 mb-1">URL фото / аватара:</label>
+                          <div className="flex items-center gap-3">
+                            <img
+                              src={editingTestimonial.avatar}
+                              alt="Preview"
+                              onError={(e) => { e.target.src = 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=160&q=80'; }}
+                              className="w-10 h-10 rounded-full object-cover border border-slate-700 shrink-0"
+                            />
+                            <input
+                              type="text"
+                              placeholder="https://images.unsplash.com/..."
+                              value={editingTestimonial.avatar || ''}
+                              onChange={(e) => setEditingTestimonial({
+                                ...editingTestimonial,
+                                avatar: e.target.value
+                              })}
+                              className="flex-1 px-3 py-2 rounded-xl bg-slate-900 border border-slate-800 text-xs text-white"
+                            />
+                          </div>
+                        </div>
+
+                        {/* Quote Text */}
+                        <div className="space-y-2">
+                          <div>
+                            <label className="block text-xs font-mono text-slate-400 mb-1">Текст отзыва (RU):</label>
+                            <textarea
+                              rows="3"
+                              value={editingTestimonial.text?.ru || ''}
+                              onChange={(e) => setEditingTestimonial({
+                                ...editingTestimonial,
+                                text: { ...editingTestimonial.text, ru: e.target.value }
+                              })}
+                              className="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-800 text-xs text-white resize-none"
+                            />
+                          </div>
+
+                          <div>
+                            <label className="block text-xs font-mono text-slate-400 mb-1">Текст отзыва (KZ):</label>
+                            <textarea
+                              rows="2"
+                              value={editingTestimonial.text?.kz || ''}
+                              onChange={(e) => setEditingTestimonial({
+                                ...editingTestimonial,
+                                text: { ...editingTestimonial.text, kz: e.target.value }
+                              })}
+                              className="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-800 text-xs text-white resize-none"
+                            />
+                          </div>
+
+                          <div>
+                            <label className="block text-xs font-mono text-slate-400 mb-1">Текст отзыва (EN):</label>
+                            <textarea
+                              rows="2"
+                              value={editingTestimonial.text?.en || ''}
+                              onChange={(e) => setEditingTestimonial({
+                                ...editingTestimonial,
+                                text: { ...editingTestimonial.text, en: e.target.value }
+                              })}
+                              className="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-800 text-xs text-white resize-none"
+                            />
+                          </div>
+                        </div>
+
+                      </div>
+
+                      <div className="pt-4 border-t border-slate-800 flex justify-end gap-3">
+                        <button
+                          onClick={() => setEditingTestimonial(null)}
+                          className="px-4 py-2 rounded-xl bg-slate-900 text-xs text-slate-400 hover:text-white"
+                        >
+                          Отмена
+                        </button>
+                        <button
+                          onClick={() => {
+                            const exists = testimonials.some(t => (editingTestimonial.id && t.id === editingTestimonial.id) || (t.name?.ru && t.name.ru === editingTestimonial.name?.ru));
+                            const updated = exists
+                              ? testimonials.map(t => ((editingTestimonial.id && t.id === editingTestimonial.id) || (t.name?.ru && t.name.ru === editingTestimonial.name?.ru)) ? editingTestimonial : t)
+                              : [editingTestimonial, ...testimonials];
+                            setTestimonials(updated);
+                            saveAllContent(cases, services, techStack, updated);
+                            setEditingTestimonial(null);
+                          }}
+                          className="px-6 py-2.5 rounded-xl bg-white hover:bg-slate-200 text-slate-950 font-heading font-bold text-xs shadow-lg transition-all"
+                        >
+                          Сохранить отзыв
                         </button>
                       </div>
 

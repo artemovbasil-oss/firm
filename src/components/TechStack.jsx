@@ -3,8 +3,9 @@ import { ShieldCheck, Zap, Cpu } from 'lucide-react';
 import { TECH_STACK } from '../data/agencyData';
 import { TRANSLATIONS } from '../data/translations';
 
-export default function TechStack({ lang }) {
+export default function TechStack({ lang, techStackList }) {
   const t = TRANSLATIONS[lang].tech;
+  const list = Array.isArray(techStackList) && techStackList.length > 0 ? techStackList : TECH_STACK;
 
   return (
     <section id="stack" className="py-20 sm:py-28 lg:py-32 relative w-full max-w-full overflow-hidden">
@@ -32,7 +33,7 @@ export default function TechStack({ lang }) {
 
         {/* Clean Spacious Bento Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
-          {TECH_STACK.map((group, idx) => (
+          {list.map((group, idx) => (
             <div
               key={idx}
               className="p-6 sm:p-8 rounded-2xl sm:rounded-3xl bg-black/[0.02] dark:bg-white/[0.02] border border-black/[0.06] dark:border-white/[0.06] space-y-5"

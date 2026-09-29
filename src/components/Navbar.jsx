@@ -9,8 +9,6 @@ export default function Navbar({
   setLang, 
   theme, 
   setTheme, 
-  currency, 
-  setCurrency, 
   onOpenContact,
   onOpenAdmin 
 }) {
@@ -97,23 +95,6 @@ export default function Navbar({
               ))}
             </div>
 
-            {/* Currency selector */}
-            <div className="flex items-center rounded-full border border-slate-200 dark:border-slate-800 bg-slate-100/90 dark:bg-slate-900/90 p-1 text-xs font-mono shadow-inner">
-              {['rub', 'usd', 'kzt'].map((cur) => (
-                <button
-                  key={cur}
-                  onClick={() => setCurrency(cur)}
-                  className={`px-2.5 py-1 rounded-full uppercase text-xs font-bold transition-all ${
-                    currency === cur
-                      ? 'bg-white dark:bg-slate-800 text-slate-950 dark:text-white shadow-sm' 
-                      : 'text-slate-500 hover:text-slate-900 dark:hover:text-white'
-                  }`}
-                >
-                  {cur === 'rub' ? '₽' : cur === 'usd' ? '$' : '₸'}
-                </button>
-              ))}
-            </div>
-
             {/* Theme Switcher */}
             <button
               onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
@@ -191,23 +172,6 @@ export default function Navbar({
                     }`}
                   >
                     {l}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div className="pt-2 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
-              <span className="text-xs text-slate-500 font-mono font-medium">Валюта:</span>
-              <div className="flex gap-1.5">
-                {['rub', 'usd', 'kzt'].map(cur => (
-                  <button
-                    key={cur}
-                    onClick={() => setCurrency(cur)}
-                    className={`px-3.5 py-1.5 rounded-xl text-xs uppercase font-mono transition-all ${
-                      currency === cur ? 'bg-amber-400 text-slate-950 font-bold shadow-sm' : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
-                    }`}
-                  >
-                    {cur === 'rub' ? '₽' : cur === 'usd' ? '$' : '₸'}
                   </button>
                 ))}
               </div>
