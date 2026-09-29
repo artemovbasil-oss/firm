@@ -2,18 +2,45 @@ import React, { useEffect, useRef } from 'react';
 
 /**
  * CardShaderHover
- * Ultra-elegant WebGL Thermal Heatmap with analog film grain,
- * dynamic fluid convection, and mathematical SDF corner radius matching.
- * Tuned for rich chromatic saturation and high-contrast typography readability.
- * Runs ONLY on hover, 0% CPU/GPU when idle.
+ * Ultra-elegant WebGL Thermal Heatmap with 7 specialized scientific/artistic variants:
+ * 0. Isothermal: Topographic contour lines & elevation relief
+ * 1. Prismatic: Refractive optical dispersion & lens chromatic aberration
+ * 2. Plasma: Coronal magnetic vortex & swirling plasma filaments
+ * 3. Radar: Concentric telemetry sonar pulses & rotating radar sweep
+ * 4. Convective: Atmospheric laminar flow & rising geothermal plume
+ * 5. Infrared: FLIR industrial thermography, dual-pole sensor & raster grid
+ * 6. Quantum: Cellular particulate dispersion & radiant dermal glow
+ * 
+ * Features:
+ * - Mathematical SDF corner radius matching (0 border clip distortion)
+ * - Analog film grain sensor noise
+ * - Configurable anchor coordinates per card
+ * - Runs ONLY on hover, 0% CPU/GPU overhead when idle
  */
+
+const VARIANT_MAP = {
+  isothermal: 0.0,
+  prismatic: 1.0,
+  plasma: 2.0,
+  radar: 3.0,
+  convective: 4.0,
+  infrared: 5.0,
+  quantum: 6.0,
+};
+
 export default function CardShaderHover({ 
   colorMode = 'thermal', 
+  variant = 'isothermal',
+  anchor = { x: 0.5, y: 0.5 },
+  seed = 0.0,
   isHovered = false, 
   mousePos = { x: 0.5, y: 0.5 },
   borderRadius = 24 
 }) {
   const canvasRef = useRef(null);
+
+  const variantVal = typeof variant === 'number' ? variant : (VARIANT_MAP[variant] ?? 0.0);
+
   const stateRef = useRef({
     hover: 0,
     targetHover: 0,
@@ -23,13 +50,15 @@ export default function CardShaderHover({
     targetMouseY: 0.5,
     isRunning: false,
     isVisible: true,
-    radius: borderRadius
+    radius: borderRadius,
+    variant: variantVal,
+    anchorX: anchor?.x ?? 0.5,
+    anchorY: anchor?.y ?? 0.5,
+    seed: seed
   });
 
-  // Exquisite thermal heatmap palettes calibrated for high contrast with white text
-  // Coherent palettes strictly grounded in the Hero Video's 2-color aesthetic:
-  // 1. Solar Amber / Gold (The radiant setting sun & warm horizon)
-  // 2. Cosmic Atmospheric Cyan (The deep twilight sky & atmospheric glow)
+  // Exquisite thermal heatmap palettes calibrated for high contrast with white typography
+  // Coherent palettes grounded in Solar Amber / Atmospheric Cyan aesthetic
   const PALETTES = {
     // 1. Solar Amber Horizon (Hero Sun: Deep Obsidian -> Midnight Sapphire -> Vermillion -> Radiant Amber -> Solar Gold)
     thermal: {
@@ -49,25 +78,24 @@ export default function CardShaderHover({
       c4: [0.45, 0.84, 0.96], // Brilliant sky
       c5: [0.85, 0.95, 0.98], // Luminous ice highlight
     },
-    // Map magma to warm solar gold
-    magma: {
-      c0: [0.02, 0.03, 0.07],
-      c1: [0.12, 0.08, 0.35],
-      c2: [0.65, 0.15, 0.15],
-      c3: [0.90, 0.35, 0.06],
-      c4: [0.98, 0.68, 0.14],
-      c5: [1.00, 0.88, 0.50],
-    },
-    // Map ultraviolet to deep solar-indigo
+    // 3. Deep Astral Ultraviolet & Solar Corona (Nebula Violet -> Crimson Flame -> Radiant Amber -> Corona Gold)
     ultraviolet: {
-      c0: [0.02, 0.03, 0.07],
-      c1: [0.08, 0.12, 0.42],
-      c2: [0.45, 0.15, 0.40],
-      c3: [0.85, 0.28, 0.15],
-      c4: [0.96, 0.65, 0.15],
-      c5: [1.00, 0.86, 0.50],
+      c0: [0.03, 0.02, 0.08],
+      c1: [0.14, 0.06, 0.38],
+      c2: [0.48, 0.12, 0.45],
+      c3: [0.82, 0.24, 0.22],
+      c4: [0.96, 0.64, 0.18],
+      c5: [1.00, 0.88, 0.60],
     },
-    // Map cobalt to cosmic cyan
+    // 4. Radiant Magma & Rose Gold (Basalt -> Plum -> Ruby -> Rose Vermillion -> Champagne Gold)
+    magma: {
+      c0: [0.03, 0.02, 0.06],
+      c1: [0.18, 0.06, 0.24],
+      c2: [0.62, 0.14, 0.28],
+      c3: [0.92, 0.32, 0.20],
+      c4: [0.98, 0.68, 0.26],
+      c5: [1.00, 0.90, 0.65],
+    },
     cobalt: {
       c0: [0.02, 0.03, 0.08],
       c1: [0.04, 0.14, 0.48],
@@ -88,6 +116,13 @@ export default function CardShaderHover({
   useEffect(() => {
     stateRef.current.radius = borderRadius;
   }, [borderRadius]);
+
+  useEffect(() => {
+    stateRef.current.variant = typeof variant === 'number' ? variant : (VARIANT_MAP[variant] ?? 0.0);
+    stateRef.current.anchorX = anchor?.x ?? 0.5;
+    stateRef.current.anchorY = anchor?.y ?? 0.5;
+    stateRef.current.seed = seed;
+  }, [variant, anchor?.x, anchor?.y, seed]);
 
   useEffect(() => {
     stateRef.current.isTouch = isTouchDevice;
@@ -132,9 +167,12 @@ export default function CardShaderHover({
       varying vec2 v_uv;
       uniform vec2 u_resolution;
       uniform vec2 u_mouse;
+      uniform vec2 u_anchor;
       uniform float u_time;
       uniform float u_hover;
       uniform float u_radius;
+      uniform float u_variant;
+      uniform float u_seed;
       uniform vec3 u_c0;
       uniform vec3 u_c1;
       uniform vec3 u_c2;
@@ -214,7 +252,7 @@ export default function CardShaderHover({
         }
 
         // 1. Mathematical Rounded Corner SDF Mask
-        // Guarantees subpixel-perfect alignment with the container's border-radius
+        // Guarantees subpixel-perfect alignment with container's 24px border radius
         vec2 centerPos = gl_FragCoord.xy - u_resolution.xy * 0.5;
         float distToBox = roundedBoxSDF(centerPos, u_resolution.xy * 0.5, u_radius);
         float cornerAlpha = clamp(1.0 - smoothstep(-0.75, 0.75, distToBox), 0.0, 1.0);
@@ -227,60 +265,190 @@ export default function CardShaderHover({
         float aspect = u_resolution.x / u_resolution.y;
         vec2 uv = vec2((st.x - 0.5) * aspect, st.y - 0.5);
         vec2 mouseUv = vec2((u_mouse.x - 0.5) * aspect, u_mouse.y - 0.5);
+        vec2 anchorUv = vec2((u_anchor.x - 0.5) * aspect, u_anchor.y - 0.5);
 
-        float t = u_time * 0.32;
+        float t = (u_time + u_seed) * 0.32;
 
-        // 3. Fluid Convection Warping
+        // Fluid convection warp field
         vec2 warp = vec2(
-          fbm(uv * 2.2 + vec2(t * 0.26, -t * 0.16)),
-          fbm(uv * 2.2 + vec2(-t * 0.20, t * 0.30) + vec2(4.2, 7.8))
+          fbm(uv * 2.2 + vec2(t * 0.24, -t * 0.16)),
+          fbm(uv * 2.2 + vec2(-t * 0.18, t * 0.28) + vec2(4.2, 7.8))
         );
 
-        vec2 fineWarp = vec2(
-          snoise(uv * 4.0 + warp * 1.1 + vec2(0.0, t * 0.35)),
-          snoise(uv * 4.0 - warp * 1.1 + vec2(t * 0.35, 0.0))
-        );
+        // Dynamic Interactive Mouse Heat Emitter
+        float dMouse = length(uv + warp * 0.10 - mouseUv);
+        float mouseHeat = exp(-dMouse * 3.8) * 0.65 + exp(-dMouse * 1.8) * 0.20;
+        float pinpointCore = exp(-dMouse * 8.5) * 0.30;
 
-        // 4. Dynamic Mouse Heat Emitter
-        // Focused thermal emission at cursor, with smooth decaying falloff
-        float dMouse = length(uv + warp * 0.12 + fineWarp * 0.04 - mouseUv);
-        float mouseHeat = exp(-dMouse * 3.8) * 0.70 + exp(-dMouse * 1.8) * 0.24;
-        // Tight, pinpoint epicenter directly at the cursor tip
-        float pinpointCore = exp(-dMouse * 8.5) * 0.32;
+        vec3 color = vec3(0.0);
+        float temp = 0.0;
 
-        // 5. Drifting Ambient Thermal Nodes (gentle, never overpowering)
-        vec2 node1Pos = vec2(sin(t * 0.65) * 0.32 * aspect, cos(t * 0.85) * 0.22);
-        vec2 node2Pos = vec2(cos(t * 0.55 + 2.0) * 0.35 * aspect, sin(t * 0.75 + 1.2) * 0.25);
-        float dNode1 = length(uv + warp * 0.08 - node1Pos);
-        float dNode2 = length(uv + warp * 0.08 - node2Pos);
-        float nodeHeat = exp(-dNode1 * 3.8) * 0.20 + exp(-dNode2 * 4.0) * 0.16;
+        if (u_variant < 0.5) {
+          // -------------------------------------------------------------
+          // VARIANT 0: ISOTHERMAL CONTOURS (Topographic Elevation Lines)
+          // -------------------------------------------------------------
+          float dAnchor = length(uv + warp * 0.12 - anchorUv);
+          float anchorHeat = exp(-dAnchor * 2.6) * 0.72 + exp(-dAnchor * 1.3) * 0.24;
+          float ambient = fbm(uv * 1.5 + warp * 0.35 + vec2(t * 0.10)) * 0.18;
+          temp = clamp(anchorHeat + mouseHeat + pinpointCore + ambient, 0.0, 1.0);
 
-        // 6. Ambient Convective Fluid Heat Field
-        float ambientFluid = fbm(uv * 1.5 + warp * 0.4 + vec2(t * 0.10)) * 0.18;
+          color = getThermalColor(temp, u_c0, u_c1, u_c2, u_c3, u_c4, u_c5);
 
-        // 7. Composite Thermal Intensity Field (T)
-        // Scaled so average surface remains in deep rich chromatic spectrum (0.2..0.7)
-        float temp = mouseHeat + pinpointCore + nodeHeat + ambientFluid;
-        temp = clamp(temp, 0.0, 1.0);
+          // Precision Topographic Contour Bands
+          float contourWave = fract(temp * 7.5);
+          float contour = smoothstep(0.06, 0.0, abs(contourWave - 0.5));
+          float subContour = smoothstep(0.03, 0.0, abs(fract(temp * 15.0) - 0.5)) * 0.5;
+          float contourMask = smoothstep(0.15, 0.40, temp) * smoothstep(0.95, 0.70, temp);
+          color += vec3(0.18, 0.14, 0.08) * (contour + subContour) * contourMask;
 
-        // 8. Thermal Spectral Color Mapping
-        vec3 color = getThermalColor(temp, u_c0, u_c1, u_c2, u_c3, u_c4, u_c5);
+        } else if (u_variant < 1.5) {
+          // -------------------------------------------------------------
+          // VARIANT 1: PRISMATIC OPTICAL (Lens Refraction / Chromatic Aberration)
+          // -------------------------------------------------------------
+          vec2 dOptic = uv - anchorUv;
+          float rDist = length(dOptic);
+          vec2 opticDir = (rDist > 0.001) ? (dOptic / rDist) : vec2(0.0);
+          vec2 disp = opticDir * (0.035 + 0.015 * sin(t * 1.8));
 
-        // 9. Subtle Isothermal Contour Rings (Scientific / High-Tech Topographic Data Aesthetic)
-        float contourWave = fract(temp * 4.5);
-        float contour = smoothstep(0.04, 0.0, abs(contourWave - 0.5));
-        float contourMask = smoothstep(0.20, 0.45, temp) * smoothstep(1.0, 0.80, temp);
-        color += vec3(0.12) * contour * contourMask;
+          // Sample heat spectrum at R, G, B chromatic spatial offsets
+          float dR = length(uv + disp + warp * 0.08 - anchorUv);
+          float dG = length(uv + warp * 0.08 - anchorUv);
+          float dB = length(uv - disp * 0.9 + warp * 0.08 - anchorUv);
 
-        // 10. Analog Film Grain / Sensor Noise
+          float tR = clamp(exp(-dR * 2.7) * 0.75 + exp(-length(uv + disp - mouseUv) * 3.6) * 0.6 + fbm(uv * 1.4) * 0.16, 0.0, 1.0);
+          float tG = clamp(exp(-dG * 2.7) * 0.75 + exp(-length(uv - mouseUv) * 3.6) * 0.6 + fbm(uv * 1.4) * 0.16, 0.0, 1.0);
+          float tB = clamp(exp(-dB * 2.7) * 0.75 + exp(-length(uv - disp * 0.9 - mouseUv) * 3.6) * 0.6 + fbm(uv * 1.4) * 0.16, 0.0, 1.0);
+
+          vec3 colR = getThermalColor(tR, u_c0, u_c1, u_c2, u_c3, u_c4, u_c5);
+          vec3 colG = getThermalColor(tG, u_c0, u_c1, u_c2, u_c3, u_c4, u_c5);
+          vec3 colB = getThermalColor(tB, u_c0, u_c1, u_c2, u_c3, u_c4, u_c5);
+          color = vec3(colR.r, colG.g, colB.b);
+
+          // Specular lens flare ring around optical focal center
+          float lensRing = smoothstep(0.035, 0.0, abs(rDist - (0.42 + 0.12 * sin(t * 0.9))));
+          color += vec3(0.10, 0.22, 0.32) * lensRing * exp(-rDist * 1.4);
+          temp = tG;
+
+        } else if (u_variant < 2.5) {
+          // -------------------------------------------------------------
+          // VARIANT 2: CORONAL PLASMA VORTEX (Swirling Magnetic Spiral Arms)
+          // -------------------------------------------------------------
+          vec2 dVortex = uv - anchorUv;
+          float r = length(dVortex);
+          float theta = atan(dVortex.y, dVortex.x);
+          float swirl = theta + (1.3 / (r + 0.30)) * sin(t * 0.7) + t * 0.65;
+          vec2 twistedUv = anchorUv + vec2(cos(swirl), sin(swirl)) * r;
+          vec2 warpVortex = vec2(fbm(twistedUv * 2.8 + vec2(t * 0.25)), fbm(twistedUv * 2.8 - vec2(t * 0.20) + vec2(5.1, 2.3)));
+
+          float vortexHeat = exp(-r * 2.3) * 0.75 + fbm(twistedUv * 1.8 + warpVortex) * 0.30;
+          temp = clamp(vortexHeat + mouseHeat + pinpointCore, 0.0, 1.0);
+          color = getThermalColor(temp, u_c0, u_c1, u_c2, u_c3, u_c4, u_c5);
+
+          // Twisted plasma filament spiral arms
+          float filament = pow(abs(sin(swirl * 2.0 + r * 9.0 - t * 2.0)), 5.0);
+          color += vec3(0.24, 0.16, 0.08) * filament * exp(-r * 2.2);
+
+        } else if (u_variant < 3.5) {
+          // -------------------------------------------------------------
+          // VARIANT 3: RADAR TELEMETRY PULSE (Expanding Sonar Wavefronts)
+          // -------------------------------------------------------------
+          vec2 dRadar = uv - anchorUv;
+          float d = length(dRadar);
+          float angle = atan(dRadar.y, dRadar.x);
+
+          // Expanding concentric sonar wavefronts
+          float pulse = fract(d * 3.6 - t * 0.85);
+          float sonarRing = smoothstep(0.10, 0.0, pulse) * exp(-d * 1.5);
+
+          // Rotating telemetry radar beam sweep
+          float sweepBeam = fract((angle + 3.14159) / 6.28318 + t * 0.40);
+          sweepBeam = pow(sweepBeam, 10.0) * exp(-d * 1.6) * 0.45;
+
+          float baseHeat = exp(-d * 2.5) * 0.65 + exp(-d * 1.2) * 0.20;
+          temp = clamp(baseHeat + mouseHeat + pinpointCore + sonarRing * 0.25 + sweepBeam * 0.25, 0.0, 1.0);
+          color = getThermalColor(temp, u_c0, u_c1, u_c2, u_c3, u_c4, u_c5);
+
+          // High-tech reticle telemetry rings
+          float reticle = smoothstep(0.018, 0.0, abs(fract(d * 4.2) - 0.5)) * exp(-d * 2.0);
+          color += vec3(0.06, 0.20, 0.26) * (reticle + sweepBeam * 1.2);
+
+        } else if (u_variant < 4.5) {
+          // -------------------------------------------------------------
+          // VARIANT 4: CONVECTIVE LAMINAR PLUME (Geothermal Rising Plume)
+          // -------------------------------------------------------------
+          float xDist = uv.x - anchorUv.x;
+          float yDist = uv.y - anchorUv.y;
+          // Ascending buoyant thermal plume
+          float plume = exp(-abs(xDist) * 3.5) * smoothstep(-0.25, 0.85, yDist);
+
+          // Laminar wavy convection currents
+          float wave1 = sin(uv.x * 4.8 + t * 1.0 + fbm(uv * 2.2) * 1.6);
+          float wave2 = cos(uv.x * 3.0 - t * 0.7 + uv.y * 3.8);
+          float laminar = (wave1 * 0.5 + 0.5) * (wave2 * 0.5 + 0.5) * exp(-abs(uv.y) * 1.3);
+
+          temp = clamp(plume * 0.55 + laminar * 0.35 + mouseHeat + pinpointCore + fbm(uv * 1.6 + vec2(0.0, -t * 0.35)) * 0.18, 0.0, 1.0);
+          color = getThermalColor(temp, u_c0, u_c1, u_c2, u_c3, u_c4, u_c5);
+
+          // Soft convection eddy wisps
+          color += vec3(0.14, 0.10, 0.05) * smoothstep(0.60, 0.85, laminar);
+
+        } else if (u_variant < 5.5) {
+          // -------------------------------------------------------------
+          // VARIANT 5: FLIR INFRARED SENSOR (Dual-Pole Thermography & Sensor Grid)
+          // -------------------------------------------------------------
+          float dHot = length(uv + warp * 0.08 - anchorUv);
+          vec2 coldSink = vec2(-anchorUv.x * 0.8, -anchorUv.y * 0.8);
+          float dCold = length(uv + warp * 0.08 - coldSink);
+
+          float hotSpot = exp(-dHot * 2.8) * 0.80;
+          float coldZone = exp(-dCold * 2.4) * 0.30;
+          float ambientFLIR = fbm(uv * 2.4 + vec2(t * 0.15)) * 0.22;
+
+          temp = clamp(hotSpot - coldZone + mouseHeat + pinpointCore + ambientFLIR, 0.0, 1.0);
+          color = getThermalColor(temp, u_c0, u_c1, u_c2, u_c3, u_c4, u_c5);
+
+          // FLIR thermal boundary high-contrast gradient
+          float eps = 0.016;
+          float f0 = fbm(uv * 2.4 + vec2(t * 0.12));
+          float fx = fbm((uv + vec2(eps, 0.0)) * 2.4 + vec2(t * 0.12));
+          float fy = fbm((uv + vec2(0.0, eps)) * 2.4 + vec2(t * 0.12));
+          float edgeGrad = length(vec2(fx - f0, fy - f0)) / eps;
+
+          // Sensor scanlines raster
+          float scanline = sin(gl_FragCoord.y * 1.8) * 0.03;
+          color += scanline + vec3(0.06, 0.16, 0.20) * smoothstep(1.6, 3.4, edgeGrad);
+
+        } else {
+          // -------------------------------------------------------------
+          // VARIANT 6: QUANTUM CELLULAR DISPERSION (Particulate Matrix & Dermal Glow)
+          // -------------------------------------------------------------
+          vec2 dQ = uv - anchorUv;
+          float rQ = length(dQ);
+
+          vec2 cellCoord = uv * 12.0 + vec2(t * 0.18, -t * 0.12);
+          vec2 cellFrac = fract(cellCoord) - 0.5;
+          float cellDist = length(cellFrac);
+          float sparkRand = fract(sin(dot(floor(cellCoord), vec2(17.13, 43.71))) * 43758.54);
+          float cellSpark = smoothstep(0.42, 0.0, cellDist) * (0.5 + 0.5 * sin(sparkRand * 6.28 + t * 2.8));
+
+          float dermalBreathe = sin(rQ * 11.0 - t * 2.2) * 0.5 + 0.5;
+          float baseHeat = exp(-rQ * 2.5) * 0.70 + fbm(uv * 1.8 + vec2(t * 0.14)) * 0.20;
+
+          temp = clamp(baseHeat + mouseHeat + pinpointCore + cellSpark * 0.16 * exp(-rQ * 1.8), 0.0, 1.0);
+          color = getThermalColor(temp, u_c0, u_c1, u_c2, u_c3, u_c4, u_c5);
+
+          color += vec3(0.20, 0.14, 0.06) * cellSpark * exp(-rQ * 1.6) + vec3(0.08) * dermalBreathe * exp(-rQ * 2.2);
+        }
+
+        // Analog Film Grain / Sensor Noise
         float grain = fract(sin(dot(gl_FragCoord.xy + fract(u_time * 2.0), vec2(12.9898, 78.233))) * 43758.5453);
-        color += (grain - 0.5) * 0.06;
+        color += (grain - 0.5) * 0.055;
 
-        // 11. Soft Specular Caustic at Cursor Center
+        // Specular Caustic at Cursor Center
         float cursorGlow = exp(-length(uv - mouseUv) * 4.2) * 0.22;
         color += vec3(cursorGlow);
 
-        // 12. Final Subpixel Masked Alpha
+        // Final Subpixel Masked Alpha
         float alpha = u_hover * 0.82 * cornerAlpha;
         gl_FragColor = vec4(color, alpha);
       }
@@ -291,6 +459,7 @@ export default function CardShaderHover({
       gl.shaderSource(s, source);
       gl.compileShader(s);
       if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) {
+        console.warn(gl.getShaderInfoLog(s));
         gl.deleteShader(s);
         return null;
       }
@@ -305,7 +474,10 @@ export default function CardShaderHover({
     gl.attachShader(program, vs);
     gl.attachShader(program, fs);
     gl.linkProgram(program);
-    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) return;
+    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+      console.warn(gl.getProgramInfoLog(program));
+      return;
+    }
 
     gl.useProgram(program);
 
@@ -322,9 +494,12 @@ export default function CardShaderHover({
 
     const uRes = gl.getUniformLocation(program, 'u_resolution');
     const uMouse = gl.getUniformLocation(program, 'u_mouse');
+    const uAnchor = gl.getUniformLocation(program, 'u_anchor');
     const uTime = gl.getUniformLocation(program, 'u_time');
     const uHover = gl.getUniformLocation(program, 'u_hover');
     const uRadius = gl.getUniformLocation(program, 'u_radius');
+    const uVariant = gl.getUniformLocation(program, 'u_variant');
+    const uSeed = gl.getUniformLocation(program, 'u_seed');
     const uC0 = gl.getUniformLocation(program, 'u_c0');
     const uC1 = gl.getUniformLocation(program, 'u_c1');
     const uC2 = gl.getUniformLocation(program, 'u_c2');
@@ -383,10 +558,13 @@ export default function CardShaderHover({
 
         gl.uniform2f(uRes, canvas.width, canvas.height);
         gl.uniform2f(uMouse, state.mouseX, state.mouseY);
+        gl.uniform2f(uAnchor, state.anchorX, 1.0 - state.anchorY);
         gl.uniform1f(uTime, elapsed);
         gl.uniform1f(uHover, state.hover);
         // Mathematical corner radius in physical device pixels
         gl.uniform1f(uRadius, state.radius * currentDpr);
+        gl.uniform1f(uVariant, state.variant);
+        gl.uniform1f(uSeed, state.seed);
 
         gl.drawArrays(gl.TRIANGLES, 0, 6);
         animId = requestAnimationFrame(render);
@@ -448,11 +626,9 @@ export default function CardShaderHover({
     <canvas
       ref={canvasRef}
       style={{ 
-        borderRadius: `${borderRadius}px`,
-        WebkitMaskImage: '-webkit-radial-gradient(white, black)',
-        maskImage: 'radial-gradient(white, black)'
+        borderRadius: `${borderRadius}px`
       }}
-      className="absolute inset-0 pointer-events-none z-0 w-full h-full rounded-3xl rounded-[inherit] overflow-hidden mix-blend-screen opacity-85 transition-opacity duration-300"
+      className="absolute inset-0 pointer-events-none z-0 w-full h-full rounded-[24px] overflow-hidden mix-blend-screen opacity-85 transition-opacity duration-300"
     />
   );
 }

@@ -72,17 +72,16 @@ export default function ExpressAudit({ lang, onSuccessLead }) {
           onMouseMove={handleMouseMove}
           style={{ 
             borderRadius: '24px',
-            WebkitMaskImage: '-webkit-radial-gradient(white, black)',
-            maskImage: 'radial-gradient(white, black)',
-            WebkitBackfaceVisibility: 'hidden',
-            backfaceVisibility: 'hidden',
-            transform: 'translateZ(0)'
+            transform: 'translateZ(0)',
+            isolation: 'isolate'
           }}
-          className="p-6 sm:p-12 lg:p-16 rounded-3xl bg-slate-50/90 dark:bg-slate-950 text-slate-950 dark:text-white relative overflow-hidden shadow-xl dark:shadow-2xl border border-slate-200/90 dark:border-white/10"
+          className="p-6 sm:p-12 lg:p-16 rounded-[24px] bg-slate-50/90 dark:bg-slate-950 text-slate-950 dark:text-white relative overflow-hidden shadow-xl dark:shadow-2xl"
         >
           {/* Subtle Dynamic WebGL Thermal Heatmap & Film Noise on Hover */}
           <CardShaderHover 
             colorMode="thermal" 
+            variant="radar"
+            anchor={{ x: 0.5, y: 0.3 }}
             isHovered={isHovered} 
             mousePos={mousePos} 
             borderRadius={24}
@@ -91,7 +90,13 @@ export default function ExpressAudit({ lang, onSuccessLead }) {
           {/* Contrast Protection Scrim Overlay */}
           <div 
             style={{ borderRadius: '24px' }}
-            className="absolute inset-0 rounded-3xl bg-gradient-to-t from-slate-50/95 via-slate-50/60 to-slate-50/80 dark:from-slate-950/85 dark:via-slate-950/50 dark:to-slate-950/70 pointer-events-none z-[2]" 
+            className="absolute inset-0 rounded-[24px] bg-gradient-to-t from-slate-50/95 via-slate-50/60 to-slate-50/80 dark:from-slate-950/85 dark:via-slate-950/50 dark:to-slate-950/70 pointer-events-none z-[2]" 
+          />
+
+          {/* Architectural Perimeter Frame Overlay */}
+          <div 
+            style={{ borderRadius: '24px' }}
+            className="absolute inset-0 rounded-[24px] pointer-events-none z-[15] border border-slate-200 dark:border-white/15 hover:border-amber-400/50 dark:hover:border-amber-400/60 transition-colors duration-300 shadow-[inset_0_1px_1px_rgba(255,255,255,0.12)]" 
           />
 
           {/* Subtle Ambient Glow */}

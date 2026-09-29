@@ -4,6 +4,72 @@ import { motion } from 'framer-motion';
 import { TRANSLATIONS } from '../data/translations';
 import CardShaderHover from './CardShaderHover';
 
+const CASE_PRESETS = [
+  // 1. Casa Italia (ID 1): Luxury Italian furniture — Topographic elevation contour lines
+  {
+    variant: 'isothermal',
+    anchor: { x: 0.80, y: 0.25 }, // Top-Right radiant warmth
+    seed: 0.42,
+    colorMode: 'thermal',
+    grad: 'from-[#0b0e19] via-[#1e1308]/90 to-[#07090f]',
+    hoverBorder: 'group-hover:border-amber-400/50 dark:group-hover:border-amber-400/60'
+  },
+  // 2. Ottica Milano (ID 2): Optical lenses — Prismatic chromatic dispersion
+  {
+    variant: 'prismatic',
+    anchor: { x: 0.20, y: 0.78 }, // Bottom-Left optical focal point
+    seed: 1.85,
+    colorMode: 'cyber',
+    grad: 'from-[#080d19] via-[#091a2e]/90 to-[#060810]',
+    hoverBorder: 'group-hover:border-cyan-400/50 dark:group-hover:border-cyan-400/60'
+  },
+  // 3. Astraea (ID 3): European astrology — Swirling coronal plasma vortex
+  {
+    variant: 'plasma',
+    anchor: { x: 0.75, y: 0.38 }, // Center-Right celestial vortex
+    seed: 3.14,
+    colorMode: 'ultraviolet',
+    grad: 'from-[#0c0919] via-[#1d0e2e]/90 to-[#07050e]',
+    hoverBorder: 'group-hover:border-purple-400/50 dark:group-hover:border-purple-400/60'
+  },
+  // 4. Bazarum (ID 4): Azerbaijan marketplace — Radar telemetry & sonar pulse
+  {
+    variant: 'radar',
+    anchor: { x: 0.22, y: 0.28 }, // Top-Left logistics radar beacon
+    seed: 4.62,
+    colorMode: 'cyber',
+    grad: 'from-[#080d1a] via-[#081a29]/90 to-[#060810]',
+    hoverBorder: 'group-hover:border-cyan-400/50 dark:group-hover:border-cyan-400/60'
+  },
+  // 5. Français Pro (ID 5): Executive EdTech — Fluid laminar knowledge convection
+  {
+    variant: 'convective',
+    anchor: { x: 0.50, y: 0.82 }, // Bottom-Center ascending thermal plume
+    seed: 5.91,
+    colorMode: 'thermal',
+    grad: 'from-[#0b0e19] via-[#1e1409]/90 to-[#07090f]',
+    hoverBorder: 'group-hover:border-amber-400/50 dark:group-hover:border-amber-400/60'
+  },
+  // 6. FinCore DS (ID 6): Tier-1 Bank design system — FLIR industrial thermography
+  {
+    variant: 'infrared',
+    anchor: { x: 0.20, y: 0.50 }, // Center-Left structural node
+    seed: 7.28,
+    colorMode: 'cyber',
+    grad: 'from-[#080e1c] via-[#08182b]/90 to-[#060810]',
+    hoverBorder: 'group-hover:border-cyan-400/50 dark:group-hover:border-cyan-400/60'
+  },
+  // 7. Pure Esthétique (ID 7): Luxury beauty flagship — Quantum cellular dispersion
+  {
+    variant: 'quantum',
+    anchor: { x: 0.80, y: 0.75 }, // Bottom-Right dermal radiance
+    seed: 8.75,
+    colorMode: 'magma',
+    grad: 'from-[#100b14] via-[#241018]/90 to-[#08060b]',
+    hoverBorder: 'group-hover:border-amber-400/50 dark:group-hover:border-amber-400/60'
+  }
+];
+
 function CaseCard({ item, idx, lang, onOpenContact, t, getLocalized }) {
   const [isHovered, setIsHovered] = useState(false);
   const [mousePos, setMousePos] = useState({ x: 0.5, y: 0.5 });
@@ -14,14 +80,13 @@ function CaseCard({ item, idx, lang, onOpenContact, t, getLocalized }) {
   const badge = getLocalized(item.badge);
   const heroMetric = item.metrics && item.metrics[0];
 
-  const colorModes = ['thermal', 'cyber'];
-  const colorMode = (item.colorMode === 'cyber') ? 'cyber' : 'thermal';
-
-  const gradients = [
-    'from-[#0a0d17] via-[#1c1208]/80 to-[#07090f]', // Solar Amber Horizon
-    'from-[#0a0d17] via-[#091728]/80 to-[#07090f]', // Atmospheric Cyan Horizon
-  ];
-  const activeGrad = gradients[idx % gradients.length];
+  const preset = CASE_PRESETS[idx % CASE_PRESETS.length];
+  const variant = item.shaderVariant || preset.variant;
+  const anchor = item.anchor || preset.anchor;
+  const seed = item.seed !== undefined ? item.seed : preset.seed;
+  const colorMode = item.colorMode || preset.colorMode;
+  const activeGrad = preset.grad;
+  const hoverBorderClass = preset.hoverBorder;
 
   const handleMouseMove = (e) => {
     if (!cardRef.current) return;
@@ -52,17 +117,17 @@ function CaseCard({ item, idx, lang, onOpenContact, t, getLocalized }) {
         transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
         style={{ 
           borderRadius: '24px',
-          WebkitMaskImage: '-webkit-radial-gradient(white, black)',
-          maskImage: 'radial-gradient(white, black)',
-          WebkitBackfaceVisibility: 'hidden',
-          backfaceVisibility: 'hidden',
-          transform: 'translateZ(0)'
+          transform: 'translateZ(0)',
+          isolation: 'isolate'
         }}
-        className={`w-full aspect-[16/10] rounded-3xl bg-gradient-to-br ${activeGrad} p-6 sm:p-10 flex flex-col justify-between relative overflow-hidden shadow-2xl border border-black/[0.06] dark:border-white/10 cursor-pointer`}
+        className={`w-full aspect-[16/10] rounded-[24px] bg-gradient-to-br ${activeGrad} p-6 sm:p-10 flex flex-col justify-between relative overflow-hidden shadow-xl dark:shadow-2xl cursor-pointer`}
       >
         {/* Dynamic WebGL Thermal Heatmap + Analog Film Grain Noise on Hover */}
         <CardShaderHover 
           colorMode={colorMode}
+          variant={variant}
+          anchor={anchor}
+          seed={seed}
           isHovered={isHovered}
           mousePos={mousePos}
           borderRadius={24}
@@ -71,13 +136,19 @@ function CaseCard({ item, idx, lang, onOpenContact, t, getLocalized }) {
         {/* Contrast Scrim Protection Overlay: guarantees strong AAA contrast for all text */}
         <div 
           style={{ borderRadius: '24px' }}
-          className="absolute inset-0 rounded-3xl bg-gradient-to-t from-slate-950/85 via-black/35 to-slate-950/60 pointer-events-none z-[2]" 
+          className="absolute inset-0 rounded-[24px] bg-gradient-to-t from-slate-950/85 via-black/35 to-slate-950/60 pointer-events-none z-[2]" 
         />
 
         {/* Subtle Grid Pattern Accent */}
         <div 
           style={{ borderRadius: '24px' }}
-          className="absolute inset-0 rounded-3xl bg-grid-subtle opacity-15 pointer-events-none z-[3]" 
+          className="absolute inset-0 rounded-[24px] bg-grid-subtle opacity-15 pointer-events-none z-[3]" 
+        />
+
+        {/* Pixel-Perfect Perimeter Architectural Frame Overlay (matching 24px radius, crisp on both light and dark backgrounds) */}
+        <div 
+          style={{ borderRadius: '24px' }}
+          className={`absolute inset-0 rounded-[24px] pointer-events-none z-[15] border border-black/[0.08] dark:border-white/15 ${hoverBorderClass} transition-colors duration-300 shadow-[inset_0_1px_1px_rgba(255,255,255,0.12)]`} 
         />
 
         {/* Top Bar with category tag & status */}
