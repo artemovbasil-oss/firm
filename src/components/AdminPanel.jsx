@@ -6,6 +6,7 @@ import {
   Search, CheckCircle2, AlertCircle, Clock, ChevronRight, 
   Phone, Send, MessageSquare, ArrowLeft, Eye, EyeOff
 } from 'lucide-react';
+import StudioSelect from './ui/StudioSelect';
 
 export default function AdminPanel({ isOpen, onClose, lang = 'ru', casesList = [], onUpdateCases }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -497,16 +498,12 @@ export default function AdminPanel({ isOpen, onClose, lang = 'ru', casesList = [
 
                       {/* Status Selector */}
                       <div>
-                        <div className="text-xs font-mono text-slate-400 mb-1.5">Статус воронки:</div>
-                        <select
+                        <StudioSelect
+                          label="Статус воронки"
                           value={selectedLead.status || 'new'}
-                          onChange={(e) => updateLeadStatus(selectedLead.id, e.target.value)}
-                          className="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-800 text-xs text-white focus:outline-none focus:border-slate-600"
-                        >
-                          {statuses.map(st => (
-                            <option key={st.id} value={st.id}>{st.label}</option>
-                          ))}
-                        </select>
+                          onChange={(val) => updateLeadStatus(selectedLead.id, val)}
+                          options={statuses.map(st => ({ value: st.id, label: st.label }))}
+                        />
                       </div>
 
                       {/* Project info details */}

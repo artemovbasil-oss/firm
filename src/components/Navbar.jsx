@@ -81,14 +81,14 @@ export default function Navbar({
           <div className="hidden sm:flex items-center gap-2">
             
             {/* Language Switcher */}
-            <div className="flex items-center rounded-full border border-slate-200 dark:border-slate-800 bg-slate-100/80 dark:bg-slate-900/80 p-0.5 text-xs font-mono">
+            <div className="flex items-center rounded-full border border-slate-200 dark:border-slate-800 bg-slate-100/90 dark:bg-slate-900/90 p-1 text-xs font-mono shadow-inner">
               {['kz', 'ru', 'en'].map((l) => (
                 <button
                   key={l}
                   onClick={() => setLang(l)}
-                  className={`px-2 py-0.5 rounded-full uppercase transition-all ${
+                  className={`px-2.5 py-1 rounded-full uppercase text-xs font-bold transition-all ${
                     lang === l 
-                      ? 'bg-white dark:bg-slate-800 text-slate-950 dark:text-white font-bold shadow-sm' 
+                      ? 'bg-white dark:bg-slate-800 text-slate-950 dark:text-white shadow-sm' 
                       : 'text-slate-500 hover:text-slate-900 dark:hover:text-white'
                   }`}
                 >
@@ -98,14 +98,14 @@ export default function Navbar({
             </div>
 
             {/* Currency selector */}
-            <div className="flex items-center rounded-full border border-slate-200 dark:border-slate-800 bg-slate-100/80 dark:bg-slate-900/80 p-0.5 text-xs font-mono">
+            <div className="flex items-center rounded-full border border-slate-200 dark:border-slate-800 bg-slate-100/90 dark:bg-slate-900/90 p-1 text-xs font-mono shadow-inner">
               {['rub', 'usd', 'kzt'].map((cur) => (
                 <button
                   key={cur}
                   onClick={() => setCurrency(cur)}
-                  className={`px-2 py-0.5 rounded-full uppercase transition-all ${
+                  className={`px-2.5 py-1 rounded-full uppercase text-xs font-bold transition-all ${
                     currency === cur
-                      ? 'bg-white dark:bg-slate-800 text-slate-950 dark:text-white font-bold shadow-sm' 
+                      ? 'bg-white dark:bg-slate-800 text-slate-950 dark:text-white shadow-sm' 
                       : 'text-slate-500 hover:text-slate-900 dark:hover:text-white'
                   }`}
                 >
@@ -180,14 +180,14 @@ export default function Navbar({
             </div>
 
             <div className="pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
-              <span className="text-xs text-slate-500 font-mono">Тіл / Язык:</span>
-              <div className="flex gap-1">
+              <span className="text-xs text-slate-500 font-mono font-medium">Тіл / Язык:</span>
+              <div className="flex gap-1.5">
                 {['kz', 'ru', 'en'].map(l => (
                   <button
                     key={l}
                     onClick={() => setLang(l)}
-                    className={`px-2.5 py-1 rounded-full text-xs uppercase font-mono ${
-                      lang === l ? 'bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold' : 'text-slate-500'
+                    className={`px-3.5 py-1.5 rounded-xl text-xs uppercase font-mono transition-all ${
+                      lang === l ? 'bg-amber-400 text-slate-950 font-bold shadow-sm' : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
                     }`}
                   >
                     {l}
@@ -197,14 +197,14 @@ export default function Navbar({
             </div>
 
             <div className="pt-2 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
-              <span className="text-xs text-slate-500 font-mono">Валюта:</span>
-              <div className="flex gap-1">
+              <span className="text-xs text-slate-500 font-mono font-medium">Валюта:</span>
+              <div className="flex gap-1.5">
                 {['rub', 'usd', 'kzt'].map(cur => (
                   <button
                     key={cur}
                     onClick={() => setCurrency(cur)}
-                    className={`px-2.5 py-1 rounded-full text-xs uppercase font-mono ${
-                      currency === cur ? 'bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold' : 'text-slate-500'
+                    className={`px-3.5 py-1.5 rounded-xl text-xs uppercase font-mono transition-all ${
+                      currency === cur ? 'bg-amber-400 text-slate-950 font-bold shadow-sm' : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
                     }`}
                   >
                     {cur === 'rub' ? '₽' : cur === 'usd' ? '$' : '₸'}
