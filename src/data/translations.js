@@ -145,8 +145,8 @@ export const TRANSLATIONS = {
     },
     modal: {
       badge: 'Жобаны бастау',
-      title: 'Жаңа биіктерді бірге бағындырайық',
-      desc: 'Форманы толтырыңыз, біз Telegram немесе телефон арқылы 20 минут ішінде байланысамыз.',
+      title: 'Жобаны бастау',
+      desc: 'Форманы толтырыңыз, біз 20 минут ішінде байланысамыз.',
       tgDirect: 'Telegram арқылы жазу',
       waDirect: 'WhatsApp арқылы жазу',
       nameLabel: 'Атыңыз / Компания атауы:',
@@ -319,8 +319,8 @@ export const TRANSLATIONS = {
     },
     modal: {
       badge: 'Обсудить задачу',
-      title: 'Давайте создадим нечто выдающееся',
-      desc: 'Заполните форму, и мы свяжемся с вами в Telegram или по телефону в течение 20 минут.',
+      title: 'Начать проект',
+      desc: 'Заполните форму, и мы свяжемся с вами в течение 20 минут.',
       tgDirect: 'Написать в Telegram',
       waDirect: 'WhatsApp диалог',
       nameLabel: 'Ваше имя / Компания:',
@@ -493,8 +493,8 @@ export const TRANSLATIONS = {
     },
     modal: {
       badge: 'Start a Project',
-      title: 'Let’s build something remarkable',
-      desc: 'Fill out the form below, and we will get back to you via Telegram or email within 20 minutes.',
+      title: 'Start a Project',
+      desc: 'Fill out the form below, and we will get back to you within 20 minutes.',
       tgDirect: 'Message on Telegram',
       waDirect: 'WhatsApp Chat',
       nameLabel: 'Your Name / Organization:',

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Send, CheckCircle2, AlertCircle, MessageSquare, ShieldCheck, Sparkles, DollarSign, User, Phone, Check } from 'lucide-react';
+import { X, Send, CheckCircle2, AlertCircle, ShieldCheck } from 'lucide-react';
 import { TRANSLATIONS } from '../data/translations';
 import StudioSelect from './ui/StudioSelect';
 
@@ -92,35 +92,6 @@ export default function ContactModal({
     }
   ];
 
-  // Quick 1-tap topics
-  const quickTopics = lang === 'en' ? [
-    'Turnkey Web Platform',
-    'Platform Redesign',
-    'Custom Software / CRM',
-    'Brand Identity & Deck',
-    'Urgent Fast-Track'
-  ] : lang === 'kz' ? [
-    'Сайтты нөлден жасау',
-    'Платформа редизайны',
-    'Жеке софт және CRM',
-    'Брендинг және Pitch Deck',
-    'Шұғыл іске қосу'
-  ] : [
-    'Сайт под ключ',
-    'Редизайн платформы',
-    'Кастомный софт / CRM',
-    'Брендинг и Pitch Deck',
-    'Срочный запуск'
-  ];
-
-  const handleToggleTopic = (topic) => {
-    setMessage(prev => {
-      if (!prev) return topic;
-      if (prev.includes(topic)) return prev;
-      return `${prev} · ${topic}`;
-    });
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!contact.trim()) return;
@@ -200,45 +171,12 @@ export default function ContactModal({
             {/* Inner Scrollable Body with Contained Scrollbar */}
             <div className="overflow-y-auto w-full flex-1 p-5 sm:p-8 md:p-10 modal-scrollbar">
               
-              {/* Modal Header */}
-              <div className="mb-6 sm:mb-8 pr-12">
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-slate-200 dark:border-white/10 bg-slate-100/80 dark:bg-white/[0.04] text-slate-700 dark:text-slate-300 text-xs font-mono uppercase mb-3">
-                  <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span>
-                  <span>{t.badge}</span>
-                </div>
+              {/* Simplified Modal Header */}
+              <div className="mb-6 pr-12">
                 <h3 className="text-2xl sm:text-3xl font-heading font-black text-slate-950 dark:text-white tracking-tight uppercase leading-tight">
                   {t.title}
                 </h3>
-                <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-2 leading-relaxed">
-                  {t.desc}
-                </p>
               </div>
-
-            {/* Quick 1-Click Messengers */}
-            <div className="mb-6 grid grid-cols-2 gap-3">
-              <motion.a
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                href="https://t.me/artemov_basil"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="min-h-[48px] px-4 rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-50/90 dark:bg-white/[0.03] text-slate-900 dark:text-slate-100 hover:border-slate-400 dark:hover:border-white/25 text-xs sm:text-sm font-heading font-bold flex items-center justify-center gap-2 transition-all shadow-sm"
-              >
-                <Send className="w-4 h-4 text-cyan-500 dark:text-cyan-400" />
-                <span>{t.tgDirect}</span>
-              </motion.a>
-              <motion.a
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                href="https://wa.me/?text=Hello!%20I%20would%20like%20to%20discuss%20a%20project%20with%20FIRM%20agency"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="min-h-[48px] px-4 rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-50/90 dark:bg-white/[0.03] text-slate-900 dark:text-slate-100 hover:border-slate-400 dark:hover:border-white/25 text-xs sm:text-sm font-heading font-bold flex items-center justify-center gap-2 transition-all shadow-sm"
-              >
-                <MessageSquare className="w-4 h-4 text-amber-500 dark:text-amber-400" />
-                <span>{t.waDirect}</span>
-              </motion.a>
-            </div>
 
             {/* Simplified High-Converting Form */}
             <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
@@ -307,26 +245,12 @@ export default function ContactModal({
                 </div>
 
                 <textarea
-                  rows="2"
+                  rows="3"
                   placeholder={lang === 'en' ? 'Tell us briefly about your goals or paste current website link...' : (lang === 'kz' ? 'Жобаңыз туралы қысқаша немесе сайт сілтемесі...' : 'Расскажите в двух словах о задаче или пришлите ссылку...')}
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   className="w-full px-4 sm:px-5 py-3.5 rounded-2xl bg-slate-50/90 dark:bg-white/[0.05] border border-slate-200 dark:border-white/10 hover:border-slate-400 dark:hover:border-white/25 focus:outline-none focus:border-amber-400 focus:ring-2 focus:ring-amber-400/20 text-slate-950 dark:text-white placeholder-slate-400 text-sm sm:text-base resize-none shadow-sm transition-all"
                 ></textarea>
-
-                {/* 1-Tap Quick Topic Chips */}
-                <div className="flex flex-wrap gap-1.5 mt-2.5">
-                  {quickTopics.map((topic, idx) => (
-                    <button
-                      key={idx}
-                      type="button"
-                      onClick={() => handleToggleTopic(topic)}
-                      className="px-2.5 py-1 rounded-lg text-xs font-mono bg-slate-100 dark:bg-white/[0.04] hover:bg-amber-400/15 dark:hover:bg-amber-400/20 text-slate-600 dark:text-slate-400 hover:text-amber-600 dark:hover:text-amber-300 border border-slate-200 dark:border-white/10 transition-colors"
-                    >
-                      + {topic}
-                    </button>
-                  ))}
-                </div>
               </div>
 
               {/* Submit Button */}
