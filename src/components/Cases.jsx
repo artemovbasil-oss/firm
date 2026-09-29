@@ -72,7 +72,6 @@ const CASE_PRESETS = [
 
 function CaseCard({ item, idx, lang, onOpenContact, t, getLocalized }) {
   const [isHovered, setIsHovered] = useState(false);
-  const [mousePos, setMousePos] = useState({ x: 0.5, y: 0.5 });
   const cardRef = useRef(null);
 
   const title = getLocalized(item.title);
@@ -88,30 +87,19 @@ function CaseCard({ item, idx, lang, onOpenContact, t, getLocalized }) {
   const activeGrad = preset.grad;
   const hoverBorderClass = preset.hoverBorder;
 
-  const handleMouseMove = (e) => {
-    if (!cardRef.current) return;
-    const rect = cardRef.current.getBoundingClientRect();
-    if (rect.width > 0 && rect.height > 0) {
-      const x = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
-      const y = Math.max(0, Math.min(1, (e.clientY - rect.top) / rect.height));
-      setMousePos({ x, y });
-    }
-  };
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-50px' }}
       transition={{ duration: 0.5, delay: idx * 0.1 }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
       className="group w-full"
     >
       {/* Visual Showcase Card with Motion Hover & WebGL Thermal Heatmap */}
       <motion.div 
         ref={cardRef}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-        onMouseMove={handleMouseMove}
         onClick={() => onOpenContact(`${title} Case Discussion`)}
         whileHover={{ y: -6 }}
         transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
@@ -129,7 +117,6 @@ function CaseCard({ item, idx, lang, onOpenContact, t, getLocalized }) {
           anchor={anchor}
           seed={seed}
           isHovered={isHovered}
-          mousePos={mousePos}
           borderRadius={24}
         />
 
@@ -153,7 +140,7 @@ function CaseCard({ item, idx, lang, onOpenContact, t, getLocalized }) {
 
         {/* Top Bar with category tag & status */}
         <div className="flex items-center justify-between z-10 gap-3 relative">
-          <span className="font-mono text-xs font-semibold text-white uppercase tracking-widest truncate drop-shadow-[0_2px_4px_rgba(0,0,0,0.95)]">
+          <span className="font-mono text-xs font-semibold text-white/90 uppercase tracking-widest truncate">
             {client} · 2026
           </span>
           <span className="px-3.5 py-1 rounded-full text-xs font-mono font-bold bg-white text-slate-950 shadow-xl shrink-0">
@@ -161,19 +148,19 @@ function CaseCard({ item, idx, lang, onOpenContact, t, getLocalized }) {
           </span>
         </div>
 
-        {/* Monumental Hero Metric */}
+        {/* Monumental Hero Metric (Clean, no rectangular drop-shadow artifact) */}
         <div className="my-auto z-10 py-4 sm:py-6 relative min-w-0">
-          <div className="text-3xl sm:text-5xl lg:text-6xl font-heading font-black text-white tracking-tight tabular-nums truncate drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)] drop-shadow-[0_1px_3px_rgba(0,0,0,0.95)]">
+          <div className="text-3xl sm:text-5xl lg:text-6xl font-heading font-black text-white tracking-tight tabular-nums truncate">
             {heroMetric ? heroMetric.value : '+340%'}
           </div>
-          <div className="text-xs sm:text-sm font-mono font-bold text-white/95 uppercase tracking-wider mt-2 drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)] line-clamp-2">
+          <div className="text-xs sm:text-sm font-mono font-bold text-white/80 uppercase tracking-wider mt-2 line-clamp-2">
             {heroMetric ? getLocalized(heroMetric.label) : (lang === 'en' ? 'Organic Revenue Surge' : (lang === 'kz' ? 'Органикалық өсім' : 'Рост выручки'))}
           </div>
         </div>
 
         {/* Bottom client mark */}
         <div className="flex items-center justify-between z-10 pt-4 border-t border-white/15 gap-4 relative">
-          <span className="text-sm sm:text-base font-heading font-bold text-white tracking-wide leading-snug drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)] line-clamp-2">
+          <span className="text-sm sm:text-base font-heading font-bold text-white tracking-wide leading-snug line-clamp-2">
             {title}
           </span>
           <div className="w-8 h-8 rounded-full bg-white/15 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white group-hover:bg-white group-hover:text-slate-950 transition-all shrink-0 shadow-lg">

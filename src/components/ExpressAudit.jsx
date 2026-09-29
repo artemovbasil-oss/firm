@@ -10,20 +10,9 @@ export default function ExpressAudit({ lang, onSuccessLead }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [status, setStatus] = useState(null);
   const [isHovered, setIsHovered] = useState(false);
-  const [mousePos, setMousePos] = useState({ x: 0.5, y: 0.5 });
   const cardRef = useRef(null);
 
   const t = TRANSLATIONS[lang].audit;
-
-  const handleMouseMove = (e) => {
-    if (!cardRef.current) return;
-    const rect = cardRef.current.getBoundingClientRect();
-    if (rect.width > 0 && rect.height > 0) {
-      const x = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
-      const y = Math.max(0, Math.min(1, (e.clientY - rect.top) / rect.height));
-      setMousePos({ x, y });
-    }
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -69,7 +58,6 @@ export default function ExpressAudit({ lang, onSuccessLead }) {
           ref={cardRef}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
-          onMouseMove={handleMouseMove}
           style={{ 
             borderRadius: '24px',
             transform: 'translateZ(0)',
@@ -83,7 +71,6 @@ export default function ExpressAudit({ lang, onSuccessLead }) {
             variant="isothermal"
             anchor={{ x: 0.5, y: 0.3 }}
             isHovered={isHovered} 
-            mousePos={mousePos} 
             borderRadius={24}
           />
           

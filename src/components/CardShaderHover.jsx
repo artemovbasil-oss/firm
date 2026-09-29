@@ -12,6 +12,8 @@ import React, { useEffect, useRef } from 'react';
  * - Analog film grain sensor noise
  * - Configurable anchor coordinates per card
  * - Runs ONLY on hover, 0% CPU/GPU overhead when idle
+ * - ZERO re-renders on mouse move: native event tracking directly to GPU uniforms
+ * - Single-pass WebGL context: no context recreation or flashing on hover
  */
 
 const VARIANT_MAP = {
@@ -25,18 +27,73 @@ const VARIANT_MAP = {
   infrared: 1.0,
 };
 
+// Module-level palettes (static, never recreated on render)
+const PALETTES = {
+  // 1. Solar Amber Horizon (Casa Italia, Français Pro)
+  thermal: {
+    c0: [0.02, 0.03, 0.07], // Deep nocturnal obsidian
+    c1: [0.08, 0.12, 0.42], // Deep midnight cosmic navy
+    c2: [0.60, 0.12, 0.22], // Deep crimson ember
+    c3: [0.88, 0.28, 0.06], // Solar vermillion
+    c4: [0.96, 0.62, 0.12], // Radiant amber
+    c5: [1.00, 0.84, 0.45], // Solar gold core
+  },
+  // 2. Cosmic Atmospheric Cyan (Ottica Milano, Bazarum, FinCore DS)
+  cyber: {
+    c0: [0.02, 0.03, 0.08], // Deep space obsidian
+    c1: [0.04, 0.14, 0.48], // Deep sapphire
+    c2: [0.06, 0.36, 0.70], // Oceanic azure
+    c3: [0.12, 0.68, 0.90], // Electric cyan
+    c4: [0.45, 0.84, 0.96], // Brilliant sky
+    c5: [0.85, 0.95, 0.98], // Luminous ice highlight
+  },
+  // 3. Deep Astral Ultraviolet & Solar Corona (Astraea)
+  ultraviolet: {
+    c0: [0.03, 0.02, 0.08],
+    c1: [0.14, 0.06, 0.38],
+    c2: [0.48, 0.12, 0.45],
+    c3: [0.82, 0.24, 0.22],
+    c4: [0.96, 0.64, 0.18],
+    c5: [1.00, 0.88, 0.60],
+  },
+  // 4. Radiant Magma & Rose Gold (Pure Esthétique)
+  magma: {
+    c0: [0.03, 0.02, 0.06],
+    c1: [0.18, 0.06, 0.24],
+    c2: [0.62, 0.14, 0.28],
+    c3: [0.92, 0.32, 0.20],
+    c4: [0.98, 0.68, 0.26],
+    c5: [1.00, 0.90, 0.65],
+  },
+  cobalt: {
+    c0: [0.02, 0.03, 0.08],
+    c1: [0.04, 0.14, 0.48],
+    c2: [0.06, 0.36, 0.70],
+    c3: [0.12, 0.68, 0.90],
+    c4: [0.45, 0.84, 0.96],
+    c5: [0.85, 0.95, 0.98],
+  }
+};
+
 export default function CardShaderHover({ 
   colorMode = 'thermal', 
   variant = 'isothermal',
   anchor = { x: 0.5, y: 0.5 },
   seed = 0.0,
   isHovered = false, 
-  mousePos = { x: 0.5, y: 0.5 },
   borderRadius = 24 
 }) {
   const canvasRef = useRef(null);
+  const glRef = useRef(null);
+  const uniformsRef = useRef(null);
+  const startLoopRef = useRef(null);
 
   const variantVal = typeof variant === 'number' ? variant : (VARIANT_MAP[variant] ?? 0.0);
+
+  // Detect touch / mobile devices where mouse hover is absent
+  const isTouchDevice = typeof window !== 'undefined' && (
+    'ontouchstart' in window || (navigator && navigator.maxTouchPoints > 0) || window.innerWidth < 1024
+  );
 
   const stateRef = useRef({
     hover: 0,
@@ -47,6 +104,7 @@ export default function CardShaderHover({
     targetMouseY: 0.5,
     isRunning: false,
     isVisible: true,
+    isTouch: isTouchDevice,
     radius: borderRadius,
     variant: variantVal,
     anchorX: anchor?.x ?? 0.5,
@@ -54,61 +112,7 @@ export default function CardShaderHover({
     seed: seed
   });
 
-  // Exquisite thermal heatmap palettes calibrated for high contrast with white typography
-  const PALETTES = {
-    // 1. Solar Amber Horizon (Casa Italia, Français Pro)
-    thermal: {
-      c0: [0.02, 0.03, 0.07], // Deep nocturnal obsidian
-      c1: [0.08, 0.12, 0.42], // Deep midnight cosmic navy
-      c2: [0.60, 0.12, 0.22], // Deep crimson ember
-      c3: [0.88, 0.28, 0.06], // Solar vermillion
-      c4: [0.96, 0.62, 0.12], // Radiant amber
-      c5: [1.00, 0.84, 0.45], // Solar gold core
-    },
-    // 2. Cosmic Atmospheric Cyan (Ottica Milano, Bazarum, FinCore DS)
-    cyber: {
-      c0: [0.02, 0.03, 0.08], // Deep space obsidian
-      c1: [0.04, 0.14, 0.48], // Deep sapphire
-      c2: [0.06, 0.36, 0.70], // Oceanic azure
-      c3: [0.12, 0.68, 0.90], // Electric cyan
-      c4: [0.45, 0.84, 0.96], // Brilliant sky
-      c5: [0.85, 0.95, 0.98], // Luminous ice highlight
-    },
-    // 3. Deep Astral Ultraviolet & Solar Corona (Astraea)
-    ultraviolet: {
-      c0: [0.03, 0.02, 0.08],
-      c1: [0.14, 0.06, 0.38],
-      c2: [0.48, 0.12, 0.45],
-      c3: [0.82, 0.24, 0.22],
-      c4: [0.96, 0.64, 0.18],
-      c5: [1.00, 0.88, 0.60],
-    },
-    // 4. Radiant Magma & Rose Gold (Pure Esthétique)
-    magma: {
-      c0: [0.03, 0.02, 0.06],
-      c1: [0.18, 0.06, 0.24],
-      c2: [0.62, 0.14, 0.28],
-      c3: [0.92, 0.32, 0.20],
-      c4: [0.98, 0.68, 0.26],
-      c5: [1.00, 0.90, 0.65],
-    },
-    cobalt: {
-      c0: [0.02, 0.03, 0.08],
-      c1: [0.04, 0.14, 0.48],
-      c2: [0.06, 0.36, 0.70],
-      c3: [0.12, 0.68, 0.90],
-      c4: [0.45, 0.84, 0.96],
-      c5: [0.85, 0.95, 0.98],
-    }
-  };
-
-  const palette = PALETTES[colorMode] || PALETTES.thermal;
-
-  // Detect touch / mobile devices where mouse hover is absent
-  const isTouchDevice = typeof window !== 'undefined' && (
-    'ontouchstart' in window || (navigator && navigator.maxTouchPoints > 0) || window.innerWidth < 1024
-  );
-
+  // Keep state in sync without re-creating WebGL program
   useEffect(() => {
     stateRef.current.radius = borderRadius;
   }, [borderRadius]);
@@ -120,6 +124,22 @@ export default function CardShaderHover({
     stateRef.current.seed = seed;
   }, [variant, anchor?.x, anchor?.y, seed]);
 
+  // Update palette uniform vectors without recompiling shaders
+  useEffect(() => {
+    const gl = glRef.current;
+    const u = uniformsRef.current;
+    if (gl && u) {
+      const pal = PALETTES[colorMode] || PALETTES.thermal;
+      gl.uniform3fv(u.uC0, pal.c0);
+      gl.uniform3fv(u.uC1, pal.c1);
+      gl.uniform3fv(u.uC2, pal.c2);
+      gl.uniform3fv(u.uC3, pal.c3);
+      gl.uniform3fv(u.uC4, pal.c4);
+      gl.uniform3fv(u.uC5, pal.c5);
+    }
+  }, [colorMode]);
+
+  // Handle external hover change
   useEffect(() => {
     stateRef.current.isTouch = isTouchDevice;
     stateRef.current.targetHover = isHovered ? 1.0 : (isTouchDevice ? 0.68 : 0.0);
@@ -129,13 +149,7 @@ export default function CardShaderHover({
     }
   }, [isHovered, isTouchDevice]);
 
-  useEffect(() => {
-    stateRef.current.targetMouseX = mousePos.x;
-    stateRef.current.targetMouseY = 1.0 - mousePos.y; // WebGL inverted Y
-  }, [mousePos]);
-
-  const startLoopRef = useRef(null);
-
+  // Main WebGL Lifecycle — runs ONCE on mount, NEVER recreates shaders on hover
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -148,6 +162,7 @@ export default function CardShaderHover({
     }) || canvas.getContext('experimental-webgl');
 
     if (!gl) return;
+    glRef.current = gl;
 
     const vsSource = `
       attribute vec2 a_position;
@@ -248,7 +263,6 @@ export default function CardShaderHover({
         }
 
         // 1. Mathematical Rounded Corner SDF Mask
-        // Guarantees subpixel-perfect alignment with container's 24px border radius
         vec2 centerPos = gl_FragCoord.xy - u_resolution.xy * 0.5;
         float distToBox = roundedBoxSDF(centerPos, u_resolution.xy * 0.5, u_radius);
         float cornerAlpha = clamp(1.0 - smoothstep(-0.75, 0.75, distToBox), 0.0, 1.0);
@@ -394,27 +408,32 @@ export default function CardShaderHover({
     gl.enableVertexAttribArray(aPos);
     gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
 
-    const uRes = gl.getUniformLocation(program, 'u_resolution');
-    const uMouse = gl.getUniformLocation(program, 'u_mouse');
-    const uAnchor = gl.getUniformLocation(program, 'u_anchor');
-    const uTime = gl.getUniformLocation(program, 'u_time');
-    const uHover = gl.getUniformLocation(program, 'u_hover');
-    const uRadius = gl.getUniformLocation(program, 'u_radius');
-    const uVariant = gl.getUniformLocation(program, 'u_variant');
-    const uSeed = gl.getUniformLocation(program, 'u_seed');
-    const uC0 = gl.getUniformLocation(program, 'u_c0');
-    const uC1 = gl.getUniformLocation(program, 'u_c1');
-    const uC2 = gl.getUniformLocation(program, 'u_c2');
-    const uC3 = gl.getUniformLocation(program, 'u_c3');
-    const uC4 = gl.getUniformLocation(program, 'u_c4');
-    const uC5 = gl.getUniformLocation(program, 'u_c5');
+    const uniforms = {
+      uRes: gl.getUniformLocation(program, 'u_resolution'),
+      uMouse: gl.getUniformLocation(program, 'u_mouse'),
+      uAnchor: gl.getUniformLocation(program, 'u_anchor'),
+      uTime: gl.getUniformLocation(program, 'u_time'),
+      uHover: gl.getUniformLocation(program, 'u_hover'),
+      uRadius: gl.getUniformLocation(program, 'u_radius'),
+      uVariant: gl.getUniformLocation(program, 'u_variant'),
+      uSeed: gl.getUniformLocation(program, 'u_seed'),
+      uC0: gl.getUniformLocation(program, 'u_c0'),
+      uC1: gl.getUniformLocation(program, 'u_c1'),
+      uC2: gl.getUniformLocation(program, 'u_c2'),
+      uC3: gl.getUniformLocation(program, 'u_c3'),
+      uC4: gl.getUniformLocation(program, 'u_c4'),
+      uC5: gl.getUniformLocation(program, 'u_c5'),
+    };
+    uniformsRef.current = uniforms;
 
-    gl.uniform3fv(uC0, palette.c0);
-    gl.uniform3fv(uC1, palette.c1);
-    gl.uniform3fv(uC2, palette.c2);
-    gl.uniform3fv(uC3, palette.c3);
-    gl.uniform3fv(uC4, palette.c4);
-    gl.uniform3fv(uC5, palette.c5);
+    // Initialize palette
+    const initialPal = PALETTES[colorMode] || PALETTES.thermal;
+    gl.uniform3fv(uniforms.uC0, initialPal.c0);
+    gl.uniform3fv(uniforms.uC1, initialPal.c1);
+    gl.uniform3fv(uniforms.uC2, initialPal.c2);
+    gl.uniform3fv(uniforms.uC3, initialPal.c3);
+    gl.uniform3fv(uniforms.uC4, initialPal.c4);
+    gl.uniform3fv(uniforms.uC5, initialPal.c5);
 
     let animId = null;
     let startTime = performance.now();
@@ -458,15 +477,14 @@ export default function CardShaderHover({
         gl.clearColor(0, 0, 0, 0);
         gl.clear(gl.COLOR_BUFFER_BIT);
 
-        gl.uniform2f(uRes, canvas.width, canvas.height);
-        gl.uniform2f(uMouse, state.mouseX, state.mouseY);
-        gl.uniform2f(uAnchor, state.anchorX, 1.0 - state.anchorY);
-        gl.uniform1f(uTime, elapsed);
-        gl.uniform1f(uHover, state.hover);
-        // Mathematical corner radius in physical device pixels
-        gl.uniform1f(uRadius, state.radius * currentDpr);
-        gl.uniform1f(uVariant, state.variant);
-        gl.uniform1f(uSeed, state.seed);
+        gl.uniform2f(uniforms.uRes, canvas.width, canvas.height);
+        gl.uniform2f(uniforms.uMouse, state.mouseX, state.mouseY);
+        gl.uniform2f(uniforms.uAnchor, state.anchorX, 1.0 - state.anchorY);
+        gl.uniform1f(uniforms.uTime, elapsed);
+        gl.uniform1f(uniforms.uHover, state.hover);
+        gl.uniform1f(uniforms.uRadius, state.radius * currentDpr);
+        gl.uniform1f(uniforms.uVariant, state.variant);
+        gl.uniform1f(uniforms.uSeed, state.seed);
 
         gl.drawArrays(gl.TRIANGLES, 0, 6);
         animId = requestAnimationFrame(render);
@@ -474,7 +492,7 @@ export default function CardShaderHover({
         // Still transitioning in
         animId = requestAnimationFrame(render);
       } else {
-        // Idle: clear canvas and stop requesting frames (0% CPU/GPU overhead)
+        // Idle: clear canvas once and stop requesting frames (0% CPU/GPU overhead)
         gl.clearColor(0, 0, 0, 0);
         gl.clear(gl.COLOR_BUFFER_BIT);
         state.isRunning = false;
@@ -494,6 +512,21 @@ export default function CardShaderHover({
       startLoop();
     }
 
+    // Direct native DOM mousemove tracking on parent container (0 React re-renders)
+    const parent = canvas.parentElement;
+    const handleNativeMouseMove = (e) => {
+      if (!parent) return;
+      const rect = parent.getBoundingClientRect();
+      if (rect.width > 0 && rect.height > 0) {
+        stateRef.current.targetMouseX = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+        stateRef.current.targetMouseY = 1.0 - Math.max(0, Math.min(1, (e.clientY - rect.top) / rect.height));
+      }
+    };
+
+    if (parent) {
+      parent.addEventListener('mousemove', handleNativeMouseMove, { passive: true });
+    }
+
     const observer = new IntersectionObserver(([entry]) => {
       stateRef.current.isVisible = entry.isIntersecting;
       if (entry.isIntersecting && stateRef.current.targetHover > 0.005 && !stateRef.current.isRunning) {
@@ -504,15 +537,18 @@ export default function CardShaderHover({
     observer.observe(canvas);
 
     const resizeObserver = new ResizeObserver(() => handleResize());
-    if (canvas.parentElement) {
-      resizeObserver.observe(canvas.parentElement);
+    if (parent) {
+      resizeObserver.observe(parent);
     }
     window.addEventListener('resize', handleResize, { passive: true });
 
     return () => {
       if (animId) cancelAnimationFrame(animId);
       window.removeEventListener('resize', handleResize);
-      resizeObserver.disconnect();
+      if (parent) {
+        parent.removeEventListener('mousemove', handleNativeMouseMove);
+        resizeObserver.disconnect();
+      }
       observer.disconnect();
       startLoopRef.current = null;
       if (gl) {
@@ -521,8 +557,10 @@ export default function CardShaderHover({
         gl.deleteShader(fs);
         gl.deleteBuffer(posBuf);
       }
+      glRef.current = null;
+      uniformsRef.current = null;
     };
-  }, [palette, borderRadius]);
+  }, [borderRadius]);
 
   return (
     <canvas
@@ -530,7 +568,7 @@ export default function CardShaderHover({
       style={{ 
         borderRadius: `${borderRadius}px`
       }}
-      className="absolute inset-0 pointer-events-none z-0 w-full h-full rounded-[24px] overflow-hidden mix-blend-screen opacity-85 transition-opacity duration-300"
+      className="absolute inset-0 pointer-events-none z-0 w-full h-full rounded-[24px] overflow-hidden mix-blend-screen opacity-90"
     />
   );
 }
