@@ -173,12 +173,12 @@ export default function Calculator({
                       onClick={() => onToggleService(s.id)}
                       className={`max-w-full px-3.5 sm:px-5 py-2.5 sm:py-3 rounded-full text-xs sm:text-sm font-heading font-semibold transition-all flex items-center justify-between gap-2.5 sm:gap-4 ${
                         isChecked
-                          ? 'bg-slate-950 dark:bg-white text-white dark:text-slate-950 shadow-md scale-[1.01]'
+                          ? 'bg-amber-400 text-slate-950 shadow-md scale-[1.01]'
                           : 'border border-black/[0.08] dark:border-white/10 bg-white/40 dark:bg-white/[0.02] text-slate-700 dark:text-slate-300 hover:border-slate-400'
                       }`}
                     >
                       <span className="truncate min-w-0">{title}</span>
-                      <span className={`text-[10px] sm:text-[11px] font-mono shrink-0 tabular-nums whitespace-nowrap ${isChecked ? 'text-white/80 dark:text-slate-900/80' : 'text-slate-400'}`}>
+                      <span className={`text-[10px] sm:text-[11px] font-mono shrink-0 tabular-nums whitespace-nowrap ${isChecked ? 'text-slate-900 font-bold' : 'text-slate-400'}`}>
                         +{price} {curSymbol}
                       </span>
                     </motion.button>
@@ -206,7 +206,7 @@ export default function Calculator({
                     onClick={() => setScale(item.id)}
                     className={`py-3 sm:py-4 px-2 sm:px-4 rounded-xl sm:rounded-2xl text-[11px] sm:text-sm font-heading font-bold transition-all text-center truncate ${
                       scale === item.id
-                        ? 'bg-slate-950 dark:bg-white text-white dark:text-slate-950 shadow-md'
+                        ? 'bg-amber-400 text-slate-950 shadow-md'
                         : 'border border-black/[0.08] dark:border-white/10 bg-white/40 dark:bg-white/[0.02] text-slate-600 dark:text-slate-400 hover:border-slate-400'
                     }`}
                   >
@@ -229,7 +229,7 @@ export default function Calculator({
                   onClick={() => setUrgency('standard')}
                   className={`py-3 sm:py-4 px-3 sm:px-4 rounded-xl sm:rounded-2xl text-xs sm:text-sm font-heading font-semibold transition-all ${
                     urgency === 'standard'
-                      ? 'bg-slate-950 dark:bg-white text-white dark:text-slate-950 shadow-md'
+                      ? 'bg-amber-400 text-slate-950 shadow-md font-bold'
                       : 'border border-black/[0.08] dark:border-white/10 bg-white/40 dark:bg-white/[0.02] text-slate-600 dark:text-slate-400'
                   }`}
                 >
@@ -242,7 +242,7 @@ export default function Calculator({
                   onClick={() => setUrgency('express')}
                   className={`py-3 sm:py-4 px-3 sm:px-4 rounded-xl sm:rounded-2xl text-xs sm:text-sm font-heading font-semibold transition-all flex items-center justify-center gap-2 ${
                     urgency === 'express'
-                      ? 'bg-slate-950 dark:bg-white text-white dark:text-slate-950 shadow-md'
+                      ? 'bg-amber-400 text-slate-950 shadow-md font-bold'
                       : 'border border-black/[0.08] dark:border-white/10 bg-white/40 dark:bg-white/[0.02] text-slate-600 dark:text-slate-400'
                   }`}
                 >
@@ -262,7 +262,7 @@ export default function Calculator({
                 {t.summaryTitle}
               </span>
               {bundleDiscount > 0 && (
-                <span className="px-3 py-1 rounded-full text-xs font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                <span className="px-3 py-1 rounded-full text-xs font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">
                   -{bundleDiscount * 100}% Bundle
                 </span>
               )}
@@ -321,7 +321,7 @@ export default function Calculator({
             </form>
 
             <div className="flex items-center gap-2.5 text-xs font-mono text-slate-500 pt-2">
-              <ShieldCheck className="w-4 h-4 text-indigo-400 shrink-0" />
+              <ShieldCheck className="w-4 h-4 text-amber-400 shrink-0" />
               <span>{t.privacyNote}</span>
             </div>
 

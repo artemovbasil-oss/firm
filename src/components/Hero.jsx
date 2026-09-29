@@ -53,35 +53,33 @@ export default function Hero({ lang, onOpenContact }) {
   return (
     <section className="relative pt-28 pb-12 sm:pt-36 sm:pb-16 lg:pt-44 lg:pb-20 overflow-hidden ambient-glow-hero w-full max-w-full">
       
-      {/* Background Centered Surreal Video Portal: Full cover on mobile, elegant feathered vignette on desktop */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none select-none z-0 flex items-center justify-center">
-        {/* Full-bleed responsive video container */}
-        <div className="relative w-full h-full sm:h-auto sm:aspect-video sm:max-w-4xl lg:max-w-5xl flex items-center justify-center">
-          <video
-            ref={videoRef}
-            key="hero-video-v4"
-            autoPlay
-            loop
-            muted
-            playsInline
-            preload="auto"
-            poster="/videos/hero-surreal-v4.jpg"
-            className="w-full h-full object-cover opacity-85 dark:opacity-85 [mask-image:radial-gradient(ellipse_95%_85%_at_50%_50%,black_20%,transparent_90%)] [-webkit-mask-image:radial-gradient(ellipse_95%_85%_at_50%_50%,black_20%,transparent_90%)] scale-105"
-          >
-            <source src="/videos/hero-surreal-v4.mp4" type="video/mp4" />
-          </video>
+      {/* Background Surreal Video Portal: Full-bleed seamless radial fade without box borders */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none select-none z-0">
+        <video
+          ref={videoRef}
+          key="hero-video-v4"
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+          poster="/videos/hero-surreal-v4.jpg"
+          className="w-full h-full object-cover scale-105 opacity-80 dark:opacity-75 [mask-image:radial-gradient(ellipse_75%_65%_at_50%_48%,black_20%,transparent_80%)] [-webkit-mask-image:radial-gradient(ellipse_75%_65%_at_50%_48%,black_20%,transparent_80%)]"
+        >
+          <source src="/videos/hero-surreal-v4.mp4" type="video/mp4" />
+        </video>
 
-          {/* Deep Feathered Radial Vignette for Seamless Void Merging */}
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_85%_75%_at_50%_50%,transparent_15%,#fbfbfd_85%)] dark:bg-[radial-gradient(ellipse_85%_75%_at_50%_50%,transparent_15%,#06070a_85%)] pointer-events-none"></div>
-        </div>
+        {/* Center Contrast Scrim: Dims the video in the center so text pops with crisp contrast */}
+        <div className="absolute inset-0 bg-[#06070a]/35 dark:bg-[#06070a]/50 pointer-events-none"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_75%_60%_at_50%_45%,rgba(6,7,11,0.65)_0%,rgba(6,7,11,0.3)_60%,rgba(6,7,11,0.95)_100%)] pointer-events-none"></div>
 
         {/* Global Edge Fade into Page Background */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#fbfbfd]/70 via-transparent to-[#fbfbfd] dark:from-[#06070a]/70 dark:via-transparent dark:to-[#06070a] pointer-events-none"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-[#fbfbfd]/80 via-transparent to-[#fbfbfd] dark:from-[#06070a]/80 dark:via-transparent dark:to-[#06070a] pointer-events-none"></div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
-        {/* Live Studio Status */}
+        {/* Live Studio Status - Solar Amber Beacon */}
         <motion.div 
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -90,8 +88,8 @@ export default function Hero({ lang, onOpenContact }) {
         >
           <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full border border-black/[0.06] dark:border-white/10 bg-white/70 dark:bg-white/[0.03] backdrop-blur-2xl text-xs font-mono shadow-sm">
             <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
             </span>
             <span className="font-semibold text-slate-900 dark:text-white uppercase tracking-wider text-[11px] sm:text-xs">
               {t.badge}
@@ -115,12 +113,12 @@ export default function Hero({ lang, onOpenContact }) {
             </span>
           </motion.h1>
 
-          {/* Crisp 1-sentence manifesto */}
+          {/* Crisp, High-Contrast Subtitle over Video */}
           <motion.p 
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-            className="mt-6 sm:mt-8 text-sm sm:text-xl md:text-2xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto leading-relaxed font-normal"
+            className="mt-6 sm:mt-8 text-base sm:text-xl md:text-2xl text-slate-100 dark:text-slate-100 font-medium max-w-3xl mx-auto leading-relaxed drop-shadow-[0_2px_12px_rgba(0,0,0,0.95)]"
           >
             {t.desc}
           </motion.p>
@@ -155,7 +153,7 @@ export default function Hero({ lang, onOpenContact }) {
 
         </div>
 
-        {/* Architectural Solid Opaque Islands for Key Performance Metrics */}
+        {/* Key Performance Metrics: Translucent Frosted Glass on Mobile, Solid Studio on Desktop */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -163,26 +161,26 @@ export default function Hero({ lang, onOpenContact }) {
           className="relative z-20 mt-14 sm:mt-20 grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6"
         >
           {[
-            { value: t.stats.projects, label: t.stats.projectsDesc, accent: 'bg-emerald-400' },
-            { value: t.stats.conversion, label: t.stats.conversionDesc, accent: 'bg-cyan-400' },
-            { value: t.stats.capital, label: t.stats.capitalDesc, accent: 'bg-amber-400' },
-            { value: t.stats.sla, label: t.stats.slaDesc, accent: 'bg-indigo-400' }
+            { value: t.stats.projects, label: t.stats.projectsDesc, accent: 'bg-amber-400 shadow-[0_0_8px_rgba(251,191,36,0.6)]' },
+            { value: t.stats.conversion, label: t.stats.conversionDesc, accent: 'bg-cyan-400 shadow-[0_0_8px_rgba(56,189,248,0.6)]' },
+            { value: t.stats.capital, label: t.stats.capitalDesc, accent: 'bg-amber-400 shadow-[0_0_8px_rgba(251,191,36,0.6)]' },
+            { value: t.stats.sla, label: t.stats.slaDesc, accent: 'bg-cyan-400 shadow-[0_0_8px_rgba(56,189,248,0.6)]' }
           ].map((stat, idx) => (
             <div 
               key={idx}
-              className="p-4 sm:p-6 lg:p-7 rounded-2xl sm:rounded-3xl bg-white dark:bg-[#08090f] border border-black/[0.08] dark:border-white/10 shadow-xl shadow-black/[0.03] dark:shadow-black/50 flex flex-col justify-between group hover:border-black/20 dark:hover:border-white/25 transition-all duration-300 min-w-0"
+              className="p-4 sm:p-6 lg:p-7 rounded-2xl sm:rounded-3xl backdrop-blur-xl bg-white/20 dark:bg-black/35 sm:bg-white sm:dark:bg-[#08090f]/90 border border-white/20 dark:border-white/10 shadow-2xl flex flex-col justify-between group hover:border-amber-400/40 transition-all duration-300 min-w-0"
             >
               <div className="flex items-center justify-between mb-3">
                 <span className={`w-2 h-2 rounded-full ${stat.accent}`}></span>
-                <span className="text-[9px] sm:text-[10px] font-mono uppercase tracking-widest text-slate-400 dark:text-slate-500">
+                <span className="text-[9px] sm:text-[10px] font-mono uppercase tracking-widest text-slate-300 dark:text-slate-400">
                   METRIC
                 </span>
               </div>
               <div className="min-w-0">
-                <div className="text-2xl sm:text-4xl lg:text-5xl font-heading font-black tracking-tight text-slate-950 dark:text-white leading-none mb-1.5 tabular-nums truncate">
+                <div className="text-2xl sm:text-4xl lg:text-5xl font-heading font-black tracking-tight text-white dark:text-white sm:text-slate-950 leading-none mb-1.5 tabular-nums truncate drop-shadow-sm">
                   {stat.value}
                 </div>
-                <div className="text-[11px] sm:text-xs font-mono text-slate-600 dark:text-slate-400 uppercase tracking-wider font-medium line-clamp-2">
+                <div className="text-[11px] sm:text-xs font-mono text-slate-200 dark:text-slate-300 sm:text-slate-600 sm:dark:text-slate-400 uppercase tracking-wider font-medium line-clamp-2">
                   {stat.label}
                 </div>
               </div>
@@ -192,13 +190,13 @@ export default function Hero({ lang, onOpenContact }) {
 
       </div>
 
-      {/* Infinite Running Marquee Ticker with 100% Solid Opaque Island Background */}
+      {/* Infinite Running Marquee Ticker with Solar Amber Accent Separators */}
       <div className="relative z-20 mt-12 sm:mt-16 py-3.5 sm:py-4 bg-white dark:bg-[#06070b] text-slate-950 dark:text-white border-y border-black/[0.1] dark:border-white/15 overflow-hidden select-none shadow-xl w-full max-w-full">
         <div className="animate-marquee whitespace-nowrap flex items-center gap-8 text-xs sm:text-sm font-mono font-bold tracking-widest uppercase">
           {[...marqueeItems, ...marqueeItems].map((item, idx) => (
             <span key={idx} className="flex items-center gap-8">
               <span>{item}</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0"></span>
+              <span className="w-1.5 h-1.5 rounded-full bg-amber-400 shadow-[0_0_6px_rgba(251,191,36,0.6)] shrink-0"></span>
             </span>
           ))}
         </div>

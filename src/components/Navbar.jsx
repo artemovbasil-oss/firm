@@ -28,11 +28,8 @@ export default function Navbar({
 
   const navLinks = [
     { name: t.services, href: '#services' },
-    { name: t.calculator, href: '#calculator' },
     { name: t.cases, href: '#cases' },
     { name: t.audit, href: '#audit' },
-    { name: t.process, href: '#process' },
-    { name: t.stack, href: '#stack' },
     { name: t.faq, href: '#faq' },
   ];
 
@@ -59,7 +56,7 @@ export default function Navbar({
                 <span className="font-heading font-extrabold text-base sm:text-lg tracking-tight text-slate-950 dark:text-white leading-none">
                   FIRM
                 </span>
-                <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" title="Available for projects"></span>
+                <span className="inline-block w-1.5 h-1.5 rounded-full bg-amber-400 shadow-[0_0_6px_rgba(251,191,36,0.7)] animate-pulse" title="Available for projects"></span>
               </div>
               <span className="text-[9px] uppercase font-mono tracking-widest text-slate-400 dark:text-slate-400 leading-tight">
                 Studio
@@ -67,13 +64,13 @@ export default function Navbar({
             </div>
           </a>
 
-          {/* Desktop Nav Links */}
+          {/* Desktop Nav Links: Curated 4 core sections */}
           <nav className="hidden lg:flex items-center gap-1 xl:gap-2">
             {navLinks.map((link) => (
               <a
                 key={link.name}
                 href={link.href}
-                className="px-2.5 py-1.5 rounded-full text-xs font-heading font-semibold text-slate-600 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10 transition-all duration-150"
+                className="px-3 py-1.5 rounded-full text-xs font-heading font-semibold text-slate-600 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10 transition-all duration-150"
               >
                 {link.name}
               </a>
@@ -108,7 +105,7 @@ export default function Navbar({
                   onClick={() => setCurrency(cur)}
                   className={`px-2 py-0.5 rounded-full uppercase transition-all ${
                     currency === cur
-                      ? 'bg-white dark:bg-slate-800 text-slate-950 dark:text-white font-bold shadow-sm'
+                      ? 'bg-white dark:bg-slate-800 text-slate-950 dark:text-white font-bold shadow-sm' 
                       : 'text-slate-500 hover:text-slate-900 dark:hover:text-white'
                   }`}
                 >
@@ -124,15 +121,6 @@ export default function Navbar({
               title={theme === 'dark' ? t.themeLight : t.themeDark}
             >
               {theme === 'dark' ? <Sun className="w-3.5 h-3.5" /> : <Moon className="w-3.5 h-3.5" />}
-            </button>
-
-            {/* CRM Admin Button */}
-            <button
-              onClick={onOpenAdmin}
-              className="w-8 h-8 rounded-full border border-slate-200 dark:border-slate-800 bg-slate-100/80 dark:bg-slate-900/80 text-slate-600 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white flex items-center justify-center transition-all hover:scale-105"
-              title={t.admin}
-            >
-              <LayoutDashboard className="w-3.5 h-3.5" />
             </button>
 
             {/* CTA Button */}
@@ -226,16 +214,6 @@ export default function Navbar({
             </div>
 
             <div className="pt-2 flex flex-col gap-2">
-              <button
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  onOpenAdmin();
-                }}
-                className="w-full py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 text-xs font-mono text-slate-700 dark:text-slate-300 flex items-center justify-center gap-2"
-              >
-                <LayoutDashboard className="w-3.5 h-3.5" />
-                <span>{t.admin}</span>
-              </button>
               <button
                 onClick={() => {
                   setMobileMenuOpen(false);

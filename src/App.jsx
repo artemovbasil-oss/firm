@@ -71,11 +71,28 @@ export default function App() {
     }
   }, [lang]);
 
-  // Check URL hash for admin entry
+  // Check URL hash and hotkey for admin entry
   useEffect(() => {
-    if (window.location.hash === '#admin') {
-      setIsAdminOpen(true);
-    }
+    const handleHash = () => {
+      if (window.location.hash === '#admin') {
+        setIsAdminOpen(true);
+      }
+    };
+    handleHash();
+    window.addEventListener('hashchange', handleHash);
+
+    const handleKeyDown = (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'A' || e.key === 'a')) {
+        e.preventDefault();
+        setIsAdminOpen(prev => !prev);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      window.removeEventListener('hashchange', handleHash);
+      window.removeEventListener('keydown', handleKeyDown);
+    };
   }, []);
 
   // Hydrate content from backend API if available

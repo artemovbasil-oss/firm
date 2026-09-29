@@ -15,14 +15,12 @@ function CaseCard({ item, idx, lang, onOpenContact, t, getLocalized }) {
   const badge = getLocalized(item.badge);
   const heroMetric = item.metrics && item.metrics[0];
 
-  const colorModes = ['thermal', 'cyber', 'ultraviolet', 'magma'];
-  const colorMode = item.colorMode || colorModes[idx % colorModes.length];
+  const colorModes = ['thermal', 'cyber'];
+  const colorMode = (item.colorMode === 'cyber') ? 'cyber' : 'thermal';
 
   const gradients = [
-    'from-slate-900 via-indigo-950/70 to-slate-950',
-    'from-slate-900 via-emerald-950/70 to-slate-950',
-    'from-slate-900 via-purple-950/70 to-slate-950',
-    'from-slate-900 via-amber-950/70 to-slate-950'
+    'from-[#0a0d17] via-[#1c1208]/80 to-[#07090f]', // Solar Amber Horizon
+    'from-[#0a0d17] via-[#091728]/80 to-[#07090f]', // Atmospheric Cyan Horizon
   ];
   const activeGrad = gradients[idx % gradients.length];
 
@@ -160,7 +158,7 @@ export default function Cases({ lang, casesList = [], onOpenContact }) {
                 onClick={() => setSelectedTag(tag)}
                 className={`px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs font-mono transition-all ${
                   selectedTag === tag
-                    ? 'bg-slate-950 dark:bg-white text-white dark:text-slate-950 font-bold shadow-sm'
+                    ? 'bg-amber-400 text-slate-950 font-bold shadow-md shadow-amber-400/20'
                     : 'border border-black/[0.08] dark:border-white/10 text-slate-600 dark:text-slate-400 hover:text-slate-950 dark:hover:text-white'
                 }`}
               >

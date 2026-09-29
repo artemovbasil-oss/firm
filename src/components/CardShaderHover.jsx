@@ -27,75 +27,76 @@ export default function CardShaderHover({
   });
 
   // Exquisite thermal heatmap palettes calibrated for high contrast with white text
+  // Coherent palettes strictly grounded in the Hero Video's 2-color aesthetic:
+  // 1. Solar Amber / Gold (The radiant setting sun & warm horizon)
+  // 2. Cosmic Atmospheric Cyan (The deep twilight sky & atmospheric glow)
   const PALETTES = {
-    // 1. Thermal Infrared (Classic Awwwards Luxury Heatmap - rich velvet, magenta & warm amber)
+    // 1. Solar Amber Horizon (Hero Sun: Deep Obsidian -> Midnight Sapphire -> Vermillion -> Radiant Amber -> Solar Gold)
     thermal: {
-      c0: [0.02, 0.03, 0.09], // Deep nocturnal obsidian
-      c1: [0.10, 0.12, 0.58], // Royal cobalt
-      c2: [0.58, 0.05, 0.60], // Electric magenta
-      c3: [0.86, 0.22, 0.08], // Solar vermillion
-      c4: [0.96, 0.58, 0.10], // Luminous amber
-      c5: [1.00, 0.82, 0.50], // Warm solar gold core (no white blowout)
+      c0: [0.02, 0.03, 0.07], // Deep nocturnal obsidian
+      c1: [0.08, 0.12, 0.42], // Deep midnight cosmic navy
+      c2: [0.60, 0.12, 0.22], // Deep crimson ember
+      c3: [0.88, 0.28, 0.06], // Solar vermillion
+      c4: [0.96, 0.62, 0.12], // Radiant amber
+      c5: [1.00, 0.84, 0.45], // Solar gold core
     },
-    // 2. Cyber Oceanic (Data & Traffic Flow Heatmap - deep slate, electric cyan & emerald mint)
+    // 2. Cosmic Atmospheric Cyan (Hero Atmosphere: Deep Obsidian -> Sapphire -> Deep Azure -> Electric Cyan -> Luminous Sky)
     cyber: {
-      c0: [0.02, 0.05, 0.08], // Deep dark slate
-      c1: [0.04, 0.20, 0.65], // Deep sapphire
-      c2: [0.02, 0.62, 0.70], // Electric cyan
-      c3: [0.06, 0.78, 0.45], // Neon emerald mint
-      c4: [0.60, 0.88, 0.25], // Chartreuse
-      c5: [0.84, 0.96, 0.82], // Warm mint highlight
+      c0: [0.02, 0.03, 0.08], // Deep space obsidian
+      c1: [0.04, 0.14, 0.48], // Deep sapphire
+      c2: [0.06, 0.36, 0.70], // Oceanic azure
+      c3: [0.12, 0.68, 0.90], // Electric cyan
+      c4: [0.45, 0.84, 0.96], // Brilliant sky
+      c5: [0.85, 0.95, 0.98], // Luminous ice highlight
     },
-    // 3. Ultraviolet Amethyst (Deep Space / Cosmic Heatmap - obsidian, violet & rose coral)
-    ultraviolet: {
-      c0: [0.04, 0.02, 0.08], // Deep space void
-      c1: [0.18, 0.06, 0.58], // Electric indigo
-      c2: [0.68, 0.08, 0.65], // Neon fuchsia
-      c3: [0.85, 0.20, 0.45], // Hot coral-rose
-      c4: [0.94, 0.60, 0.55], // Luminous peach
-      c5: [0.96, 0.84, 0.88], // Lavender highlight
-    },
-    // 4. Solar Magma (Volcanic / High Energy Heatmap - basalt, crimson & molten gold)
+    // Map magma to warm solar gold
     magma: {
-      c0: [0.05, 0.02, 0.02], // Basalt void
-      c1: [0.45, 0.05, 0.12], // Deep crimson
-      c2: [0.80, 0.15, 0.05], // Fiery vermillion
-      c3: [0.90, 0.45, 0.05], // Solar tangerine
-      c4: [0.96, 0.74, 0.16], // Molten gold
-      c5: [1.00, 0.88, 0.55], // Solar flare
+      c0: [0.02, 0.03, 0.07],
+      c1: [0.12, 0.08, 0.35],
+      c2: [0.65, 0.15, 0.15],
+      c3: [0.90, 0.35, 0.06],
+      c4: [0.98, 0.68, 0.14],
+      c5: [1.00, 0.88, 0.50],
     },
-    // 5. Cobalt Azure (Arctic / Deep Azure Heatmap - midnight abyss, azure & ice)
+    // Map ultraviolet to deep solar-indigo
+    ultraviolet: {
+      c0: [0.02, 0.03, 0.07],
+      c1: [0.08, 0.12, 0.42],
+      c2: [0.45, 0.15, 0.40],
+      c3: [0.85, 0.28, 0.15],
+      c4: [0.96, 0.65, 0.15],
+      c5: [1.00, 0.86, 0.50],
+    },
+    // Map cobalt to cosmic cyan
     cobalt: {
-      c0: [0.02, 0.03, 0.12], // Midnight abyss
-      c1: [0.06, 0.18, 0.68], // Royal cobalt
-      c2: [0.10, 0.42, 0.85], // Electric azure
-      c3: [0.14, 0.72, 0.85], // Brilliant cyan
-      c4: [0.50, 0.85, 0.92], // Luminous ice
-      c5: [0.82, 0.94, 0.96], // Arctic highlight
+      c0: [0.02, 0.03, 0.08],
+      c1: [0.04, 0.14, 0.48],
+      c2: [0.06, 0.36, 0.70],
+      c3: [0.12, 0.68, 0.90],
+      c4: [0.45, 0.84, 0.96],
+      c5: [0.85, 0.95, 0.98],
     }
   };
 
-  // Map legacy colorMode names to thermal equivalents
-  const resolvedMode = 
-    colorMode === 'indigo' ? 'thermal' :
-    colorMode === 'emerald' ? 'cyber' :
-    colorMode === 'purple' ? 'ultraviolet' :
-    colorMode === 'amber' ? 'magma' :
-    colorMode;
+  const palette = PALETTES[colorMode] || PALETTES.thermal;
 
-  const palette = PALETTES[resolvedMode] || PALETTES.thermal;
+  // Detect touch / mobile devices where mouse hover is absent
+  const isTouchDevice = typeof window !== 'undefined' && (
+    'ontouchstart' in window || (navigator && navigator.maxTouchPoints > 0) || window.innerWidth < 1024
+  );
 
   useEffect(() => {
     stateRef.current.radius = borderRadius;
   }, [borderRadius]);
 
   useEffect(() => {
-    stateRef.current.targetHover = isHovered ? 1.0 : 0.0;
-    if (isHovered && !stateRef.current.isRunning) {
+    stateRef.current.isTouch = isTouchDevice;
+    stateRef.current.targetHover = isHovered ? 1.0 : (isTouchDevice ? 0.68 : 0.0);
+    if ((isHovered || isTouchDevice) && !stateRef.current.isRunning && stateRef.current.isVisible) {
       stateRef.current.isRunning = true;
       if (startLoopRef.current) startLoopRef.current();
     }
-  }, [isHovered]);
+  }, [isHovered, isTouchDevice]);
 
   useEffect(() => {
     stateRef.current.targetMouseX = mousePos.x;
@@ -362,6 +363,13 @@ export default function CardShaderHover({
     const render = (now) => {
       const state = stateRef.current;
 
+      // Natural fluid ambient convection orbit for mobile / touch devices without mouse
+      if (state.isTouch && !isHovered) {
+        const elapsed = (now - startTime) * 0.001;
+        state.targetMouseX = 0.5 + Math.sin(elapsed * 0.75) * 0.25;
+        state.targetMouseY = 0.5 + Math.cos(elapsed * 0.55) * 0.22;
+      }
+
       // Smooth hover lerp
       state.hover += (state.targetHover - state.hover) * 0.12;
       state.mouseX += (state.targetMouseX - state.mouseX) * 0.12;
@@ -401,14 +409,14 @@ export default function CardShaderHover({
     };
     startLoopRef.current = startLoop;
 
-    if (isHovered) {
+    if (isHovered || isTouchDevice) {
       stateRef.current.isRunning = true;
       startLoop();
     }
 
     const observer = new IntersectionObserver(([entry]) => {
       stateRef.current.isVisible = entry.isIntersecting;
-      if (entry.isIntersecting && stateRef.current.targetHover > 0 && !stateRef.current.isRunning) {
+      if (entry.isIntersecting && stateRef.current.targetHover > 0.005 && !stateRef.current.isRunning) {
         stateRef.current.isRunning = true;
         startLoop();
       }
