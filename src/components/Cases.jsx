@@ -122,7 +122,7 @@ export default function Cases({ lang, casesList = [], onOpenContact }) {
   const [selectedTag, setSelectedTag] = useState('All');
   const t = TRANSLATIONS[lang].cases;
 
-  const tags = ['All', 'SaaS', 'Branding', 'Landing Page', 'SEO Optimization', 'Full Packaging'];
+  const tags = ['All', 'Websites', 'Branding', 'SaaS', 'SEO Optimization', 'Full Packaging'];
   const publishedCases = casesList.filter(c => c.published !== false);
 
   const filteredCases = selectedTag === 'All' 
@@ -146,7 +146,7 @@ export default function Cases({ lang, casesList = [], onOpenContact }) {
               {lang === 'en' ? 'Proof of Work' : (lang === 'kz' ? 'Нәтижелер' : 'Кейсы и цифры')}
             </div>
             <h2 className="text-3xl sm:text-5xl lg:text-6xl font-heading font-black tracking-tight text-slate-950 dark:text-white uppercase leading-[0.98]">
-              {lang === 'en' ? 'Selected Cases.' : (lang === 'kz' ? 'Таңдаулы жобалар.' : 'Избранные кейсы.')}
+              {lang === 'en' ? 'Selected Cases' : (lang === 'kz' ? 'Таңдаулы жобалар' : 'Избранные кейсы')}
             </h2>
           </div>
 

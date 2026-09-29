@@ -71,7 +71,7 @@ export default function ExpressAudit({ lang, onSuccessLead }) {
           onMouseLeave={() => setIsHovered(false)}
           onMouseMove={handleMouseMove}
           style={{ borderRadius: '24px' }}
-          className="p-6 sm:p-12 lg:p-16 rounded-2xl sm:rounded-3xl bg-slate-950 text-white relative overflow-hidden shadow-2xl border border-white/10 isolate transform-gpu"
+          className="p-6 sm:p-12 lg:p-16 rounded-2xl sm:rounded-3xl bg-slate-50/90 dark:bg-slate-950 text-slate-950 dark:text-white relative overflow-hidden shadow-xl dark:shadow-2xl border border-slate-200/90 dark:border-white/10 isolate transform-gpu"
         >
           {/* Subtle Dynamic WebGL Thermal Heatmap & Film Noise on Hover */}
           <CardShaderHover 
@@ -82,19 +82,19 @@ export default function ExpressAudit({ lang, onSuccessLead }) {
           />
           
           {/* Contrast Protection Scrim Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/50 to-slate-950/70 pointer-events-none z-[2]" />
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-50/95 via-slate-50/60 to-slate-50/80 dark:from-slate-950/85 dark:via-slate-950/50 dark:to-slate-950/70 pointer-events-none z-[2]" />
 
           {/* Subtle Ambient Glow */}
           <div className="absolute top-0 right-0 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none z-[1]"></div>
 
           <div className="relative z-10 max-w-4xl mx-auto text-center space-y-6">
             
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full border border-white/15 bg-white/[0.04] text-xs font-mono uppercase tracking-wider text-slate-300">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full border border-slate-200 dark:border-white/15 bg-white dark:bg-white/[0.04] text-xs font-mono uppercase tracking-wider text-slate-700 dark:text-slate-300 shadow-sm">
               <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span>
               <span>{lang === 'en' ? 'Diagnostic Teardown' : (lang === 'kz' ? 'Экспресс-аудит' : 'Экспресс-аудит')}</span>
             </div>
 
-            <h2 className="text-2xl sm:text-4xl lg:text-5xl font-heading font-black tracking-tight text-white uppercase leading-[1.05]">
+            <h2 className="text-2xl sm:text-4xl lg:text-5xl font-heading font-black tracking-tight text-slate-950 dark:text-white uppercase leading-[1.05]">
               {lang === 'en' ? (
                 <>Want to know why your <br className="hidden sm:inline" />platform isn't converting?</>
               ) : lang === 'kz' ? (
@@ -104,7 +104,7 @@ export default function ExpressAudit({ lang, onSuccessLead }) {
               )}
             </h2>
 
-            <p className="text-sm sm:text-base lg:text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed font-light">
+            <p className="text-sm sm:text-base lg:text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto leading-relaxed font-normal">
               {lang === 'en'
                 ? 'Send your URL. Our senior partners will record a 10-minute private video breakdown and map out your conversion bottlenecks within 24 hours. 100% free.'
                 : lang === 'kz'
@@ -116,7 +116,7 @@ export default function ExpressAudit({ lang, onSuccessLead }) {
             <form onSubmit={handleSubmit} className="pt-6 max-w-2xl mx-auto space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                 {/* Field 1: Project / Website URL */}
-                <div className="relative flex items-center rounded-2xl bg-white/[0.07] hover:bg-white/[0.1] focus-within:bg-white/[0.12] border border-white/15 focus-within:border-white/40 transition-all backdrop-blur-xl shadow-inner">
+                <div className="relative flex items-center rounded-2xl bg-white dark:bg-white/[0.07] hover:bg-slate-100 dark:hover:bg-white/[0.1] focus-within:bg-white dark:focus-within:bg-white/[0.12] border border-slate-200 dark:border-white/15 focus-within:border-slate-400 dark:focus-within:border-white/40 transition-all shadow-sm">
                   <div className="pl-4 pr-1 text-slate-400 shrink-0">
                     <Globe className="w-4 h-4" />
                   </div>
@@ -125,13 +125,13 @@ export default function ExpressAudit({ lang, onSuccessLead }) {
                     placeholder={lang === 'en' ? 'https://yourwebsite.com' : (lang === 'kz' ? 'Сайт немесе жоба сілтемесі' : 'Ссылка на ваш сайт или проект')}
                     value={targetUrl}
                     onChange={(e) => setTargetUrl(e.target.value)}
-                    className="w-full py-4 pr-4 pl-2 bg-transparent text-sm text-white placeholder-slate-400 focus:outline-none"
+                    className="w-full py-4 pr-4 pl-2 bg-transparent text-sm text-slate-950 dark:text-white placeholder-slate-400 focus:outline-none"
                   />
                 </div>
 
                 {/* Field 2: Direct Contact Handle */}
-                <div className="relative flex items-center rounded-2xl bg-white/[0.07] hover:bg-white/[0.1] focus-within:bg-white/[0.12] border border-white/15 focus-within:border-white/40 transition-all backdrop-blur-xl shadow-inner">
-                  <div className="pl-4 pr-1 text-cyan-400 shrink-0">
+                <div className="relative flex items-center rounded-2xl bg-white dark:bg-white/[0.07] hover:bg-slate-100 dark:hover:bg-white/[0.1] focus-within:bg-white dark:focus-within:bg-white/[0.12] border border-slate-200 dark:border-white/15 focus-within:border-slate-400 dark:focus-within:border-white/40 transition-all shadow-sm">
+                  <div className="pl-4 pr-1 text-cyan-500 dark:text-cyan-400 shrink-0">
                     <Send className="w-4 h-4" />
                   </div>
                   <input
@@ -140,7 +140,7 @@ export default function ExpressAudit({ lang, onSuccessLead }) {
                     placeholder={lang === 'en' ? 'Telegram (@user) or WhatsApp *' : (lang === 'kz' ? 'Telegram (@user) немесе WhatsApp *' : 'Telegram (@user) или WhatsApp *')}
                     value={contact}
                     onChange={(e) => setContact(e.target.value)}
-                    className="w-full py-4 pr-4 pl-2 bg-transparent text-sm text-white placeholder-slate-400 focus:outline-none"
+                    className="w-full py-4 pr-4 pl-2 bg-transparent text-sm text-slate-950 dark:text-white placeholder-slate-400 focus:outline-none"
                   />
                 </div>
               </div>
@@ -152,7 +152,7 @@ export default function ExpressAudit({ lang, onSuccessLead }) {
                   whileTap={{ scale: 0.98 }}
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full sm:w-auto px-10 py-4 rounded-2xl bg-white text-slate-950 font-heading font-black text-sm hover:bg-slate-100 transition-all flex items-center justify-center gap-2.5 shadow-2xl shadow-white/10 disabled:opacity-50"
+                  className="w-full sm:w-auto px-10 py-4 rounded-2xl bg-slate-950 dark:bg-white text-white dark:text-slate-950 font-heading font-black text-sm hover:bg-slate-800 dark:hover:bg-slate-100 transition-all flex items-center justify-center gap-2.5 shadow-xl disabled:opacity-50"
                 >
                   {isSubmitting ? (
                     <span>...</span>
@@ -166,8 +166,8 @@ export default function ExpressAudit({ lang, onSuccessLead }) {
               </div>
 
               {status === 'success' && (
-                <div className="mt-4 p-4 rounded-2xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-200 text-xs sm:text-sm flex items-center justify-center gap-2 animate-fadeIn">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                <div className="mt-4 p-4 rounded-2xl bg-amber-500/15 border border-amber-500/30 text-amber-900 dark:text-amber-200 text-xs sm:text-sm flex items-center justify-center gap-2 animate-fadeIn">
+                  <CheckCircle2 className="w-4 h-4 text-amber-500 dark:text-amber-400 shrink-0" />
                   <span>{t.successMsg}</span>
                 </div>
               )}
@@ -181,17 +181,17 @@ export default function ExpressAudit({ lang, onSuccessLead }) {
             </form>
 
             {/* 3 Minimalist Guarantees */}
-            <div className="pt-6 flex flex-wrap items-center justify-center gap-6 sm:gap-10 text-xs font-mono text-slate-400">
+            <div className="pt-6 flex flex-wrap items-center justify-center gap-6 sm:gap-10 text-xs font-mono text-slate-500 dark:text-slate-400">
               <div className="flex items-center gap-2">
-                <ShieldCheck className="w-4 h-4 text-emerald-400" />
+                <ShieldCheck className="w-4 h-4 text-amber-500 dark:text-amber-400" />
                 <span>{lang === 'en' ? 'Senior Review · Zero Bots' : (lang === 'kz' ? 'Ботсыз · Тек сарапшылар' : 'Ручной разбор · Без ботов')}</span>
               </div>
               <div className="flex items-center gap-2">
-                <Zap className="w-4 h-4 text-amber-400" />
+                <Zap className="w-4 h-4 text-amber-500 dark:text-amber-400" />
                 <span>{lang === 'en' ? '24h Turnaround' : (lang === 'kz' ? '24 сағат ішінде' : 'Готовность 24 часа')}</span>
               </div>
               <div className="flex items-center gap-2">
-                <Lock className="w-4 h-4 text-indigo-400" />
+                <Lock className="w-4 h-4 text-cyan-500 dark:text-cyan-400" />
                 <span>{lang === 'en' ? '100% Confidential' : (lang === 'kz' ? '100% Құпиялық' : '100% Конфиденциально')}</span>
               </div>
             </div>

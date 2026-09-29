@@ -44,7 +44,7 @@ export default function Services({
               {lang === 'en' ? 'Core Capabilities' : (lang === 'kz' ? 'Негізгі бағыттар' : 'Экспертиза и стек')}
             </div>
             <h2 className="text-3xl sm:text-5xl lg:text-6xl font-heading font-black tracking-tight text-slate-950 dark:text-white uppercase leading-[0.98]">
-              {lang === 'en' ? 'What We Build.' : (lang === 'kz' ? 'Біз не жасаймыз.' : 'Что мы создаем.')}
+              {lang === 'en' ? 'What We Build' : (lang === 'kz' ? 'Біз не жасаймыз' : 'Что мы создаем')}
             </h2>
           </div>
 

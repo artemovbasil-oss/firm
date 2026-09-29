@@ -571,214 +571,526 @@ export const INITIAL_SERVICES = [
 
 export const INITIAL_CASES = [
   {
-    id: 1,
-    title: {
-      kz: 'FinCore — Финтех платформасы және B2B SaaS',
-      ru: 'FinCore — Финтех платформа и B2B SaaS',
-      en: 'FinCore — FinTech Platform & B2B SaaS'
+    "id": 1,
+    "title": {
+      "kz": "Casa Italia — Премиум жиһаз дүкені",
+      "ru": "Casa Italia — Салон итальянской мебели в Казахстане",
+      "en": "Casa Italia — Italian Luxury Furniture E-Commerce"
     },
-    client: {
-      kz: 'FinCore Technologies (Ұлыбритания / Халықаралық)',
-      ru: 'FinCore Technologies (Великобритания / СНГ)',
-      en: 'FinCore Technologies (UK / International)'
+    "client": {
+      "kz": "Casa Italia Kazakhstan (Алматы / Астана)",
+      "ru": "Салон мебели Casa Italia (Алматы / Астана)",
+      "en": "Casa Italia Furniture Atelier (Kazakhstan)"
     },
-    services: {
-      kz: ['Бағдарлама әзірлеу', 'Брендинг', 'Презентация'],
-      ru: ['Разработка ПО', 'Брендинг', 'Презентация'],
-      en: ['Software Dev', 'Branding', 'Pitch Deck']
+    "services": {
+      "kz": [
+        "Сайт әзірлеу",
+        "Каталог модульдері",
+        "Кастом софт"
+      ],
+      "ru": [
+        "Разработка сайта",
+        "Кастомные модули каталога",
+        "E-Commerce"
+      ],
+      "en": [
+        "Web Development",
+        "Custom Catalog Engine",
+        "E-Commerce"
+      ]
     },
-    badge: {
-      kz: '+340% лид өсімі',
-      ru: '+340% лидов',
-      en: '+340% Inbound Leads'
+    "badge": {
+      "kz": "+185% онлайн сатылым",
+      "ru": "+185% онлайн-продаж",
+      "en": "+185% Online Sales"
     },
-    summary: {
-      kz: 'Жеке кабинет веб-қосымшасын әзірлеп, ребрендинг өткіздік және $3.2M көлемінде Series A раундын жабуға көмектескен Pitch Deck жасадық.',
-      ru: 'Разработали веб-приложение личного кабинета, провели ребрендинг и создали Pitch Deck, который помог закрыть инвестиционный раунд Series A на $3.2M.',
-      en: 'Engineered a client portal dashboard, refreshed brand architecture, and authored an investor deck that secured a $3.2M Series A round.'
+    "summary": {
+      "kz": "Итальян фабрикаларының қоймаларымен тікелей синхрондалған, 3D конфигураторы және материал таңдаудың кастомдық модульдері бар премиум интернет-дүкен жасадық",
+      "ru": "Разработали интерактивный интернет-магазин с кастомными модулями подбора отделок, 3D-конфигуратором модульных диванов и бесшовной синхронизацией складских остатков фабрик Италии",
+      "en": "Engineered an interactive e-commerce platform with custom textile/finish selectors, 3D modular sofa configurator, and real-time inventory sync directly with Italian manufacturers"
     },
-    metrics: [
-      { label: { kz: 'Тартылған инвестиция', ru: 'Привлечено инвестиций', en: 'Capital Raised' }, value: '$3.2M' },
-      { label: { kz: 'Конверсия өсімі', ru: 'Рост конверсии', en: 'Conversion Boost' }, value: '+340%' },
-      { label: { kz: 'Іске асыру мерзімі', ru: 'Срок реализации', en: 'Time to Market' }, value: '38 к.' }
+    "metrics": [
+      {
+        "label": {
+          "kz": "Орташа чек өсімі",
+          "ru": "Рост среднего чека",
+          "en": "AOV Growth"
+        },
+        "value": "+$1,450"
+      },
+      {
+        "label": {
+          "kz": "Қарау тереңдігі",
+          "ru": "Глубина просмотра",
+          "en": "Session Depth"
+        },
+        "value": "7.4 стр"
+      },
+      {
+        "label": {
+          "kz": "Тапсырыс конверсиясы",
+          "ru": "Конверсия в заявку",
+          "en": "Inquiry Conversion"
+        },
+        "value": "4.8%"
+      }
     ],
-    tags: ['SaaS', 'FinTech', 'React', 'Pitch Deck'],
-    published: true
+    "tags": [
+      "Websites",
+      "Full Packaging"
+    ],
+    "colorMode": "thermal",
+    "published": true
   },
   {
-    id: 2,
-    title: {
-      kz: 'Aura Living — Премиум жылжымайтын мүлік',
-      ru: 'Aura Living — Премиальный девелопмент',
-      en: 'Aura Living — Luxury Real Estate Development'
+    "id": 2,
+    "title": {
+      "kz": "Ottica Milano — Италиядан брендтік оптика тапсырысы",
+      "ru": "Ottica Milano — Онлайн-заказ оптики мировых брендов из Италии",
+      "en": "Ottica Milano — Direct-to-Consumer Italian Designer Eyewear"
     },
-    client: {
-      kz: 'Aura Real Estate Group',
-      ru: 'Aura Real Estate Group',
-      en: 'Aura Real Estate Group'
+    "client": {
+      "kz": "Ottica Global Group (Италия / Халықаралық)",
+      "ru": "Ottica Global Group (Италия / Международные поставки)",
+      "en": "Ottica Global Group (Italy / Global Fulfillment)"
     },
-    services: {
-      kz: ['Сатушы лендингтер', 'Брендинг', 'Презентациялар'],
-      ru: ['Продающие лендинги', 'Брендинг', 'Презентации'],
-      en: ['Landing Pages', 'Branding', 'Decks']
+    "services": {
+      "kz": [
+        "Нөлден кастом әзірлеу",
+        "API интеграциялары",
+        "SEO архитектурасы"
+      ],
+      "ru": [
+        "Кастомная разработка с 0",
+        "Интеграции и API",
+        "SEO-продвижение"
+      ],
+      "en": [
+        "Zero-to-One Development",
+        "Custom API Integrations",
+        "SEO Architecture"
+      ]
     },
-    badge: {
-      kz: 'CPL 2.8 есе азайды',
-      ru: 'CPL снижен в 2.8 раза',
-      en: 'CPL Reduced 64%'
+    "badge": {
+      "kz": "айына 42,000+ тапсырыс",
+      "ru": "42 000+ заказов/мес",
+      "en": "42,000+ Orders/mo"
     },
-    summary: {
-      kz: '3D-турлары, пәтер таңдау квизі және инвесторларға арналған сандық каталогы бар тұрғын үй кешенінің промо-парақшасын жасадық.',
-      ru: 'Создали интерактивную промо-страницу жилого комплекса бизнес-класса с 3D-турами, квизом подбора планировки и премиальным каталогом для инвесторов.',
-      en: 'Created an interactive luxury residential landing page with 3D tours, apartment selector quiz, and an investor-facing digital catalog.'
+    "summary": {
+      "kz": "Италиялық көзілдіріктерге арналған толық кастомдық платформа құрдық: онлайн өлшеп көру жүйесі, халықаралық логистика интеграциялары және көптілді SEO архитектурасы",
+      "ru": "С нуля создали highload e-commerce платформу заказа дизайнерских очков и линз: алгоритм виртуальной примерки, интеграция таможенно-логистических шлюзов и международное мультиязычное SEO",
+      "en": "Engineered a zero-to-one highload luxury eyewear platform: virtual try-on fitting algorithms, automated customs/courier logistics pipelines, and multi-region technical SEO"
     },
-    metrics: [
-      { label: { kz: 'Лид құны (CPL)', ru: 'Стоимость лида (CPL)', en: 'Cost Per Lead' }, value: '-64%' },
-      { label: { kz: '1 айдағы броньдар', ru: 'Броней за 1 месяц', en: 'Pre-sales Month 1' }, value: '47 дана' },
-      { label: { kz: 'Парақша конверсиясы', ru: 'Конверсия страницы', en: 'Page Conversion' }, value: '11.4%' }
+    "metrics": [
+      {
+        "label": {
+          "kz": "Еуропадан SEO-трафик",
+          "ru": "SEO-трафик из Европы",
+          "en": "Organic EU Traffic"
+        },
+        "value": "+380%"
+      },
+      {
+        "label": {
+          "kz": "Жүктелу жылдамдығы",
+          "ru": "Скорость отклика",
+          "en": "Page Load Speed"
+        },
+        "value": "0.7 сек"
+      },
+      {
+        "label": {
+          "kz": "Автоматтандыру",
+          "ru": "Автоматизация логистики",
+          "en": "Auto Fulfillment"
+        },
+        "value": "98%"
+      }
     ],
-    tags: ['Landing Page', 'Branding', 'Real Estate'],
-    published: true
+    "tags": [
+      "Websites",
+      "SEO Optimization"
+    ],
+    "colorMode": "cyber",
+    "published": true
   },
   {
-    id: 3,
-    title: {
-      kz: 'PromEquip — Өндірістік жабдық жеткізушісі',
-      ru: 'PromEquip — Федеральный B2B поставщик',
-      en: 'PromEquip — Industrial B2B Equipment'
+    "id": 3,
+    "title": {
+      "kz": "Astraea — Еуропадағы №1 астрологтың платформасы",
+      "ru": "Astraea — Платформа онлайн-астрологии и личный кабинет астролога №1 в Европе",
+      "en": "Astraea — Online Astrology Ecosystem & Client Portal for Europe’s #1 Astrologer"
     },
-    client: {
-      kz: 'ПромЭквип Инжиниринг',
-      ru: 'ПромЭквип Инжиниринг',
-      en: 'PromEquip Engineering'
+    "client": {
+      "kz": "Astraea Mindset & Astrology (Франция / Швейцария)",
+      "ru": "Astraea Mindset & Astrology (Франция / Швейцария)",
+      "en": "Astraea Mindset & Astrology (France / Switzerland)"
     },
-    services: {
-      kz: ['Сайт әзірлеу', 'SEO оңтайландыру', 'Бизнесті қаптау'],
-      ru: ['Разработка сайтов', 'SEO-оптимизация', 'Упаковка бизнеса'],
-      en: ['Web Platform', 'SEO Optimization', 'Business Packaging']
+    "services": {
+      "kz": [
+        "Веб-қосымша & Кабинет",
+        "Сайт әзірлеу",
+        "Премиум брендинг",
+        "SEO"
+      ],
+      "ru": [
+        "Веб-приложение & Кабинет",
+        "Разработка сайта",
+        "Премиальный брендинг",
+        "SEO"
+      ],
+      "en": [
+        "Web App & Client Portal",
+        "Web Platform",
+        "Luxury Branding",
+        "SEO Dominance"
+      ]
     },
-    badge: {
-      kz: 'Трафик x5.2',
-      ru: 'Трафик x5.2',
-      en: 'Organic Traffic x5.2'
+    "badge": {
+      "kz": "120,000+ белсенді қолданушы",
+      "ru": "120 000+ пользователей",
+      "en": "120,000+ Active Users"
     },
-    summary: {
-      kz: '18 000+ тауары бар жабдықтар каталогы, 1С интеграциясы және терең SEO. Іздеу жүйелерінің ТОП-3-іне 650-ден астам сұраныс шықты.',
-      ru: 'Каталог оборудования на 18 000+ SKU с умным фильтром, полной интеграцией 1С и глубоким SEO. Вывели более 650 высокочастотных запросов в ТОП-3 поисковиков.',
-      en: '18,000+ SKU industrial catalog with smart filtering, live ERP sync, and structural SEO ranking 650+ high-intent commercial keywords in Top 3.'
+    "summary": {
+      "kz": "Еуропаның жетекші астрологына арналған экожүйе: интерактивті наталды карталар, жазылым клубтары, PWA-қосымша, бренд айдентикасы және іздеу жүйелерінің тобына шығару",
+      "ru": "Разработали комплексную экосистему: защищенный личный кабинет с интерактивной натальной картой, закрытые клубы по подписке, PWA-приложение, премиальную айдентику и вывод в топ поисковиков Европы",
+      "en": "Architected a complete digital universe: interactive natal chart calculations, subscription membership tiers, high-converting web presence, luxury visual identity, and pan-European SEO"
     },
-    metrics: [
-      { label: { kz: 'SEO-трафик өсімі', ru: 'Рост SEO-трафика', en: 'Organic Traffic' }, value: '+520%' },
-      { label: { kz: 'ТОП-3 сұраныстар', ru: 'Запросов в ТОП-3', en: 'Keywords in Top 3' }, value: '650+' },
-      { label: { kz: 'Өзін-өзі ақтау мерзімі', ru: 'Окупаемость проекта', en: 'Payback Period' }, value: '2.5 ай' }
+    "metrics": [
+      {
+        "label": {
+          "kz": "Жазылымнан MRR",
+          "ru": "MRR подписок клуба",
+          "en": "Subscription MRR"
+        },
+        "value": "€84,000"
+      },
+      {
+        "label": {
+          "kz": "Қолданушы LTV өсімі",
+          "ru": "Рост LTV клиентов",
+          "en": "Client LTV Boost"
+        },
+        "value": "+240%"
+      },
+      {
+        "label": {
+          "kz": "Органикалық трафик",
+          "ru": "SEO-трафик в Европе",
+          "en": "Pan-EU SEO Reach"
+        },
+        "value": "190K / ай"
+      }
     ],
-    tags: ['Websites', 'SEO Optimization', 'Full Packaging'],
-    published: true
+    "tags": [
+      "SaaS",
+      "Branding",
+      "SEO Optimization"
+    ],
+    "colorMode": "thermal",
+    "published": true
   },
   {
-    id: 4,
-    title: {
-      kz: 'Nordic Clinic — Жеке клиникалар желісі',
-      ru: 'Nordic Clinic — Сеть медицинских центров',
-      en: 'Nordic Clinic — Private Healthcare Chain'
+    "id": 4,
+    "title": {
+      "kz": "Bazarum — Әзірбайжандағы ұлттық маркетплейс",
+      "ru": "Bazarum — Национальный маркетплейс в Азербайджане и цифровая экосистема",
+      "en": "Bazarum — National Multi-Vendor Marketplace & Community Ecosystem in Azerbaijan"
     },
-    client: {
-      kz: 'Nordic Health Group',
-      ru: 'Nordic Health Group',
-      en: 'Nordic Health Group'
+    "client": {
+      "kz": "Bazarum Technologies (Баку, Әзірбайжан)",
+      "ru": "Bazarum Technologies (Баку, Азербайджан)",
+      "en": "Bazarum Technologies (Baku, Azerbaijan)"
     },
-    services: {
-      kz: ['Бизнесті қаптау', 'SMM жүргізу', 'Сайт әзірлеу'],
-      ru: ['Упаковка бизнеса', 'Ведение соцсетей', 'Разработка сайтов'],
-      en: ['Business Packaging', 'SMM', 'Websites']
+    "services": {
+      "kz": [
+        "Маркетплейс әзірлеу",
+        "Telegram-бот",
+        "Брендинг",
+        "Комьюнити & SMM"
+      ],
+      "ru": [
+        "Разработка маркетплейса",
+        "Telegram-бот и воронки",
+        "Брендинг",
+        "Комьюнити-менеджмент & SMM"
+      ],
+      "en": [
+        "Marketplace Platform",
+        "Telegram Bot & Automations",
+        "Brand Identity",
+        "Community Management & SMM"
+      ]
     },
-    badge: {
-      kz: '+210% жазылу',
-      ru: '+210% записей',
-      en: '+210% Patient Bookings'
+    "badge": {
+      "kz": "85,000 келісім / тоқсан",
+      "ru": "85 000 сделок / квартал",
+      "en": "85,000 Orders / Qtr"
     },
-    summary: {
-      kz: '5 филиалды толық қаптау: дәрігерге онлайн жазылу, сараптамалық Reels контенті, фирмалық стиль және пациенттердің үздіксіз ағыны.',
-      ru: 'Полная упаковка 5 филиалов: онлайн-запись к врачам, контент-стратегия с экспертными Reels, обновленный фирменный стиль и сквозная воронка пациентов.',
-      en: 'End-to-end transformation of 5 clinic branches: doctor appointment scheduling, expert short-form video funnels, unified brand identity, and patient CJM.'
+    "summary": {
+      "kz": "Жергілікті сатушылар мен сатып алушылар үшін маркетплейс жасадық: веб-сайт, жедел тапсырыс беретін Telegram-бот, бренд стилі және 60K қатысушысы бар белсенді қауымдастық",
+      "ru": "Запустили маркетплейс локальных продавцов под ключ: адаптивный вебсайт, умный Telegram-бот мгновенных уведомлений и заказов, яркий национально-модернистский брендинг и комьюнити в 62 000+ участников",
+      "en": "Launched a turnkey regional marketplace: scalable web app, instant transaction Telegram bot, vibrant modern-heritage brand identity, and an active 62,000+ member merchant community"
     },
-    metrics: [
-      { label: { kz: 'Алғашқы жазылулар', ru: 'Первичных записей', en: 'New Bookings' }, value: '+210%' },
-      { label: { kz: 'Желілердегі қамту', ru: 'Охват в соцсетях', en: 'Social Reach' }, value: '480K / ай' },
-      { label: { kz: 'Орташа чек', ru: 'Средний чек', en: 'Average Ticket' }, value: '+35%' }
+    "metrics": [
+      {
+        "label": {
+          "kz": "Қауымдастық көлемі",
+          "ru": "Активное комьюнити",
+          "en": "Community Size"
+        },
+        "value": "62,000+"
+      },
+      {
+        "label": {
+          "kz": "Қосылған сатушылар",
+          "ru": "Подключено продавцов",
+          "en": "Verified Merchants"
+        },
+        "value": "1,400+"
+      },
+      {
+        "label": {
+          "kz": "Бот арқылы конверсия",
+          "ru": "Конверсия через бот",
+          "en": "Telegram Bot Funnel"
+        },
+        "value": "18.4%"
+      }
     ],
-    tags: ['Full Packaging', 'SMM', 'Websites'],
-    published: true
+    "tags": [
+      "Branding",
+      "Full Packaging"
+    ],
+    "colorMode": "cyber",
+    "published": true
   },
   {
-    id: 5,
-    title: {
-      kz: 'DataPulse — AI-аналитика платформасы',
-      ru: 'DataPulse — Платформа AI-аналитики',
-      en: 'DataPulse — AI Analytics SaaS'
+    "id": 5,
+    "title": {
+      "kz": "Français Pro — Іскерлік француз тілі платформасы",
+      "ru": "Français Pro — EdTech платформа изучения бизнес-французского языка",
+      "en": "Français Pro — EdTech Platform for Executive & Business French"
     },
-    client: {
-      kz: 'DataPulse Analytics',
-      ru: 'DataPulse Analytics',
-      en: 'DataPulse Analytics'
+    "client": {
+      "kz": "L’Institut de Français des Affaires (Париж / Женева)",
+      "ru": "L’Institut de Français des Affaires (Париж / Женева)",
+      "en": "French Business Institute (Paris / Geneva)"
     },
-    services: {
-      kz: ['Бағдарлама әзірлеу', 'Сатушы лендингтер', 'Аудит'],
-      ru: ['Разработка ПО', 'Продающие лендинги', 'Аудит'],
-      en: ['Software Dev', 'Landing Page', 'Audit']
+    "services": {
+      "kz": [
+        "LMS платформасы",
+        "Интерактивті жаттығулар",
+        "UX/UI дизайн",
+        "Бизнесті қаптау"
+      ],
+      "ru": [
+        "LMS-платформа",
+        "Интерактивные тренажеры",
+        "UX/UI дизайн",
+        "Упаковка онлайн-школы"
+      ],
+      "en": [
+        "LMS Web App",
+        "Interactive Exercises",
+        "UX/UI Design",
+        "EdTech Packaging"
+      ]
     },
-    badge: {
-      kz: 'MVP 21 күнде',
-      ru: 'MVP за 21 день',
-      en: 'MVP in 21 Days'
+    "badge": {
+      "kz": "91% курсты бітіру",
+      "ru": "91% доходимость курсов",
+      "en": "91% Course Completion"
     },
-    summary: {
-      kz: 'Жоғары деректер ағынын өңдейтін AI негізіндегі аналитикалық дашборд үшін интерфейсті жобалап, ауқымды MVP жасадық.',
-      ru: 'Спроектировали интерфейс и разработали масштабируемый MVP для аналитического дашборда на базе AI с высокой пропускной способностью данных.',
-      en: 'Designed and deployed a high-throughput AI dashboard MVP with modern analytics visualizations and multi-tenant security in 21 days.'
+    "summary": {
+      "kz": "Топ-менеджерлер мен мамандарға арналған білім беру платформасы: интерактивті жаттығулар, бизнес-лексика сөздігі, сабақтар кестесі және ыңғайлы жеке кабинет",
+      "ru": "Разработали интерактивную обучающую платформу для топ-менеджеров и экспатов: видеомодули, тренажеры бизнес-лексики, автоматическая проверка произношения и синхронизация с календарями тьюторов",
+      "en": "Engineered an interactive language platform tailored for executives and expats: micro-learning video modules, business negotiation simulators, AI speech analysis, and seamless tutor calendar booking"
     },
-    metrics: [
-      { label: { kz: 'Іске қосу мерзімі', ru: 'Срок запуска MVP', en: 'MVP Timeline' }, value: '21 күн' },
-      { label: { kz: 'Пайдаланушы NPS', ru: 'NPS пользователей', en: 'User NPS' }, value: '94 / 100' },
-      { label: { kz: 'Uptime тұрақтылығы', ru: 'Uptime системы', en: 'Uptime SLA' }, value: '99.98%' }
+    "metrics": [
+      {
+        "label": {
+          "kz": "Корпоративтік клиенттер",
+          "ru": "Корпоративных клиентов",
+          "en": "Corporate Clients"
+        },
+        "value": "45+ компаний"
+      },
+      {
+        "label": {
+          "kz": "Бағдарламаны аяқтау",
+          "ru": "Доходимость программы",
+          "en": "Completion Rate"
+        },
+        "value": "91%"
+      },
+      {
+        "label": {
+          "kz": "Түлектердің NPS бағасы",
+          "ru": "NPS выпускников",
+          "en": "Graduate NPS"
+        },
+        "value": "9.6 / 10"
+      }
     ],
-    tags: ['SaaS', 'Software Dev', 'Landing Page'],
-    published: true
+    "tags": [
+      "Websites",
+      "SaaS"
+    ],
+    "colorMode": "thermal",
+    "published": true
   },
   {
-    id: 6,
-    title: {
-      kz: 'Vogue Craft — Зергерлік ателье',
-      ru: 'Vogue Craft — Ювелирное ателье',
-      en: 'Vogue Craft — Bespoke Jewelry Atelier'
+    "id": 6,
+    "title": {
+      "kz": "FinCore DS — Қазақстанның №1 банкінің дизайн-жүйесі",
+      "ru": "FinCore DS — Комплексная дизайн-система для ведущего банка Казахстана",
+      "en": "FinCore DS — Enterprise Digital Design System for Kazakhstan’s #1 Bank"
     },
-    client: {
-      kz: 'Vogue Craft Atelier',
-      ru: 'Vogue Craft Atelier',
-      en: 'Vogue Craft Atelier'
+    "client": {
+      "kz": "Қазақстанның жетекші қаржы институты",
+      "ru": "Банк №1 в Казахстане (Алматы, Казахстан)",
+      "en": "Tier-1 Banking Institution in Kazakhstan"
     },
-    services: {
-      kz: ['Брендинг', 'SMM жүргізу', 'Бизнесті қаптау'],
-      ru: ['Брендинг', 'Ведение соцсетей', 'Упаковка бизнеса'],
-      en: ['Branding', 'SMM', 'Business Packaging']
+    "services": {
+      "kz": [
+        "Enterprise дизайн-жүйесі",
+        "Figma токендері",
+        "React UI Kit",
+        "WCAG қолжетімділік"
+      ],
+      "ru": [
+        "Дизайн-система Enterprise",
+        "Figma токенизация",
+        "React UI Kit",
+        "Гайдлайны доступности"
+      ],
+      "en": [
+        "Enterprise Design System",
+        "Figma Design Tokens",
+        "Production React UI Kit",
+        "Accessibility (WCAG)"
+      ]
     },
-    badge: {
-      kz: 'ROAS 6.4x',
-      ru: 'ROAS 6.4x',
-      en: 'ROAS 6.4x'
+    "badge": {
+      "kz": "Релиздер 2.2 есе жедел",
+      "ru": "Time-to-Market x2.2 быстрее",
+      "en": "2.2x Faster Time-to-Market"
     },
-    summary: {
-      kz: 'Нөлден жасалған айдентика, топтаманы қаптау, сатушы визуал және жарнаманың 640% өзін-өзі ақтауымен таргетингтік науқан.',
-      ru: 'Айдентика с нуля, упаковка коллекции, продающий визуал и таргетированная кампания в социальных сетях с окупаемостью рекламы 640%.',
-      en: 'Zero-to-one visual identity, high-end collection styling, and performance social campaigns delivering a 6.4x Return on Ad Spend (ROAS).'
+    "summary": {
+      "kz": "Банктің 40-тан астам өнімдік командасына арналған ауқымды дизайн-жүйесін әзірледік: 250+ компонент, Figma-дан кодқа токендер және өнім шығаруды екі есеге жылдамдату",
+      "ru": "Создали масштабируемую дизайн-систему для 40+ продуктовых команд банка: единая библиотека токенов (Figma to Code), 250+ доступных компонентов (WCAG AA), документация и React-библиотека",
+      "en": "Architected an enterprise design system governing 40+ cross-functional banking squads: unified token pipeline (Figma to code), 250+ accessible components (WCAG AA), and interactive documentation"
     },
-    metrics: [
-      { label: { kz: 'Жарнама окупаемость (ROAS)', ru: 'Окупаемость рекламы', en: 'ROAS' }, value: '6.4x' },
-      { label: { kz: 'Жаңа сатып алушылар', ru: 'Новых клиентов', en: 'New Clients' }, value: '1,200+' },
-      { label: { kz: 'Бренд танымалдығы', ru: 'Узнаваемость бренда', en: 'Brand Recall' }, value: '+180%' }
+    "metrics": [
+      {
+        "label": {
+          "kz": "Релиздер жылдамдығы",
+          "ru": "Скорость продуктовых релизов",
+          "en": "Release Velocity"
+        },
+        "value": "+55%"
+      },
+      {
+        "label": {
+          "kz": "Кодтағы UI компоненттер",
+          "ru": "UI-компонентов в React",
+          "en": "Standardized UI Kit"
+        },
+        "value": "250+"
+      },
+      {
+        "label": {
+          "kz": "Қолданушы сквадтар",
+          "ru": "Продуктовых команд банка",
+          "en": "Active Banking Squads"
+        },
+        "value": "40+ сквадов"
+      }
     ],
-    tags: ['Branding', 'SMM', 'Full Packaging'],
-    published: true
+    "tags": [
+      "Branding",
+      "SaaS"
+    ],
+    "colorMode": "cyber",
+    "published": true
+  },
+  {
+    "id": 7,
+    "title": {
+      "kz": "Pure Esthétique — Мәскеудегі бьюти-брендті кешенді қаптау",
+      "ru": "Pure Esthétique — Премиальный веб-сайт и продвижение бьюти-бренда в Москве",
+      "en": "Pure Esthétique — Digital Flagship, Luxury Branding & Growth for Moscow Beauty Brand"
+    },
+    "client": {
+      "kz": "Pure Esthétique эстетикалық бьюти-бренді (Мәскеу)",
+      "ru": "Бьюти-бренд и салон эстетики Pure Esthétique (Москва)",
+      "en": "Pure Esthétique Beauty & Skin Care (Moscow)"
+    },
+    "services": {
+      "kz": [
+        "Веб-сайт әзірлеу",
+        "Премиум брендинг",
+        "SMM & Контент",
+        "Жергілікті SEO"
+      ],
+      "ru": [
+        "Разработка веб-сайта",
+        "Премиальный брендинг",
+        "SMM & Контент-стратегия",
+        "Локальное SEO"
+      ],
+      "en": [
+        "Web Development",
+        "Luxury Brand Identity",
+        "SMM & Visual Content",
+        "Local SEO & Maps"
+      ]
+    },
+    "badge": {
+      "kz": "іздеуден +320% жазылу",
+      "ru": "+320% записей из поиска",
+      "en": "+320% Organic Bookings"
+    },
+    "summary": {
+      "kz": "Бьюти-кеңістікті толық қаптау: YClients онлайн-жазылуы бар эстетикалық сайт, бренд стилі, тартымды SMM визуалы және Мәскеуде іздеу жүйелерінің тобына шығару",
+      "ru": "Полная digital-упаковка бьюти-пространства: эстетичный сайт с онлайн-записью через YClients, тактильный брендинг полиграфии и упаковки, визуальный стиль соцсетей и вывод в топ гео-поиска Москвы",
+      "en": "End-to-end digital packaging for a luxury beauty atelier: fluid website with YClients appointment flow, tactile brand identity, editorial social strategy, and #1 local SEO ranking across central Moscow"
+    },
+    "metrics": [
+      {
+        "label": {
+          "kz": "Алғашқы онлайн жазылу",
+          "ru": "Первичных онлайн-записей",
+          "en": "First-time Client Inflow"
+        },
+        "value": "+320%"
+      },
+      {
+        "label": {
+          "kz": "Әлеуметтік желіде қамту",
+          "ru": "Охват в соцсетях и Reels",
+          "en": "Monthly Social Reach"
+        },
+        "value": "340K / ай"
+      },
+      {
+        "label": {
+          "kz": "Мобильді сайт конверсиясы",
+          "ru": "Конверсия мобильного сайта",
+          "en": "Mobile Site Conversion"
+        },
+        "value": "8.7%"
+      }
+    ],
+    "tags": [
+      "Websites",
+      "Branding",
+      "SEO Optimization",
+      "Full Packaging"
+    ],
+    "colorMode": "thermal",
+    "published": true
   }
 ];
 

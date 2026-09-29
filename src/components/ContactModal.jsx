@@ -148,7 +148,7 @@ export default function ContactModal({
                 rel="noopener noreferrer"
                 className="flex-1 py-3 px-4 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50/80 dark:bg-slate-900/60 text-slate-900 dark:text-slate-100 hover:border-slate-400 dark:hover:border-white/20 text-xs sm:text-sm font-semibold flex items-center justify-center gap-2 transition-all"
               >
-                <MessageSquare className="w-4 h-4 text-emerald-500" />
+                <MessageSquare className="w-4 h-4 text-amber-500" />
                 <span>{t.waDirect}</span>
               </motion.a>
             </div>
@@ -250,8 +250,8 @@ export default function ContactModal({
               </motion.button>
 
               {status === 'success' && (
-                <div className="p-3.5 rounded-xl border border-emerald-400/50 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-900 dark:text-emerald-200 text-xs sm:text-sm flex items-center gap-2.5 animate-fadeIn">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                <div className="p-3.5 rounded-xl border border-amber-400/50 bg-amber-50 dark:bg-amber-950/40 text-amber-900 dark:text-amber-200 text-xs sm:text-sm flex items-center gap-2.5 animate-fadeIn">
+                  <CheckCircle2 className="w-4 h-4 text-amber-500 shrink-0" />
                   <span>{t.successMsg}</span>
                 </div>
               )}

@@ -60,7 +60,7 @@ export default function Footer({ lang, servicesList = [], onOpenContact, onOpenA
               </a>
               <button
                 onClick={() => onOpenContact('Direct Email Inquiry')}
-                className="w-10 h-10 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/[0.03] flex items-center justify-center text-slate-700 dark:text-slate-300 hover:text-emerald-500 hover:border-emerald-500/50 transition-all hover:scale-105"
+                className="w-10 h-10 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/[0.03] flex items-center justify-center text-slate-700 dark:text-slate-300 hover:text-amber-400 hover:border-amber-400/50 transition-all hover:scale-105"
                 title="Email"
               >
                 <Mail className="w-4 h-4" />
@@ -120,12 +120,12 @@ export default function Footer({ lang, servicesList = [], onOpenContact, onOpenA
               </div>
               <div>
                 <a href="mailto:hello@firm-agency.pro" className="hover:text-slate-950 dark:hover:text-white flex items-center gap-2">
-                  <Mail className="w-3.5 h-3.5 text-emerald-500" />
+                  <Mail className="w-3.5 h-3.5 text-amber-400" />
                   <span>hello@firm-agency.pro</span>
                 </a>
               </div>
               <div className="flex items-center gap-2 text-xs text-slate-400">
-                <ShieldCheck className="w-3.5 h-3.5 text-indigo-400" />
+                <ShieldCheck className="w-3.5 h-3.5 text-cyan-400" />
                 <span>NDA & Direct Invoicing</span>
               </div>
             </div>

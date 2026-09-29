@@ -17,7 +17,7 @@ export default function TechStack({ lang }) {
               {lang === 'en' ? 'Stack & Infrastructure' : (lang === 'kz' ? 'Технологиялық стек' : 'Технологический стек')}
             </div>
             <h2 className="text-3xl sm:text-5xl lg:text-6xl font-heading font-black tracking-tight text-slate-950 dark:text-white uppercase leading-[0.98]">
-              {lang === 'en' ? 'Engineered for Speed.' : (lang === 'kz' ? 'Жоғары жылдамдық.' : 'Стек без компромиссов.')}
+              {lang === 'en' ? 'Engineered for Speed' : (lang === 'kz' ? 'Жоғары жылдамдық' : 'Стек без компромиссов')}
             </h2>
           </div>
 
@@ -60,15 +60,15 @@ export default function TechStack({ lang }) {
         {/* Guarantees */}
         <div className="mt-12 sm:mt-16 flex flex-wrap items-center justify-center gap-6 sm:gap-10 text-xs font-mono text-slate-500 dark:text-slate-400">
           <div className="flex items-center gap-2">
-            <ShieldCheck className="w-4 h-4 text-emerald-500" />
+            <ShieldCheck className="w-4 h-4 text-amber-400" />
             <span>{t.badge1}</span>
           </div>
           <div className="flex items-center gap-2">
-            <Zap className="w-4 h-4 text-amber-500" />
+            <Zap className="w-4 h-4 text-amber-400" />
             <span>{t.badge2}</span>
           </div>
           <div className="flex items-center gap-2">
-            <Cpu className="w-4 h-4 text-cyan-500" />
+            <Cpu className="w-4 h-4 text-cyan-400" />
             <span>{t.badge3}</span>
           </div>
         </div>

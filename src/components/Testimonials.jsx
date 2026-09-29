@@ -16,7 +16,7 @@ export default function Testimonials({ lang }) {
               {lang === 'en' ? 'Client Feedback' : (lang === 'kz' ? 'Пікірлер' : 'Доверие клиентов')}
             </div>
             <h2 className="text-3xl sm:text-5xl lg:text-6xl font-heading font-black tracking-tight text-slate-950 dark:text-white uppercase leading-[0.98]">
-              {lang === 'en' ? 'Trusted by Leaders.' : (lang === 'kz' ? 'Тапсырыс берушілер.' : 'Нам доверяют лидеры.')}
+              {lang === 'en' ? 'Trusted by Leaders' : (lang === 'kz' ? 'Тапсырыс берушілер' : 'Нам доверяют лидеры')}
             </h2>
           </div>
         </div>

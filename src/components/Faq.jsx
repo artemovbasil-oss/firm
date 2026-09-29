@@ -22,7 +22,7 @@ export default function Faq({ lang }) {
             {lang === 'en' ? 'Direct Answers' : (lang === 'kz' ? 'Сұрақ-жауап' : 'Частые вопросы')}
           </div>
           <h2 className="text-3xl sm:text-5xl lg:text-6xl font-heading font-black tracking-tight text-slate-950 dark:text-white uppercase leading-[0.98]">
-            {lang === 'en' ? 'F.A.Q.' : (lang === 'kz' ? 'Жиі қойылатын сұрақтар' : 'Вопросы и ответы')}
+            {lang === 'en' ? 'FAQ' : (lang === 'kz' ? 'Жиі қойылатын сұрақтар' : 'Вопросы и ответы')}
           </h2>
         </div>
 
