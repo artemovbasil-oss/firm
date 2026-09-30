@@ -13,14 +13,14 @@ export default function ArtxLogo({ className = 'w-8 h-8', showText = false, text
             <stop offset="0%" stopColor="#0d0f18" />
             <stop offset="100%" stopColor="#030408" />
           </linearGradient>
-          <linearGradient id="artxAmberBeacon" x1="0%" y1="0%" x2="100%" y2="100%">
+          <linearGradient id="artxAmberSpark" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" stopColor="#fde047" />
             <stop offset="50%" stopColor="#fbbf24" />
             <stop offset="100%" stopColor="#f59e0b" />
           </linearGradient>
-          <linearGradient id="artxWhiteDelta" x1="0%" y1="0%" x2="0%" y2="100%">
+          <linearGradient id="artxWhitePillar" x1="0%" y1="0%" x2="0%" y2="100%">
             <stop offset="0%" stopColor="#ffffff" />
-            <stop offset="100%" stopColor="#e2e8f0" />
+            <stop offset="100%" stopColor="#f1f5f9" />
           </linearGradient>
         </defs>
 
@@ -28,11 +28,17 @@ export default function ArtxLogo({ className = 'w-8 h-8', showText = false, text
         <rect width="100" height="100" rx="22" fill="url(#artxObsidianBg)" />
         <rect x="0.75" y="0.75" width="98.5" height="98.5" rx="21.25" fill="none" stroke="rgba(255,255,255,0.12)" strokeWidth="1.5" />
 
-        {/* Swiss Architectural Delta Chevron (A) */}
-        <polygon points="50,20 26,78 38,78 50,44 62,78 74,78" fill="url(#artxWhiteDelta)" />
+        {/* Master ARTX Architectural Mark: Letter A with Stellar Astroid Cutout */}
+        <path 
+          d="M 44,13 L 56,13 L 89,87 L 66,87 C 54,87 50.8,77 50.5,69 C 52,60 58,54 71,52 C 58,50 52,43 50,30 C 48,43 42,50 29,52 C 42,54 48,60 49.5,69 C 49.2,77 46,87 34,87 L 11,87 Z" 
+          fill="url(#artxWhitePillar)" 
+        />
 
-        {/* Solar Amber Core Beacon */}
-        <circle cx="50" cy="62" r="5.5" fill="url(#artxAmberBeacon)" />
+        {/* Core Solar Amber Diamond Spark */}
+        <path 
+          d="M 50,44.5 Q 50,51 56,51 Q 50,51 50,57.5 Q 50,51 44,51 Q 50,51 50,44.5 Z" 
+          fill="url(#artxAmberSpark)" 
+        />
       </svg>
 
       {showText && (
