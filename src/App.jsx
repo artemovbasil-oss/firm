@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
+import MarqueeTicker from './components/MarqueeTicker';
 import Services from './components/Services';
 import Calculator from './components/Calculator';
 import Cases from './components/Cases';
@@ -172,11 +173,11 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#fbfbfd] dark:bg-[#06070a] text-slate-900 dark:text-slate-100 flex flex-col font-sans transition-colors duration-200 w-full max-w-full overflow-x-hidden">
+    <div className="min-h-screen bg-[#fcfcfd] dark:bg-[#080808] text-neutral-900 dark:text-neutral-100 flex flex-col font-sans transition-colors duration-200 w-full max-w-full overflow-x-hidden">
       
       {/* Toast notification */}
       {toastMessage && (
-        <div className="fixed bottom-6 right-6 z-50 p-4 rounded-xl bg-white dark:bg-slate-900 border border-emerald-500/40 text-emerald-800 dark:text-emerald-300 shadow-2xl flex items-center gap-3 animate-fadeIn">
+        <div className="fixed bottom-6 right-6 z-50 p-4 rounded-xl bg-white dark:bg-neutral-900 border border-emerald-500/40 text-emerald-800 dark:text-emerald-300 shadow-2xl flex items-center gap-3 animate-fadeIn">
           <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
           <span className="text-xs sm:text-sm font-medium">{toastMessage}</span>
         </div>
@@ -198,8 +199,15 @@ export default function App() {
         <Hero 
           lang={lang}
           onOpenContact={handleOpenContact} 
-          isTickerSticky={isTickerSticky}
         />
+
+        {/* Running Marquee Ticker: sits directly below the Hero fold and docks stickily when scrolled */}
+        <div className="relative w-full max-w-full z-20">
+          {isTickerSticky && (
+            <div className="h-12 sm:h-14 w-full" aria-hidden="true" />
+          )}
+          <MarqueeTicker lang={lang} isSticky={isTickerSticky} />
+        </div>
         
         <Services 
           lang={lang}

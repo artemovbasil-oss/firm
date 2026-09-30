@@ -56,7 +56,7 @@ export default function ExpressAudit({ lang, onSuccessLead }) {
         
         {/* Ambient Backlight blooming from beneath the diagnostic card */}
         <div 
-          className={`absolute -inset-3 sm:-inset-6 rounded-[36px] bg-gradient-to-r from-amber-500/25 via-cyan-500/20 to-purple-600/25 blur-3xl transition-all duration-700 pointer-events-none -z-10 ${
+          className={`absolute -inset-3 sm:-inset-6 rounded-[36px] bg-gradient-to-r from-amber-500/20 via-orange-500/15 to-amber-600/20 blur-3xl transition-all duration-700 pointer-events-none -z-10 ${
             isHovered ? 'opacity-100 scale-100' : 'opacity-20 scale-95'
           }`}
         />
@@ -147,7 +147,7 @@ export default function ExpressAudit({ lang, onSuccessLead }) {
 
                 {/* Field 2: Direct Contact Handle */}
                 <div className="relative flex items-center rounded-2xl bg-white dark:bg-white/[0.07] hover:bg-slate-100 dark:hover:bg-white/[0.1] focus-within:bg-white dark:focus-within:bg-white/[0.12] border border-slate-200 dark:border-white/15 focus-within:border-slate-400 dark:focus-within:border-white/40 transition-all shadow-sm">
-                  <div className="pl-4 pr-1 text-cyan-500 dark:text-cyan-400 shrink-0">
+                  <div className="pl-4 pr-1 text-amber-500 dark:text-amber-400 shrink-0">
                     <Send className="w-4 h-4" />
                   </div>
                   <input
@@ -207,7 +207,7 @@ export default function ExpressAudit({ lang, onSuccessLead }) {
                 <span>{lang === 'en' ? '24h Turnaround' : (lang === 'kz' ? '24 сағат ішінде' : 'Готовность 24 часа')}</span>
               </div>
               <div className="flex items-center gap-2">
-                <Lock className="w-4 h-4 text-cyan-500 dark:text-cyan-400" />
+                <Lock className="w-4 h-4 text-amber-500 dark:text-amber-400" />
                 <span>{lang === 'en' ? '100% Confidential' : (lang === 'kz' ? '100% Құпиялық' : '100% Конфиденциально')}</span>
               </div>
             </div>

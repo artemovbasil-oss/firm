@@ -12,11 +12,11 @@
   }
 
   html.dark {
-    --bg-main: #06070a;
-    --text-main: #f8fafc;
-    --card-bg: #0c0e14;
-    --card-border: rgba(255, 255, 255, 0.07);
-    --subtext: #8e95a5;
+    --bg-main: #080808;
+    --text-main: #f5f5f5;
+    --card-bg: #121212;
+    --card-border: rgba(255, 255, 255, 0.08);
+    --subtext: #888888;
   }
   
   html {
@@ -173,19 +173,19 @@
 
 /* Ambient Spotlights */
 .ambient-glow-hero {
-  background: radial-gradient(circle 800px at 50% -80px, rgba(99, 102, 241, 0.09), rgba(59, 130, 246, 0.03), transparent 75%);
+  background: radial-gradient(circle 800px at 50% -80px, rgba(251, 191, 36, 0.03), transparent 75%);
 }
 
 .dark .ambient-glow-hero {
-  background: radial-gradient(circle 950px at 50% -120px, rgba(99, 102, 241, 0.15), rgba(168, 85, 247, 0.06), transparent 75%);
+  background: radial-gradient(circle 950px at 50% -120px, rgba(251, 191, 36, 0.04), transparent 75%);
 }
 
 .ambient-spotlight {
-  background: radial-gradient(circle 600px at 50% 50%, rgba(59, 130, 246, 0.06), transparent 80%);
+  background: radial-gradient(circle 600px at 50% 50%, rgba(255, 255, 255, 0.03), transparent 80%);
 }
 
 .dark .ambient-spotlight {
-  background: radial-gradient(circle 600px at 50% 50%, rgba(99, 102, 241, 0.08), transparent 80%);
+  background: radial-gradient(circle 600px at 50% 50%, rgba(255, 255, 255, 0.02), transparent 80%);
 }
 
 /* Awwwards Studio Hero Card styling */
@@ -204,7 +204,7 @@
 
 .dark .card-studio-hero:hover {
   border-color: rgba(255, 255, 255, 0.22);
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8), 0 0 35px -5px rgba(99, 102, 241, 0.15);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8), 0 0 35px -5px rgba(251, 191, 36, 0.08);
 }
 
 /* Range slider track & thumb */

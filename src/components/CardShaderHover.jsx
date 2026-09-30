@@ -38,14 +38,14 @@ const PALETTES = {
     c4: [0.96, 0.62, 0.12], // Radiant amber
     c5: [1.00, 0.84, 0.45], // Solar gold core
   },
-  // 2. Cosmic Atmospheric Cyan (Ottica Milano, Bazarum, FinCore DS)
+  // 2. Pure Platinum & Silver Monochrome
   cyber: {
-    c0: [0.02, 0.03, 0.08], // Deep space obsidian
-    c1: [0.04, 0.14, 0.48], // Deep sapphire
-    c2: [0.06, 0.36, 0.70], // Oceanic azure
-    c3: [0.12, 0.68, 0.90], // Electric cyan
-    c4: [0.45, 0.84, 0.96], // Brilliant sky
-    c5: [0.85, 0.95, 0.98], // Luminous ice highlight
+    c0: [0.02, 0.02, 0.02], // Deep space obsidian
+    c1: [0.12, 0.12, 0.12], // Deep graphite
+    c2: [0.35, 0.35, 0.35], // Titanium silver
+    c3: [0.65, 0.65, 0.65], // Brilliant platinum
+    c4: [0.85, 0.85, 0.85], // Radiant silver
+    c5: [1.00, 1.00, 1.00], // Pure white core
   },
   // 3. Deep Astral Ultraviolet & Solar Corona (Astraea)
   ultraviolet: {

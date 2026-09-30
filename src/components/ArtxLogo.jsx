@@ -10,8 +10,8 @@ export default function ArtxLogo({ className = 'w-8 h-8', showText = false, text
       >
         <defs>
           <linearGradient id="artxObsidianBg" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#0d0f18" />
-            <stop offset="100%" stopColor="#030408" />
+            <stop offset="0%" stopColor="#141414" />
+            <stop offset="100%" stopColor="#050505" />
           </linearGradient>
           <linearGradient id="artxAmberSpark" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" stopColor="#fde047" />

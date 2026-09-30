@@ -76,7 +76,7 @@ export default function TechStack({ lang, techStackList }) {
             <span>{t.badge2}</span>
           </div>
           <div className="flex items-center gap-2">
-            <Cpu className="w-4 h-4 text-cyan-400" />
+            <Cpu className="w-4 h-4 text-amber-400" />
             <span>{t.badge3}</span>
           </div>
         </div>

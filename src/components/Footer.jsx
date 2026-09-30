@@ -41,7 +41,7 @@ export default function Footer({ lang, servicesList = [], onOpenContact }) {
                 href="https://t.me/artemov_basil"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/[0.03] flex items-center justify-center text-slate-700 dark:text-slate-300 hover:text-cyan-500 hover:border-cyan-500/50 transition-all hover:scale-105"
+                className="w-10 h-10 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/[0.03] flex items-center justify-center text-slate-700 dark:text-slate-300 hover:text-amber-400 hover:border-amber-400/50 transition-all hover:scale-105"
                 title="Telegram"
               >
                 <Send className="w-4 h-4" />
@@ -113,7 +113,7 @@ export default function Footer({ lang, servicesList = [], onOpenContact }) {
             <div className="space-y-2.5 text-xs sm:text-sm text-slate-600 dark:text-slate-400">
               <div>
                 <a href="https://t.me/artemov_basil" target="_blank" rel="noopener noreferrer" className="hover:text-slate-950 dark:hover:text-white flex items-center gap-2">
-                  <Send className="w-3.5 h-3.5 text-cyan-500" />
+                  <Send className="w-3.5 h-3.5 text-amber-400" />
                   <span>@artemov_basil</span>
                 </a>
               </div>
@@ -124,7 +124,7 @@ export default function Footer({ lang, servicesList = [], onOpenContact }) {
                 </a>
               </div>
               <div className="flex items-center gap-2 text-xs text-slate-400">
-                <ShieldCheck className="w-3.5 h-3.5 text-cyan-400" />
+                <ShieldCheck className="w-3.5 h-3.5 text-amber-400" />
                 <span>NDA & Direct Invoicing</span>
               </div>
             </div>

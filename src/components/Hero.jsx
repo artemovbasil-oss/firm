@@ -2,9 +2,8 @@ import React, { useRef, useEffect } from 'react';
 import { ArrowUpRight, ArrowDown } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { TRANSLATIONS } from '../data/translations';
-import MarqueeTicker from './MarqueeTicker';
 
-export default function Hero({ lang, onOpenContact, isTickerSticky = false }) {
+export default function Hero({ lang, onOpenContact }) {
   const t = TRANSLATIONS[lang].hero;
   const videoRef = useRef(null);
 
@@ -23,9 +22,9 @@ export default function Hero({ lang, onOpenContact, isTickerSticky = false }) {
   }, []);
 
   return (
-    <section className="relative pt-28 pb-12 sm:pt-36 sm:pb-16 lg:pt-44 lg:pb-20 overflow-hidden ambient-glow-hero w-full max-w-full">
+    <section className="relative min-h-[100dvh] pt-24 sm:pt-28 pb-4 sm:pb-6 lg:pb-8 flex flex-col justify-between overflow-hidden ambient-glow-hero w-full max-w-full">
       
-      {/* Background Surreal Video Portal: Full-bleed seamless radial fade without box borders */}
+      {/* Background Video: Crisp, vivid, clearly visible without heavy scrims */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none select-none z-0">
         <video
           ref={videoRef}
@@ -36,45 +35,45 @@ export default function Hero({ lang, onOpenContact, isTickerSticky = false }) {
           playsInline
           preload="auto"
           poster="/videos/hero-poster.jpg"
-          className="w-full h-full object-cover scale-105 opacity-80 dark:opacity-75 [mask-image:radial-gradient(ellipse_75%_65%_at_50%_48%,black_20%,transparent_80%)] [-webkit-mask-image:radial-gradient(ellipse_75%_65%_at_50%_48%,black_20%,transparent_80%)]"
+          className="w-full h-full object-cover scale-105 opacity-95 dark:opacity-90 [mask-image:radial-gradient(ellipse_95%_90%_at_50%_50%,black_65%,transparent_100%)] [-webkit-mask-image:radial-gradient(ellipse_95%_90%_at_50%_50%,black_65%,transparent_100%)]"
         >
           <source src="/videos/hero-bg.webm" type="video/webm" />
           <source src="/videos/hero-bg.mp4" type="video/mp4" />
         </video>
 
-        {/* Center Contrast Scrim: In dark mode, deep black void; in light mode, soft radiant white scrim */}
-        <div className="absolute inset-0 bg-[#fbfbfd]/40 dark:bg-[#06070a]/50 pointer-events-none"></div>
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_75%_60%_at_50%_45%,rgba(251,251,253,0.65)_0%,rgba(251,251,253,0.3)_60%,rgba(251,251,253,0.95)_100%)] dark:bg-[radial-gradient(ellipse_75%_60%_at_50%_45%,rgba(6,7,11,0.65)_0%,rgba(6,7,11,0.3)_60%,rgba(6,7,11,0.95)_100%)] pointer-events-none"></div>
+        {/* Center Contrast Scrim: Delicate and restrained - ensures text contrast without washing out the video */}
+        <div className="absolute inset-0 bg-white/10 dark:bg-black/30 pointer-events-none"></div>
 
-        {/* Global Edge Fade into Page Background */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#fbfbfd]/90 via-transparent to-[#fbfbfd] dark:from-[#06070a]/80 dark:via-transparent dark:to-[#06070a] pointer-events-none"></div>
+        {/* Global Edge Fade: Smoothly dissolves video into background only at outer boundaries */}
+        <div className="absolute inset-0 bg-gradient-to-b from-white/20 via-transparent to-[#fcfcfd] dark:from-black/25 dark:via-transparent dark:to-[#080808] pointer-events-none"></div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      {/* Main Content Area */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex-1 flex flex-col justify-between w-full">
         
         {/* Monumental Ultra-Short Headline with Blinds Reveal */}
-        <div className="text-center max-w-5xl mx-auto">
+        <div className="text-center max-w-5xl mx-auto my-auto pt-6 sm:pt-10">
           <div className="overflow-hidden inline-block py-1">
             <motion.h1 
-              initial={{ y: '105%', opacity: 0.05 }}
+              initial={{ y: '100%', opacity: 1 }}
               animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              className="text-3xl sm:text-6xl md:text-7xl lg:text-8xl font-heading font-black tracking-tight text-slate-950 dark:text-white leading-[1.05] sm:leading-[1.0] uppercase drop-shadow-sm inline-block"
+              transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
+              className="text-3xl sm:text-6xl md:text-7xl lg:text-8xl font-heading font-black tracking-tight text-neutral-950 dark:text-white leading-[1.05] sm:leading-[1.0] uppercase drop-shadow-sm inline-block"
             >
               <span>{t.titleStart}</span>{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-slate-900 via-slate-600 to-slate-900 dark:from-white dark:via-slate-400 dark:to-white">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-neutral-900 via-neutral-600 to-neutral-900 dark:from-white dark:via-neutral-400 dark:to-white">
                 {t.titleHighlight}
               </span>
             </motion.h1>
           </div>
 
           {/* Crisp, High-Contrast Subtitle over Video with Blinds Reveal */}
-          <div className="overflow-hidden block py-1 mt-6 sm:mt-8">
+          <div className="overflow-hidden block py-1 mt-4 sm:mt-6">
             <motion.p 
-              initial={{ y: '105%', opacity: 0.05 }}
+              initial={{ y: '100%', opacity: 1 }}
               animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.12, ease: [0.16, 1, 0.3, 1] }}
-              className="text-base sm:text-xl md:text-2xl text-slate-700 dark:text-slate-100 font-medium max-w-3xl mx-auto leading-relaxed dark:drop-shadow-[0_2px_12px_rgba(0,0,0,0.95)]"
+              transition={{ duration: 0.75, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+              className="text-base sm:text-xl md:text-2xl text-neutral-700 dark:text-neutral-100 font-medium max-w-3xl mx-auto leading-relaxed dark:drop-shadow-[0_2px_12px_rgba(0,0,0,0.95)]"
             >
               {t.desc}
             </motion.p>
@@ -84,14 +83,14 @@ export default function Hero({ lang, onOpenContact, isTickerSticky = false }) {
           <motion.div 
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
-            className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-center justify-center gap-3.5 sm:gap-5"
+            transition={{ duration: 0.6, delay: 0.22, ease: [0.16, 1, 0.3, 1] }}
+            className="mt-6 sm:mt-8 flex flex-col sm:flex-row items-center justify-center gap-3.5 sm:gap-5"
           >
             <motion.a
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
               href="#calculator"
-              className="w-full sm:w-auto px-8 py-3.5 sm:px-9 sm:py-4 rounded-full bg-slate-950 dark:bg-white text-white dark:text-slate-950 font-heading font-bold text-xs sm:text-base hover:opacity-90 transition-all flex items-center justify-center gap-2 shadow-2xl"
+              className="w-full sm:w-auto px-8 py-3.5 sm:px-9 sm:py-4 rounded-full bg-neutral-950 dark:bg-white text-white dark:text-neutral-950 font-heading font-bold text-xs sm:text-base hover:opacity-90 transition-all flex items-center justify-center gap-2 shadow-2xl"
             >
               <span>{t.ctaCalc}</span>
               <ArrowUpRight className="w-4 h-4" />
@@ -101,7 +100,7 @@ export default function Hero({ lang, onOpenContact, isTickerSticky = false }) {
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
               href="#cases"
-              className="w-full sm:w-auto px-7 py-3.5 sm:px-8 sm:py-4 rounded-full border border-slate-200 dark:border-white/10 bg-white/80 dark:bg-white/[0.02] backdrop-blur-xl text-slate-800 dark:text-slate-200 hover:text-slate-950 dark:hover:text-white font-heading font-semibold text-xs sm:text-base transition-all flex items-center justify-center gap-2 shadow-sm"
+              className="w-full sm:w-auto px-7 py-3.5 sm:px-8 sm:py-4 rounded-full border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/[0.04] backdrop-blur-xl text-neutral-800 dark:text-neutral-200 hover:text-neutral-950 dark:hover:text-white font-heading font-semibold text-xs sm:text-base transition-all flex items-center justify-center gap-2 shadow-sm"
             >
               <span>{lang === 'en' ? 'Selected Cases' : (lang === 'kz' ? 'Таңдаулы кейстер' : 'Смотреть кейсы')}</span>
               <ArrowDown className="w-4 h-4" />
@@ -110,34 +109,34 @@ export default function Hero({ lang, onOpenContact, isTickerSticky = false }) {
 
         </div>
 
-        {/* Key Performance Metrics: Translucent Luxury Frosted Glass with Compact Typography */}
+        {/* Key Performance Metrics: At the bottom of the first screen, sitting comfortably above the bottom edge */}
         <motion.div 
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.35 }}
-          className="relative z-20 mt-14 sm:mt-20 grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6"
+          transition={{ duration: 0.8, delay: 0.28 }}
+          className="relative z-20 mt-6 sm:mt-10 mb-1 sm:mb-2 grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6"
         >
           {[
             { value: t.stats.projects, label: t.stats.projectsDesc, accent: 'bg-amber-400 shadow-[0_0_8px_rgba(251,191,36,0.6)]' },
-            { value: t.stats.conversion, label: t.stats.conversionDesc, accent: 'bg-cyan-400 shadow-[0_0_8px_rgba(56,189,248,0.6)]' },
+            { value: t.stats.conversion, label: t.stats.conversionDesc, accent: 'bg-amber-400 shadow-[0_0_8px_rgba(251,191,36,0.6)]' },
             { value: t.stats.capital, label: t.stats.capitalDesc, accent: 'bg-amber-400 shadow-[0_0_8px_rgba(251,191,36,0.6)]' },
-            { value: t.stats.sla, label: t.stats.slaDesc, accent: 'bg-cyan-400 shadow-[0_0_8px_rgba(56,189,248,0.6)]' }
+            { value: t.stats.sla, label: t.stats.slaDesc, accent: 'bg-amber-400 shadow-[0_0_8px_rgba(251,191,36,0.6)]' }
           ].map((stat, idx) => (
             <div 
               key={idx}
-              className="p-3.5 sm:p-5 lg:p-6 rounded-2xl sm:rounded-3xl backdrop-blur-2xl bg-white/35 dark:bg-white/[0.03] border border-black/[0.06] dark:border-white/10 shadow-lg dark:shadow-2xl flex flex-col justify-between group hover:border-amber-400/50 hover:bg-white/50 dark:hover:bg-white/[0.06] transition-all duration-300 min-w-0"
+              className="p-3 sm:p-4 lg:p-5 rounded-2xl sm:rounded-3xl backdrop-blur-2xl bg-white/40 dark:bg-white/[0.03] border border-black/[0.06] dark:border-white/10 shadow-lg dark:shadow-2xl flex flex-col justify-between group hover:border-amber-400/50 hover:bg-white/60 dark:hover:bg-white/[0.06] transition-all duration-300 min-w-0"
             >
-              <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center justify-between mb-2">
                 <span className={`w-2 h-2 rounded-full ${stat.accent}`}></span>
-                <span className="text-[9px] sm:text-[10px] font-mono uppercase tracking-widest text-slate-500 dark:text-slate-400">
+                <span className="text-[9px] sm:text-[10px] font-mono uppercase tracking-widest text-neutral-500 dark:text-neutral-400">
                   METRIC
                 </span>
               </div>
               <div className="min-w-0">
-                <div className="text-xl sm:text-2xl lg:text-3xl font-heading font-bold tracking-tight text-slate-950 dark:text-white leading-none mb-1.5 tabular-nums truncate">
+                <div className="text-xl sm:text-2xl lg:text-3xl font-heading font-bold tracking-tight text-neutral-950 dark:text-white leading-none mb-1 tabular-nums truncate">
                   {stat.value}
                 </div>
-                <div className="text-[10px] sm:text-xs font-mono text-slate-600 dark:text-slate-300 uppercase tracking-wider font-medium line-clamp-2">
+                <div className="text-[10px] sm:text-xs font-mono text-neutral-600 dark:text-neutral-300 uppercase tracking-wider font-medium line-clamp-2">
                   {stat.label}
                 </div>
               </div>
@@ -145,14 +144,6 @@ export default function Hero({ lang, onOpenContact, isTickerSticky = false }) {
           ))}
         </motion.div>
 
-      </div>
-
-      {/* Running Marquee Ticker with Smooth Deceleration and Sticky Docking */}
-      <div className="relative mt-12 sm:mt-16 w-full max-w-full">
-        {isTickerSticky && (
-          <div className="h-12 sm:h-14 w-full" aria-hidden="true" />
-        )}
-        <MarqueeTicker lang={lang} isSticky={isTickerSticky} />
       </div>
 
     </section>
