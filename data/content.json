@@ -554,28 +554,28 @@
       },
       "deliverables": {
         "kz": [
-          "Терең алдын ала талдау және CJM картасы",
-          "Figma-да жеке интерактивті дизайн жүйесі",
-          "Mobile First бейімді верстка және интерфейс микроанимациялары",
-          "CMS / Headless / жеке API интеграциясы",
-          "Төлем жүйелері, CRM және аналитика (GA4, Метрика)",
-          "Google PageSpeed көрсеткіші 90+"
+          "CJM және талдау",
+          "Figma дизайн",
+          "Mobile-first верстка",
+          "Next.js / React",
+          "Төлемдер мен CRM",
+          "PageSpeed 90+"
         ],
         "ru": [
-          "Глубокий предпроектный анализ и CJM пользователя",
-          "Индивидуальный интерактивный дизайн в Figma",
-          "Адаптивная верстка (Mobile First) и анимации интерфейса",
-          "Интеграция с CMS / Headless / кастомным бекендом",
-          "Подключение платежных систем, CRM и аналитики (Метрика, GA4)",
-          "Оценка производительности 90+ в Google PageSpeed"
+          "CJM и аналитика",
+          "Дизайн в Figma",
+          "Mobile-first верстка",
+          "Next.js / React",
+          "Платежи и CRM",
+          "PageSpeed 90+"
         ],
         "en": [
-          "Deep pre-project market research & customer journey mapping (CJM)",
-          "Bespoke interactive design system in Figma",
-          "Mobile-first responsive frontend & micro-interactions",
-          "Headless CMS or custom API backend integration",
-          "Payment gateways, CRM synchronization & analytics (GA4, Yandex)",
-          "90+ performance score in Google PageSpeed Core Web Vitals"
+          "CJM & User Flow",
+          "Bespoke Figma UI",
+          "Mobile-First Build",
+          "Next.js / React",
+          "Payment & CRM Sync",
+          "PageSpeed 90+"
         ]
       },
       "timeline": {
@@ -625,28 +625,28 @@
       },
       "deliverables": {
         "kz": [
-          "Бәсекелестерді зерттеу және нарықтағы позициялау",
-          "Логотип тұжырымдамасы (таңдау үшін 3 ерекше нұсқа)",
-          "Түстер палитрасы, фирмалық типографика және паттерндер",
-          "Толық Брендбук және нұсқаулық (PDF + Figma)",
-          "Іскери құжаттама, мерч, баннерлер және полиграфия дизайны",
-          "Сайт пен әлеуметтік желілерге арналған цифрлық ассеттер"
+          "Позициялау",
+          "3 лого концепті",
+          "Палитра мен қаріптер",
+          "Брендбук (PDF+Figma)",
+          "Мерч пен тасымалдаушылар",
+          "Digital-кит"
         ],
         "ru": [
-          "Анализ конкурентной среды и позиционирование бренда",
-          "Концепция логотипа (3 уникальных вектора на выбор)",
-          "Цветовая гамма, фирменная типографика и паттерны",
-          "Гайдлайн и Брендбук по использованию стиля (PDF + Figma)",
-          "Оформление деловой документации, мерча, баннеров и полиграфии",
-          "Digital-ассеты для сайта и соцсетей"
+          "Позиционирование",
+          "3 концепта лого",
+          "Палитра и шрифты",
+          "Брендбук (PDF+Figma)",
+          "Мерч и носители",
+          "Digital-кит"
         ],
         "en": [
-          "Market & competitor landscape research with strategic positioning",
-          "Logo concepts (3 distinct art directions to choose from)",
-          "Color palette, custom typography hierarchy, and brand patterns",
-          "Comprehensive Brand Guidelines (PDF + Figma vectors)",
-          "Corporate stationery, branded merchandise, packaging, and banners",
-          "Digital social kits and presentation assets"
+          "Brand Positioning",
+          "3 Logo Concepts",
+          "Color & Typography",
+          "Brand Guidelines",
+          "Merch & Collateral",
+          "Digital Kit"
         ]
       },
       "timeline": {
@@ -696,28 +696,28 @@
       },
       "deliverables": {
         "kz": [
-          "Мақсатты аудитория мен бәсекелестерді маркетингтік зерттеу",
-          "Қарсылықтарды сейілтетін сатушы копирайтинг",
-          "Заманауи эстетикалық UX/UI дизайн",
-          "Лидтерді жылытуға арналған интерактивті квиздер",
-          "A/B сплит-тестілеу",
-          "Telegram, WhatsApp және CRM-мен жылдам синхрондау"
+          "Аудитория & Оффер",
+          "Сатушы копирайтинг",
+          "Премиум UI/UX",
+          "Квиздер мен есептеуіш",
+          "A/B тестілеу",
+          "Telegram & CRM"
         ],
         "ru": [
-          "Маркетинговый аудит ЦА и офферов конкурентов",
-          "Сильный продающий копирайтинг с отработкой возражений",
-          "High-end UX/UI дизайн с вау-эффектом",
-          "Интерактивные калькуляторы и квизы для прогрева лидов",
-          "A/B сплит-тестирование заголовков и офферов",
-          "Интеграция с Telegram, WhatsApp и CRM за 1 минуту"
+          "Аудит ЦА и оффер",
+          "Продающий копирайтинг",
+          "Премиальный UI/UX",
+          "Квизы и калькуляторы",
+          "A/B тестирование",
+          "Telegram & CRM"
         ],
         "en": [
-          "Audience deep-dive & competitor value proposition mapping",
-          "Persuasive, objection-crushing conversion copywriting",
-          "Editorial, high-aesthetic UI/UX with smooth micro-motion",
-          "Interactive calculation quizzes to pre-qualify inbound leads",
-          "A/B test variations for headlines and CTAs",
-          "Instant multi-channel integration (Telegram, WhatsApp, CRM)"
+          "Audience & Offer Audit",
+          "Conversion Copywriting",
+          "High-End UI/UX",
+          "Interactive Quizzes",
+          "A/B Testing",
+          "Telegram & CRM Sync"
         ]
       },
       "timeline": {
@@ -767,28 +767,28 @@
       },
       "deliverables": {
         "kz": [
-          "Жобаның қаржылық моделі мен трекшенін құрылымдау",
-          "Инвесторлар мен шешім қабылдаушыларға арналған копирайтинг",
-          "Премиум графикалық дизайн, инфографика және диаграммалар",
-          "Интерактивті PDF + Figma / Keynote / PowerPoint файлдары",
-          "Басып шығару нұсқасы және мобильді дайджест",
-          "Питчинг пен сөз сөйлеуге арналған ұсынымдар"
+          "Финмодель & Трекшн",
+          "Инвесторға мәтін",
+          "Инфографика",
+          "Figma / Keynote",
+          "Мобильді нұсқа",
+          "Питч-гайд"
         ],
         "ru": [
-          "Структурирование сути проекта, финансовой модели и трекшена",
-          "Копирайтинг для инвесторов и корпоративных ЛПР",
-          "Премиальный графический дизайн, инфографика и диаграммы",
-          "Интерактивная PDF-версия + исходники в Figma / Keynote / PowerPoint",
-          "Версия для распечатки и мобильный дайджест",
-          "Гайд по питчингу и выступлению"
+          "Финмодель и трекшен",
+          "Копирайтинг для ЛПР",
+          "Инфографика и графики",
+          "Figma / Keynote",
+          "Мобильный дайджест",
+          "Гайд по питчингу"
         ],
         "en": [
-          "Problem-solution clarity, market sizing (TAM/SAM/SOM) & unit economics",
-          "Investor-grade narrative structure and persuasive executive summary",
-          "Clean diagrams, financial data visualizations, and custom graphics",
-          "Interactive PDF + fully editable Keynote / PowerPoint / Figma source files",
-          "Print-ready high-res format + condensed mobile teaser slide deck",
-          "Strategic pitch coaching notes"
+          "Financials & Traction",
+          "Executive Copywriting",
+          "Data Visualizations",
+          "Figma & Keynote Decks",
+          "Mobile Teaser Deck",
+          "Pitch Strategy Guide"
         ]
       },
       "timeline": {
@@ -838,28 +838,28 @@
       },
       "deliverables": {
         "kz": [
-          "Техникалық сипаттама, сәулет жоспары және деректер моделі",
-          "Full-stack әзірлеу (React, Next.js, Node.js, Python, PostgreSQL, Redis)",
-          "Банктермен, CRM, 1C және сыртқы API-мен интеграция",
-          "Қауіпсіздік тестілеуі, жүктемелік стресс-тесттер",
-          "Docker контейнерлеу, CI/CD және бұлтқа үздіксіз деплой",
-          "30 күндік кепілдік қолдау, бастапқы код пен құжаттаманы тапсыру"
+          "ТЗ және архитектура",
+          "React & Node Stack",
+          "1C және API байланыс",
+          "Стресс-тесттер",
+          "Docker & CI/CD",
+          "Бастапқы код"
         ],
         "ru": [
-          "Техническое задание, архитектурный план и модель данных",
-          "Разработка frontend (React, Next.js, Vue) и backend (Node.js, Python, Go)",
-          "Интеграции с 1С, складскими сервисами, банками и платежными шлюзами",
-          "Тестирование, безопасность, защита от атак и стресс-тесты",
-          "CI/CD, контейнеризация Docker и деплой в облачную инфраструктуру",
-          "Гарантийная поддержка и передача исходного кода с документацией"
+          "ТЗ и архитектура",
+          "React & Node Stack",
+          "Интеграции с 1С и API",
+          "Стресс-тесты",
+          "Docker и CI/CD",
+          "Исходный код"
         ],
         "en": [
-          "Formal technical specification, database schema, and microservice architecture",
-          "Full-stack engineering (React, Next.js, Node.js, Python, PostgreSQL, Redis)",
-          "Third-party ERP/CRM integrations, banking APIs, and custom webhooks",
-          "Security hardening, role-based access control (RBAC), and stress testing",
-          "Automated CI/CD pipelines, Docker containerization, and zero-downtime deploy",
-          "30-day post-launch warranty with full documentation and code handover"
+          "Tech Specs & Schema",
+          "React & Node Stack",
+          "ERP, 1C & Banking API",
+          "Stress & Load Testing",
+          "Docker & CI/CD",
+          "Full Code Handover"
         ]
       },
       "timeline": {
@@ -909,28 +909,28 @@
       },
       "deliverables": {
         "kz": [
-          "Техникалық жай-күйдің толық аудиті (жылдамдық, индекс, көшірмелер)",
-          "Конверсия UX/UI аудиті (CRO) және қолданушылар картасы",
-          "Іздеу сұраныстарының толық семантикалық ядросын жинау",
-          "Ішкі оңтайландыру (метатегтер, микробелгілер, сілтемелер)",
-          "Контент-жоспар және сенімді сілтемелік массаны өсіру",
-          "Позициялар мен трафик динамикасы бойынша ай сайынғы ашық есептер"
+          "Техникалық аудит",
+          "Конверсия аудиті (CRO)",
+          "Семантикалық ядро",
+          "Ішкі SEO баптау",
+          "Сілтемелер стратегиясы",
+          "Есептер және ТОП-3"
         ],
         "ru": [
-          "Полный аудит технического состояния (скорость, дубли, индексация)",
-          "UX/UI аудит конверсии (CRO) и карта кликов пользователей",
-          "Сбор и кластеризация семантического ядра запросов",
-          "Внутренняя оптимизация (метатеги, микроразметка, перелинковка)",
-          "План по контенту и наращиванию трастовой ссылочной массы",
-          "Ежемесячные прозрачные отчеты по динамике позиций и трафика"
+          "Технический аудит",
+          "Аудит конверсии (CRO)",
+          "Семантическое ядро",
+          "Микроразметка & SEO",
+          "Трастовые ссылки",
+          "Отчеты и ТОП-3"
         ],
         "en": [
-          "Technical crawl (Core Web Vitals, duplicate detection, canonicalization)",
-          "Conversion rate optimization (CRO) audit with user click heatmaps",
-          "Exhaustive semantic keyword clustering for commercial intent queries",
-          "On-page SEO optimization (structured schema.org, metatags, internal linking)",
-          "Content strategy roadmap & authoritative backlink building strategy",
-          "Transparent automated monthly analytics reporting on rankings and organic revenue"
+          "Technical Audit",
+          "CRO & Click Heatmaps",
+          "Keyword Clustering",
+          "On-Page Schema & SEO",
+          "Authority Backlinks",
+          "Monthly KPI Tracking"
         ]
       },
       "timeline": {
@@ -980,28 +980,28 @@
       },
       "deliverables": {
         "kz": [
-          "Сегментке бейімделген контент-стратегия мен жариялау жоспары",
-          "Парақшаның біртұтас визуалды стилі (тор, мұқабалар, Highlights)",
-          "Reels / Shorts бейнероликтерінің сценарийлері мен өндірісі",
-          "Тартымды сатушы жазбалар копирайтингі",
-          "Комьюнити-менеджмент және директ өтінімдерін өңдеу",
-          "Таргеттік жарнаманы реттеу және блогерлермен интеграция"
+          "Контент-стратегия",
+          "Фирмалық визуал",
+          "Reels/Shorts өндірісі",
+          "Жазбалар & Карусель",
+          "Директ өңдеу",
+          "Таргет & Блогерлер"
         ],
         "ru": [
-          "Разработка контент-стратегии и рубрикатора под ваш сегмент",
-          "Создание единого визуального стиля профиля (сетка, обложки, Highlights)",
-          "Сценарии и продакшн роликов Reels / Shorts / TikTok",
-          "Копирайтинг вовлекающих постов и каруселей",
-          "Комьюнити-менеджмент, ответы на комментарии и обработка директа",
-          "Настройка таргетированной рекламы и посевов у блогеров"
+          "Контент-стратегия",
+          "Фирменный визуал",
+          "Сценарии Reels/Shorts",
+          "Посты и карусели",
+          "Комьюнити & Директ",
+          "Таргетинг & Посевы"
         ],
         "en": [
-          "Audience-tailored content architecture and publishing calendar",
-          "Cohesive visual branding (feed grid, cover graphics, Highlights styling)",
-          "Short-form video scriptwriting, dynamic editing, and captions (Reels/Shorts)",
-          "Engaging editorial copy, carousels, and case summaries",
-          "Community engagement and inbound lead routing workflows",
-          "Targeted advertising and influencer seeding execution"
+          "Content Strategy",
+          "Visual Feed Identity",
+          "Reels & Shorts Scripts",
+          "Editorial Carousels",
+          "Community & DMs",
+          "Paid Ads & Seeding"
         ]
       },
       "timeline": {
@@ -1051,28 +1051,28 @@
       },
       "deliverables": {
         "kz": [
-          "Терең зерттеу, CustDev сұхбаттары және ерекше сауда ұсынысы (УТП)",
-          "Фирмалық стиль мен көлемді Брендбукті толық жасау",
-          "Негізгі бағыттар бойынша сатушы сайт немесе экосистема",
-          "Маркетинг-кит, коммерциялық ұсыныстар және компания презентациясы",
-          "Әлеуметтік желілерді қаптау және лидогенерация жүйесі",
-          "Клиент жолын цифрландыру және түпкілікті аналитика"
+          "CustDev және УТП",
+          "Фирстиль мен брендбук",
+          "Сайттар экожүйесі",
+          "Маркетинг-кит & КП",
+          "Лидогенерация воронкасы",
+          "Түпкілікті аналитика"
         ],
         "ru": [
-          "Глубинное исследование рынка, CustDev интервью и выжимка УТП",
-          "Полная разработка корпоративного стиля и брендбука",
-          "Продающий сайт или экосистема страниц под ключевые направления",
-          "Маркетинг-кит, коммерческие предложения и презентация компании",
-          "Упаковка социальных сетей и воронка лидогенерации",
-          "Оцифровка пути клиента и внедрение сквозной аналитики"
+          "CustDev и УТП",
+          "Фирстиль и брендбук",
+          "Экосистема страниц",
+          "Маркетинг-кит и КП",
+          "Воронка лидогенерации",
+          "Сквозная аналитика"
         ],
         "en": [
-          "CustDev interviews, market positioning study, and core value propositions",
-          "Complete brand identity system and comprehensive Brandbook",
-          "High-converting flagship web platform or multi-landing ecosystem",
-          "Corporate marketing kit, executive sales decks, and offer templates",
-          "Social media design package and automated lead routing funnels",
-          "End-to-end attribution analytics and customer journey instrumentation"
+          "CustDev & Positioning",
+          "Brand Identity & Guide",
+          "Digital Ecosystem",
+          "Marketing Kit & Decks",
+          "Lead Generation Funnel",
+          "Attribution Analytics"
         ]
       },
       "timeline": {

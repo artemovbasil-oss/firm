@@ -10,7 +10,7 @@ export default function Services({
   onSelectForCalculator, 
   onOrderService 
 }) {
-  const [activeService, setActiveService] = useState('websites');
+  const [activeService, setActiveService] = useState(null);
   const t = TRANSLATIONS[lang].services;
 
   const formatPrice = (priceObj) => {
@@ -77,10 +77,10 @@ export default function Services({
                 <button
                   type="button"
                   onClick={() => setActiveService(isSelected ? null : service.id)}
-                  className="w-full py-6 sm:py-8 lg:py-10 text-left flex flex-col md:flex-row md:items-center justify-between gap-3 sm:gap-6 focus:outline-none group px-1 sm:px-4"
+                  className="w-full py-5 sm:py-7 lg:py-8 text-left flex flex-col md:flex-row md:items-center justify-between gap-3 sm:gap-6 focus:outline-none group px-1 sm:px-4"
                 >
                   <div className="flex items-center gap-4 sm:gap-8 min-w-0 flex-1">
-                    <h3 className="text-xl sm:text-3xl md:text-4xl lg:text-5xl font-heading font-extrabold tracking-tight text-slate-950 dark:text-white group-hover:translate-x-2 transition-transform duration-200 truncate sm:whitespace-normal">
+                    <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-heading font-extrabold tracking-tight text-slate-950 dark:text-white group-hover:translate-x-2 transition-transform duration-200 truncate sm:whitespace-normal">
                       {title}
                     </h3>
                   </div>
@@ -119,40 +119,41 @@ export default function Services({
                       transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
                       className="overflow-hidden"
                     >
-                      <div className="pb-8 sm:pb-10 pl-2 sm:pl-8 lg:pl-12 pr-2 sm:pr-8 space-y-5 pt-2">
-                        <p className="text-sm sm:text-lg lg:text-xl text-slate-700 dark:text-slate-300 leading-relaxed font-light max-w-4xl">
+                      <div className="pb-6 sm:pb-8 pl-1 sm:pl-4 lg:pl-4 pr-1 sm:pr-4 space-y-4 pt-1">
+                        <p className="text-xs sm:text-sm md:text-base text-slate-600 dark:text-slate-300 leading-relaxed font-normal max-w-3xl">
                           {tagline}
                         </p>
 
-                        {/* Clean Deliverable Tags with Healthy Gaps */}
-                        <div className="flex flex-wrap gap-2 pt-1">
-                          {deliverables.slice(0, 4).map((d, dIdx) => (
+                        {/* Compact Deliverable Tags with Accent Dot */}
+                        <div className="flex flex-wrap gap-1.5 sm:gap-2">
+                          {deliverables.slice(0, 6).map((d, dIdx) => (
                             <span 
                               key={dIdx}
-                              className="px-3.5 py-1.5 rounded-full text-xs font-mono bg-white dark:bg-white/[0.05] border border-black/[0.08] dark:border-white/10 text-slate-700 dark:text-slate-300 shadow-sm"
+                              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] sm:text-xs font-mono bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.07] dark:border-white/10 text-slate-700 dark:text-slate-200 transition-colors hover:border-black/25 dark:hover:border-white/25"
                             >
+                              <span className="w-1.5 h-1.5 rounded-full bg-amber-500/80 dark:bg-amber-400 shrink-0" />
                               {d}
                             </span>
                           ))}
                         </div>
 
                         {/* Action buttons with proper margins */}
-                        <div className="flex flex-wrap items-center gap-4 pt-4">
+                        <div className="flex flex-wrap items-center gap-3 pt-2">
                           <motion.button
-                            whileHover={{ scale: 1.03 }}
-                            whileTap={{ scale: 0.97 }}
+                            whileHover={{ scale: 1.02 }}
+                            whileTap={{ scale: 0.98 }}
                             onClick={() => onOrderService(title)}
-                            className="px-6 py-3.5 rounded-full bg-slate-950 dark:bg-white text-white dark:text-slate-950 text-xs sm:text-sm font-heading font-bold transition-all flex items-center gap-2 shadow-lg"
+                            className="px-4 py-2 sm:px-5 sm:py-2.5 rounded-full bg-slate-950 dark:bg-white text-white dark:text-slate-950 text-xs sm:text-sm font-heading font-bold transition-all flex items-center gap-1.5 shadow-md hover:shadow-lg"
                           >
                             <span>{t.orderBtn}</span>
                             <ArrowRight className="w-3.5 h-3.5" />
                           </motion.button>
 
                           <motion.button
-                            whileHover={{ scale: 1.03 }}
-                            whileTap={{ scale: 0.97 }}
+                            whileHover={{ scale: 1.02 }}
+                            whileTap={{ scale: 0.98 }}
                             onClick={() => onSelectForCalculator(service.id)}
-                            className="px-6 py-3.5 rounded-full border border-black/[0.1] dark:border-white/15 text-slate-800 dark:text-slate-200 hover:text-slate-950 dark:hover:text-white text-xs sm:text-sm font-heading font-medium transition-all"
+                            className="px-4 py-2 sm:px-5 sm:py-2.5 rounded-full border border-black/[0.1] dark:border-white/15 text-slate-800 dark:text-slate-200 hover:text-slate-950 dark:hover:text-white hover:border-black/30 dark:hover:border-white/30 text-xs sm:text-sm font-heading font-medium transition-all"
                           >
                             {t.calcBtn}
                           </motion.button>
