@@ -2,8 +2,9 @@ import React, { useRef, useEffect } from 'react';
 import { ArrowUpRight, ArrowDown } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { TRANSLATIONS } from '../data/translations';
+import MarqueeTicker from './MarqueeTicker';
 
-export default function Hero({ lang, onOpenContact }) {
+export default function Hero({ lang, onOpenContact, isTickerSticky = false }) {
   const t = TRANSLATIONS[lang].hero;
   const videoRef = useRef(null);
 
@@ -20,35 +21,6 @@ export default function Hero({ lang, onOpenContact }) {
       }
     }
   }, []);
-
-  const marqueeItems = lang === 'en' ? [
-    'HIGH-LOAD WEB PLATFORMS',
-    'BESPOKE BRANDING & PACKAGING',
-    'CUSTOM SAAS & CRM ENGINES',
-    'VENTURE PITCH DECKS',
-    'TECHNICAL SEO DOMINANCE',
-    'CONVERSION-FOCUSED ARCHITECTURE',
-    '100% NDA & CODE OWNERSHIP',
-    'TWO-WEEK RAPID SPRINTS'
-  ] : lang === 'kz' ? [
-    'ЖОҒАРЫ ЖҮКТЕМЕЛІ ВЕБ-ПЛАТФОРМАЛАР',
-    'ПРЕМИУМ БРЕНДИНГ ЖӘНЕ ҚАПТАМА',
-    'ЖЕКЕ SAAS ЖӘНЕ CRM ЖҮЙЕЛЕРІ',
-    'ИНВЕСТОРЛЫҚ PITCH DECK-ТЕР',
-    'SEO ЖӘНЕ ТЕХНИКАЛЫҚ АУДИТ',
-    'КОНВЕРСИЯСЫ ЖОҒАРЫ САЙТТАР',
-    '100% NDA ЖӘНЕ МЕНШІК ҚҰҚЫҒЫ',
-    '2 АПТАЛЫҚ ЖЕДЕЛ СПРИНТТЕР'
-  ] : [
-    'ВЫСОКОНАГРУЖЕННЫЕ ВЕБ-ПЛАТФОРМЫ',
-    'ПРЕМИАЛЬНЫЙ БРЕНДИНГ И УПАКОВКА',
-    'КАСТОМНЫЙ СОФТ, SAAS И CRM',
-    'ИНВЕСТИЦИОННЫЕ PITCH DECKS',
-    'SEO И ОРГАНИЧЕСКИЙ РОСТ',
-    'ПРОДАЮЩИЕ ВОРОНКИ И ЛЕНДИНГИ',
-    '100% NDA И ПЕРЕДАЧА ВСЕХ ПРАВ',
-    'ДВУХНЕДЕЛЬНЫЕ РЕЛИЗ-СПРИНТЫ'
-  ];
 
   return (
     <section className="relative pt-28 pb-12 sm:pt-36 sm:pb-16 lg:pt-44 lg:pb-20 overflow-hidden ambient-glow-hero w-full max-w-full">
@@ -190,16 +162,12 @@ export default function Hero({ lang, onOpenContact }) {
 
       </div>
 
-      {/* Infinite Running Marquee Ticker with Solar Amber Accent Separators */}
-      <div className="relative z-20 mt-12 sm:mt-16 py-3.5 sm:py-4 bg-white dark:bg-[#06070b] text-slate-950 dark:text-white border-y border-slate-200 dark:border-white/15 overflow-hidden select-none shadow-sm dark:shadow-xl w-full max-w-full">
-        <div className="animate-marquee whitespace-nowrap flex items-center gap-8 text-xs sm:text-sm font-mono font-bold tracking-widest uppercase">
-          {[...marqueeItems, ...marqueeItems].map((item, idx) => (
-            <span key={idx} className="flex items-center gap-8">
-              <span>{item}</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-amber-400 shadow-[0_0_6px_rgba(251,191,36,0.6)] shrink-0"></span>
-            </span>
-          ))}
-        </div>
+      {/* Running Marquee Ticker with Smooth Deceleration and Sticky Docking */}
+      <div className="relative mt-12 sm:mt-16 w-full max-w-full">
+        {isTickerSticky && (
+          <div className="h-12 sm:h-14 w-full" aria-hidden="true" />
+        )}
+        <MarqueeTicker lang={lang} isSticky={isTickerSticky} />
       </div>
 
     </section>

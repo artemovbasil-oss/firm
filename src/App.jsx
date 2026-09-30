@@ -36,6 +36,16 @@ export default function App() {
   const [contactInitialService, setContactInitialService] = useState('');
   const [isAdminOpen, setIsAdminOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState(null);
+  const [isTickerSticky, setIsTickerSticky] = useState(false);
+
+  // Monitor scroll for sticky ticker & navbar adjustment
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsTickerSticky(window.scrollY > 480);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   // Update theme class on HTML element
   useEffect(() => {
@@ -180,6 +190,7 @@ export default function App() {
         setTheme={setTheme}
         onOpenContact={handleOpenContact}
         onOpenAdmin={() => setIsAdminOpen(true)}
+        isTickerSticky={isTickerSticky}
       />
 
       {/* Main Content */}
@@ -187,6 +198,7 @@ export default function App() {
         <Hero 
           lang={lang}
           onOpenContact={handleOpenContact} 
+          isTickerSticky={isTickerSticky}
         />
         
         <Services 

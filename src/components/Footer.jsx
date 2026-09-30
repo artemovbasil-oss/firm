@@ -1,6 +1,7 @@
 import React from 'react';
 import { Send, Mail, ShieldCheck, ArrowUp } from 'lucide-react';
 import { TRANSLATIONS } from '../data/translations';
+import ArtxLogo from './ArtxLogo';
 
 export default function Footer({ lang, servicesList = [], onOpenContact }) {
   const t = TRANSLATIONS[lang].footer;
@@ -19,9 +20,7 @@ export default function Footer({ lang, servicesList = [], onOpenContact }) {
           {/* Brand Info (2 cols) */}
           <div className="lg:col-span-2 space-y-5">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-slate-950 dark:bg-white text-white dark:text-slate-950 flex items-center justify-center font-heading font-black text-base shadow-sm">
-                A
-              </div>
+              <ArtxLogo className="w-9 h-9" />
               <div className="flex flex-col">
                 <span className="font-heading font-extrabold text-xl text-slate-950 dark:text-white tracking-tight leading-none">
                   ARTX

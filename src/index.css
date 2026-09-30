@@ -171,10 +171,6 @@
   animation: marquee 32s linear infinite;
 }
 
-.animate-marquee:hover {
-  animation-play-state: paused;
-}
-
 /* Ambient Spotlights */
 .ambient-glow-hero {
   background: radial-gradient(circle 800px at 50% -80px, rgba(99, 102, 241, 0.09), rgba(59, 130, 246, 0.03), transparent 75%);

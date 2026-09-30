@@ -3,6 +3,7 @@ import {
   Menu, X, Sun, Moon, ArrowUpRight, LayoutDashboard, Sparkles
 } from 'lucide-react';
 import { TRANSLATIONS } from '../data/translations';
+import ArtxLogo from './ArtxLogo';
 
 export default function Navbar({ 
   lang, 
@@ -10,7 +11,8 @@ export default function Navbar({
   theme, 
   setTheme, 
   onOpenContact,
-  onOpenAdmin 
+  onOpenAdmin,
+  isTickerSticky = false 
 }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -32,8 +34,12 @@ export default function Navbar({
   ];
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 pointer-events-none transition-all duration-300">
-      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 pt-3 sm:pt-4">
+    <header className={`fixed left-0 right-0 z-50 pointer-events-none transition-all duration-300 ${
+      isTickerSticky ? 'top-7 sm:top-8' : 'top-0'
+    }`}>
+      <div className={`max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 transition-all duration-300 ${
+        isTickerSticky ? 'pt-1.5 sm:pt-2' : 'pt-3 sm:pt-4'
+      }`}>
         
         {/* Floating Dock Container */}
         <div 
@@ -46,9 +52,7 @@ export default function Navbar({
           
           {/* Logo with live status beacon */}
           <a href="#" className="flex items-center gap-2.5 group shrink-0">
-            <div className="w-8 h-8 rounded-xl bg-slate-950 dark:bg-white text-white dark:text-slate-950 flex items-center justify-center font-heading font-black text-sm tracking-wider shadow-sm group-hover:scale-105 transition-transform">
-              A
-            </div>
+            <ArtxLogo className="w-8 h-8 group-hover:scale-105 transition-transform" />
             <div className="flex flex-col">
               <div className="flex items-center gap-1.5">
                 <span className="font-heading font-extrabold text-base sm:text-lg tracking-tight text-slate-950 dark:text-white leading-none">
