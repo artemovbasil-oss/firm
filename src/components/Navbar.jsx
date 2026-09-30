@@ -35,10 +35,10 @@ export default function Navbar({
 
   return (
     <header className={`fixed left-0 right-0 z-50 pointer-events-none transition-all duration-300 ${
-      isTickerSticky ? 'top-7 sm:top-8' : 'top-0'
+      isTickerSticky ? 'top-10 sm:top-11' : 'top-0'
     }`}>
       <div className={`max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 transition-all duration-300 ${
-        isTickerSticky ? 'pt-1.5 sm:pt-2' : 'pt-3 sm:pt-4'
+        isTickerSticky ? 'pt-1 sm:pt-2' : 'pt-3 sm:pt-4'
       }`}>
         
         {/* Floating Dock Container */}

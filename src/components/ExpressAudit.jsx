@@ -51,8 +51,15 @@ export default function ExpressAudit({ lang, onSuccessLead }) {
 
   return (
     <section id="audit" className="py-20 sm:py-28 lg:py-32 relative w-full max-w-full overflow-hidden">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         
+        {/* Ambient Backlight blooming from beneath the diagnostic card */}
+        <div 
+          className={`absolute -inset-3 sm:-inset-6 rounded-[36px] bg-gradient-to-r from-amber-500/25 via-cyan-500/20 to-purple-600/25 blur-3xl transition-all duration-700 pointer-events-none -z-10 ${
+            isHovered ? 'opacity-100 scale-100' : 'opacity-20 scale-95'
+          }`}
+        />
+
         {/* Luxury Studio Diagnostic Card with WebGL Thermal Heatmap & Film Noise on Hover */}
         <div 
           ref={cardRef}
@@ -96,13 +103,13 @@ export default function ExpressAudit({ lang, onSuccessLead }) {
               <span>{lang === 'en' ? 'Diagnostic Teardown' : (lang === 'kz' ? 'Экспресс-аудит' : 'Экспресс-аудит')}</span>
             </div>
 
-            <h2 className="text-2xl sm:text-4xl lg:text-5xl font-heading font-black tracking-tight text-slate-950 dark:text-white uppercase leading-[1.05]">
+            <h2 className="text-2xl sm:text-4xl lg:text-5xl font-heading font-black tracking-tight text-slate-950 dark:text-white uppercase leading-[1.08] max-w-3xl mx-auto [text-wrap:balance]">
               {lang === 'en' ? (
-                <>Want to know why your <br className="hidden sm:inline" />platform isn't converting?</>
+                <>Want to know why your platform <br className="hidden sm:inline" />isn't making sales?</>
               ) : lang === 'kz' ? (
                 <>Сайтыңыз неліктен <br className="hidden sm:inline" />сатылым әкелмей жатыр?</>
               ) : (
-                <>Хотите узнать, почему ваш <br className="hidden sm:inline" />сайт не приносит продажи?</>
+                <>Хотите узнать, почему <br className="hidden sm:inline" />ваш&nbsp;сайт не&nbsp;приносит продажи?</>
               )}
             </h2>
 

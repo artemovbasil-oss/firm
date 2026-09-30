@@ -9,40 +9,30 @@ export default function ArtxLogo({ className = 'w-8 h-8', showText = false, text
         xmlns="http://www.w3.org/2000/svg"
       >
         <defs>
-          <linearGradient id="artxLogoDarkBg" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#0a0c14" />
-            <stop offset="100%" stopColor="#020306" />
+          <linearGradient id="artxObsidianBg" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#0d0f18" />
+            <stop offset="100%" stopColor="#030408" />
           </linearGradient>
-          <linearGradient id="artxLogoAmber" x1="0%" y1="0%" x2="100%" y2="100%">
+          <linearGradient id="artxAmberBeacon" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" stopColor="#fde047" />
-            <stop offset="40%" stopColor="#fbbf24" />
+            <stop offset="50%" stopColor="#fbbf24" />
             <stop offset="100%" stopColor="#f59e0b" />
           </linearGradient>
-          <linearGradient id="artxLogoWhite" x1="0%" y1="0%" x2="0%" y2="100%">
+          <linearGradient id="artxWhiteDelta" x1="0%" y1="0%" x2="0%" y2="100%">
             <stop offset="0%" stopColor="#ffffff" />
-            <stop offset="100%" stopColor="#f1f5f9" />
+            <stop offset="100%" stopColor="#e2e8f0" />
           </linearGradient>
         </defs>
 
-        {/* Deep Obsidian Base with Subtle Border */}
-        <rect width="100" height="100" rx="24" fill="url(#artxLogoDarkBg)" />
-        <rect x="1" y="1" width="98" height="98" rx="23" fill="none" stroke="rgba(255,255,255,0.14)" strokeWidth="1.5" />
+        {/* Deep Obsidian Container with Refined Micro-Border */}
+        <rect width="100" height="100" rx="22" fill="url(#artxObsidianBg)" />
+        <rect x="0.75" y="0.75" width="98.5" height="98.5" rx="21.25" fill="none" stroke="rgba(255,255,255,0.12)" strokeWidth="1.5" />
 
-        {/* Master ARTX Mark: Architectural A + Kinetic Amber X */}
-        {/* Left Ascending Pillar of A */}
-        <polygon points="22,82 43,18 57,18 36,82" fill="url(#artxLogoWhite)" />
+        {/* Swiss Architectural Delta Chevron (A) */}
+        <polygon points="50,20 26,78 38,78 50,44 62,78 74,78" fill="url(#artxWhiteDelta)" />
 
-        {/* Right Descending Pillar of A */}
-        <polygon points="43,18 57,18 78,82 64,82 50,40" fill="url(#artxLogoWhite)" />
-
-        {/* Kinetic Solar Amber Blade (Forms X + Crossbar) */}
-        {/* Upper Right Wing of Amber Blade */}
-        <polygon points="80,20 66,20 48,50 62,50" fill="url(#artxLogoAmber)" />
-        {/* Lower Left Wing of Amber Blade */}
-        <polygon points="40,64 26,82 12,82 26,64" fill="url(#artxLogoAmber)" />
-
-        {/* Amber Core Floating Crossbar (The A crossbar & X center lock) */}
-        <polygon points="36,52 64,52 68,60 32,60" fill="url(#artxLogoAmber)" />
+        {/* Solar Amber Core Beacon */}
+        <circle cx="50" cy="62" r="5.5" fill="url(#artxAmberBeacon)" />
       </svg>
 
       {showText && (

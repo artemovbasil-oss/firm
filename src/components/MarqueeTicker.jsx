@@ -97,33 +97,22 @@ export default function MarqueeTicker({ lang = 'ru', isSticky = false }) {
       onMouseLeave={() => setIsHovered(false)}
       className={`w-full overflow-hidden select-none transition-all duration-300 ${
         isSticky
-          ? 'fixed top-0 left-0 right-0 z-40 py-2 sm:py-2.5 bg-white/90 dark:bg-[#06070b]/92 backdrop-blur-xl border-b border-black/[0.08] dark:border-white/10 shadow-sm'
-          : 'relative z-20 py-3.5 sm:py-4 bg-white/80 dark:bg-[#06070b]/80 backdrop-blur-md border-y border-slate-200/80 dark:border-white/10 shadow-sm dark:shadow-xl'
+          ? 'fixed top-0 left-0 right-0 z-40 py-2 sm:py-2.5 bg-white/95 dark:bg-[#07080e]/95 backdrop-blur-xl border-b border-black/[0.08] dark:border-white/10 shadow-sm'
+          : 'relative z-20 py-3.5 sm:py-4 bg-slate-100/90 dark:bg-[#07080e]/90 backdrop-blur-md border-y border-slate-200/80 dark:border-white/10 shadow-sm dark:shadow-xl'
       }`}
     >
       {/* Edge gradient masks for smooth fade in/out */}
-      <div className="pointer-events-none absolute inset-y-0 left-0 w-12 sm:w-24 bg-gradient-to-r from-white dark:from-[#06070b] to-transparent z-10" />
-      <div className="pointer-events-none absolute inset-y-0 right-0 w-12 sm:w-24 bg-gradient-to-l from-white dark:from-[#06070b] to-transparent z-10" />
+      <div className="pointer-events-none absolute inset-y-0 left-0 w-12 sm:w-24 bg-gradient-to-r from-white dark:from-[#07080e] to-transparent z-10" />
+      <div className="pointer-events-none absolute inset-y-0 right-0 w-12 sm:w-24 bg-gradient-to-l from-white dark:from-[#07080e] to-transparent z-10" />
 
       {/* Marquee Track Container */}
       <div className="flex items-center">
-        {/* Subtle Live Badge indicator in sticky mode */}
-        {isSticky && (
-          <div className="pl-3 sm:pl-6 shrink-0 z-20 hidden md:flex items-center gap-1.5 pr-2">
-            <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse shadow-[0_0_6px_rgba(251,191,36,0.8)]" />
-            <span className="text-[10px] font-mono font-bold tracking-widest text-slate-400 dark:text-slate-500 uppercase">
-              ARTX · LIVE
-            </span>
-            <span className="text-slate-300 dark:text-slate-700">/</span>
-          </div>
-        )}
-
         <div
           ref={trackRef}
           style={{ willChange: 'transform' }}
           className={`flex items-center whitespace-nowrap font-mono font-semibold uppercase tracking-wider ${
             isSticky
-              ? 'text-[11px] sm:text-xs text-slate-700 dark:text-slate-300'
+              ? 'text-[11px] sm:text-xs text-slate-800 dark:text-slate-200'
               : 'text-xs sm:text-sm text-slate-900 dark:text-white'
           }`}
         >

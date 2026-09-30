@@ -49,12 +49,15 @@ export default function Testimonials({ lang, testimonialsList }) {
                 </div>
 
                 <div className="flex items-center gap-4 pt-6 border-t border-black/[0.06] dark:border-white/[0.06]">
-                  <img
-                    src={item.avatar}
-                    alt={name}
-                    className="w-11 h-11 rounded-full object-cover grayscale hover:grayscale-0 transition-all"
-                  />
-                  <div>
+                  <div className="w-12 h-12 rounded-full overflow-hidden shrink-0 border border-black/10 dark:border-white/10 ring-2 ring-black/5 dark:ring-white/5 bg-slate-200 dark:bg-white/10">
+                    <img
+                      src={item.avatar}
+                      alt={name}
+                      className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-300"
+                      loading="lazy"
+                    />
+                  </div>
+                  <div className="min-w-0">
                     <div className="text-sm sm:text-base font-heading font-bold text-slate-950 dark:text-white">
                       {name}
                     </div>
