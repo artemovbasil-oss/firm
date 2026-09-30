@@ -243,7 +243,7 @@ export default function Cases({ lang, casesList = [], onOpenContact }) {
         </div>
 
         {/* Confidential NDA Advisory Strip: Clean, seamless editorial layout without enclosed border box */}
-        <div className="mt-12 sm:mt-16 pt-8 sm:pt-12 border-t border-black/[0.06] dark:border-white/[0.08] flex flex-col md:flex-row md:items-center justify-between gap-6 sm:gap-8 px-1 sm:px-2">
+        <div id="cases-nda" className="mt-12 sm:mt-16 pt-8 sm:pt-12 border-t border-black/[0.06] dark:border-white/[0.08] flex flex-col md:flex-row md:items-center justify-between gap-6 sm:gap-8 px-1 sm:px-2">
           <div className="max-w-xl">
             <h3 className="text-xl sm:text-2xl font-heading font-extrabold text-neutral-950 dark:text-white tracking-tight">
               {t.requestNicheTitle}
