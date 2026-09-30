@@ -1186,9 +1186,9 @@ export const TESTIMONIALS = [
     role: { kz: 'CEO & Негізін қалаушы', ru: 'CEO & Основатель', en: 'Founder & CEO' },
     company: 'FinCore Tech',
     text: {
-      kz: 'FIRM командасы керемет жұмыс жасады: бір ай ішінде өнімді қайта жинақтап, презентация мен платформаны толық жаңарттық. Нәтижесінде $3.2M раундын 3 аптада жаптық.',
-      ru: 'Команда FIRM сделала невозможное: за месяц мы полностью пересобрали продукт, переделали презентацию и платформу. На демо-дне инвесторы сразу отметили качество подачи. Результат — раунд закрыт за 3 недели.',
-      en: 'The FIRM squad delivered extraordinary work: within a single month, our platform, deck, and brand were completely rebuilt. Investors praised our execution and we closed our round in 3 weeks.'
+      kz: 'ARTX командасы керемет жұмыс жасады: бір ай ішінде өнімді қайта жинақтап, презентация мен платформаны толық жаңарттық. Нәтижесінде $3.2M раундын 3 аптада жаптық.',
+      ru: 'Команда ARTX сделала невозможное: за месяц мы полностью пересобрали продукт, переделали презентацию и платформу. На демо-дне инвесторы сразу отметили качество подачи. Результат — раунд закрыт за 3 недели.',
+      en: 'The ARTX squad delivered extraordinary work: within a single month, our platform, deck, and brand were completely rebuilt. Investors praised our execution and we closed our round in 3 weeks.'
     },
     avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=160&q=80',
     outcome: { kz: '$3.2M Раунды', ru: 'Раунд $3.2M', en: '$3.2M Seed Round' }
@@ -1198,9 +1198,9 @@ export const TESTIMONIALS = [
     role: { kz: 'Коммерциялық директор', ru: 'Коммерческий директор', en: 'Chief Commercial Officer' },
     company: 'Aura Development',
     text: {
-      kz: 'FIRM элиталық жылжымайтын мүліктің ерекшелігін өте жақсы түсінеді. Жарнамадан келген конверсия 3 есе өсті, ал менеджерлердің сату циклі қысқарды.',
-      ru: 'Искали агентство, которое понимает специфику премиальной недвижимости. Лендинг от FIRM превзошел ожидания: конверсия из рекламы выросла почти в 3 раза, а менеджеры наконец перестали тратить часы на объяснения.',
-      en: 'FIRM deeply understands the high-net-worth real estate market. Our advertising conversion tripled, while our inbound sales cycle shortened dramatically.'
+      kz: 'ARTX элиталық жылжымайтын мүліктің ерекшелігін өте жақсы түсінеді. Жарнамадан келген конверсия 3 есе өсті, ал менеджерлердің сату циклі қысқарды.',
+      ru: 'Искали агентство, которое понимает специфику премиальной недвижимости. Лендинг от ARTX превзошел ожидания: конверсия из рекламы выросла почти в 3 раза, а менеджеры наконец перестали тратить часы на объяснения.',
+      en: 'ARTX deeply understands the high-net-worth real estate market. Our advertising conversion tripled, while our inbound sales cycle shortened dramatically.'
     },
     avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=160&q=80',
     outcome: { kz: '-64% лид құны', ru: '-64% стоимость лида', en: '-64% Cost Per Lead' }
@@ -1295,11 +1295,11 @@ export const FAQ_ITEMS = [
 ];
 
 export const INITIAL_SETTINGS = {
-  agencyName: 'FIRM Digital Agency',
-  email: 'hello@firm-agency.pro',
+  agencyName: 'ARTX Digital Agency',
+  email: 'hello@artx.one',
   telegram: 'artemov_basil',
   phone: '+7 (999) 000-00-00',
   telegramBotToken: '',
   telegramChatId: '',
-  adminPin: 'firm2026'
+  adminPin: 'artx_KkBOtISfzIs!2026'
 };

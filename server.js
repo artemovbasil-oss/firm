@@ -13,7 +13,7 @@ const DATA_DIR = process.env.DATA_DIR || path.join(__dirname, 'data');
 const LEADS_FILE = path.join(DATA_DIR, 'leads.json');
 const CONTENT_FILE = path.join(DATA_DIR, 'content.json');
 
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'firm2026';
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'artx_KkBOtISfzIs!2026';
 const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN || '';
 const CHAT_ID = process.env.TELEGRAM_CHAT_ID || '';
 
@@ -84,7 +84,7 @@ async function notifyTelegram(lead) {
   if (!BOT_TOKEN || !CHAT_ID) return;
 
   try {
-    let msg = `🔥 <b>НОВАЯ ЗАЯВКА FIRM AGENCY</b>\n\n`;
+    let msg = `🔥 <b>НОВАЯ ЗАЯВКА ARTX AGENCY</b>\n\n`;
     msg += `<b>Тип:</b> ${lead.type || 'Контакт'}\n`;
     if (lead.name) msg += `<b>Имя:</b> ${lead.name}\n`;
     if (lead.contact) msg += `<b>Контакт:</b> ${lead.contact}\n`;
@@ -159,7 +159,7 @@ const server = http.createServer(async (req, res) => {
     res.writeHead(200, { 'Content-Type': 'application/json' });
     return res.end(JSON.stringify({
       status: 'ok',
-      service: 'firm-agency',
+      service: 'artx-agency',
       uptime: process.uptime(),
       time: new Date().toISOString()
     }));
@@ -170,7 +170,7 @@ const server = http.createServer(async (req, res) => {
     try {
       const { password } = await parseJsonBody(req);
       if (password === ADMIN_PASSWORD) {
-        const token = crypto.createHmac('sha256', ADMIN_PASSWORD).update('firm-admin-session').digest('hex');
+        const token = crypto.createHmac('sha256', ADMIN_PASSWORD).update('artx-admin-session').digest('hex');
         res.writeHead(200, { 'Content-Type': 'application/json' });
         return res.end(JSON.stringify({ success: true, token }));
       } else {
@@ -361,6 +361,6 @@ const server = http.createServer(async (req, res) => {
 });
 
 server.listen(PORT, '0.0.0.0', () => {
-  console.log(`🚀 FIRM Agency Server running on http://0.0.0.0:${PORT}`);
+  console.log(`🚀 ARTX Agency Server running on http://0.0.0.0:${PORT}`);
   console.log(`📁 Serving static assets from ${DIST_DIR}`);
 });

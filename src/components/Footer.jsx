@@ -1,8 +1,8 @@
 import React from 'react';
-import { Send, Mail, ShieldCheck, ArrowUp, Lock } from 'lucide-react';
+import { Send, Mail, ShieldCheck, ArrowUp } from 'lucide-react';
 import { TRANSLATIONS } from '../data/translations';
 
-export default function Footer({ lang, servicesList = [], onOpenContact, onOpenAdmin }) {
+export default function Footer({ lang, servicesList = [], onOpenContact }) {
   const t = TRANSLATIONS[lang].footer;
 
   const scrollToTop = () => {
@@ -20,11 +20,11 @@ export default function Footer({ lang, servicesList = [], onOpenContact, onOpenA
           <div className="lg:col-span-2 space-y-5">
             <div className="flex items-center gap-3">
               <div className="w-9 h-9 rounded-xl bg-slate-950 dark:bg-white text-white dark:text-slate-950 flex items-center justify-center font-heading font-black text-base shadow-sm">
-                F
+                A
               </div>
               <div className="flex flex-col">
                 <span className="font-heading font-extrabold text-xl text-slate-950 dark:text-white tracking-tight leading-none">
-                  FIRM
+                  ARTX
                 </span>
                 <span className="text-[10px] font-mono uppercase tracking-widest text-slate-400 mt-0.5">
                   Digital Production & Growth
@@ -119,9 +119,9 @@ export default function Footer({ lang, servicesList = [], onOpenContact, onOpenA
                 </a>
               </div>
               <div>
-                <a href="mailto:hello@firm-agency.pro" className="hover:text-slate-950 dark:hover:text-white flex items-center gap-2">
+                <a href="mailto:hello@artx.one" className="hover:text-slate-950 dark:hover:text-white flex items-center gap-2">
                   <Mail className="w-3.5 h-3.5 text-amber-400" />
-                  <span>hello@firm-agency.pro</span>
+                  <span>hello@artx.one</span>
                 </a>
               </div>
               <div className="flex items-center gap-2 text-xs text-slate-400">
@@ -145,17 +145,10 @@ export default function Footer({ lang, servicesList = [], onOpenContact, onOpenA
         {/* Bottom Bar */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
           <div>
-            © {new Date().getFullYear()} FIRM Digital Agency. {t.rights}
+            © {new Date().getFullYear()} ARTX Digital Agency. {t.rights}
           </div>
 
           <div className="flex items-center gap-5 text-xs">
-            <button
-              onClick={onOpenAdmin}
-              className="text-slate-500 hover:text-slate-950 dark:hover:text-white flex items-center gap-1.5 transition-colors"
-            >
-              <Lock className="w-3.5 h-3.5" />
-              <span>{t.adminLink}</span>
-            </button>
             <a href="#" className="hover:text-slate-950 dark:hover:text-white transition-colors">{t.privacy}</a>
             <a href="#" className="hover:text-slate-950 dark:hover:text-white transition-colors">{t.terms}</a>
             <button

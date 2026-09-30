@@ -47,17 +47,17 @@ export default function Navbar({
           {/* Logo with live status beacon */}
           <a href="#" className="flex items-center gap-2.5 group shrink-0">
             <div className="w-8 h-8 rounded-xl bg-slate-950 dark:bg-white text-white dark:text-slate-950 flex items-center justify-center font-heading font-black text-sm tracking-wider shadow-sm group-hover:scale-105 transition-transform">
-              F
+              A
             </div>
             <div className="flex flex-col">
               <div className="flex items-center gap-1.5">
                 <span className="font-heading font-extrabold text-base sm:text-lg tracking-tight text-slate-950 dark:text-white leading-none">
-                  FIRM
+                  ARTX
                 </span>
                 <span className="inline-block w-1.5 h-1.5 rounded-full bg-amber-400 shadow-[0_0_6px_rgba(251,191,36,0.7)] animate-pulse" title="Available for projects"></span>
               </div>
               <span className="text-[9px] uppercase font-mono tracking-widest text-slate-400 dark:text-slate-400 leading-tight">
-                Studio
+                Digital
               </span>
             </div>
           </a>

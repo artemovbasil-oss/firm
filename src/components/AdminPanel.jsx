@@ -59,7 +59,7 @@ export default function AdminPanel({
   }, [testimonialsList]);
 
   useEffect(() => {
-    const token = localStorage.getItem('firm_admin_token');
+    const token = localStorage.getItem('artx_admin_token') || localStorage.getItem('firm_admin_token');
     if (token) {
       setIsAuthenticated(true);
       fetchData();
@@ -77,7 +77,7 @@ export default function AdminPanel({
       });
       const data = await res.json();
       if (res.ok && data.success) {
-        localStorage.setItem('firm_admin_token', data.token);
+        localStorage.setItem('artx_admin_token', data.token);
         setIsAuthenticated(true);
         fetchData();
       } else {
@@ -89,6 +89,7 @@ export default function AdminPanel({
   };
 
   const handleLogout = () => {
+    localStorage.removeItem('artx_admin_token');
     localStorage.removeItem('firm_admin_token');
     setIsAuthenticated(false);
     setPassword('');
@@ -242,7 +243,7 @@ export default function AdminPanel({
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement('a');
     link.setAttribute('href', encodedUri);
-    link.setAttribute('download', `firm_leads_${new Date().toISOString().slice(0, 10)}.csv`);
+    link.setAttribute('download', `artx_leads_${new Date().toISOString().slice(0, 10)}.csv`);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -288,7 +289,7 @@ export default function AdminPanel({
           </button>
           <div className="h-4 w-[1px] bg-slate-800"></div>
           <div className="flex items-center gap-2">
-            <span className="font-heading font-extrabold text-white text-base tracking-wider">FIRM</span>
+            <span className="font-heading font-extrabold text-white text-base tracking-wider">ARTX</span>
             <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-slate-300">CRM & Control</span>
           </div>
         </div>
@@ -361,14 +362,14 @@ export default function AdminPanel({
               Вход в панель управления
             </h3>
             <p className="text-xs text-slate-400 mb-6">
-              Панель CRM и управления портфолио агентства FIRM. Введите пароль администратора.
+              Панель CRM и управления портфолио агентства ARTX. Введите пароль администратора.
             </p>
 
             <form onSubmit={handleLogin} className="space-y-4">
               <input
                 type="password"
                 required
-                placeholder="Пароль администратора (по умолч.: firm2026)"
+                placeholder="Пароль администратора"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full px-4 py-3 rounded-xl input-studio text-sm focus:border-slate-400"

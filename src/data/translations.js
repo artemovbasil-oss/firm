@@ -16,7 +16,7 @@ export const TRANSLATIONS = {
       currency: 'Валюта'
     },
     hero: {
-      badge: 'FIRM Studio · 2026',
+      badge: 'ARTX Studio · 2026',
       badgeDesc: 'Сайттар · Брендинг · Бағдарламалық қамтамасыз ету',
       titleStart: 'Сайттар · Брендинг',
       titleHighlight: 'Софт',
@@ -190,7 +190,7 @@ export const TRANSLATIONS = {
       currency: 'Валюта'
     },
     hero: {
-      badge: 'FIRM Studio · 2026',
+      badge: 'ARTX Studio · 2026',
       badgeDesc: 'Сайты · Брендинг · Заказное ПО',
       titleStart: 'Сайты · Брендинг',
       titleHighlight: 'Софт',
@@ -364,7 +364,7 @@ export const TRANSLATIONS = {
       currency: 'Currency'
     },
     hero: {
-      badge: 'FIRM Studio · 2026',
+      badge: 'ARTX Studio · 2026',
       badgeDesc: 'Web · Branding · Custom Software',
       titleStart: 'Web · Brand',
       titleHighlight: 'Software',

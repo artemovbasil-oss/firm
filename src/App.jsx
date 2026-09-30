@@ -55,19 +55,19 @@ export default function App() {
     document.documentElement.setAttribute('lang', lang === 'kz' ? 'kk' : lang);
 
     if (lang === 'en') {
-      document.title = 'FIRM — Digital Production & Growth Agency | Web, Branding, Software, SEO';
+      document.title = 'ARTX — Digital Production & Growth Agency | Web, Branding, Software, SEO';
       const metaDesc = document.querySelector('meta[name="description"]');
       if (metaDesc) {
         metaDesc.setAttribute('content', 'Full-cycle digital production agency. We engineer high-converting web platforms, branding, software, investor pitch decks, SEO dominance, and turnkey business packaging.');
       }
     } else if (lang === 'kz') {
-      document.title = 'FIRM — Сандық шешімдер агенттігі | Сайттар, Брендинг, Бағдарламалық қамтамасыз ету, SEO';
+      document.title = 'ARTX — Сандық шешімдер агенттігі | Сайттар, Брендинг, Бағдарламалық қамтамасыз ету, SEO';
       const metaDesc = document.querySelector('meta[name="description"]');
       if (metaDesc) {
         metaDesc.setAttribute('content', 'Конверсиясы жоғары сайттар, сатушы лендингтер, айдентика, презентациялар және жеке бағдарламалық қамтамасыз ету. Бизнесті 360° орап, SEO мен SMM арқылы сатылымды еселейміз.');
       }
     } else {
-      document.title = 'FIRM — Агентство цифровых решений | Сайты, Брендинг, ПО, SEO и Упаковка бизнеса';
+      document.title = 'ARTX — Агентство цифровых решений | Сайты, Брендинг, ПО, SEO и Упаковка бизнеса';
       const metaDesc = document.querySelector('meta[name="description"]');
       if (metaDesc) {
         metaDesc.setAttribute('content', 'Создаем высококонверсионные сайты, продающие лендинги, айдентику, презентации и кастомное ПО. Проводим SEO-аудит, упаковываем бизнес и ведем соцсети для взрывного роста продаж.');
@@ -75,10 +75,10 @@ export default function App() {
     }
   }, [lang]);
 
-  // Check URL hash and hotkey for admin entry
+  // Check URL hash, path, and hotkey for admin entry
   useEffect(() => {
     const handleHash = () => {
-      if (window.location.hash === '#admin') {
+      if (window.location.hash === '#admin' || window.location.pathname === '/admin') {
         setIsAdminOpen(true);
       }
     };
@@ -241,7 +241,6 @@ export default function App() {
         lang={lang}
         servicesList={servicesList}
         onOpenContact={handleOpenContact} 
-        onOpenAdmin={() => setIsAdminOpen(true)}
       />
 
       {/* Global Contact Modal */}
