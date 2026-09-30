@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { ArrowUpRight, ArrowRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { TRANSLATIONS } from '../data/translations';
+import BlindTextReveal from './BlindTextReveal';
 
 export default function Services({ 
   lang, 
@@ -40,21 +41,27 @@ export default function Services({
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 sm:mb-16 lg:mb-20 gap-6">
           <div>
-            <div className="text-xs sm:text-sm font-mono text-slate-500 uppercase tracking-widest mb-3">
-              {lang === 'en' ? 'Core Capabilities' : (lang === 'kz' ? 'Негізгі бағыттар' : 'Экспертиза и стек')}
-            </div>
-            <h2 className="text-3xl sm:text-5xl lg:text-6xl font-heading font-black tracking-tight text-slate-950 dark:text-white uppercase leading-[0.98]">
-              {lang === 'en' ? 'What We Build' : (lang === 'kz' ? 'Біз не жасаймыз' : 'Что мы создаем')}
-            </h2>
+            <BlindTextReveal delay={0}>
+              <div className="text-xs sm:text-sm font-mono text-slate-500 uppercase tracking-widest mb-3">
+                {lang === 'en' ? 'Core Capabilities' : (lang === 'kz' ? 'Негізгі бағыттар' : 'Экспертиза и стек')}
+              </div>
+            </BlindTextReveal>
+            <BlindTextReveal as="h2" delay={0.08}>
+              <span className="text-3xl sm:text-5xl lg:text-6xl font-heading font-black tracking-tight text-slate-950 dark:text-white uppercase leading-[0.98] inline-block">
+                {lang === 'en' ? 'What We Build' : (lang === 'kz' ? 'Біз не жасаймыз' : 'Что мы создаем')}
+              </span>
+            </BlindTextReveal>
           </div>
 
-          <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 max-w-md leading-relaxed font-normal">
-            {lang === 'en' 
-              ? 'Complete digital engineering from brand strategy to high-load code. No templates, no agency bloat.'
-              : lang === 'kz'
-              ? 'Брендтен бастап күрделі IT-жүйелерге дейін. Барлық цифрлық міндеттер бір терезеде.'
-              : 'Полный цикл цифрового производства: от визуальной стратегии до масштабируемого софта. Без шаблонов и воды.'}
-          </p>
+          <BlindTextReveal delay={0.16}>
+            <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 max-w-md leading-relaxed font-normal">
+              {lang === 'en' 
+                ? 'Complete digital engineering from brand strategy to high-load code. No templates, no agency bloat.'
+                : lang === 'kz'
+                ? 'Брендтен бастап күрделі IT-жүйелерге дейін. Барлық цифрлық міндеттер бір терезеде.'
+                : 'Полный цикл цифрового производства: от визуальной стратегии до масштабируемого софта. Без шаблонов и воды.'}
+            </p>
+          </BlindTextReveal>
         </div>
 
         {/* Editorial Interactive Studio Index with Framer Motion Accordion */}

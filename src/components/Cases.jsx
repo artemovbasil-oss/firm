@@ -3,6 +3,7 @@ import { ArrowUpRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { TRANSLATIONS } from '../data/translations';
 import CardShaderHover from './CardShaderHover';
+import BlindTextReveal from './BlindTextReveal';
 
 const CASE_PRESETS = [
   // 1. Casa Italia (ID 1): Luxury Italian furniture — Topographic elevation contour lines (Variant 1)
@@ -196,12 +197,16 @@ export default function Cases({ lang, casesList = [], onOpenContact }) {
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 sm:mb-16 lg:mb-20 gap-6">
           <div>
-            <div className="text-xs sm:text-sm font-mono text-slate-500 uppercase tracking-widest mb-3">
-              {lang === 'en' ? 'Proof of Work' : (lang === 'kz' ? 'Нәтижелер' : 'Кейсы и цифры')}
-            </div>
-            <h2 className="text-3xl sm:text-5xl lg:text-6xl font-heading font-black tracking-tight text-slate-950 dark:text-white uppercase leading-[0.98]">
-              {lang === 'en' ? 'Selected Cases' : (lang === 'kz' ? 'Таңдаулы жобалар' : 'Избранные кейсы')}
-            </h2>
+            <BlindTextReveal delay={0}>
+              <div className="text-xs sm:text-sm font-mono text-slate-500 uppercase tracking-widest mb-3">
+                {lang === 'en' ? 'Proof of Work' : (lang === 'kz' ? 'Нәтижелер' : 'Кейсы и цифры')}
+              </div>
+            </BlindTextReveal>
+            <BlindTextReveal as="h2" delay={0.08}>
+              <span className="text-3xl sm:text-5xl lg:text-6xl font-heading font-black tracking-tight text-slate-950 dark:text-white uppercase leading-[0.98] inline-block">
+                {lang === 'en' ? 'Selected Cases' : (lang === 'kz' ? 'Таңдаулы жобалар' : 'Избранные кейсы')}
+              </span>
+            </BlindTextReveal>
           </div>
 
           {/* Minimalist Filter Pills */}

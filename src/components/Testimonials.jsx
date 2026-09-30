@@ -1,6 +1,7 @@
 import React from 'react';
 import { TESTIMONIALS } from '../data/agencyData';
 import { TRANSLATIONS } from '../data/translations';
+import BlindTextReveal from './BlindTextReveal';
 
 export default function Testimonials({ lang, testimonialsList }) {
   const t = TRANSLATIONS[lang].testimonials;
@@ -13,12 +14,16 @@ export default function Testimonials({ lang, testimonialsList }) {
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 sm:mb-16 lg:mb-20 gap-6">
           <div>
-            <div className="text-xs sm:text-sm font-mono text-slate-500 uppercase tracking-widest mb-3">
-              {lang === 'en' ? 'Client Feedback' : (lang === 'kz' ? 'Пікірлер' : 'Доверие клиентов')}
-            </div>
-            <h2 className="text-3xl sm:text-5xl lg:text-6xl font-heading font-black tracking-tight text-slate-950 dark:text-white uppercase leading-[0.98]">
-              {lang === 'en' ? 'Trusted by Leaders' : (lang === 'kz' ? 'Тапсырыс берушілер' : 'Нам доверяют лидеры')}
-            </h2>
+            <BlindTextReveal delay={0}>
+              <div className="text-xs sm:text-sm font-mono text-slate-500 uppercase tracking-widest mb-3">
+                {lang === 'en' ? 'Client Feedback' : (lang === 'kz' ? 'Пікірлер' : 'Доверие клиентов')}
+              </div>
+            </BlindTextReveal>
+            <BlindTextReveal as="h2" delay={0.08}>
+              <span className="text-3xl sm:text-5xl lg:text-6xl font-heading font-black tracking-tight text-slate-950 dark:text-white uppercase leading-[0.98] inline-block">
+                {lang === 'en' ? 'Trusted by Leaders' : (lang === 'kz' ? 'Тапсырыс берушілер' : 'Нам доверяют лидеры')}
+              </span>
+            </BlindTextReveal>
           </div>
         </div>
 

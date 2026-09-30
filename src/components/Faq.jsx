@@ -3,6 +3,7 @@ import { ChevronDown } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FAQ_ITEMS } from '../data/agencyData';
 import { TRANSLATIONS } from '../data/translations';
+import BlindTextReveal from './BlindTextReveal';
 
 export default function Faq({ lang }) {
   const [openIndex, setOpenIndex] = useState(0);
@@ -18,12 +19,16 @@ export default function Faq({ lang }) {
         
         {/* Section Header */}
         <div className="text-center mb-12 sm:mb-16 lg:mb-20">
-          <div className="text-xs sm:text-sm font-mono text-slate-500 uppercase tracking-widest mb-3">
-            {lang === 'en' ? 'Direct Answers' : (lang === 'kz' ? 'Сұрақ-жауап' : 'Частые вопросы')}
-          </div>
-          <h2 className="text-3xl sm:text-5xl lg:text-6xl font-heading font-black tracking-tight text-slate-950 dark:text-white uppercase leading-[0.98]">
-            {lang === 'en' ? 'FAQ' : (lang === 'kz' ? 'Жиі қойылатын сұрақтар' : 'Вопросы и ответы')}
-          </h2>
+          <BlindTextReveal delay={0}>
+            <div className="text-xs sm:text-sm font-mono text-slate-500 uppercase tracking-widest mb-3">
+              {lang === 'en' ? 'Direct Answers' : (lang === 'kz' ? 'Сұрақ-жауап' : 'Частые вопросы')}
+            </div>
+          </BlindTextReveal>
+          <BlindTextReveal as="h2" delay={0.08}>
+            <span className="text-3xl sm:text-5xl lg:text-6xl font-heading font-black tracking-tight text-slate-950 dark:text-white uppercase leading-[0.98] inline-block">
+              {lang === 'en' ? 'FAQ' : (lang === 'kz' ? 'Жиі қойылатын сұрақтар' : 'Вопросы и ответы')}
+            </span>
+          </BlindTextReveal>
         </div>
 
         {/* Accordion list with Framer Motion */}

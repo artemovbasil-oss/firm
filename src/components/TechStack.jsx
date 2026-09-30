@@ -2,6 +2,7 @@ import React from 'react';
 import { ShieldCheck, Zap, Cpu } from 'lucide-react';
 import { TECH_STACK } from '../data/agencyData';
 import { TRANSLATIONS } from '../data/translations';
+import BlindTextReveal from './BlindTextReveal';
 
 export default function TechStack({ lang, techStackList }) {
   const t = TRANSLATIONS[lang].tech;
@@ -14,21 +15,27 @@ export default function TechStack({ lang, techStackList }) {
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 sm:mb-16 lg:mb-20 gap-6">
           <div>
-            <div className="text-xs sm:text-sm font-mono text-slate-500 uppercase tracking-widest mb-3">
-              {lang === 'en' ? 'Stack & Infrastructure' : (lang === 'kz' ? 'Технологиялық стек' : 'Технологический стек')}
-            </div>
-            <h2 className="text-3xl sm:text-5xl lg:text-6xl font-heading font-black tracking-tight text-slate-950 dark:text-white uppercase leading-[0.98]">
-              {lang === 'en' ? 'Engineered for Speed' : (lang === 'kz' ? 'Жоғары жылдамдық' : 'Стек без компромиссов')}
-            </h2>
+            <BlindTextReveal delay={0}>
+              <div className="text-xs sm:text-sm font-mono text-slate-500 uppercase tracking-widest mb-3">
+                {lang === 'en' ? 'Stack & Infrastructure' : (lang === 'kz' ? 'Технологиялық стек' : 'Технологический стек')}
+              </div>
+            </BlindTextReveal>
+            <BlindTextReveal as="h2" delay={0.08}>
+              <span className="text-3xl sm:text-5xl lg:text-6xl font-heading font-black tracking-tight text-slate-950 dark:text-white uppercase leading-[0.98] inline-block">
+                {lang === 'en' ? 'Engineered for Speed' : (lang === 'kz' ? 'Жоғары жылдамдық' : 'Стек без компромиссов')}
+              </span>
+            </BlindTextReveal>
           </div>
 
-          <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 max-w-md leading-relaxed font-normal">
-            {lang === 'en'
-              ? 'Modern headless architecture, lightning-fast client runtimes, and scalable backend infrastructure.'
-              : lang === 'kz'
-              ? 'Заманауи headless архитектура, мінсіз қауіпсіздік және жүктемеге төзімді инфрақұрылым.'
-              : 'Современная headless-архитектура, микросервисы и мгновенный отклик интерфейсов.'}
-          </p>
+          <BlindTextReveal delay={0.16}>
+            <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 max-w-md leading-relaxed font-normal">
+              {lang === 'en'
+                ? 'Modern headless architecture, lightning-fast client runtimes, and scalable backend infrastructure.'
+                : lang === 'kz'
+                ? 'Заманауи headless архитектура, мінсіз қауіпсіздік және жүктемеге төзімді инфрақұрылым.'
+                : 'Современная headless-архитектура, микросервисы и мгновенный отклик интерфейсов.'}
+            </p>
+          </BlindTextReveal>
         </div>
 
         {/* Clean Spacious Bento Grid */}

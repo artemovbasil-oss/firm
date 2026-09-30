@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Globe, Send, CheckCircle2, AlertCircle, ArrowRight, ShieldCheck, Zap, Lock } from 'lucide-react';
 import { TRANSLATIONS } from '../data/translations';
 import CardShaderHover from './CardShaderHover';
+import BlindTextReveal from './BlindTextReveal';
 
 export default function ExpressAudit({ lang, onSuccessLead }) {
   const [targetUrl, setTargetUrl] = useState('');
@@ -98,28 +99,34 @@ export default function ExpressAudit({ lang, onSuccessLead }) {
 
           <div className="relative z-10 max-w-4xl mx-auto text-center space-y-6">
             
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full border border-slate-200 dark:border-white/15 bg-white dark:bg-white/[0.04] text-xs font-mono uppercase tracking-wider text-slate-700 dark:text-slate-300 shadow-sm">
-              <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span>
-              <span>{lang === 'en' ? 'Diagnostic Teardown' : (lang === 'kz' ? 'Экспресс-аудит' : 'Экспресс-аудит')}</span>
-            </div>
+            <BlindTextReveal delay={0}>
+              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full border border-slate-200 dark:border-white/15 bg-white dark:bg-white/[0.04] text-xs font-mono uppercase tracking-wider text-slate-700 dark:text-slate-300 shadow-sm">
+                <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span>
+                <span>{lang === 'en' ? 'Diagnostic Teardown' : (lang === 'kz' ? 'Экспресс-аудит' : 'Экспресс-аудит')}</span>
+              </div>
+            </BlindTextReveal>
 
-            <h2 className="text-2xl sm:text-4xl lg:text-5xl font-heading font-black tracking-tight text-slate-950 dark:text-white uppercase leading-[1.08] max-w-3xl mx-auto [text-wrap:balance]">
-              {lang === 'en' ? (
-                <>Want to know why your platform <br className="hidden sm:inline" />isn't making sales?</>
-              ) : lang === 'kz' ? (
-                <>Сайтыңыз неліктен <br className="hidden sm:inline" />сатылым әкелмей жатыр?</>
-              ) : (
-                <>Хотите узнать, почему <br className="hidden sm:inline" />ваш&nbsp;сайт не&nbsp;приносит продажи?</>
-              )}
-            </h2>
+            <BlindTextReveal as="h2" delay={0.08}>
+              <span className="text-2xl sm:text-4xl lg:text-5xl font-heading font-black tracking-tight text-slate-950 dark:text-white uppercase leading-[1.08] max-w-3xl mx-auto [text-wrap:balance] block">
+                {lang === 'en' ? (
+                  <>Want to know why your platform <br className="hidden sm:inline" />isn't making sales?</>
+                ) : lang === 'kz' ? (
+                  <>Сайтыңыз неліктен <br className="hidden sm:inline" />сатылым әкелмей жатыр?</>
+                ) : (
+                  <>Хотите узнать, почему <br className="hidden sm:inline" />ваш&nbsp;сайт не&nbsp;приносит продажи?</>
+                )}
+              </span>
+            </BlindTextReveal>
 
-            <p className="text-sm sm:text-base lg:text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto leading-relaxed font-normal">
-              {lang === 'en'
-                ? 'Send your URL. Our senior partners will record a 10-minute private video breakdown and map out your conversion bottlenecks within 24 hours. 100% free.'
-                : lang === 'kz'
-                ? 'Сайт немесе парақша сілтемесін жіберіңіз. Бас сарапшыларымыз 24 сағат ішінде жеке 10 минуттық бейне-талдау мен өсу картасын тегін дайындап береді.'
-                : 'Пришлите ссылку на сайт. Старшие эксперты разберут UX, скорость и воронку продаж в закрытом 10-минутном видеоразборе за 24 часа. Без воды.'}
-            </p>
+            <BlindTextReveal delay={0.16}>
+              <p className="text-sm sm:text-base lg:text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto leading-relaxed font-normal">
+                {lang === 'en'
+                  ? 'Send your URL. Our senior partners will record a 10-minute private video breakdown and map out your conversion bottlenecks within 24 hours. 100% free.'
+                  : lang === 'kz'
+                  ? 'Сайт немесе парақша сілтемесін жіберіңіз. Бас сарапшыларымыз 24 сағат ішінде жеке 10 минуттық бейне-талдау мен өсу картасын тегін дайындап береді.'
+                  : 'Пришлите ссылку на сайт. Старшие эксперты разберут UX, скорость и воронку продаж в закрытом 10-минутном видеоразборе за 24 часа. Без воды.'}
+              </p>
+            </BlindTextReveal>
 
             {/* Architectural High-Converting Form Console */}
             <form onSubmit={handleSubmit} className="pt-6 max-w-2xl mx-auto space-y-4">

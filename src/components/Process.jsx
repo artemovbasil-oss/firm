@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { TRANSLATIONS } from '../data/translations';
 import { Clock, Layers } from 'lucide-react';
+import BlindTextReveal from './BlindTextReveal';
 
 export default function Process({ lang }) {
   const [activeStage, setActiveStage] = useState(null);
@@ -85,22 +86,28 @@ export default function Process({ lang }) {
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 sm:mb-16 lg:mb-20 gap-6">
           <div>
-            <div className="text-xs sm:text-sm font-mono text-slate-500 uppercase tracking-widest mb-3">
-              {lang === 'en' ? 'Methodology' : (lang === 'kz' ? 'Әдістеме' : 'Как мы работаем')}
-            </div>
-            <h2 className="text-3xl sm:text-5xl lg:text-6xl font-heading font-black tracking-tight text-slate-950 dark:text-white uppercase leading-[0.98]">
-              {lang === 'en' ? 'How We Execute' : (lang === 'kz' ? 'Жұмыс кезеңдері' : 'Процесс работы')}
-            </h2>
+            <BlindTextReveal delay={0}>
+              <div className="text-xs sm:text-sm font-mono text-slate-500 uppercase tracking-widest mb-3">
+                {lang === 'en' ? 'Methodology' : (lang === 'kz' ? 'Әдістеме' : 'Как мы работаем')}
+              </div>
+            </BlindTextReveal>
+            <BlindTextReveal as="h2" delay={0.08}>
+              <span className="text-3xl sm:text-5xl lg:text-6xl font-heading font-black tracking-tight text-slate-950 dark:text-white uppercase leading-[0.98] inline-block">
+                {lang === 'en' ? 'How We Execute' : (lang === 'kz' ? 'Жұмыс кезеңдері' : 'Процесс работы')}
+              </span>
+            </BlindTextReveal>
           </div>
 
           <div className="flex flex-col sm:flex-row sm:items-center gap-4 max-w-lg">
-            <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 leading-relaxed font-normal">
-              {lang === 'en'
-                ? 'Transparent two-week sprints. Constant feedback loops. Predictable timelines and guaranteed results'
-                : lang === 'kz'
-                ? 'Екі апталық спринттер, нақты мерзім және келісім-шарт бойынша нәтижеге толық кепілдік'
-                : 'Прозрачные двухнедельные спринты, регулярные демо и четкие дедлайны по договору'}
-            </p>
+            <BlindTextReveal delay={0.16}>
+              <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 leading-relaxed font-normal">
+                {lang === 'en'
+                  ? 'Transparent two-week sprints. Constant feedback loops. Predictable timelines and guaranteed results'
+                  : lang === 'kz'
+                  ? 'Екі апталық спринттер, нақты мерзім және келісім-шарт бойынша нәтижеге толық кепілдік'
+                  : 'Прозрачные двухнедельные спринты, регулярные демо и четкие дедлайны по договору'}
+              </p>
+            </BlindTextReveal>
           </div>
         </div>
 

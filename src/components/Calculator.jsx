@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { CheckCircle2, ArrowRight, ShieldCheck, Zap } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { TRANSLATIONS } from '../data/translations';
+import BlindTextReveal from './BlindTextReveal';
 
 export default function Calculator({ 
   lang,
@@ -132,21 +133,27 @@ export default function Calculator({
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 sm:mb-16 lg:mb-20 gap-6">
           <div>
-            <div className="text-xs sm:text-sm font-mono text-slate-500 uppercase tracking-widest mb-3">
-              {lang === 'en' ? 'Transparent Pricing' : (lang === 'kz' ? 'Баға калькуляторы' : 'Оценка бюджета')}
-            </div>
-            <h2 className="text-3xl sm:text-5xl lg:text-6xl font-heading font-black tracking-tight text-slate-950 dark:text-white uppercase leading-[0.98]">
-              {lang === 'en' ? 'Estimate Scope' : (lang === 'kz' ? 'Жоба құны' : 'Расчет сметы')}
-            </h2>
+            <BlindTextReveal delay={0}>
+              <div className="text-xs sm:text-sm font-mono text-slate-500 uppercase tracking-widest mb-3">
+                {lang === 'en' ? 'Transparent Pricing' : (lang === 'kz' ? 'Баға калькуляторы' : 'Оценка бюджета')}
+              </div>
+            </BlindTextReveal>
+            <BlindTextReveal as="h2" delay={0.08}>
+              <span className="text-3xl sm:text-5xl lg:text-6xl font-heading font-black tracking-tight text-slate-950 dark:text-white uppercase leading-[0.98] inline-block">
+                {lang === 'en' ? 'Estimate Scope' : (lang === 'kz' ? 'Жоба құны' : 'Расчет сметы')}
+              </span>
+            </BlindTextReveal>
           </div>
 
-          <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 max-w-md leading-relaxed font-normal">
-            {lang === 'en'
-              ? 'Select your disciplines and scale. Get an instant realistic baseline and lock in bundle terms.'
-              : lang === 'kz'
-              ? 'Қажетті бағыттар мен жоба ауқымын таңдаңыз. Нақты баға мен мерзімді бірден біліңіз.'
-              : 'Выберите направления и масштаб бизнеса. Узнайте честную стоимость без скрытых платежей.'}
-          </p>
+          <BlindTextReveal delay={0.16}>
+            <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 max-w-md leading-relaxed font-normal">
+              {lang === 'en'
+                ? 'Select your disciplines and scale. Get an instant realistic baseline and lock in bundle terms.'
+                : lang === 'kz'
+                ? 'Қажетті бағыттар мен жоба ауқымын таңдаңыз. Нақты баға мен мерзімді бірден біліңіз.'
+                : 'Выберите направления и масштаб бизнеса. Узнайте честную стоимость без скрытых платежей.'}
+            </p>
+          </BlindTextReveal>
         </div>
 
         {/* Minimalist 2-Column Cockpit with Healthy Breathing Room */}
