@@ -42,19 +42,19 @@ export default function Services({
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 sm:mb-16 lg:mb-20 gap-6">
           <div>
             <BlindTextReveal delay={0}>
-              <div className="text-xs sm:text-sm font-mono text-slate-500 uppercase tracking-widest mb-3">
+              <div className="text-xs sm:text-sm font-mono text-neutral-500 uppercase tracking-widest mb-3">
                 {lang === 'en' ? 'Core Capabilities' : (lang === 'kz' ? 'Негізгі бағыттар' : 'Экспертиза и стек')}
               </div>
             </BlindTextReveal>
             <BlindTextReveal as="h2" delay={0.08}>
-              <span className="text-3xl sm:text-5xl lg:text-6xl font-heading font-black tracking-tight text-slate-950 dark:text-white uppercase leading-[0.98] inline-block">
+              <span className="text-3xl sm:text-5xl lg:text-6xl font-heading font-black tracking-tight text-neutral-950 dark:text-white uppercase leading-[0.98] inline-block">
                 {lang === 'en' ? 'What We Build' : (lang === 'kz' ? 'Біз не жасаймыз' : 'Что мы создаем')}
               </span>
             </BlindTextReveal>
           </div>
 
           <BlindTextReveal delay={0.16}>
-            <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 max-w-md leading-relaxed font-normal">
+            <p className="text-sm sm:text-base text-neutral-600 dark:text-neutral-400 max-w-md leading-relaxed font-normal">
               {lang === 'en' 
                 ? 'Complete digital engineering from brand strategy to high-load code. No templates, no agency bloat.'
                 : lang === 'kz'
@@ -87,17 +87,17 @@ export default function Services({
                   className="w-full py-5 sm:py-7 lg:py-8 text-left flex flex-col md:flex-row md:items-center justify-between gap-3 sm:gap-6 focus:outline-none group px-1 sm:px-4"
                 >
                   <div className="flex items-center gap-4 sm:gap-8 min-w-0 flex-1">
-                    <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-heading font-extrabold tracking-tight text-slate-950 dark:text-white group-hover:translate-x-2 transition-transform duration-200 truncate sm:whitespace-normal">
+                    <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-heading font-extrabold tracking-tight text-neutral-950 dark:text-white group-hover:translate-x-2 transition-transform duration-200 truncate sm:whitespace-normal">
                       {title}
                     </h3>
                   </div>
 
                   <div className="flex items-center justify-between md:justify-end gap-3 sm:gap-8 shrink-0 w-full md:w-auto">
-                    <span className="text-xs sm:text-sm font-mono text-slate-500 uppercase tracking-wider hidden lg:inline">
+                    <span className="text-xs sm:text-sm font-mono text-neutral-500 uppercase tracking-wider hidden lg:inline">
                       [{category}]
                     </span>
 
-                    <span className="text-xs sm:text-sm md:text-base font-mono font-bold text-slate-950 dark:text-white whitespace-nowrap tabular-nums">
+                    <span className="text-xs sm:text-sm md:text-base font-mono font-bold text-neutral-950 dark:text-white whitespace-nowrap tabular-nums">
                       {formatPrice(service.basePrice)}
                     </span>
 
@@ -106,8 +106,8 @@ export default function Services({
                       transition={{ duration: 0.2 }}
                       className={`w-8 h-8 rounded-full border border-black/[0.1] dark:border-white/15 flex items-center justify-center shrink-0 transition-all duration-200 ${
                         isSelected 
-                          ? 'bg-slate-950 dark:bg-white text-white dark:text-slate-950 shadow-sm' 
-                          : 'text-slate-900 dark:text-white group-hover:scale-110 group-hover:border-slate-400 dark:group-hover:border-white/40'
+                          ? 'bg-neutral-950 dark:bg-white text-white dark:text-neutral-950 shadow-sm' 
+                          : 'text-neutral-900 dark:text-white group-hover:scale-110 group-hover:border-neutral-400 dark:group-hover:border-white/40'
                       }`}
                     >
                       <ArrowUpRight className="w-4 h-4" />
@@ -127,7 +127,7 @@ export default function Services({
                       className="overflow-hidden"
                     >
                       <div className="pb-6 sm:pb-8 pl-1 sm:pl-4 lg:pl-4 pr-1 sm:pr-4 space-y-4 pt-1">
-                        <p className="text-xs sm:text-sm md:text-base text-slate-600 dark:text-slate-300 leading-relaxed font-normal max-w-3xl">
+                        <p className="text-xs sm:text-sm md:text-base text-neutral-600 dark:text-neutral-300 leading-relaxed font-normal max-w-3xl">
                           {tagline}
                         </p>
 
@@ -136,7 +136,7 @@ export default function Services({
                           {deliverables.slice(0, 6).map((d, dIdx) => (
                             <span 
                               key={dIdx}
-                              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] sm:text-xs font-mono bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.07] dark:border-white/10 text-slate-700 dark:text-slate-200 transition-colors hover:border-black/25 dark:hover:border-white/25"
+                              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] sm:text-xs font-mono bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.07] dark:border-white/10 text-neutral-700 dark:text-neutral-200 transition-colors hover:border-black/25 dark:hover:border-white/25"
                             >
                               <span className="w-1.5 h-1.5 rounded-full bg-amber-500/80 dark:bg-amber-400 shrink-0" />
                               {d}
@@ -150,7 +150,7 @@ export default function Services({
                             whileHover={{ scale: 1.02 }}
                             whileTap={{ scale: 0.98 }}
                             onClick={() => onOrderService(title)}
-                            className="px-4 py-2 sm:px-5 sm:py-2.5 rounded-full bg-slate-950 dark:bg-white text-white dark:text-slate-950 text-xs sm:text-sm font-heading font-bold transition-all flex items-center gap-1.5 shadow-md hover:shadow-lg"
+                            className="px-4 py-2 sm:px-5 sm:py-2.5 rounded-full bg-neutral-950 dark:bg-white text-white dark:text-neutral-950 text-xs sm:text-sm font-heading font-bold transition-all flex items-center gap-1.5 shadow-md hover:shadow-lg"
                           >
                             <span>{t.orderBtn}</span>
                             <ArrowRight className="w-3.5 h-3.5" />
@@ -160,7 +160,7 @@ export default function Services({
                             whileHover={{ scale: 1.02 }}
                             whileTap={{ scale: 0.98 }}
                             onClick={() => onSelectForCalculator(service.id)}
-                            className="px-4 py-2 sm:px-5 sm:py-2.5 rounded-full border border-black/[0.1] dark:border-white/15 text-slate-800 dark:text-slate-200 hover:text-slate-950 dark:hover:text-white hover:border-black/30 dark:hover:border-white/30 text-xs sm:text-sm font-heading font-medium transition-all"
+                            className="px-4 py-2 sm:px-5 sm:py-2.5 rounded-full border border-black/[0.1] dark:border-white/15 text-neutral-800 dark:text-neutral-200 hover:text-neutral-950 dark:hover:text-white hover:border-black/30 dark:hover:border-white/30 text-xs sm:text-sm font-heading font-medium transition-all"
                           >
                             {t.calcBtn}
                           </motion.button>

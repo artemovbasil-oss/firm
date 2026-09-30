@@ -124,7 +124,7 @@ export default function Hero({ lang, onOpenContact }) {
           ].map((stat, idx) => (
             <div 
               key={idx}
-              className="p-3 sm:p-4 lg:p-5 rounded-2xl sm:rounded-3xl backdrop-blur-2xl bg-white/40 dark:bg-white/[0.03] border border-black/[0.06] dark:border-white/10 shadow-lg dark:shadow-2xl flex flex-col justify-between group hover:border-amber-400/50 hover:bg-white/60 dark:hover:bg-white/[0.06] transition-all duration-300 min-w-0"
+              className="p-3 sm:p-4 lg:p-5 rounded-2xl sm:rounded-3xl backdrop-blur-2xl bg-white/50 dark:bg-[#0c0c0e]/85 border border-black/[0.06] dark:border-white/10 shadow-lg dark:shadow-2xl flex flex-col justify-between group hover:border-amber-400/50 hover:bg-white/70 dark:hover:bg-[#0c0c0e] transition-all duration-300 min-w-0"
             >
               <div className="flex items-center justify-between mb-2">
                 <span className={`w-2 h-2 rounded-full ${stat.accent}`}></span>

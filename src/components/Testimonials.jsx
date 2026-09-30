@@ -15,12 +15,12 @@ export default function Testimonials({ lang, testimonialsList }) {
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 sm:mb-16 lg:mb-20 gap-6">
           <div>
             <BlindTextReveal delay={0}>
-              <div className="text-xs sm:text-sm font-mono text-slate-500 uppercase tracking-widest mb-3">
+              <div className="text-xs sm:text-sm font-mono text-neutral-500 uppercase tracking-widest mb-3">
                 {lang === 'en' ? 'Client Feedback' : (lang === 'kz' ? 'Пікірлер' : 'Доверие клиентов')}
               </div>
             </BlindTextReveal>
             <BlindTextReveal as="h2" delay={0.08}>
-              <span className="text-3xl sm:text-5xl lg:text-6xl font-heading font-black tracking-tight text-slate-950 dark:text-white uppercase leading-[0.98] inline-block">
+              <span className="text-3xl sm:text-5xl lg:text-6xl font-heading font-black tracking-tight text-neutral-950 dark:text-white uppercase leading-[0.98] inline-block">
                 {lang === 'en' ? 'Trusted by Leaders' : (lang === 'kz' ? 'Тапсырыс берушілер' : 'Нам доверяют лидеры')}
               </span>
             </BlindTextReveal>
@@ -38,23 +38,23 @@ export default function Testimonials({ lang, testimonialsList }) {
             return (
               <div
                 key={idx}
-                className="p-6 sm:p-8 lg:p-10 rounded-2xl sm:rounded-3xl bg-black/[0.02] dark:bg-white/[0.02] border border-black/[0.06] dark:border-white/[0.06] flex flex-col justify-between"
+                className="p-6 sm:p-8 lg:p-10 rounded-2xl sm:rounded-3xl bg-white/70 dark:bg-[#0c0c0e] border border-black/[0.06] dark:border-white/[0.08] shadow-sm dark:shadow-xl flex flex-col justify-between"
               >
                 <div>
                   <div className="flex items-center justify-between mb-6">
-                    <span className="text-xs font-mono font-bold px-3 py-1 rounded-full bg-slate-950 dark:bg-white text-white dark:text-slate-950">
+                    <span className="text-xs font-mono font-bold px-3 py-1 rounded-full bg-neutral-950 dark:bg-white text-white dark:text-neutral-950">
                       {outcome}
                     </span>
                     <span className="text-xs font-mono text-amber-500 tracking-widest">★★★★★</span>
                   </div>
 
-                  <p className="text-base sm:text-lg text-slate-700 dark:text-slate-300 leading-relaxed font-light mb-8 italic">
+                  <p className="text-base sm:text-lg text-neutral-700 dark:text-neutral-300 leading-relaxed font-light mb-8 italic">
                     "{text}"
                   </p>
                 </div>
 
                 <div className="flex items-center gap-4 pt-6 border-t border-black/[0.06] dark:border-white/[0.06]">
-                  <div className="w-12 h-12 rounded-full overflow-hidden shrink-0 border border-black/10 dark:border-white/10 ring-2 ring-black/5 dark:ring-white/5 bg-slate-200 dark:bg-white/10">
+                  <div className="w-12 h-12 rounded-full overflow-hidden shrink-0 border border-black/10 dark:border-white/10 ring-2 ring-black/5 dark:ring-white/5 bg-neutral-200 dark:bg-white/10">
                     <img
                       src={item.avatar}
                       alt={name}
@@ -63,10 +63,10 @@ export default function Testimonials({ lang, testimonialsList }) {
                     />
                   </div>
                   <div className="min-w-0">
-                    <div className="text-sm sm:text-base font-heading font-bold text-slate-950 dark:text-white">
+                    <div className="text-sm sm:text-base font-heading font-bold text-neutral-950 dark:text-white">
                       {name}
                     </div>
-                    <div className="text-xs font-mono text-slate-500 mt-0.5">
+                    <div className="text-xs font-mono text-neutral-500 mt-0.5">
                       {role}, {item.company}
                     </div>
                   </div>

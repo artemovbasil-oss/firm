@@ -42,7 +42,7 @@ export default function ArtxLogo({ className = 'w-8 h-8', showText = false, text
       </svg>
 
       {showText && (
-        <span className={`font-heading font-extrabold tracking-tight text-slate-950 dark:text-white ${textClassName}`}>
+        <span className={`font-heading font-extrabold tracking-tight text-neutral-950 dark:text-white ${textClassName}`}>
           ARTX
         </span>
       )}

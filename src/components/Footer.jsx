@@ -11,7 +11,7 @@ export default function Footer({ lang, servicesList = [], onOpenContact }) {
   };
 
   return (
-    <footer className="border-t border-black/[0.06] dark:border-white/[0.06] bg-black/[0.02] dark:bg-[#07080b] pt-16 sm:pt-20 lg:pt-24 pb-12 sm:pb-16 transition-colors w-full max-w-full overflow-hidden">
+    <footer className="border-t border-black/[0.06] dark:border-white/[0.06] bg-black/[0.02] dark:bg-[#080808] pt-16 sm:pt-20 lg:pt-24 pb-12 sm:pb-16 transition-colors w-full max-w-full overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Top Grid */}
@@ -22,16 +22,16 @@ export default function Footer({ lang, servicesList = [], onOpenContact }) {
             <div className="flex items-center gap-3">
               <ArtxLogo className="w-9 h-9" />
               <div className="flex flex-col">
-                <span className="font-heading font-extrabold text-xl text-slate-950 dark:text-white tracking-tight leading-none">
+                <span className="font-heading font-extrabold text-xl text-neutral-950 dark:text-white tracking-tight leading-none">
                   ARTX
                 </span>
-                <span className="text-[10px] font-mono uppercase tracking-widest text-slate-400 mt-0.5">
+                <span className="text-[10px] font-mono uppercase tracking-widest text-neutral-400 mt-0.5">
                   Digital Production & Growth
                 </span>
               </div>
             </div>
 
-            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 max-w-sm leading-relaxed">
+            <p className="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400 max-w-sm leading-relaxed">
               {t.desc}
             </p>
 
@@ -41,7 +41,7 @@ export default function Footer({ lang, servicesList = [], onOpenContact }) {
                 href="https://t.me/artemov_basil"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/[0.03] flex items-center justify-center text-slate-700 dark:text-slate-300 hover:text-amber-400 hover:border-amber-400/50 transition-all hover:scale-105"
+                className="w-10 h-10 rounded-xl border border-neutral-200 dark:border-white/10 bg-neutral-50 dark:bg-white/[0.03] flex items-center justify-center text-neutral-700 dark:text-neutral-300 hover:text-amber-400 hover:border-amber-400/50 transition-all hover:scale-105"
                 title="Telegram"
               >
                 <Send className="w-4 h-4" />
@@ -50,7 +50,7 @@ export default function Footer({ lang, servicesList = [], onOpenContact }) {
                 href="https://github.com/artemovbasil-oss/firm"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/[0.03] flex items-center justify-center text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white hover:border-slate-400 transition-all hover:scale-105"
+                className="w-10 h-10 rounded-xl border border-neutral-200 dark:border-white/10 bg-neutral-50 dark:bg-white/[0.03] flex items-center justify-center text-neutral-700 dark:text-neutral-300 hover:text-neutral-950 dark:hover:text-white hover:border-neutral-400 transition-all hover:scale-105"
                 title="GitHub"
               >
                 <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
@@ -59,7 +59,7 @@ export default function Footer({ lang, servicesList = [], onOpenContact }) {
               </a>
               <button
                 onClick={() => onOpenContact('Direct Email Inquiry')}
-                className="w-10 h-10 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/[0.03] flex items-center justify-center text-slate-700 dark:text-slate-300 hover:text-amber-400 hover:border-amber-400/50 transition-all hover:scale-105"
+                className="w-10 h-10 rounded-xl border border-neutral-200 dark:border-white/10 bg-neutral-50 dark:bg-white/[0.03] flex items-center justify-center text-neutral-700 dark:text-neutral-300 hover:text-amber-400 hover:border-amber-400/50 transition-all hover:scale-105"
                 title="Email"
               >
                 <Mail className="w-4 h-4" />
@@ -69,15 +69,15 @@ export default function Footer({ lang, servicesList = [], onOpenContact }) {
 
           {/* Core Services */}
           <div className="space-y-3">
-            <h4 className="text-xs font-mono font-bold text-slate-950 dark:text-white uppercase tracking-wider">
+            <h4 className="text-xs font-mono font-bold text-neutral-950 dark:text-white uppercase tracking-wider">
               {t.directions}
             </h4>
-            <ul className="space-y-2 text-xs sm:text-sm text-slate-600 dark:text-slate-400">
+            <ul className="space-y-2 text-xs sm:text-sm text-neutral-600 dark:text-neutral-400">
               {servicesList.slice(0, 4).map(s => {
                 const title = s.title?.[lang] || s.title?.ru || s.id;
                 return (
                   <li key={s.id}>
-                    <a href="#services" className="hover:text-slate-950 dark:hover:text-white transition-colors">
+                    <a href="#services" className="hover:text-neutral-950 dark:hover:text-white transition-colors">
                       {title}
                     </a>
                   </li>
@@ -88,15 +88,15 @@ export default function Footer({ lang, servicesList = [], onOpenContact }) {
 
           {/* Growth & Audit */}
           <div className="space-y-3">
-            <h4 className="text-xs font-mono font-bold text-slate-950 dark:text-white uppercase tracking-wider">
+            <h4 className="text-xs font-mono font-bold text-neutral-950 dark:text-white uppercase tracking-wider">
               {t.growth}
             </h4>
-            <ul className="space-y-2 text-xs sm:text-sm text-slate-600 dark:text-slate-400">
+            <ul className="space-y-2 text-xs sm:text-sm text-neutral-600 dark:text-neutral-400">
               {servicesList.slice(4).map(s => {
                 const title = s.title?.[lang] || s.title?.ru || s.id;
                 return (
                   <li key={s.id}>
-                    <a href="#services" className="hover:text-slate-950 dark:hover:text-white transition-colors">
+                    <a href="#services" className="hover:text-neutral-950 dark:hover:text-white transition-colors">
                       {title}
                     </a>
                   </li>
@@ -107,23 +107,23 @@ export default function Footer({ lang, servicesList = [], onOpenContact }) {
 
           {/* Contacts & Fast Action */}
           <div className="space-y-3.5">
-            <h4 className="text-xs font-mono font-bold text-slate-950 dark:text-white uppercase tracking-wider">
+            <h4 className="text-xs font-mono font-bold text-neutral-950 dark:text-white uppercase tracking-wider">
               {t.contacts}
             </h4>
-            <div className="space-y-2.5 text-xs sm:text-sm text-slate-600 dark:text-slate-400">
+            <div className="space-y-2.5 text-xs sm:text-sm text-neutral-600 dark:text-neutral-400">
               <div>
-                <a href="https://t.me/artemov_basil" target="_blank" rel="noopener noreferrer" className="hover:text-slate-950 dark:hover:text-white flex items-center gap-2">
+                <a href="https://t.me/artemov_basil" target="_blank" rel="noopener noreferrer" className="hover:text-neutral-950 dark:hover:text-white flex items-center gap-2">
                   <Send className="w-3.5 h-3.5 text-amber-400" />
                   <span>@artemov_basil</span>
                 </a>
               </div>
               <div>
-                <a href="mailto:hello@artx.one" className="hover:text-slate-950 dark:hover:text-white flex items-center gap-2">
+                <a href="mailto:hello@artx.one" className="hover:text-neutral-950 dark:hover:text-white flex items-center gap-2">
                   <Mail className="w-3.5 h-3.5 text-amber-400" />
                   <span>hello@artx.one</span>
                 </a>
               </div>
-              <div className="flex items-center gap-2 text-xs text-slate-400">
+              <div className="flex items-center gap-2 text-xs text-neutral-400">
                 <ShieldCheck className="w-3.5 h-3.5 text-amber-400" />
                 <span>NDA & Direct Invoicing</span>
               </div>
@@ -132,7 +132,7 @@ export default function Footer({ lang, servicesList = [], onOpenContact }) {
             <div className="pt-2">
               <button
                 onClick={() => onOpenContact(t.leaveRequest)}
-                className="w-full py-2.5 px-4 rounded-xl border border-slate-200 dark:border-white/10 text-slate-900 dark:text-slate-100 hover:bg-slate-100 dark:hover:bg-white/10 text-xs font-heading font-bold transition-all shadow-sm"
+                className="w-full py-2.5 px-4 rounded-xl border border-neutral-200 dark:border-white/10 text-neutral-900 dark:text-neutral-100 hover:bg-neutral-100 dark:hover:bg-white/10 text-xs font-heading font-bold transition-all shadow-sm"
               >
                 {t.leaveRequest}
               </button>
@@ -142,17 +142,17 @@ export default function Footer({ lang, servicesList = [], onOpenContact }) {
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
+        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-neutral-400">
           <div>
             © {new Date().getFullYear()} ARTX Digital Agency. {t.rights}
           </div>
 
           <div className="flex items-center gap-5 text-xs">
-            <a href="#" className="hover:text-slate-950 dark:hover:text-white transition-colors">{t.privacy}</a>
-            <a href="#" className="hover:text-slate-950 dark:hover:text-white transition-colors">{t.terms}</a>
+            <a href="#" className="hover:text-neutral-950 dark:hover:text-white transition-colors">{t.privacy}</a>
+            <a href="#" className="hover:text-neutral-950 dark:hover:text-white transition-colors">{t.terms}</a>
             <button
               onClick={scrollToTop}
-              className="w-8 h-8 rounded-lg border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-400 hover:text-slate-950 dark:hover:text-white hover:border-slate-400 transition-all"
+              className="w-8 h-8 rounded-lg border border-neutral-200 dark:border-white/10 flex items-center justify-center text-neutral-400 hover:text-neutral-950 dark:hover:text-white hover:border-neutral-400 transition-all"
               title="Top"
             >
               <ArrowUp className="w-4 h-4" />

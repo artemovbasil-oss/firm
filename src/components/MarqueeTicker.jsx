@@ -97,13 +97,13 @@ export default function MarqueeTicker({ lang = 'ru', isSticky = false }) {
       onMouseLeave={() => setIsHovered(false)}
       className={`w-full overflow-hidden select-none transition-all duration-300 ${
         isSticky
-          ? 'fixed top-0 left-0 right-0 z-40 py-2 sm:py-2.5 bg-white/95 dark:bg-[#07080e]/95 backdrop-blur-xl border-b border-black/[0.08] dark:border-white/10 shadow-sm'
-          : 'relative z-20 py-3.5 sm:py-4 bg-slate-100/90 dark:bg-[#07080e]/90 backdrop-blur-md border-y border-slate-200/80 dark:border-white/10 shadow-sm dark:shadow-xl'
+          ? 'fixed top-0 left-0 right-0 z-40 py-2 sm:py-2.5 bg-white/95 dark:bg-[#080808]/95 backdrop-blur-xl border-b border-black/[0.08] dark:border-white/10 shadow-sm'
+          : 'relative z-20 py-3.5 sm:py-4 bg-neutral-100/90 dark:bg-[#080808]/90 backdrop-blur-md border-y border-neutral-200/80 dark:border-white/10 shadow-sm dark:shadow-xl'
       }`}
     >
       {/* Edge gradient masks for smooth fade in/out */}
-      <div className="pointer-events-none absolute inset-y-0 left-0 w-12 sm:w-24 bg-gradient-to-r from-white dark:from-[#07080e] to-transparent z-10" />
-      <div className="pointer-events-none absolute inset-y-0 right-0 w-12 sm:w-24 bg-gradient-to-l from-white dark:from-[#07080e] to-transparent z-10" />
+      <div className="pointer-events-none absolute inset-y-0 left-0 w-12 sm:w-24 bg-gradient-to-r from-white dark:from-[#080808] to-transparent z-10" />
+      <div className="pointer-events-none absolute inset-y-0 right-0 w-12 sm:w-24 bg-gradient-to-l from-white dark:from-[#080808] to-transparent z-10" />
 
       {/* Marquee Track Container */}
       <div className="flex items-center">
@@ -112,8 +112,8 @@ export default function MarqueeTicker({ lang = 'ru', isSticky = false }) {
           style={{ willChange: 'transform' }}
           className={`flex items-center whitespace-nowrap font-mono font-semibold uppercase tracking-wider ${
             isSticky
-              ? 'text-[11px] sm:text-xs text-slate-800 dark:text-slate-200'
-              : 'text-xs sm:text-sm text-slate-900 dark:text-white'
+              ? 'text-[11px] sm:text-xs text-neutral-800 dark:text-neutral-200'
+              : 'text-xs sm:text-sm text-neutral-900 dark:text-white'
           }`}
         >
           {/* Render 3 identical sets for seamless continuous offset wrapping */}

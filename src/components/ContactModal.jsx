@@ -156,14 +156,14 @@ export default function ContactModal({
               WebkitMaskImage: '-webkit-radial-gradient(white, black)',
               maskImage: 'radial-gradient(white, black)'
             }}
-            className="relative w-full max-w-xl max-h-[90vh] flex flex-col bg-white/95 dark:bg-[#0c0e18]/95 backdrop-blur-2xl border border-slate-200/90 dark:border-white/15 rounded-3xl shadow-2xl z-10 my-auto overflow-hidden"
+            className="relative w-full max-w-xl max-h-[90vh] flex flex-col bg-white/95 dark:bg-[#0c0c0e]/95 backdrop-blur-2xl border border-neutral-200/90 dark:border-white/15 rounded-3xl shadow-2xl z-10 my-auto overflow-hidden"
           >
             {/* Close button - fixed inside top-right of the modal shell */}
             <motion.button
               whileHover={{ scale: 1.1, rotate: 90 }}
               whileTap={{ scale: 0.9 }}
               onClick={onClose}
-              className="absolute top-4 right-4 sm:top-5 sm:right-5 z-20 w-10 h-10 rounded-full border border-slate-200 dark:border-white/10 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md flex items-center justify-center text-slate-500 hover:text-slate-950 dark:hover:text-white transition-colors shadow-sm"
+              className="absolute top-4 right-4 sm:top-5 sm:right-5 z-20 w-10 h-10 rounded-full border border-neutral-200 dark:border-white/10 bg-white/80 dark:bg-neutral-900/80 backdrop-blur-md flex items-center justify-center text-neutral-500 hover:text-neutral-950 dark:hover:text-white transition-colors shadow-sm"
             >
               <X className="w-4 h-4" />
             </motion.button>
@@ -173,7 +173,7 @@ export default function ContactModal({
               
               {/* Simplified Modal Header */}
               <div className="mb-6 pr-12">
-                <h3 className="text-2xl sm:text-3xl font-heading font-black text-slate-950 dark:text-white tracking-tight uppercase leading-tight">
+                <h3 className="text-2xl sm:text-3xl font-heading font-black text-neutral-950 dark:text-white tracking-tight uppercase leading-tight">
                   {t.title}
                 </h3>
               </div>
@@ -183,7 +183,7 @@ export default function ContactModal({
               
               {/* Field 1: Contact (Required, prominent) */}
               <div>
-                <label className="block text-xs font-mono font-medium text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-2">
+                <label className="block text-xs font-mono font-medium text-neutral-700 dark:text-neutral-300 uppercase tracking-wider mb-2">
                   {lang === 'en' ? 'Contact Handle / Phone *' : (lang === 'kz' ? 'Байланыс телефоны немесе мессенджер *' : 'Контакты для связи (Telegram, WhatsApp или тел.) *')}
                 </label>
                 <div className="relative flex items-center">
@@ -193,14 +193,14 @@ export default function ContactModal({
                     placeholder="@username, phone or email"
                     value={contact}
                     onChange={(e) => setContact(e.target.value)}
-                    className="w-full min-h-[52px] sm:min-h-[56px] px-4 sm:px-5 py-3.5 rounded-2xl bg-slate-50/90 dark:bg-white/[0.05] border border-slate-200 dark:border-white/10 hover:border-slate-400 dark:hover:border-white/25 focus:outline-none focus:border-amber-400 focus:ring-2 focus:ring-amber-400/20 text-slate-950 dark:text-white placeholder-slate-400 text-sm sm:text-base font-medium shadow-sm transition-all"
+                    className="w-full min-h-[52px] sm:min-h-[56px] px-4 sm:px-5 py-3.5 rounded-2xl bg-neutral-50/90 dark:bg-white/[0.05] border border-neutral-200 dark:border-white/10 hover:border-neutral-400 dark:hover:border-white/25 focus:outline-none focus:border-amber-400 focus:ring-2 focus:ring-amber-400/20 text-neutral-950 dark:text-white placeholder-neutral-400 text-sm sm:text-base font-medium shadow-sm transition-all"
                   />
                 </div>
               </div>
 
               {/* Field 2: Name / Company */}
               <div>
-                <label className="block text-xs font-mono font-medium text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-2">
+                <label className="block text-xs font-mono font-medium text-neutral-700 dark:text-neutral-300 uppercase tracking-wider mb-2">
                   {t.nameLabel}
                 </label>
                 <input
@@ -208,7 +208,7 @@ export default function ContactModal({
                   placeholder={lang === 'en' ? 'John Doe / Company' : (lang === 'kz' ? 'Есіміңіз немесе компания' : 'Как вас зовут / Компания')}
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="w-full min-h-[52px] sm:min-h-[56px] px-4 sm:px-5 py-3.5 rounded-2xl bg-slate-50/90 dark:bg-white/[0.05] border border-slate-200 dark:border-white/10 hover:border-slate-400 dark:hover:border-white/25 focus:outline-none focus:border-amber-400 focus:ring-2 focus:ring-amber-400/20 text-slate-950 dark:text-white placeholder-slate-400 text-sm sm:text-base font-medium shadow-sm transition-all"
+                  className="w-full min-h-[52px] sm:min-h-[56px] px-4 sm:px-5 py-3.5 rounded-2xl bg-neutral-50/90 dark:bg-white/[0.05] border border-neutral-200 dark:border-white/10 hover:border-neutral-400 dark:hover:border-white/25 focus:outline-none focus:border-amber-400 focus:ring-2 focus:ring-amber-400/20 text-neutral-950 dark:text-white placeholder-neutral-400 text-sm sm:text-base font-medium shadow-sm transition-all"
                 />
               </div>
 
@@ -236,10 +236,10 @@ export default function ContactModal({
               {/* Field 5: Brief description + 1-Tap Quick Tags */}
               <div>
                 <div className="flex items-center justify-between mb-2">
-                  <label className="block text-xs font-mono font-medium text-slate-700 dark:text-slate-300 uppercase tracking-wider">
+                  <label className="block text-xs font-mono font-medium text-neutral-700 dark:text-neutral-300 uppercase tracking-wider">
                     {t.messageLabel}
                   </label>
-                  <span className="text-[10px] font-mono text-slate-400">
+                  <span className="text-[10px] font-mono text-neutral-400">
                     {lang === 'en' ? 'Optional' : (lang === 'kz' ? 'Қосымша' : 'Опционально')}
                   </span>
                 </div>
@@ -249,7 +249,7 @@ export default function ContactModal({
                   placeholder={lang === 'en' ? 'Tell us briefly about your goals or paste current website link...' : (lang === 'kz' ? 'Жобаңыз туралы қысқаша немесе сайт сілтемесі...' : 'Расскажите в двух словах о задаче или пришлите ссылку...')}
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
-                  className="w-full px-4 sm:px-5 py-3.5 rounded-2xl bg-slate-50/90 dark:bg-white/[0.05] border border-slate-200 dark:border-white/10 hover:border-slate-400 dark:hover:border-white/25 focus:outline-none focus:border-amber-400 focus:ring-2 focus:ring-amber-400/20 text-slate-950 dark:text-white placeholder-slate-400 text-sm sm:text-base resize-none shadow-sm transition-all"
+                  className="w-full px-4 sm:px-5 py-3.5 rounded-2xl bg-neutral-50/90 dark:bg-white/[0.05] border border-neutral-200 dark:border-white/10 hover:border-neutral-400 dark:hover:border-white/25 focus:outline-none focus:border-amber-400 focus:ring-2 focus:ring-amber-400/20 text-neutral-950 dark:text-white placeholder-neutral-400 text-sm sm:text-base resize-none shadow-sm transition-all"
                 ></textarea>
               </div>
 
@@ -259,7 +259,7 @@ export default function ContactModal({
                 whileTap={{ scale: 0.98 }}
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full py-4 sm:py-4.5 rounded-2xl bg-slate-950 dark:bg-white text-white dark:text-slate-950 font-heading font-black text-sm sm:text-base shadow-xl hover:bg-slate-800 dark:hover:bg-slate-100 transition-all flex items-center justify-center gap-2.5 disabled:opacity-50 mt-2"
+                className="w-full py-4 sm:py-4.5 rounded-2xl bg-neutral-950 dark:bg-white text-white dark:text-neutral-950 font-heading font-black text-sm sm:text-base shadow-xl hover:bg-neutral-800 dark:hover:bg-neutral-100 transition-all flex items-center justify-center gap-2.5 disabled:opacity-50 mt-2"
               >
                 {isSubmitting ? (
                   <span>{t.submitting}</span>
@@ -285,7 +285,7 @@ export default function ContactModal({
                 </div>
               )}
 
-              <div className="flex items-center justify-center gap-2 text-xs text-slate-500 dark:text-slate-400 pt-1 font-mono">
+              <div className="flex items-center justify-center gap-2 text-xs text-neutral-500 dark:text-neutral-400 pt-1 font-mono">
                 <ShieldCheck className="w-3.5 h-3.5 text-amber-500 dark:text-amber-400" />
                 <span>{t.footerNote}</span>
               </div>

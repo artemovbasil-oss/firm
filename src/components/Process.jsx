@@ -87,12 +87,12 @@ export default function Process({ lang }) {
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 sm:mb-16 lg:mb-20 gap-6">
           <div>
             <BlindTextReveal delay={0}>
-              <div className="text-xs sm:text-sm font-mono text-slate-500 uppercase tracking-widest mb-3">
+              <div className="text-xs sm:text-sm font-mono text-neutral-500 uppercase tracking-widest mb-3">
                 {lang === 'en' ? 'Methodology' : (lang === 'kz' ? 'Әдістеме' : 'Как мы работаем')}
               </div>
             </BlindTextReveal>
             <BlindTextReveal as="h2" delay={0.08}>
-              <span className="text-3xl sm:text-5xl lg:text-6xl font-heading font-black tracking-tight text-slate-950 dark:text-white uppercase leading-[0.98] inline-block">
+              <span className="text-3xl sm:text-5xl lg:text-6xl font-heading font-black tracking-tight text-neutral-950 dark:text-white uppercase leading-[0.98] inline-block">
                 {lang === 'en' ? 'How We Execute' : (lang === 'kz' ? 'Жұмыс кезеңдері' : 'Процесс работы')}
               </span>
             </BlindTextReveal>
@@ -100,7 +100,7 @@ export default function Process({ lang }) {
 
           <div className="flex flex-col sm:flex-row sm:items-center gap-4 max-w-lg">
             <BlindTextReveal delay={0.16}>
-              <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 leading-relaxed font-normal">
+              <p className="text-sm sm:text-base text-neutral-600 dark:text-neutral-400 leading-relaxed font-normal">
                 {lang === 'en'
                   ? 'Transparent two-week sprints. Constant feedback loops. Predictable timelines and guaranteed results'
                   : lang === 'kz'
@@ -114,11 +114,11 @@ export default function Process({ lang }) {
         {/* ========================================================================= */}
         {/* DESKTOP GANTT TIMELINE BOARD (Visible on lg+ screens)                      */}
         {/* ========================================================================= */}
-        <div className="hidden lg:block bg-white dark:bg-[#07090e] border border-black/[0.08] dark:border-white/10 rounded-3xl p-6 sm:p-8 shadow-sm dark:shadow-2xl overflow-hidden">
+        <div className="hidden lg:block bg-white dark:bg-[#0c0c0e] border border-black/[0.08] dark:border-white/10 rounded-3xl p-6 sm:p-8 shadow-sm dark:shadow-2xl overflow-hidden">
           
           {/* Gantt Header Axis: Sprints & Timeline Grid Scale */}
-          <div className="grid grid-cols-12 gap-6 pb-4 border-b border-black/[0.06] dark:border-white/[0.08] items-center text-xs font-mono text-slate-500 dark:text-slate-400">
-            <div className="col-span-4 pl-2 font-bold tracking-wider uppercase text-slate-900 dark:text-white flex items-center gap-2">
+          <div className="grid grid-cols-12 gap-6 pb-4 border-b border-black/[0.06] dark:border-white/[0.08] items-center text-xs font-mono text-neutral-500 dark:text-neutral-400">
+            <div className="col-span-4 pl-2 font-bold tracking-wider uppercase text-neutral-900 dark:text-white flex items-center gap-2">
               <Layers className="w-4 h-4 text-amber-500" />
               <span>{lang === 'en' ? 'Development Stage' : (lang === 'kz' ? 'Жұмыс кезеңі' : 'Этап разработки')}</span>
             </div>
@@ -130,8 +130,8 @@ export default function Process({ lang }) {
                   key={spIdx} 
                   className="px-3 py-1.5 rounded-lg bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.04] dark:border-white/[0.05] flex items-center justify-between"
                 >
-                  <span className="font-bold text-slate-900 dark:text-white uppercase">{sp.label}</span>
-                  <span className="text-[10px] text-slate-400 dark:text-slate-500 tabular-nums">{sp.range}</span>
+                  <span className="font-bold text-neutral-900 dark:text-white uppercase">{sp.label}</span>
+                  <span className="text-[10px] text-neutral-400 dark:text-neutral-500 tabular-nums">{sp.range}</span>
                 </div>
               ))}
             </div>
@@ -157,10 +157,10 @@ export default function Process({ lang }) {
                       {stage.num}
                     </span>
                     <div className="min-w-0">
-                      <h3 className="text-sm font-heading font-extrabold text-slate-950 dark:text-white tracking-tight truncate">
+                      <h3 className="text-sm font-heading font-extrabold text-neutral-950 dark:text-white tracking-tight truncate">
                         {stage.title}
                       </h3>
-                      <p className="text-xs text-slate-400 dark:text-slate-500 truncate mt-0.5 font-sans">
+                      <p className="text-xs text-neutral-400 dark:text-neutral-500 truncate mt-0.5 font-sans">
                         {stage.deliverable}
                       </p>
                     </div>
@@ -183,7 +183,7 @@ export default function Process({ lang }) {
                       className={`relative z-10 h-8 px-3 rounded-lg border flex items-center gap-2 transition-all duration-200 min-w-0 overflow-hidden ${
                         isActive
                           ? 'bg-amber-400/20 dark:bg-amber-400/15 border-amber-400 text-amber-950 dark:text-amber-200 shadow-sm'
-                          : 'bg-slate-100/90 dark:bg-white/[0.04] border-black/[0.06] dark:border-white/10 text-slate-700 dark:text-slate-300 hover:border-amber-400/40'
+                          : 'bg-neutral-100/90 dark:bg-white/[0.04] border-black/[0.06] dark:border-white/10 text-neutral-700 dark:text-neutral-300 hover:border-amber-400/40'
                       }`}
                     >
                       <span className={`w-1.5 h-1.5 rounded-full shrink-0 transition-transform ${
@@ -203,12 +203,12 @@ export default function Process({ lang }) {
           </div>
 
           {/* Gantt Footer Milestone Note */}
-          <div className="mt-6 pt-4 border-t border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between text-xs font-mono text-slate-500">
+          <div className="mt-6 pt-4 border-t border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between text-xs font-mono text-neutral-500">
             <div className="flex items-center gap-2">
               <Clock className="w-3.5 h-3.5 text-amber-500" />
               <span>{lang === 'en' ? 'Standard Timeline: 20–22 business days' : (lang === 'kz' ? 'Стандартты мерзім: 20–22 жұмыс күні' : 'Стандартный срок полного цикла: 20–22 рабочих дня')}</span>
             </div>
-            <div className="flex items-center gap-2 text-slate-700 dark:text-slate-300 font-semibold">
+            <div className="flex items-center gap-2 text-neutral-700 dark:text-neutral-300 font-semibold">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
               <span>{lang === 'en' ? 'Weekly Live Demos & Deliverables' : (lang === 'kz' ? 'Апта сайынғы демо және есептер' : 'Еженедельные живые демо и передача этапов')}</span>
             </div>
@@ -222,16 +222,16 @@ export default function Process({ lang }) {
         <div className="lg:hidden relative pl-6 sm:pl-8 space-y-4 sm:space-y-5">
           
           {/* Continuous Illuminated Rail */}
-          <div className="absolute left-2 sm:left-3 top-3 bottom-3 w-0.5 bg-gradient-to-b from-amber-400 via-amber-400/40 to-slate-200 dark:to-white/10" />
+          <div className="absolute left-2 sm:left-3 top-3 bottom-3 w-0.5 bg-gradient-to-b from-amber-400 via-amber-400/40 to-neutral-200 dark:to-white/10" />
 
           {stages.map((stage, idx) => (
             <div key={idx} className="relative group">
               
               {/* Timeline Node on Rail */}
-              <div className="absolute -left-6 sm:-left-8 top-3.5 w-3.5 h-3.5 rounded-full bg-slate-950 dark:bg-white border-2 border-amber-400 shadow-[0_0_8px_rgba(251,191,36,0.7)] z-10 group-hover:scale-125 transition-transform" />
+              <div className="absolute -left-6 sm:-left-8 top-3.5 w-3.5 h-3.5 rounded-full bg-neutral-950 dark:bg-white border-2 border-amber-400 shadow-[0_0_8px_rgba(251,191,36,0.7)] z-10 group-hover:scale-125 transition-transform" />
 
               {/* Stage Card */}
-              <div className="p-4 rounded-2xl bg-white dark:bg-[#07090e] border border-black/[0.08] dark:border-white/10 shadow-sm transition-all duration-200 group-hover:border-amber-500/40">
+              <div className="p-4 rounded-2xl bg-white dark:bg-[#0c0c0e] border border-black/[0.08] dark:border-white/10 shadow-sm transition-all duration-200 group-hover:border-amber-500/40">
                 
                 {/* Meta Header Row */}
                 <div className="flex items-center justify-between gap-2 mb-1.5">
@@ -239,23 +239,23 @@ export default function Process({ lang }) {
                     <span className="text-xs font-mono font-bold text-amber-500 dark:text-amber-400 tabular-nums">
                       {stage.num}
                     </span>
-                    <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 px-2 py-0.5 rounded bg-black/[0.03] dark:bg-white/[0.05]">
+                    <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-neutral-500 dark:text-neutral-400 px-2 py-0.5 rounded bg-black/[0.03] dark:bg-white/[0.05]">
                       {stage.sprint}
                     </span>
                   </div>
 
-                  <span className="text-[11px] font-mono font-bold text-slate-950 dark:text-white tabular-nums px-2 py-0.5 rounded-full bg-slate-100 dark:bg-white/10">
+                  <span className="text-[11px] font-mono font-bold text-neutral-950 dark:text-white tabular-nums px-2 py-0.5 rounded-full bg-neutral-100 dark:bg-white/10">
                     {stage.days}
                   </span>
                 </div>
 
                 {/* Stage Title */}
-                <h3 className="text-sm sm:text-base font-heading font-extrabold text-slate-950 dark:text-white tracking-tight leading-snug">
+                <h3 className="text-sm sm:text-base font-heading font-extrabold text-neutral-950 dark:text-white tracking-tight leading-snug">
                   {stage.title}
                 </h3>
 
                 {/* Deliverable */}
-                <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-normal mt-0.5 font-sans">
+                <p className="text-xs text-neutral-500 dark:text-neutral-400 leading-relaxed font-normal mt-0.5 font-sans">
                   {stage.deliverable}
                 </p>
 

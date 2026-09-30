@@ -124,7 +124,7 @@ function CaseCard({ item, idx, lang, onOpenContact, t, getLocalized }) {
         {/* Contrast Scrim Protection Overlay: guarantees strong AAA contrast for all text */}
         <div 
           style={{ borderRadius: '24px' }}
-          className="absolute inset-0 rounded-[24px] bg-gradient-to-t from-slate-950/85 via-black/35 to-slate-950/60 pointer-events-none z-[2]" 
+          className="absolute inset-0 rounded-[24px] bg-gradient-to-t from-black/85 via-black/35 to-black/60 pointer-events-none z-[2]" 
         />
 
         {/* Subtle Grid Pattern Accent */}
@@ -144,7 +144,7 @@ function CaseCard({ item, idx, lang, onOpenContact, t, getLocalized }) {
           <span className="font-mono text-xs font-semibold text-white/90 uppercase tracking-widest truncate">
             {client} · 2026
           </span>
-          <span className="px-3.5 py-1 rounded-full text-xs font-mono font-bold bg-white text-slate-950 shadow-xl shrink-0">
+          <span className="px-3.5 py-1 rounded-full text-xs font-mono font-bold bg-white text-neutral-950 shadow-xl shrink-0">
             {badge}
           </span>
         </div>
@@ -164,7 +164,7 @@ function CaseCard({ item, idx, lang, onOpenContact, t, getLocalized }) {
           <span className="text-sm sm:text-base font-heading font-bold text-white tracking-wide leading-snug line-clamp-2">
             {title}
           </span>
-          <div className="w-8 h-8 rounded-full bg-white/15 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white group-hover:bg-white group-hover:text-slate-950 transition-all shrink-0 shadow-lg">
+          <div className="w-8 h-8 rounded-full bg-white/15 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white group-hover:bg-white group-hover:text-neutral-950 transition-all shrink-0 shadow-lg">
             <ArrowUpRight className="w-4 h-4" />
           </div>
         </div>
@@ -198,12 +198,12 @@ export default function Cases({ lang, casesList = [], onOpenContact }) {
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 sm:mb-16 lg:mb-20 gap-6">
           <div>
             <BlindTextReveal delay={0}>
-              <div className="text-xs sm:text-sm font-mono text-slate-500 uppercase tracking-widest mb-3">
+              <div className="text-xs sm:text-sm font-mono text-neutral-500 uppercase tracking-widest mb-3">
                 {lang === 'en' ? 'Proof of Work' : (lang === 'kz' ? 'Нәтижелер' : 'Кейсы и цифры')}
               </div>
             </BlindTextReveal>
             <BlindTextReveal as="h2" delay={0.08}>
-              <span className="text-3xl sm:text-5xl lg:text-6xl font-heading font-black tracking-tight text-slate-950 dark:text-white uppercase leading-[0.98] inline-block">
+              <span className="text-3xl sm:text-5xl lg:text-6xl font-heading font-black tracking-tight text-neutral-950 dark:text-white uppercase leading-[0.98] inline-block">
                 {lang === 'en' ? 'Selected Cases' : (lang === 'kz' ? 'Таңдаулы жобалар' : 'Избранные кейсы')}
               </span>
             </BlindTextReveal>
@@ -217,8 +217,8 @@ export default function Cases({ lang, casesList = [], onOpenContact }) {
                 onClick={() => setSelectedTag(tag)}
                 className={`px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs font-mono transition-all ${
                   selectedTag === tag
-                    ? 'bg-amber-400 text-slate-950 font-bold shadow-md shadow-amber-400/20'
-                    : 'border border-black/[0.08] dark:border-white/10 text-slate-600 dark:text-slate-400 hover:text-slate-950 dark:hover:text-white'
+                    ? 'bg-amber-400 text-neutral-950 font-bold shadow-md shadow-amber-400/20'
+                    : 'border border-black/[0.08] dark:border-white/10 text-neutral-600 dark:text-neutral-400 hover:text-neutral-950 dark:hover:text-white'
                 }`}
               >
                 {tag === 'All' ? t.filterAll : tag}
@@ -245,10 +245,10 @@ export default function Cases({ lang, casesList = [], onOpenContact }) {
         {/* Confidential NDA Advisory Strip with Healthy Breathing Room */}
         <div className="mt-12 sm:mt-16 p-6 sm:p-10 rounded-2xl sm:rounded-3xl border border-black/[0.08] dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02] flex flex-col md:flex-row md:items-center justify-between gap-6 sm:gap-8">
           <div className="max-w-xl">
-            <h3 className="text-xl sm:text-2xl font-heading font-extrabold text-slate-950 dark:text-white tracking-tight">
+            <h3 className="text-xl sm:text-2xl font-heading font-extrabold text-neutral-950 dark:text-white tracking-tight">
               {t.requestNicheTitle}
             </h3>
-            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-2.5 leading-relaxed">
+            <p className="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400 mt-2.5 leading-relaxed">
               {t.requestNicheDesc}
             </p>
           </div>
@@ -257,7 +257,7 @@ export default function Cases({ lang, casesList = [], onOpenContact }) {
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
             onClick={() => onOpenContact('Confidential Portfolio Request')}
-            className="px-6 sm:px-8 py-3.5 sm:py-4 rounded-full bg-slate-950 dark:bg-white text-white dark:text-slate-950 font-heading font-bold text-xs sm:text-sm hover:opacity-90 transition-all shrink-0 shadow-lg"
+            className="px-6 sm:px-8 py-3.5 sm:py-4 rounded-full bg-neutral-950 dark:bg-white text-white dark:text-neutral-950 font-heading font-bold text-xs sm:text-sm hover:opacity-90 transition-all shrink-0 shadow-lg"
           >
             {t.requestNicheBtn}
           </motion.button>

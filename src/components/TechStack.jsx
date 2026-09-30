@@ -16,19 +16,19 @@ export default function TechStack({ lang, techStackList }) {
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 sm:mb-16 lg:mb-20 gap-6">
           <div>
             <BlindTextReveal delay={0}>
-              <div className="text-xs sm:text-sm font-mono text-slate-500 uppercase tracking-widest mb-3">
+              <div className="text-xs sm:text-sm font-mono text-neutral-500 uppercase tracking-widest mb-3">
                 {lang === 'en' ? 'Stack & Infrastructure' : (lang === 'kz' ? 'Технологиялық стек' : 'Технологический стек')}
               </div>
             </BlindTextReveal>
             <BlindTextReveal as="h2" delay={0.08}>
-              <span className="text-3xl sm:text-5xl lg:text-6xl font-heading font-black tracking-tight text-slate-950 dark:text-white uppercase leading-[0.98] inline-block">
+              <span className="text-3xl sm:text-5xl lg:text-6xl font-heading font-black tracking-tight text-neutral-950 dark:text-white uppercase leading-[0.98] inline-block">
                 {lang === 'en' ? 'Engineered for Speed' : (lang === 'kz' ? 'Жоғары жылдамдық' : 'Стек без компромиссов')}
               </span>
             </BlindTextReveal>
           </div>
 
           <BlindTextReveal delay={0.16}>
-            <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 max-w-md leading-relaxed font-normal">
+            <p className="text-sm sm:text-base text-neutral-600 dark:text-neutral-400 max-w-md leading-relaxed font-normal">
               {lang === 'en'
                 ? 'Modern headless architecture, lightning-fast client runtimes, and scalable backend infrastructure.'
                 : lang === 'kz'
@@ -43,10 +43,10 @@ export default function TechStack({ lang, techStackList }) {
           {list.map((group, idx) => (
             <div
               key={idx}
-              className="p-6 sm:p-8 rounded-2xl sm:rounded-3xl bg-black/[0.02] dark:bg-white/[0.02] border border-black/[0.06] dark:border-white/[0.06] space-y-5"
+              className="p-6 sm:p-8 rounded-2xl sm:rounded-3xl bg-white/70 dark:bg-[#0c0c0e] border border-black/[0.06] dark:border-white/[0.08] shadow-sm dark:shadow-xl space-y-5"
             >
               <div className="flex items-center justify-between">
-                <span className="font-heading font-bold text-sm sm:text-base text-slate-950 dark:text-white uppercase tracking-wider">
+                <span className="font-heading font-bold text-sm sm:text-base text-neutral-950 dark:text-white uppercase tracking-wider">
                   {group.category}
                 </span>
               </div>
@@ -55,7 +55,7 @@ export default function TechStack({ lang, techStackList }) {
                 {group.items.map((tech, tIdx) => (
                   <span
                     key={tIdx}
-                    className="px-3 py-1.5 rounded-full text-xs font-mono bg-white dark:bg-white/[0.06] border border-black/[0.06] dark:border-white/10 text-slate-800 dark:text-slate-200"
+                    className="px-3 py-1.5 rounded-full text-xs font-mono bg-white dark:bg-white/[0.06] border border-black/[0.06] dark:border-white/10 text-neutral-800 dark:text-neutral-200"
                   >
                     {tech}
                   </span>
@@ -66,7 +66,7 @@ export default function TechStack({ lang, techStackList }) {
         </div>
 
         {/* Guarantees */}
-        <div className="mt-12 sm:mt-16 flex flex-wrap items-center justify-center gap-6 sm:gap-10 text-xs font-mono text-slate-500 dark:text-slate-400">
+        <div className="mt-12 sm:mt-16 flex flex-wrap items-center justify-center gap-6 sm:gap-10 text-xs font-mono text-neutral-500 dark:text-neutral-400">
           <div className="flex items-center gap-2">
             <ShieldCheck className="w-4 h-4 text-amber-400" />
             <span>{t.badge1}</span>

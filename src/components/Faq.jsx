@@ -20,12 +20,12 @@ export default function Faq({ lang }) {
         {/* Section Header */}
         <div className="text-center mb-12 sm:mb-16 lg:mb-20">
           <BlindTextReveal delay={0}>
-            <div className="text-xs sm:text-sm font-mono text-slate-500 uppercase tracking-widest mb-3">
+            <div className="text-xs sm:text-sm font-mono text-neutral-500 uppercase tracking-widest mb-3">
               {lang === 'en' ? 'Direct Answers' : (lang === 'kz' ? 'Сұрақ-жауап' : 'Частые вопросы')}
             </div>
           </BlindTextReveal>
           <BlindTextReveal as="h2" delay={0.08}>
-            <span className="text-3xl sm:text-5xl lg:text-6xl font-heading font-black tracking-tight text-slate-950 dark:text-white uppercase leading-[0.98] inline-block">
+            <span className="text-3xl sm:text-5xl lg:text-6xl font-heading font-black tracking-tight text-neutral-950 dark:text-white uppercase leading-[0.98] inline-block">
               {lang === 'en' ? 'FAQ' : (lang === 'kz' ? 'Жиі қойылатын сұрақтар' : 'Вопросы и ответы')}
             </span>
           </BlindTextReveal>
@@ -45,13 +45,13 @@ export default function Faq({ lang }) {
                   onClick={() => toggle(idx)}
                   className="w-full py-6 sm:py-8 text-left flex items-center justify-between gap-4 sm:gap-6 focus:outline-none group px-1 sm:px-4"
                 >
-                  <span className="font-heading font-bold text-base sm:text-xl lg:text-2xl text-slate-950 dark:text-white group-hover:translate-x-1.5 transition-transform duration-200">
+                  <span className="font-heading font-bold text-base sm:text-xl lg:text-2xl text-neutral-950 dark:text-white group-hover:translate-x-1.5 transition-transform duration-200">
                     {question}
                   </span>
                   <motion.div 
                     animate={{ rotate: isOpen ? 180 : 0 }}
                     transition={{ duration: 0.25 }}
-                    className={`w-9 h-9 rounded-full border border-black/[0.1] dark:border-white/10 flex items-center justify-center shrink-0 ${isOpen ? 'bg-slate-950 dark:bg-white text-white dark:text-slate-950' : 'text-slate-600 dark:text-slate-400'}`}
+                    className={`w-9 h-9 rounded-full border border-black/[0.1] dark:border-white/10 flex items-center justify-center shrink-0 ${isOpen ? 'bg-neutral-950 dark:bg-white text-white dark:text-neutral-950' : 'text-neutral-600 dark:text-neutral-400'}`}
                   >
                     <ChevronDown className="w-4 h-4" />
                   </motion.div>
@@ -67,7 +67,7 @@ export default function Faq({ lang }) {
                       transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
                       className="overflow-hidden"
                     >
-                      <div className="pb-8 pt-1 pl-2 sm:pl-4 pr-6 sm:pr-12 text-sm sm:text-base text-slate-600 dark:text-slate-400 leading-relaxed font-light max-w-3xl">
+                      <div className="pb-8 pt-1 pl-2 sm:pl-4 pr-6 sm:pr-12 text-sm sm:text-base text-neutral-600 dark:text-neutral-400 leading-relaxed font-light max-w-3xl">
                         {answer}
                       </div>
                     </motion.div>
