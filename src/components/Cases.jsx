@@ -242,13 +242,13 @@ export default function Cases({ lang, casesList = [], onOpenContact }) {
           ))}
         </div>
 
-        {/* Confidential NDA Advisory Strip with Healthy Breathing Room */}
-        <div className="mt-12 sm:mt-16 p-6 sm:p-10 rounded-2xl sm:rounded-3xl border border-black/[0.08] dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02] flex flex-col md:flex-row md:items-center justify-between gap-6 sm:gap-8">
+        {/* Confidential NDA Advisory Strip: Clean, seamless editorial layout without enclosed border box */}
+        <div className="mt-12 sm:mt-16 pt-8 sm:pt-12 border-t border-black/[0.06] dark:border-white/[0.08] flex flex-col md:flex-row md:items-center justify-between gap-6 sm:gap-8 px-1 sm:px-2">
           <div className="max-w-xl">
             <h3 className="text-xl sm:text-2xl font-heading font-extrabold text-neutral-950 dark:text-white tracking-tight">
               {t.requestNicheTitle}
             </h3>
-            <p className="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400 mt-2.5 leading-relaxed">
+            <p className="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400 mt-2 leading-relaxed">
               {t.requestNicheDesc}
             </p>
           </div>

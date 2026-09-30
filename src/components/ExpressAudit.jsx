@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Globe, Send, CheckCircle2, AlertCircle, ArrowRight, ShieldCheck, Zap, Lock } from 'lucide-react';
 import { TRANSLATIONS } from '../data/translations';
-import CardShaderHover from './CardShaderHover';
 import BlindTextReveal from './BlindTextReveal';
 
 export default function ExpressAudit({ lang, onSuccessLead }) {
@@ -10,7 +9,6 @@ export default function ExpressAudit({ lang, onSuccessLead }) {
   const [contact, setContact] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [status, setStatus] = useState(null);
-  const [isHovered, setIsHovered] = useState(false);
   const cardRef = useRef(null);
   const videoRef = useRef(null);
 
@@ -67,18 +65,9 @@ export default function ExpressAudit({ lang, onSuccessLead }) {
     <section id="audit" className="py-20 sm:py-28 lg:py-32 relative w-full max-w-full overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         
-        {/* Ambient Backlight blooming from beneath the diagnostic card */}
-        <div 
-          className={`absolute -inset-3 sm:-inset-6 rounded-[36px] bg-gradient-to-r from-amber-500/20 via-orange-500/15 to-amber-600/20 blur-3xl transition-all duration-700 pointer-events-none -z-10 ${
-            isHovered ? 'opacity-100 scale-100' : 'opacity-20 scale-95'
-          }`}
-        />
-
-        {/* Luxury Studio Diagnostic Card with WebGL Thermal Heatmap, Background Video & Film Noise on Hover */}
+        {/* Luxury Studio Diagnostic Card with Crisp Web-Optimized Background Video */}
         <div 
           ref={cardRef}
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
           style={{ 
             borderRadius: '24px',
             transform: 'translateZ(0)',
@@ -96,21 +85,12 @@ export default function ExpressAudit({ lang, onSuccessLead }) {
               playsInline
               preload="auto"
               poster="/videos/audit-poster.jpg"
-              className="w-full h-full object-cover scale-105 opacity-35 dark:opacity-40 [mask-image:radial-gradient(ellipse_95%_90%_at_50%_50%,black_65%,transparent_100%)] [-webkit-mask-image:radial-gradient(ellipse_95%_90%_at_50%_50%,black_65%,transparent_100%)]"
+              className="w-full h-full object-cover scale-105 opacity-40 dark:opacity-45 [mask-image:radial-gradient(ellipse_95%_90%_at_50%_50%,black_65%,transparent_100%)] [-webkit-mask-image:radial-gradient(ellipse_95%_90%_at_50%_50%,black_65%,transparent_100%)]"
             >
               <source src="/videos/audit-bg.webm" type="video/webm" />
               <source src="/videos/audit-bg.mp4" type="video/mp4" />
             </video>
           </div>
-
-          {/* Subtle Dynamic WebGL Thermal Heatmap & Film Noise on Hover */}
-          <CardShaderHover 
-            colorMode="thermal" 
-            variant="isothermal"
-            anchor={{ x: 0.5, y: 0.3 }}
-            isHovered={isHovered} 
-            borderRadius={24}
-          />
           
           {/* Contrast Protection Scrim Overlay */}
           <div 
