@@ -89,11 +89,24 @@ export default function App() {
 
   const activeCaseItem = casesList.find(c => c.slug === activeCaseSlug || String(c.id) === String(activeCaseSlug));
 
+  const [contentBoostY, setContentBoostY] = useState(0);
+
   // Monitor scroll for sticky ticker & navbar adjustment
   useEffect(() => {
     const handleScroll = () => {
-      const heroHeight = Math.max(window.innerHeight, 640);
-      setIsTickerSticky(window.scrollY >= heroHeight - 20);
+      const scrollY = window.scrollY;
+      // Strip transitions / docks to top position at 370px
+      setIsTickerSticky(scrollY >= 370);
+
+      // Light acceleration towards the mark as user scrolls towards 370px
+      if (scrollY > 0 && scrollY < 370) {
+        const p = scrollY / 370;
+        // Quadratic acceleration pulling content upward slightly faster as it approaches the mark
+        const boost = -Math.round(Math.pow(p, 1.5) * 55);
+        setContentBoostY(boost);
+      } else {
+        setContentBoostY(0);
+      }
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
@@ -266,61 +279,70 @@ export default function App() {
             onOpenContact={handleOpenContact} 
           />
 
-          {/* Running Marquee Ticker: sits directly below the Hero fold and docks stickily when scrolled */}
-          <div className="relative w-full max-w-full z-20">
-            {isTickerSticky && (
-              <div className="h-12 sm:h-14 w-full" aria-hidden="true" />
-            )}
-            <MarqueeTicker lang={lang} isSticky={isTickerSticky} />
+          {/* Main Page Content: starts right at 100vh fold with -mt-[380px] so there is zero empty void, and scrolls up with slight acceleration towards the mark */}
+          <div 
+            className="relative w-full max-w-full z-20 -mt-[380px]"
+            style={{ 
+              transform: contentBoostY ? `translate3d(0, ${contentBoostY}px, 0)` : undefined,
+              transition: 'transform 0.05s linear'
+            }}
+          >
+            {/* Running Marquee Ticker: sits directly below the Hero fold and docks stickily when scrolled */}
+            <div className="relative w-full max-w-full z-20">
+              {isTickerSticky && (
+                <div className="h-12 sm:h-14 w-full" aria-hidden="true" />
+              )}
+              <MarqueeTicker lang={lang} isSticky={isTickerSticky} />
+            </div>
+            
+            <Services 
+              lang={lang}
+              currency={currency}
+              servicesList={servicesList}
+              onSelectForCalculator={handleSelectForCalculator}
+              onOrderService={handleOpenContact}
+            />
+            
+            <Calculator
+              lang={lang}
+              currency={currency}
+              servicesList={servicesList}
+              selectedServices={selectedServices}
+              onToggleService={handleToggleService}
+              onSuccessLead={() => showToast(lang === 'en' ? 'Estimate saved! Our strategist will reach out within 20 minutes.' : (lang === 'kz' ? 'Есеп сақталды! Маман 20 минут ішінде хабарласады.' : 'Расчет зафиксирован! Менеджер подготовит КП в течение 20 минут.'))}
+            />
+
+            <Cases 
+              lang={lang}
+              casesList={casesList}
+              onOpenContact={handleOpenContact}
+              onSelectCase={handleOpenCase}
+            />
+
+            <ExpressAudit 
+              lang={lang}
+              onSuccessLead={() => showToast(lang === 'en' ? 'Audit inquiry confirmed! We will deliver it within 24h.' : (lang === 'kz' ? 'Өтінім қабылданды! Аудит 24 сағат ішінде дайын болады.' : 'Заявка на экспресс-аудит принята! Отчет будет готов за 24 часа.'))}
+            />
+
+            <Process 
+              lang={lang} 
+            />
+
+            <TechStack 
+              lang={lang} 
+              techStackList={techStackList}
+            />
+
+            <Testimonials 
+              lang={lang} 
+              testimonialsList={testimonialsList}
+            />
+
+            <Faq 
+              lang={lang} 
+            />
           </div>
-          
-          <Services 
-            lang={lang}
-            currency={currency}
-            servicesList={servicesList}
-            onSelectForCalculator={handleSelectForCalculator}
-            onOrderService={handleOpenContact}
-          />
-          
-          <Calculator
-            lang={lang}
-            currency={currency}
-            servicesList={servicesList}
-            selectedServices={selectedServices}
-            onToggleService={handleToggleService}
-            onSuccessLead={() => showToast(lang === 'en' ? 'Estimate saved! Our strategist will reach out within 20 minutes.' : (lang === 'kz' ? 'Есеп сақталды! Маман 20 минут ішінде хабарласады.' : 'Расчет зафиксирован! Менеджер подготовит КП в течение 20 минут.'))}
-          />
-
-          <Cases 
-            lang={lang}
-            casesList={casesList}
-            onOpenContact={handleOpenContact}
-            onSelectCase={handleOpenCase}
-          />
-
-          <ExpressAudit 
-            lang={lang}
-            onSuccessLead={() => showToast(lang === 'en' ? 'Audit inquiry confirmed! We will deliver it within 24h.' : (lang === 'kz' ? 'Өтінім қабылданды! Аудит 24 сағат ішінде дайын болады.' : 'Заявка на экспресс-аудит принята! Отчет будет готов за 24 часа.'))}
-          />
-
-        <Process 
-          lang={lang} 
-        />
-
-        <TechStack 
-          lang={lang} 
-          techStackList={techStackList}
-        />
-
-        <Testimonials 
-          lang={lang} 
-          testimonialsList={testimonialsList}
-        />
-
-        <Faq 
-          lang={lang} 
-        />
-      </main>
+        </main>
     )}
 
       {/* Footer */}

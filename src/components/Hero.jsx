@@ -10,6 +10,7 @@ export default function Hero({ lang, theme = 'dark', onOpenContact }) {
 
   // Single unified motion value: 0 = collapsed in ARTX mark, 1 = full open screen
   const maskProgress = useMotionValue(0);
+  const badgeFade = useMotionValue(1);
   const controlsRef = useRef(null);
   const isIntroPlayingRef = useRef(true);
 
@@ -33,10 +34,13 @@ export default function Hero({ lang, theme = 'dark', onOpenContact }) {
     // If the user already loaded at a scrolled position, skip intro
     if (window.scrollY > 20) {
       isIntroPlayingRef.current = false;
-      const progress = Math.max(0, Math.min(1, 1 - window.scrollY / 240));
+      const progress = Math.max(0, Math.min(1, 1 - window.scrollY / 200));
       maskProgress.set(progress);
+      const fade = window.scrollY < 280 ? 1 : Math.max(0, 1 - (window.scrollY - 280) / 90);
+      badgeFade.set(fade);
     } else {
       maskProgress.set(0);
+      badgeFade.set(1);
       controlsRef.current = animate(maskProgress, 1, {
         duration: 1.9,
         delay: 0.25,
@@ -56,8 +60,12 @@ export default function Hero({ lang, theme = 'dark', onOpenContact }) {
         isIntroPlayingRef.current = false;
       }
       const scrollY = window.scrollY;
-      const progress = Math.max(0, Math.min(1, 1 - scrollY / 240));
+      const progress = Math.max(0, Math.min(1, 1 - scrollY / 200));
       maskProgress.set(progress);
+
+      // Badge stays pinned at center until ticker approaches it, then dissolves (280px -> 370px)
+      const fade = scrollY < 280 ? 1 : Math.max(0, 1 - (scrollY - 280) / 90);
+      badgeFade.set(fade);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -67,7 +75,7 @@ export default function Hero({ lang, theme = 'dark', onOpenContact }) {
       }
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [maskProgress]);
+  }, [maskProgress, badgeFade]);
 
   // Unified visual transforms derived directly from maskProgress (0 -> 1)
   // 1. Aperture scale: from compact badge (1.5x = ~135px) to fullscreen aperture (18x)
@@ -101,8 +109,14 @@ export default function Hero({ lang, theme = 'dark', onOpenContact }) {
   return (
     <section 
       ref={containerRef}
-      className="relative w-full max-w-full h-screen min-h-[640px] flex flex-col justify-between overflow-hidden ambient-glow-hero pt-24 sm:pt-28 pb-4 sm:pb-6 lg:pb-8"
+      style={{ minHeight: 'calc(100vh + 380px)' }}
+      className="relative w-full max-w-full"
     >
+      {/* Pinned 100vh Screen Container */}
+      <motion.div 
+        style={{ opacity: badgeFade }}
+        className="sticky top-0 h-screen w-full max-w-full flex flex-col justify-between overflow-hidden ambient-glow-hero pt-24 sm:pt-28 pb-4 sm:pb-6 lg:pb-8"
+      >
         
         {/* Top Ambient Gradient Strip under Menu */}
         <div className="absolute top-0 left-0 right-0 w-full h-32 sm:h-40 bg-gradient-to-b from-white/90 via-white/45 to-transparent dark:from-black/90 dark:via-black/50 dark:to-transparent pointer-events-none z-10" />
@@ -133,7 +147,7 @@ export default function Hero({ lang, theme = 'dark', onOpenContact }) {
 
         {/* Ambient Amber Glow behind collapsed badge */}
         <motion.div 
-          style={{ opacity: badgeGlowOpacity }}
+          style={{ opacity: useTransform([badgeGlowOpacity, badgeFade], ([glow, fade]) => glow * fade) }}
           className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 rounded-full pointer-events-none z-5 bg-amber-400/25 dark:bg-amber-400/20 blur-3xl"
         />
 
@@ -191,31 +205,33 @@ export default function Hero({ lang, theme = 'dark', onOpenContact }) {
             />
 
             {/* Foreground Badge Details (Central Amber Spark & Squircle Border) */}
-            <g transform="translate(500, 500)">
-              <motion.g style={{ scale: apertureScale }}>
-                <g transform="translate(-50, -50)">
-                  {/* Central Amber Diamond Spark */}
-                  <motion.path 
-                    style={{ opacity: sparkOpacity }}
-                    d="M 50,44.5 Q 50,51 56,51 Q 50,51 50,57.5 Q 50,51 44,51 Q 50,51 50,44.5 Z" 
-                    fill="url(#heroAmberSpark)" 
-                  />
+            <motion.g style={{ opacity: badgeFade }}>
+              <g transform="translate(500, 500)">
+                <motion.g style={{ scale: apertureScale }}>
+                  <g transform="translate(-50, -50)">
+                    {/* Central Amber Diamond Spark */}
+                    <motion.path 
+                      style={{ opacity: sparkOpacity }}
+                      d="M 50,44.5 Q 50,51 56,51 Q 50,51 50,57.5 Q 50,51 44,51 Q 50,51 50,44.5 Z" 
+                      fill="url(#heroAmberSpark)" 
+                    />
 
-                  {/* Squircle Border around the badge */}
-                  <motion.rect 
-                    style={{ opacity: borderOpacity }}
-                    x="0.75" 
-                    y="0.75" 
-                    width="98.5" 
-                    height="98.5" 
-                    rx="21.25" 
-                    fill="none" 
-                    stroke={isDark ? 'rgba(255,255,255,0.22)' : 'rgba(0,0,0,0.16)'} 
-                    strokeWidth="1.5" 
-                  />
-                </g>
-              </motion.g>
-            </g>
+                    {/* Squircle Border around the badge */}
+                    <motion.rect 
+                      style={{ opacity: borderOpacity }}
+                      x="0.75" 
+                      y="0.75" 
+                      width="98.5" 
+                      height="98.5" 
+                      rx="21.25" 
+                      fill="none" 
+                      stroke={isDark ? 'rgba(255,255,255,0.22)' : 'rgba(0,0,0,0.16)'} 
+                      strokeWidth="1.5" 
+                    />
+                  </g>
+                </motion.g>
+              </g>
+            </motion.g>
           </svg>
         </div>
 
@@ -223,7 +239,10 @@ export default function Hero({ lang, theme = 'dark', onOpenContact }) {
         <motion.button
           type="button"
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          style={{ opacity: borderOpacity, pointerEvents: badgePointerEvents }}
+          style={{ 
+            opacity: useTransform([borderOpacity, badgeFade], ([b, f]) => b * f), 
+            pointerEvents: badgePointerEvents 
+          }}
           className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-36 h-36 rounded-3xl z-30 cursor-pointer focus:outline-none transition-transform hover:scale-105 active:scale-95"
           title="ARTX · Наверх"
           aria-label="Наверх к первому экрану"
@@ -333,6 +352,7 @@ export default function Hero({ lang, theme = 'dark', onOpenContact }) {
           </motion.div>
 
         </motion.div>
+      </motion.div>
     </section>
   );
 }
