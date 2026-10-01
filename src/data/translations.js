@@ -63,7 +63,7 @@ export const TRANSLATIONS = {
     calculator: {
       badge: 'Интерактивті смета',
       title: 'Жоба құны мен мерзімін онлайн есептеу',
-      desc: 'Қажетті бағыттарды, ауқымды және жылдамдықты таңдап, нақты бағаны біліңіз.',
+      desc: 'Қажетті бағыттар мен орындау жылдамдығын таңдап, нақты бағаны біліңіз.',
       step1: '1. Қажетті қызметтерді таңдаңыз:',
       selectedCount: 'Таңдалды: {count} / {total}',
       step2: '2. Жоба ауқымы мен күрделілігі:',
@@ -237,7 +237,7 @@ export const TRANSLATIONS = {
     calculator: {
       badge: 'Интерактивная смета',
       title: 'Калькулятор стоимости и сроков проекта',
-      desc: 'Выберите услуги, масштаб решения и приоритет срочности для получения прозрачного расчета.',
+      desc: 'Выберите услуги и приоритет срочности для получения прозрачного расчета.',
       step1: '1. Выберите необходимые услуги:',
       selectedCount: 'Выбрано: {count} из {total}',
       step2: '2. Масштаб и сложность решения:',
@@ -411,7 +411,7 @@ export const TRANSLATIONS = {
     calculator: {
       badge: 'Interactive Estimate',
       title: 'Project Cost & Timeline Estimator',
-      desc: 'Select services, tier scope, and turnaround urgency to generate a clear transparent breakdown.',
+      desc: 'Select services and turnaround urgency to generate a clear transparent breakdown.',
       step1: '1. Select required services:',
       selectedCount: 'Selected: {count} of {total}',
       step2: '2. Project tier & complexity:',

@@ -12,25 +12,12 @@ export default function Calculator({
   onToggleService, 
   onSuccessLead 
 }) {
-  const [scale, setScale] = useState('business');
   const [urgency, setUrgency] = useState('standard');
   const [clientContact, setClientContact] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null);
 
   const t = TRANSLATIONS[lang].calculator;
-
-  const scaleMultipliers = {
-    start: 0.8,
-    business: 1.0,
-    enterprise: 1.65,
-  };
-
-  const scaleNames = {
-    start: lang === 'en' ? 'Startup / MVP' : (lang === 'kz' ? 'Стартап / MVP' : 'Стартап / MVP'),
-    business: lang === 'en' ? 'Standard / Growth' : (lang === 'kz' ? 'Бизнес / Стандарт' : 'Бизнес / Стандарт'),
-    enterprise: lang === 'en' ? 'Enterprise / Scale' : (lang === 'kz' ? 'Enterprise / Ауқымды' : 'Enterprise / Масштаб')
-  };
 
   const urgencyMultipliers = {
     standard: 1.0,
@@ -52,7 +39,7 @@ export default function Calculator({
   }
 
   const calculatedPrice = Math.round(
-    baseTotal * scaleMultipliers[scale] * urgencyMultipliers[urgency] * (1 - bundleDiscount)
+    baseTotal * urgencyMultipliers[urgency] * (1 - bundleDiscount)
   );
 
   const baseDays = selectedServices.length === 0 ? 0 : Math.max(
@@ -94,7 +81,6 @@ export default function Calculator({
       type: 'CALCULATOR_ESTIMATE',
       contact: clientContact.trim(),
       currency,
-      scale: scaleNames[scale],
       urgency: urgency === 'express' ? 'Express' : 'Standard',
       selectedServices: selectedServices.map(id => {
         const s = servicesList.find(item => item.id === id);
@@ -148,10 +134,10 @@ export default function Calculator({
           <BlindTextReveal delay={0.16}>
             <p className="text-sm sm:text-base text-neutral-600 dark:text-neutral-400 max-w-md leading-relaxed font-normal">
               {lang === 'en'
-                ? 'Select your disciplines and scale. Get an instant realistic baseline and lock in bundle terms.'
+                ? 'Select your disciplines and delivery speed. Get an instant realistic baseline and lock in bundle terms.'
                 : lang === 'kz'
-                ? 'Қажетті бағыттар мен жоба ауқымын таңдаңыз. Нақты баға мен мерзімді бірден біліңіз.'
-                : 'Выберите направления и масштаб бизнеса. Узнайте честную стоимость без скрытых платежей.'}
+                ? 'Қажетті бағыттар мен мерзімді таңдаңыз. Нақты бағаны бірден біліңіз.'
+                : 'Выберите необходимые направления и скорость запуска. Узнайте честную стоимость без скрытых платежей.'}
             </p>
           </BlindTextReveal>
         </div>
@@ -197,36 +183,7 @@ export default function Calculator({
               </div>
             </div>
 
-            {/* 2. Scale Selector */}
-            <div>
-              <div className="text-xs font-mono uppercase tracking-wider text-neutral-500 mb-4 sm:mb-5">
-                {lang === 'en' ? 'Company Scale' : (lang === 'kz' ? 'Жоба ауқымы' : 'Масштаб проекта')}
-              </div>
-
-              <div className="grid grid-cols-3 gap-2 sm:gap-3.5">
-                {[
-                  { id: 'start', label: 'Startup' },
-                  { id: 'business', label: 'Standard' },
-                  { id: 'enterprise', label: 'Enterprise' }
-                ].map((item) => (
-                  <motion.button
-                    whileTap={{ scale: 0.97 }}
-                    key={item.id}
-                    type="button"
-                    onClick={() => setScale(item.id)}
-                    className={`py-3 sm:py-4 px-2 sm:px-4 rounded-xl sm:rounded-2xl text-[11px] sm:text-sm font-heading font-bold transition-all text-center truncate ${
-                      scale === item.id
-                        ? 'bg-amber-400 text-neutral-950 shadow-md'
-                        : 'border border-black/[0.08] dark:border-white/10 bg-white/40 dark:bg-white/[0.02] text-neutral-600 dark:text-neutral-400 hover:border-neutral-400'
-                    }`}
-                  >
-                    {item.label}
-                  </motion.button>
-                ))}
-              </div>
-            </div>
-
-            {/* 3. Speed Toggle */}
+            {/* 2. Speed Toggle */}
             <div>
               <div className="text-xs font-mono uppercase tracking-wider text-neutral-500 mb-4 sm:mb-5">
                 {lang === 'en' ? 'Launch Velocity' : (lang === 'kz' ? 'Орындау қарқыны' : 'Скорость релиза')}
@@ -293,7 +250,7 @@ export default function Calculator({
                 {formattedPrice}
               </div>
               <div className="text-xs sm:text-sm font-mono text-neutral-500 dark:text-neutral-400 mt-3">
-                {t.timelineLabel} ~{estimatedDays} {t.daysUnit} · {scaleNames[scale]}
+                {t.timelineLabel} ~{estimatedDays} {t.daysUnit}
               </div>
             </div>
 
