@@ -92,8 +92,8 @@ export default function App() {
   // Monitor scroll for sticky ticker & navbar adjustment
   useEffect(() => {
     const handleScroll = () => {
-      const heroThreshold = window.innerHeight + 260;
-      setIsTickerSticky(window.scrollY > heroThreshold);
+      const heroHeight = Math.max(window.innerHeight, 640);
+      setIsTickerSticky(window.scrollY >= heroHeight - 20);
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);

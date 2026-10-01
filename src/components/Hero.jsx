@@ -33,14 +33,14 @@ export default function Hero({ lang, theme = 'dark', onOpenContact }) {
     // If the user already loaded at a scrolled position, skip intro
     if (window.scrollY > 20) {
       isIntroPlayingRef.current = false;
-      const progress = Math.max(0, Math.min(1, 1 - window.scrollY / 280));
+      const progress = Math.max(0, Math.min(1, 1 - window.scrollY / 240));
       maskProgress.set(progress);
     } else {
       maskProgress.set(0);
       controlsRef.current = animate(maskProgress, 1, {
-        duration: 1.35,
-        delay: 0.2,
-        ease: [0.16, 1, 0.3, 1],
+        duration: 1.9,
+        delay: 0.25,
+        ease: [0.22, 1, 0.36, 1],
         onComplete: () => {
           isIntroPlayingRef.current = false;
           controlsRef.current = null;
@@ -56,7 +56,7 @@ export default function Hero({ lang, theme = 'dark', onOpenContact }) {
         isIntroPlayingRef.current = false;
       }
       const scrollY = window.scrollY;
-      const progress = Math.max(0, Math.min(1, 1 - scrollY / 280));
+      const progress = Math.max(0, Math.min(1, 1 - scrollY / 240));
       maskProgress.set(progress);
     };
 
@@ -89,8 +89,8 @@ export default function Hero({ lang, theme = 'dark', onOpenContact }) {
   const overlayOpacity = useTransform(maskProgress, [0, 0.75, 0.95, 1], [1, 1, 0.15, 0]);
 
   // 7. Hero content: fades out and drifts upward when scrolling down to collapse
-  const contentOpacity = useTransform(maskProgress, [0.35, 0.75, 1], [0, 0.5, 1]);
-  const contentY = useTransform(maskProgress, [0, 1], [-45, 0]);
+  const contentOpacity = useTransform(maskProgress, [0.4, 0.85, 1], [0, 0.7, 1]);
+  const contentY = useTransform(maskProgress, [0, 1], [-40, 0]);
 
   // 8. Interactive pointer events: only enable clicking badge when collapsed
   const badgePointerEvents = useTransform(maskProgress, (p) => (p < 0.25 ? 'auto' : 'none'));
@@ -101,11 +101,8 @@ export default function Hero({ lang, theme = 'dark', onOpenContact }) {
   return (
     <section 
       ref={containerRef}
-      style={{ minHeight: 'calc(100vh + 340px)' }}
-      className="relative w-full max-w-full"
+      className="relative w-full max-w-full h-screen min-h-[640px] flex flex-col justify-between overflow-hidden ambient-glow-hero pt-24 sm:pt-28 pb-4 sm:pb-6 lg:pb-8"
     >
-      {/* Pinned 100vh Screen Container */}
-      <div className="sticky top-0 h-screen w-full max-w-full flex flex-col justify-between overflow-hidden ambient-glow-hero pt-24 sm:pt-28 pb-4 sm:pb-6 lg:pb-8">
         
         {/* Top Ambient Gradient Strip under Menu */}
         <div className="absolute top-0 left-0 right-0 w-full h-32 sm:h-40 bg-gradient-to-b from-white/90 via-white/45 to-transparent dark:from-black/90 dark:via-black/50 dark:to-transparent pointer-events-none z-10" />
@@ -243,7 +240,7 @@ export default function Hero({ lang, theme = 'dark', onOpenContact }) {
               <motion.h1 
                 initial={{ y: '100%', opacity: 1 }}
                 animate={{ y: 0, opacity: 1 }}
-                transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ duration: 0.9, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
                 className="text-3xl sm:text-6xl md:text-7xl lg:text-8xl font-heading font-black tracking-tight text-neutral-950 dark:text-white leading-[1.05] sm:leading-[1.0] uppercase drop-shadow-sm inline-block"
               >
                 <span>{t.titleStart}</span>{' '}
@@ -258,7 +255,7 @@ export default function Hero({ lang, theme = 'dark', onOpenContact }) {
               <motion.p 
                 initial={{ y: '100%', opacity: 1 }}
                 animate={{ y: 0, opacity: 1 }}
-                transition={{ duration: 0.75, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ duration: 0.9, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
                 className="text-base sm:text-xl md:text-2xl text-neutral-700 dark:text-neutral-100 font-medium max-w-3xl mx-auto leading-relaxed dark:drop-shadow-[0_2px_12px_rgba(0,0,0,0.95)]"
               >
                 {t.desc}
@@ -269,7 +266,7 @@ export default function Hero({ lang, theme = 'dark', onOpenContact }) {
             <motion.div 
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.22, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 0.75, delay: 0.75, ease: [0.16, 1, 0.3, 1] }}
               className="mt-6 sm:mt-8 flex flex-col sm:flex-row items-center justify-center gap-3.5 sm:gap-5"
             >
               <motion.a
@@ -299,7 +296,7 @@ export default function Hero({ lang, theme = 'dark', onOpenContact }) {
           <motion.div 
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.28 }}
+            transition={{ duration: 0.85, delay: 0.85 }}
             className="relative z-20 mt-6 sm:mt-10 mb-1 sm:mb-2 grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6"
           >
             {[
@@ -336,8 +333,6 @@ export default function Hero({ lang, theme = 'dark', onOpenContact }) {
           </motion.div>
 
         </motion.div>
-
-      </div>
     </section>
   );
 }
