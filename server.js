@@ -18,7 +18,25 @@ const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN || '';
 const CHAT_ID = process.env.TELEGRAM_CHAT_ID || '';
 
 // Ensure data folder exists
-fs.mkdirSync(DATA_DIR, { recursive: true });
+try {
+  fs.mkdirSync(DATA_DIR, { recursive: true });
+  console.log(`📁 Using persistent DATA_DIR: ${DATA_DIR}`);
+  
+  // Seed initial content.json to persistent volume if missing
+  const DEFAULT_CONTENT_FILE = path.join(__dirname, 'data', 'content.json');
+  if (!fs.existsSync(CONTENT_FILE) && fs.existsSync(DEFAULT_CONTENT_FILE)) {
+    fs.copyFileSync(DEFAULT_CONTENT_FILE, CONTENT_FILE);
+    console.log(`✅ Seeded default content.json to ${CONTENT_FILE}`);
+  }
+
+  // Ensure leads.json exists
+  if (!fs.existsSync(LEADS_FILE)) {
+    fs.writeFileSync(LEADS_FILE, JSON.stringify([], null, 2), 'utf8');
+    console.log(`✅ Initialized empty leads.json at ${LEADS_FILE}`);
+  }
+} catch (err) {
+  console.error('Error initializing data directory:', err);
+}
 
 const MIME_TYPES = {
   '.html': 'text/html; charset=utf-8',

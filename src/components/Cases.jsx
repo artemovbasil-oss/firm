@@ -71,7 +71,7 @@ const CASE_PRESETS = [
   }
 ];
 
-function CaseCard({ item, idx, lang, onOpenContact, t, getLocalized }) {
+function CaseCard({ item, idx, lang, onOpenContact, onSelectCase, t, getLocalized }) {
   const [isHovered, setIsHovered] = useState(false);
   const cardRef = useRef(null);
 
@@ -88,6 +88,14 @@ function CaseCard({ item, idx, lang, onOpenContact, t, getLocalized }) {
   const activeGrad = preset.grad;
   const hoverBorderClass = preset.hoverBorder;
 
+  const handleClick = () => {
+    if (onSelectCase) {
+      onSelectCase(item.slug || item.id);
+    } else if (onOpenContact) {
+      onOpenContact(`${title} Case Discussion`);
+    }
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -101,7 +109,7 @@ function CaseCard({ item, idx, lang, onOpenContact, t, getLocalized }) {
       {/* Visual Showcase Card with Motion Hover & WebGL Thermal Heatmap */}
       <motion.div 
         ref={cardRef}
-        onClick={() => onOpenContact(`${title} Case Discussion`)}
+        onClick={handleClick}
         whileHover={{ y: -6 }}
         transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
         style={{ 
@@ -173,7 +181,7 @@ function CaseCard({ item, idx, lang, onOpenContact, t, getLocalized }) {
   );
 }
 
-export default function Cases({ lang, casesList = [], onOpenContact }) {
+export default function Cases({ lang, casesList = [], onOpenContact, onSelectCase }) {
   const [selectedTag, setSelectedTag] = useState('All');
   const t = TRANSLATIONS[lang].cases;
 
@@ -236,6 +244,7 @@ export default function Cases({ lang, casesList = [], onOpenContact }) {
               idx={idx}
               lang={lang}
               onOpenContact={onOpenContact}
+              onSelectCase={onSelectCase}
               t={t}
               getLocalized={getLocalized}
             />

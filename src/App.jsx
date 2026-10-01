@@ -13,6 +13,7 @@ import Faq from './components/Faq';
 import Footer from './components/Footer';
 import ContactModal from './components/ContactModal';
 import AdminPanel from './components/AdminPanel';
+import CaseStudyDetail from './components/CaseStudyDetail';
 import { INITIAL_SERVICES, INITIAL_CASES, TECH_STACK, TESTIMONIALS } from './data/agencyData';
 import { TRANSLATIONS } from './data/translations';
 import { CheckCircle2 } from 'lucide-react';
@@ -38,6 +39,50 @@ export default function App() {
   const [isAdminOpen, setIsAdminOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState(null);
   const [isTickerSticky, setIsTickerSticky] = useState(false);
+
+  // Case Study Routing state (/cases/:slug or #/cases/:slug)
+  const getSlugFromUrl = () => {
+    if (typeof window === 'undefined') return null;
+    const path = window.location.pathname;
+    if (path.startsWith('/cases/')) {
+      const slug = path.replace('/cases/', '').replace(/\/$/, '');
+      if (slug) return slug;
+    }
+    const hash = window.location.hash;
+    if (hash.startsWith('#/cases/')) {
+      const slug = hash.replace('#/cases/', '');
+      if (slug) return slug;
+    }
+    return null;
+  };
+
+  const [activeCaseSlug, setActiveCaseSlug] = useState(getSlugFromUrl);
+
+  useEffect(() => {
+    const handlePopState = () => {
+      setActiveCaseSlug(getSlugFromUrl());
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  const handleOpenCase = (slugOrId) => {
+    const targetCase = casesList.find(c => c.slug === slugOrId || String(c.id) === String(slugOrId));
+    const slug = targetCase?.slug || slugOrId;
+    setActiveCaseSlug(slug);
+    window.history.pushState(null, '', `/cases/${slug}`);
+  };
+
+  const handleCloseCase = () => {
+    setActiveCaseSlug(null);
+    window.history.pushState(null, '', '/#cases');
+    setTimeout(() => {
+      const el = document.getElementById('cases');
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    }, 50);
+  };
+
+  const activeCaseItem = casesList.find(c => c.slug === activeCaseSlug || String(c.id) === String(activeCaseSlug));
 
   // Monitor scroll for sticky ticker & navbar adjustment
   useEffect(() => {
@@ -184,58 +229,71 @@ export default function App() {
       )}
 
       {/* Header */}
-      <Navbar
-        lang={lang}
-        setLang={setLang}
-        theme={theme}
-        setTheme={setTheme}
-        onOpenContact={handleOpenContact}
-        onOpenAdmin={() => setIsAdminOpen(true)}
-        isTickerSticky={isTickerSticky}
-      />
+      {!activeCaseItem && (
+        <Navbar
+          lang={lang}
+          setLang={setLang}
+          theme={theme}
+          setTheme={setTheme}
+          onOpenContact={handleOpenContact}
+          onOpenAdmin={() => setIsAdminOpen(true)}
+          isTickerSticky={isTickerSticky}
+        />
+      )}
 
       {/* Main Content */}
-      <main className="flex-1 w-full max-w-full overflow-x-hidden">
-        <Hero 
+      {activeCaseItem ? (
+        <CaseStudyDetail 
+          caseItem={activeCaseItem}
+          allCases={casesList}
           lang={lang}
-          onOpenContact={handleOpenContact} 
-        />
-
-        {/* Running Marquee Ticker: sits directly below the Hero fold and docks stickily when scrolled */}
-        <div className="relative w-full max-w-full z-20">
-          {isTickerSticky && (
-            <div className="h-12 sm:h-14 w-full" aria-hidden="true" />
-          )}
-          <MarqueeTicker lang={lang} isSticky={isTickerSticky} />
-        </div>
-        
-        <Services 
-          lang={lang}
-          currency={currency}
-          servicesList={servicesList}
-          onSelectForCalculator={handleSelectForCalculator}
-          onOrderService={handleOpenContact}
-        />
-        
-        <Calculator
-          lang={lang}
-          currency={currency}
-          servicesList={servicesList}
-          selectedServices={selectedServices}
-          onToggleService={handleToggleService}
-          onSuccessLead={() => showToast(lang === 'en' ? 'Estimate saved! Our strategist will reach out within 20 minutes.' : (lang === 'kz' ? 'Есеп сақталды! Маман 20 минут ішінде хабарласады.' : 'Расчет зафиксирован! Менеджер подготовит КП в течение 20 минут.'))}
-        />
-
-        <Cases 
-          lang={lang}
-          casesList={casesList}
+          onClose={handleCloseCase}
+          onSelectCase={handleOpenCase}
           onOpenContact={handleOpenContact}
         />
+      ) : (
+        <main className="flex-1 w-full max-w-full overflow-x-hidden">
+          <Hero 
+            lang={lang}
+            onOpenContact={handleOpenContact} 
+          />
 
-        <ExpressAudit 
-          lang={lang}
-          onSuccessLead={() => showToast(lang === 'en' ? 'Audit inquiry confirmed! We will deliver it within 24h.' : (lang === 'kz' ? 'Өтінім қабылданды! Аудит 24 сағат ішінде дайын болады.' : 'Заявка на экспресс-аудит принята! Отчет будет готов за 24 часа.'))}
-        />
+          {/* Running Marquee Ticker: sits directly below the Hero fold and docks stickily when scrolled */}
+          <div className="relative w-full max-w-full z-20">
+            {isTickerSticky && (
+              <div className="h-12 sm:h-14 w-full" aria-hidden="true" />
+            )}
+            <MarqueeTicker lang={lang} isSticky={isTickerSticky} />
+          </div>
+          
+          <Services 
+            lang={lang}
+            currency={currency}
+            servicesList={servicesList}
+            onSelectForCalculator={handleSelectForCalculator}
+            onOrderService={handleOpenContact}
+          />
+          
+          <Calculator
+            lang={lang}
+            currency={currency}
+            servicesList={servicesList}
+            selectedServices={selectedServices}
+            onToggleService={handleToggleService}
+            onSuccessLead={() => showToast(lang === 'en' ? 'Estimate saved! Our strategist will reach out within 20 minutes.' : (lang === 'kz' ? 'Есеп сақталды! Маман 20 минут ішінде хабарласады.' : 'Расчет зафиксирован! Менеджер подготовит КП в течение 20 минут.'))}
+          />
+
+          <Cases 
+            lang={lang}
+            casesList={casesList}
+            onOpenContact={handleOpenContact}
+            onSelectCase={handleOpenCase}
+          />
+
+          <ExpressAudit 
+            lang={lang}
+            onSuccessLead={() => showToast(lang === 'en' ? 'Audit inquiry confirmed! We will deliver it within 24h.' : (lang === 'kz' ? 'Өтінім қабылданды! Аудит 24 сағат ішінде дайын болады.' : 'Заявка на экспресс-аудит принята! Отчет будет готов за 24 часа.'))}
+          />
 
         <Process 
           lang={lang} 
@@ -255,6 +313,7 @@ export default function App() {
           lang={lang} 
         />
       </main>
+    )}
 
       {/* Footer */}
       <Footer 

@@ -2,30 +2,32 @@
   "cases": [
     {
       "id": 1,
+      "slug": "luxury-furniture-kazakhstan",
+      "year": "2025–2026",
       "title": {
-        "kz": "Casa Italia — Премиум жиһаз дүкені",
-        "ru": "Casa Italia — Салон итальянской мебели в Казахстане",
-        "en": "Casa Italia — Italian Luxury Furniture E-Commerce"
+        "kz": "Премиум жиһаз дүкені және 3D конфигуратор",
+        "ru": "Интернет-магазин элитной мебели и 3D-конфигуратор",
+        "en": "Luxury Furniture E-Commerce & 3D Configurator"
       },
       "client": {
-        "kz": "Casa Italia Kazakhstan (Алматы / Астана)",
-        "ru": "Салон мебели Casa Italia (Алматы / Астана)",
-        "en": "Casa Italia Furniture Atelier (Kazakhstan)"
+        "kz": "Итальяндық жиһаз салоны (Алматы / Астана)",
+        "ru": "Салон элитной мебели (Алматы / Астана)",
+        "en": "Luxury Furniture Atelier (Kazakhstan)"
       },
       "services": {
         "kz": [
           "Сайт әзірлеу",
-          "Каталог модульдері",
-          "Кастом софт"
+          "3D конфигуратор",
+          "E-Commerce"
         ],
         "ru": [
           "Разработка сайта",
-          "Кастомные модули каталога",
+          "3D-конфигуратор",
           "E-Commerce"
         ],
         "en": [
           "Web Development",
-          "Custom Catalog Engine",
+          "3D Configurator",
           "E-Commerce"
         ]
       },
@@ -35,9 +37,19 @@
         "en": "+185% Online Sales"
       },
       "summary": {
-        "kz": "Итальян фабрикаларының қоймаларымен тікелей синхрондалған, 3D конфигураторы және материал таңдаудың кастомдық модульдері бар премиум интернет-дүкен жасадық",
-        "ru": "Разработали интерактивный интернет-магазин с кастомными модулями подбора отделок, 3D-конфигуратором модульных диванов и бесшовной синхронизацией складских остатков фабрик Италии",
-        "en": "Engineered an interactive e-commerce platform with custom textile/finish selectors, 3D modular sofa configurator, and real-time inventory sync directly with Italian manufacturers"
+        "kz": "Итальян фабрикаларының қоймаларымен тікелей синхрондалған, 3D конфигураторы және материал таңдаудың кастомдық модульдері бар премиум интернет-дүкен жасадық.",
+        "ru": "Разработали интерактивный интернет-магазин с кастомными модулями подбора отделок, 3D-конфигуратором модульных диванов и бесшовной синхронизацией складских остатков фабрик Италии.",
+        "en": "Engineered an interactive e-commerce platform with custom finish selectors, 3D modular sofa configurator, and real-time inventory sync directly with Italian manufacturers."
+      },
+      "challenge": {
+        "kz": "Тапсырыс беру циклінің ұзақтығы (3 аптаға дейін), мата мен ағаш үлгілерін шоурумға келмей онлайн таңдаудың қиындығы және еуропалық фабрикалардың қоймаларымен байланыстың болмауы.",
+        "ru": "Долгий цикл согласования кастомных заказов (до 3 недель), сложность выбора заказных тканей, дерева и модулей онлайн без посещения шоурума, отсутствие живой синхронизации остатков с европейскими фабриками.",
+        "en": "Protracted bespoke furniture sales cycle (up to 3 weeks), friction in selecting custom textiles and finishes online, and zero real-time inventory visibility across Italian manufacturing plants."
+      },
+      "solution": {
+        "kz": "Three.js/WebGL негізінде модульдік жиһаздың 3D-конфигураторы, жоғары ажыратымдылықтағы материал таңдау модулі және Италия фабрикаларының қойма жүйелерімен тікелей API-байланысы бар заманауи интернет-дүкен жасадық.",
+        "ru": "Спроектировали архитектуру флагманского интернет-магазина с 3D-конфигуратором модульных диванов и гарнитуров на Three.js/WebGL, интерактивным селектором материалов высокой четкости и прямым API-мостом к складским ERP фабрик в Италии.",
+        "en": "Engineered a luxury e-commerce flagship featuring a WebGL 3D modular sofa configurator, tactile texture inspection system, and automated real-time inventory sync with Italian manufacturing ERPs."
       },
       "metrics": [
         {
@@ -63,41 +75,74 @@
             "en": "Inquiry Conversion"
           },
           "value": "4.8%"
+        },
+        {
+          "label": {
+            "kz": "Келісімді есептеу уақыты",
+            "ru": "Расчет спецификации",
+            "en": "Spec Calculation"
+          },
+          "value": "2 мин"
         }
+      ],
+      "deliverables": [
+        "UX/UI Design & Luxury Design System",
+        "WebGL 3D Sofa & Room Configurator",
+        "Next.js / React Modular Frontend",
+        "Factory Inventory Sync & API Bridge",
+        "Omnichannel Lead Routing & WhatsApp CRM"
+      ],
+      "technologies": [
+        "React",
+        "Three.js",
+        "WebGL",
+        "Next.js",
+        "Tailwind CSS",
+        "Node.js",
+        "PostgreSQL",
+        "Figma"
       ],
       "tags": [
         "Websites",
         "Full Packaging"
       ],
       "colorMode": "thermal",
+      "shaderVariant": "isothermal",
+      "anchor": {
+        "x": 0.8,
+        "y": 0.25
+      },
+      "seed": 0.42,
       "published": true
     },
     {
       "id": 2,
+      "slug": "italian-eyewear-platform",
+      "year": "2025–2026",
       "title": {
-        "kz": "Ottica Milano — Италиядан брендтік оптика тапсырысы",
-        "ru": "Ottica Milano — Онлайн-заказ оптики мировых брендов из Италии",
-        "en": "Ottica Milano — Direct-to-Consumer Italian Designer Eyewear"
+        "kz": "Италиялық оптикаға онлайн тапсырыс беру платформасы",
+        "ru": "D2C-платформа онлайн-заказа дизайнерской оптики из Италии",
+        "en": "D2C Designer Eyewear Platform with Virtual Try-On"
       },
       "client": {
-        "kz": "Ottica Global Group (Италия / Халықаралық)",
-        "ru": "Ottica Global Group (Италия / Международные поставки)",
-        "en": "Ottica Global Group (Italy / Global Fulfillment)"
+        "kz": "Еуропалық дизайнерлік оптика өндірушісі (Милан / Global)",
+        "ru": "Европейский производитель дизайнерской оптики (Милан / Global)",
+        "en": "European Designer Eyewear Brand (Milan / Global)"
       },
       "services": {
         "kz": [
-          "Нөлден кастом әзірлеу",
-          "API интеграциялары",
+          "Кастом әзірлеу",
+          "Виртуалды өлшеу",
           "SEO архитектурасы"
         ],
         "ru": [
-          "Кастомная разработка с 0",
-          "Интеграции и API",
-          "SEO-продвижение"
+          "Кастомная разработка",
+          "Виртуальная примерка",
+          "SEO-архитектура"
         ],
         "en": [
-          "Zero-to-One Development",
-          "Custom API Integrations",
+          "Custom Development",
+          "Virtual Try-On",
           "SEO Architecture"
         ]
       },
@@ -107,9 +152,19 @@
         "en": "42,000+ Orders/mo"
       },
       "summary": {
-        "kz": "Италиялық көзілдіріктерге арналған толық кастомдық платформа құрдық: онлайн өлшеп көру жүйесі, халықаралық логистика интеграциялары және көптілді SEO архитектурасы",
-        "ru": "С нуля создали highload e-commerce платформу заказа дизайнерских очков и линз: алгоритм виртуальной примерки, интеграция таможенно-логистических шлюзов и международное мультиязычное SEO",
-        "en": "Engineered a zero-to-one highload luxury eyewear platform: virtual try-on fitting algorithms, automated customs/courier logistics pipelines, and multi-region technical SEO"
+        "kz": "Италиялық көзілдіріктерге арналған толық кастомдық платформа құрдық: онлайн өлшеп көру жүйесі, халықаралық логистика интеграциялары және көптілді SEO архитектурасы.",
+        "ru": "С нуля создали highload e-commerce платформу заказа дизайнерских очков и линз: алгоритм виртуальной примерки, интеграция таможенно-логистических шлюзов и международное мультиязычное SEO.",
+        "en": "Engineered a zero-to-one highload luxury eyewear platform: virtual try-on fitting algorithms, automated customs/courier logistics pipelines, and multi-region technical SEO."
+      },
+      "challenge": {
+        "kz": "Көзілдіріктің бетке сәйкестігін бағалай алмау салдарынан қайтару деңгейінің жоғары болуы; 30+ елде кедендік және салықтық есептерді автоматты түрде жүргізу қажеттілігі.",
+        "ru": "Высокий уровень отказов и возвратов из-за невозможности оценить посадку оправы по форме лица; необходимость бесшовного оформления международных заказов с учетом таможенных сборов в 30+ странах.",
+        "en": "High return rates driven by uncertainty over face fitment, coupled with complex cross-border customs regulations and taxation across 30+ global shipping destinations."
+      },
+      "solution": {
+        "kz": "Камера арқылы бет пішінін анықтап, көзілдірікті киіп көруге мүмкіндік беретін Face Mesh алгоритмі, линза калькуляторы және халықаралық салықты автоматты есептейтін жүйе құрдық.",
+        "ru": "Создали highload e-commerce решение с алгоритмом виртуальной примерки оправы на базе камеры смартфона (Face Mesh), калькулятором оптических линз и рецептов, мультивалютным шлюзом и автоматическим расчетом таможенных пошлин.",
+        "en": "Developed a scalable headless e-commerce architecture with real-time browser-based Face Mesh virtual try-on, automated prescription lens calculator, and frictionless international customs clearance."
       },
       "metrics": [
         {
@@ -135,196 +190,191 @@
             "en": "Auto Fulfillment"
           },
           "value": "98%"
+        },
+        {
+          "label": {
+            "kz": "Қайтаруды азайту",
+            "ru": "Снижение возвратов",
+            "en": "Return Reduction"
+          },
+          "value": "-34%"
         }
+      ],
+      "deliverables": [
+        "Virtual Try-On WebGL Face Mesh Engine",
+        "Global Headless E-Commerce System",
+        "Multi-Currency & Regional Tax Engine",
+        "Pan-European Technical SEO Architecture",
+        "Automated Carrier Logistics Integration"
+      ],
+      "technologies": [
+        "React",
+        "Face Mesh",
+        "MediaPipe",
+        "WebGL",
+        "Node.js",
+        "Stripe Global",
+        "Tailwind CSS",
+        "Cloudflare"
       ],
       "tags": [
         "Websites",
-        "SEO Optimization"
+        "SEO Optimization",
+        "SaaS"
       ],
       "colorMode": "cyber",
+      "shaderVariant": "convective",
+      "anchor": {
+        "x": 0.2,
+        "y": 0.78
+      },
+      "seed": 1.85,
       "published": true
     },
     {
       "id": 3,
+      "slug": "transport-hr-platform",
+      "year": "2025–2026",
       "title": {
-        "kz": "Astraea — Еуропадағы №1 астрологтың платформасы",
-        "ru": "Astraea — Платформа онлайн-астрологии и личный кабинет астролога №1 в Европе",
-        "en": "Astraea — Online Astrology Ecosystem & Client Portal for Europe’s #1 Astrologer"
+        "kz": "Көлік кәсіпорнының цифрлық HR және карьералық платформасы",
+        "ru": "Цифровая HR-экосистема и платформа развития талантов транспортного холдинга",
+        "en": "Enterprise HR & Career Progression Platform for National Transport Leader"
       },
       "client": {
-        "kz": "Astraea Mindset & Astrology (Франция / Швейцария)",
-        "ru": "Astraea Mindset & Astrology (Франция / Швейцария)",
-        "en": "Astraea Mindset & Astrology (France / Switzerland)"
+        "kz": "Ұлттық көлік-логистикалық холдинг (150,000+ қызметкер)",
+        "ru": "Транспортно-логистический холдинг (150 000+ сотрудников)",
+        "en": "National Transport Corporation (150,000+ Employees)"
       },
       "services": {
         "kz": [
-          "Веб-қосымша & Кабинет",
-          "Сайт әзірлеу",
-          "Премиум брендинг",
-          "SEO"
+          "HR платформа",
+          "Корпоративтік веб-портал",
+          "Кастом софт"
         ],
         "ru": [
-          "Веб-приложение & Кабинет",
-          "Разработка сайта",
-          "Премиальный брендинг",
-          "SEO"
+          "HR-платформа",
+          "Корпоративный портал",
+          "Кастомный софт"
         ],
         "en": [
-          "Web App & Client Portal",
-          "Web Platform",
-          "Luxury Branding",
-          "SEO Dominance"
+          "HR Platform",
+          "Corporate Portal",
+          "Custom Software"
         ]
       },
       "badge": {
-        "kz": "120,000+ белсенді қолданушы",
-        "ru": "120 000+ пользователей",
-        "en": "120,000+ Active Users"
+        "kz": "150,000+ қызметкер",
+        "ru": "150 000+ сотрудников",
+        "en": "150,000+ Employees"
       },
       "summary": {
-        "kz": "Еуропаның жетекші астрологына арналған экожүйе: интерактивті наталды карталар, жазылым клубтары, PWA-қосымша, бренд айдентикасы және іздеу жүйелерінің тобына шығару",
-        "ru": "Разработали комплексную экосистему: защищенный личный кабинет с интерактивной натальной картой, закрытые клубы по подписке, PWA-приложение, премиальную айдентику и вывод в топ поисковиков Европы",
-        "en": "Architected a complete digital universe: interactive natal chart calculations, subscription membership tiers, high-converting web presence, luxury visual identity, and pan-European SEO"
+        "kz": "Ірі транспорттық кәсіпорын үшін бірыңғай цифрлық кадрлық экожүйе құрдық: бос орындар порталы, түйіндемелерді автоматты сүзу және карьералық өсу картасы.",
+        "ru": "Разработали комплексную HR-платформу национального масштаба: единый портал вакансий, автоматизированный скрининг кандидатов, интерактивные карты карьерных треков и онбординг для 150 000+ специалистов.",
+        "en": "Architected a nationwide enterprise HR portal: centralized vacancy hub, automated applicant screening, transparent career progression diagrams, and onboarding sprints for 150,000+ workforce."
+      },
+      "challenge": {
+        "kz": "Өңірлік базалардың шашыраңқылығы, құжат айналымының баяулығы, бастапқы бейімделу кезеңінде жас мамандардың кетуі және айқын өсу бағыттарының жоқтығы.",
+        "ru": "Разрозненные региональные базы соискателей, бумажный документооборот между депо и штаб-квартирой, потеря перспективных технических специалистов на этапе первичной адаптации и отсутствие наглядных треков роста.",
+        "en": "Fragmented regional talent databases, cumbersome manual recruitment paperwork across nationwide depots, and acute employee turnover during initial engineering onboarding."
+      },
+      "solution": {
+        "kz": "Тұтас кадрлық веб-платформа құрылды: бірыңғай бос орындар порталы, түйіндемелерді автоматты іріктеу, шәкірттен бөлім басшысына дейінгі карьералық даму картасы және тәлімгерлік модулі.",
+        "ru": "Спроектировали и внедрили масштабируемую кадровую веб-платформу: единый портал вакансий, автоматизированный скрининг резюме, интерактивный навигатор карьерного роста от ученика до руководителя подразделения и адаптационный трекер с наставниками.",
+        "en": "Architected a unified digital career platform: centralized vacancy portal, automated candidate screening, transparent job progression maps from apprentice to station chief, and structured onboarding sprints."
       },
       "metrics": [
         {
           "label": {
-            "kz": "Жазылымнан MRR",
-            "ru": "MRR подписок клуба",
-            "en": "Subscription MRR"
+            "kz": "Бос орынды жабу уақыты",
+            "ru": "Снижение Time-to-Hire",
+            "en": "Time-to-Hire Reduction"
           },
-          "value": "€84,000"
+          "value": "-45%"
         },
         {
           "label": {
-            "kz": "Қолданушы LTV өсімі",
-            "ru": "Рост LTV клиентов",
-            "en": "Client LTV Boost"
+            "kz": "Онбордингті бітіру",
+            "ru": "Завершение онбординга",
+            "en": "Onboarding Completion"
           },
-          "value": "+240%"
+          "value": "82%"
         },
         {
           "label": {
-            "kz": "Органикалық трафик",
-            "ru": "SEO-трафик в Европе",
-            "en": "Pan-EU SEO Reach"
+            "kz": "Қамтылған қызметкерлер",
+            "ru": "Охват персонала",
+            "en": "Total Workforce"
           },
-          "value": "190K / ай"
+          "value": "150K+"
+        },
+        {
+          "label": {
+            "kz": "Қызметкерлердің eNPS",
+            "ru": "Индекс eNPS",
+            "en": "eNPS Score"
+          },
+          "value": "+38 п.п."
         }
+      ],
+      "deliverables": [
+        "Enterprise Career & Vacancy Portal",
+        "Automated Candidate Screening Pipeline",
+        "Interactive Career Track Navigation Map",
+        "Role-based Access & Compliance Architecture",
+        "Executive HR Analytics Dashboard"
+      ],
+      "technologies": [
+        "React",
+        "TypeScript",
+        "Node.js",
+        "Enterprise API",
+        "PostgreSQL",
+        "Tailwind CSS",
+        "Framer Motion"
       ],
       "tags": [
         "SaaS",
-        "Branding",
-        "SEO Optimization"
+        "Websites",
+        "Full Packaging"
       ],
-      "colorMode": "thermal",
+      "colorMode": "ultraviolet",
+      "shaderVariant": "quantum",
+      "anchor": {
+        "x": 0.75,
+        "y": 0.38
+      },
+      "seed": 3.14,
       "published": true
     },
     {
       "id": 4,
+      "slug": "employee-learning-lms",
+      "year": "2025–2026",
       "title": {
-        "kz": "Bazarum — Әзірбайжандағы ұлттық маркетплейс",
-        "ru": "Bazarum — Национальный маркетплейс в Азербайджане и цифровая экосистема",
-        "en": "Bazarum — National Multi-Vendor Marketplace & Community Ecosystem in Azerbaijan"
+        "kz": "Қызметкерлерді оқытуға арналған онлайн сервис және интерактивті тренажерлар",
+        "ru": "Сервис онлайн-обучения и интерактивные тренажеры для сотрудников",
+        "en": "Corporate Learning LMS & Interactive Scenario Simulators"
       },
       "client": {
-        "kz": "Bazarum Technologies (Баку, Әзірбайжан)",
-        "ru": "Bazarum Technologies (Баку, Азербайджан)",
-        "en": "Bazarum Technologies (Baku, Azerbaijan)"
+        "kz": "Халықаралық корпоративтік қызметтер холдингі",
+        "ru": "Международный корпоративный холдинг",
+        "en": "Global Enterprise Services Group"
       },
       "services": {
         "kz": [
-          "Маркетплейс әзірлеу",
-          "Telegram-бот",
-          "Брендинг",
-          "Комьюнити & SMM"
-        ],
-        "ru": [
-          "Разработка маркетплейса",
-          "Telegram-бот и воронки",
-          "Брендинг",
-          "Комьюнити-менеджмент & SMM"
-        ],
-        "en": [
-          "Marketplace Platform",
-          "Telegram Bot & Automations",
-          "Brand Identity",
-          "Community Management & SMM"
-        ]
-      },
-      "badge": {
-        "kz": "85,000 келісім / тоқсан",
-        "ru": "85 000 сделок / квартал",
-        "en": "85,000 Orders / Qtr"
-      },
-      "summary": {
-        "kz": "Жергілікті сатушылар мен сатып алушылар үшін маркетплейс жасадық: веб-сайт, жедел тапсырыс беретін Telegram-бот, бренд стилі және 60K қатысушысы бар белсенді қауымдастық",
-        "ru": "Запустили маркетплейс локальных продавцов под ключ: адаптивный вебсайт, умный Telegram-бот мгновенных уведомлений и заказов, яркий национально-модернистский брендинг и комьюнити в 62 000+ участников",
-        "en": "Launched a turnkey regional marketplace: scalable web app, instant transaction Telegram bot, vibrant modern-heritage brand identity, and an active 62,000+ member merchant community"
-      },
-      "metrics": [
-        {
-          "label": {
-            "kz": "Қауымдастық көлемі",
-            "ru": "Активное комьюнити",
-            "en": "Community Size"
-          },
-          "value": "62,000+"
-        },
-        {
-          "label": {
-            "kz": "Қосылған сатушылар",
-            "ru": "Подключено продавцов",
-            "en": "Verified Merchants"
-          },
-          "value": "1,400+"
-        },
-        {
-          "label": {
-            "kz": "Бот арқылы конверсия",
-            "ru": "Конверсия через бот",
-            "en": "Telegram Bot Funnel"
-          },
-          "value": "18.4%"
-        }
-      ],
-      "tags": [
-        "Branding",
-        "Full Packaging"
-      ],
-      "colorMode": "cyber",
-      "published": true
-    },
-    {
-      "id": 5,
-      "title": {
-        "kz": "Français Pro — Іскерлік француз тілі платформасы",
-        "ru": "Français Pro — EdTech платформа изучения бизнес-французского языка",
-        "en": "Français Pro — EdTech Platform for Executive & Business French"
-      },
-      "client": {
-        "kz": "L’Institut de Français des Affaires (Париж / Женева)",
-        "ru": "L’Institut de Français des Affaires (Париж / Женева)",
-        "en": "French Business Institute (Paris / Geneva)"
-      },
-      "services": {
-        "kz": [
-          "LMS платформасы",
-          "Интерактивті жаттығулар",
-          "UX/UI дизайн",
-          "Бизнесті қаптау"
+          "LMS жүйесі",
+          "Интерактивті тренажерлар",
+          "UX/UI дизайн"
         ],
         "ru": [
           "LMS-платформа",
           "Интерактивные тренажеры",
-          "UX/UI дизайн",
-          "Упаковка онлайн-школы"
+          "UX/UI дизайн"
         ],
         "en": [
-          "LMS Web App",
-          "Interactive Exercises",
-          "UX/UI Design",
-          "EdTech Packaging"
+          "LMS Platform",
+          "Interactive Simulators",
+          "UX/UI Design"
         ]
       },
       "badge": {
@@ -333,19 +383,21 @@
         "en": "91% Course Completion"
       },
       "summary": {
-        "kz": "Топ-менеджерлер мен мамандарға арналған білім беру платформасы: интерактивті жаттығулар, бизнес-лексика сөздігі, сабақтар кестесі және ыңғайлы жеке кабинет",
-        "ru": "Разработали интерактивную обучающую платформу для топ-менеджеров и экспатов: видеомодули, тренажеры бизнес-лексики, автоматическая проверка произношения и синхронизация с календарями тьюторов",
-        "en": "Engineered an interactive language platform tailored for executives and expats: micro-learning video modules, business negotiation simulators, AI speech analysis, and seamless tutor calendar booking"
+        "kz": "Топ-менеджерлер мен қызметкерлерге арналған білім беру платформасы: интерактивті жаттығулар, бизнес-лексика тренажерлары және ыңғайлы жеке кабинет.",
+        "ru": "Разработали интерактивную обучающую платформу для персонала: микро-уроки, тренажеры рабочих сценариев (Letter Gap Trainer), автоматическая проверка ответов и детальная аналитика команд.",
+        "en": "Engineered an interactive enterprise training ecosystem: micro-learning modules, scenario simulators (Letter Gap Trainer), automated skill verification, and deep team analytics."
+      },
+      "challenge": {
+        "kz": "Дәстүрлі лекциялар мен құжаттардың тиімсіздігі (бітіру көрсеткіші 20%-дан төмен), қызметкерлердің оқуға қызығушылығының жоқтығы және нақты дағдыларды бағалаудың қиындығы.",
+        "ru": "Традиционные корпоративные лекции и PDF-регламенты показывали доходимость ниже 20%; сотрудники воспринимали обучение как бюрократическую обузу, а руководство не видело объективной проверки усвоения регламентов.",
+        "en": "Conventional corporate video libraries and static compliance PDFs suffered from <20% completion rates, zero practical retention, and high employee cynicism toward mandatory training."
+      },
+      "solution": {
+        "kz": "5–7 минуттық шағын сабақтар, жұмыс барысындағы жағдаяттарды сипаттайтын интерактивті тренажерлар, жедел тексеру және HR басшыларға арналған нақты аналитикалық панель жасалды.",
+        "ru": "Разработали модульную обучающую платформу с микро-уроками (5–7 минут), интерактивными симуляторами рабочих ситуаций (Letter Gap Trainer, кейс-сценарии), мгновенной проверкой ответов, системой стриков и аналитическим дашбордом для HR-директоров.",
+        "en": "Engineered an engaging micro-learning platform: 5-minute bite-sized scenario trainers, interactive roleplay simulations, instant skill scoring, streak mechanics, and real-time manager competency reporting."
       },
       "metrics": [
-        {
-          "label": {
-            "kz": "Корпоративтік клиенттер",
-            "ru": "Корпоративных клиентов",
-            "en": "Corporate Clients"
-          },
-          "value": "45+ компаний"
-        },
         {
           "label": {
             "kz": "Бағдарламаны аяқтау",
@@ -356,151 +408,123 @@
         },
         {
           "label": {
-            "kz": "Түлектердің NPS бағасы",
+            "kz": "Күнделікті қатысу",
+            "ru": "Вовлеченность в спринты",
+            "en": "Daily Engagement"
+          },
+          "value": "x3.4"
+        },
+        {
+          "label": {
+            "kz": "Түлектердің NPS",
             "ru": "NPS выпускников",
-            "en": "Graduate NPS"
+            "en": "Learner NPS"
           },
           "value": "9.6 / 10"
+        },
+        {
+          "label": {
+            "kz": "Корпоративтік командалар",
+            "ru": "Корпоративных команд",
+            "en": "Active Teams"
+          },
+          "value": "45+"
         }
       ],
+      "deliverables": [
+        "Modular Learning Web Application",
+        "Interactive Work Scenario Simulators",
+        "Gamification & Team Streak Engine",
+        "Automated Skill Assessment & Certificates",
+        "Manager Performance Analytics Dashboard"
+      ],
+      "technologies": [
+        "React",
+        "TypeScript",
+        "Node.js",
+        "Framer Motion",
+        "Tailwind CSS",
+        "PostgreSQL",
+        "PWA"
+      ],
       "tags": [
-        "Websites",
-        "SaaS"
+        "SaaS",
+        "Websites"
       ],
       "colorMode": "thermal",
+      "shaderVariant": "isothermal",
+      "anchor": {
+        "x": 0.35,
+        "y": 0.65
+      },
+      "seed": 2.11,
       "published": true
     },
     {
-      "id": 6,
+      "id": 5,
+      "slug": "nail-cosmetics-brand",
+      "year": "2025–2026",
       "title": {
-        "kz": "FinCore DS — Қазақстанның №1 банкінің дизайн-жүйесі",
-        "ru": "FinCore DS — Комплексная дизайн-система для ведущего банка Казахстана",
-        "en": "FinCore DS — Enterprise Digital Design System for Kazakhstan’s #1 Bank"
+        "kz": "Тырнақ бояуларын өндіруші брендке арналған премиум брендинг және сайт",
+        "ru": "Премиальный брендинг, визуальная стратегия и D2C-магазин бренда лаков для ногтей",
+        "en": "Luxury Brand Identity, Editorial Visual Direction & D2C Store for Nail Cosmetics"
       },
       "client": {
-        "kz": "Қазақстанның жетекші қаржы институты",
-        "ru": "Банк №1 в Казахстане (Алматы, Казахстан)",
-        "en": "Tier-1 Banking Institution in Kazakhstan"
+        "kz": "Кәсіби тырнақ бояуларының өндірушісі",
+        "ru": "Бренд и производитель профессиональных лаков для ногтей",
+        "en": "Professional Nail Polish & Color Cosmetics Brand"
       },
       "services": {
         "kz": [
-          "Enterprise дизайн-жүйесі",
-          "Figma токендері",
-          "React UI Kit",
-          "WCAG қолжетімділік"
+          "Брендинг",
+          "Веб-сайт",
+          "SMM & Визуал"
         ],
         "ru": [
-          "Дизайн-система Enterprise",
-          "Figma токенизация",
-          "React UI Kit",
-          "Гайдлайны доступности"
+          "Брендинг",
+          "Веб-сайт",
+          "SMM & Визуальный стиль"
         ],
         "en": [
-          "Enterprise Design System",
-          "Figma Design Tokens",
-          "Production React UI Kit",
-          "Accessibility (WCAG)"
+          "Brand Identity",
+          "D2C Store",
+          "SMM & Visual Content"
         ]
       },
       "badge": {
-        "kz": "Релиздер 2.2 есе жедел",
-        "ru": "Time-to-Market x2.2 быстрее",
-        "en": "2.2x Faster Time-to-Market"
+        "kz": "+320% D2C сатылым",
+        "ru": "+320% продаж в D2C",
+        "en": "+320% D2C Sales"
       },
       "summary": {
-        "kz": "Банктің 40-тан астам өнімдік командасына арналған ауқымды дизайн-жүйесін әзірледік: 250+ компонент, Figma-дан кодқа токендер және өнім шығаруды екі есеге жылдамдату",
-        "ru": "Создали масштабируемую дизайн-систему для 40+ продуктовых команд банка: единая библиотека токенов (Figma to Code), 250+ доступных компонентов (WCAG AA), документация и React-библиотека",
-        "en": "Architected an enterprise design system governing 40+ cross-functional banking squads: unified token pipeline (Figma to code), 250+ accessible components (WCAG AA), and interactive documentation"
+        "kz": "Минималистік бренд стилі, флакон дизайны, тырнақ бояуларына арналған бейне-туториалдар форматы және сұлулық салондарына арналған көтерме бағалары бар мобильді интернет-дүкен әзірленді.",
+        "ru": "Создали утонченный премиальный брендинг, фирменную геометрию флакона, видео-стратегию туториалов для Reels (Nail Tutorial Reels) и запустили быстрый мобильный интернет-магазин с оптовым кабинетом для салонов.",
+        "en": "Crafted an editorial-grade luxury identity system (custom bottle geometry, curated shade taxonomy), produced viral short-form tutorial assets, and deployed a high-speed mobile D2C flagship."
+      },
+      "challenge": {
+        "kz": "Бьюти нарығындағы бірыңғай танымал стильдің болмауы, комиссиясы жоғары маркетплейстерге тәуелділік және шеберлермен тікелей байланыстың аздығы.",
+        "ru": "Отсутствие единого узнаваемого стиля в плотном сегменте нейл-индустрии, зависимость от маркетплейсов с высокими комиссиями и слабая лояльность мастеров маникюра без прямого контакта с брендом.",
+        "en": "Stifling marketplace commission fees, lack of visual distinction in an oversaturated nail care market, and weak salon loyalty caused by absent direct brand-to-artist engagement."
+      },
+      "solution": {
+        "kz": "Минималистік бренд стилі (шрифттер, флакон пішіні, түстер палитрасы), әлеуметтік желілерге арналған туториалдар форматы және сұлулық салондарына арналған көтерме бағалары бар мобильді интернет-дүкен әзірленді.",
+        "ru": "Создали утонченный минималистичный брендинг (шрифтовая система, геометрия флакона, карточки оттенков), разработали видео-стратегию туториалов для Reels (Nail Tutorial Reels), запустили быстрый мобильный интернет-магазин с умным фильтром плотности и оптовым кабинетом для салонов.",
+        "en": "Crafted an editorial-grade luxury identity system (custom bottle geometry, tactile unboxing, curated chromatic shade taxonomy), produced viral short-form tutorial assets, and deployed a high-speed mobile D2C flagship with professional wholesale tiers."
       },
       "metrics": [
         {
           "label": {
-            "kz": "Релиздер жылдамдығы",
-            "ru": "Скорость продуктовых релизов",
-            "en": "Release Velocity"
-          },
-          "value": "+55%"
-        },
-        {
-          "label": {
-            "kz": "Кодтағы UI компоненттер",
-            "ru": "UI-компонентов в React",
-            "en": "Standardized UI Kit"
-          },
-          "value": "250+"
-        },
-        {
-          "label": {
-            "kz": "Қолданушы сквадтар",
-            "ru": "Продуктовых команд банка",
-            "en": "Active Banking Squads"
-          },
-          "value": "40+ сквадов"
-        }
-      ],
-      "tags": [
-        "Branding",
-        "SaaS"
-      ],
-      "colorMode": "cyber",
-      "published": true
-    },
-    {
-      "id": 7,
-      "title": {
-        "kz": "Pure Esthétique — Мәскеудегі бьюти-брендті кешенді қаптау",
-        "ru": "Pure Esthétique — Премиальный веб-сайт и продвижение бьюти-бренда в Москве",
-        "en": "Pure Esthétique — Digital Flagship, Luxury Branding & Growth for Moscow Beauty Brand"
-      },
-      "client": {
-        "kz": "Pure Esthétique эстетикалық бьюти-бренді (Мәскеу)",
-        "ru": "Бьюти-бренд и салон эстетики Pure Esthétique (Москва)",
-        "en": "Pure Esthétique Beauty & Skin Care (Moscow)"
-      },
-      "services": {
-        "kz": [
-          "Веб-сайт әзірлеу",
-          "Премиум брендинг",
-          "SMM & Контент",
-          "Жергілікті SEO"
-        ],
-        "ru": [
-          "Разработка веб-сайта",
-          "Премиальный брендинг",
-          "SMM & Контент-стратегия",
-          "Локальное SEO"
-        ],
-        "en": [
-          "Web Development",
-          "Luxury Brand Identity",
-          "SMM & Visual Content",
-          "Local SEO & Maps"
-        ]
-      },
-      "badge": {
-        "kz": "іздеуден +320% жазылу",
-        "ru": "+320% записей из поиска",
-        "en": "+320% Organic Bookings"
-      },
-      "summary": {
-        "kz": "Бьюти-кеңістікті толық қаптау: YClients онлайн-жазылуы бар эстетикалық сайт, бренд стилі, тартымды SMM визуалы және Мәскеуде іздеу жүйелерінің тобына шығару",
-        "ru": "Полная digital-упаковка бьюти-пространства: эстетичный сайт с онлайн-записью через YClients, тактильный брендинг полиграфии и упаковки, визуальный стиль соцсетей и вывод в топ гео-поиска Москвы",
-        "en": "End-to-end digital packaging for a luxury beauty atelier: fluid website with YClients appointment flow, tactile brand identity, editorial social strategy, and #1 local SEO ranking across central Moscow"
-      },
-      "metrics": [
-        {
-          "label": {
-            "kz": "Алғашқы онлайн жазылу",
-            "ru": "Первичных онлайн-записей",
-            "en": "First-time Client Inflow"
+            "kz": "D2C сатылым өсімі",
+            "ru": "Прямые продажи в D2C",
+            "en": "Direct D2C Sales"
           },
           "value": "+320%"
         },
         {
           "label": {
-            "kz": "Әлеуметтік желіде қамту",
-            "ru": "Охват в соцсетях и Reels",
-            "en": "Monthly Social Reach"
+            "kz": "Видеотуториалдар қамтуы",
+            "ru": "Охват Reels и туториалов",
+            "en": "Reels Video Reach"
           },
           "value": "340K / ай"
         },
@@ -508,18 +532,161 @@
           "label": {
             "kz": "Мобильді сайт конверсиясы",
             "ru": "Конверсия мобильного сайта",
-            "en": "Mobile Site Conversion"
+            "en": "Mobile Conversion"
           },
           "value": "8.7%"
+        },
+        {
+          "label": {
+            "kz": "Қосылған салон-серіктестер",
+            "ru": "Подключено салонов",
+            "en": "Partner Salons"
+          },
+          "value": "1,200+"
         }
+      ],
+      "deliverables": [
+        "Complete Brand Book & Typography Hierarchy",
+        "Industrial Bottle & Cap Geometry Design",
+        "High-Speed Mobile D2C E-Commerce Store",
+        "B2B Wholesale Portal for Beauty Salons",
+        "Short-Form Video Production & Reels Templates"
+      ],
+      "technologies": [
+        "Figma",
+        "React",
+        "Next.js",
+        "Tailwind CSS",
+        "Shopify / Stripe API",
+        "Motion Graphics"
+      ],
+      "tags": [
+        "Branding",
+        "Websites",
+        "Full Packaging"
+      ],
+      "colorMode": "cyber",
+      "shaderVariant": "convective",
+      "anchor": {
+        "x": 0.85,
+        "y": 0.7
+      },
+      "seed": 4.88,
+      "published": true
+    },
+    {
+      "id": 6,
+      "slug": "automotive-market-launch",
+      "year": "2025–2026",
+      "title": {
+        "kz": "Қытайлық автоөндірушіні жергілікті нарыққа шығаруға арналған цифрлық экожүйе",
+        "ru": "Цифровой запуск и дилерская экосистема для вывода китайского автопроизводителя на рынок",
+        "en": "Digital Market Entry & Dealer Ecosystem for Global Automotive Manufacturer"
+      },
+      "client": {
+        "kz": "Халықаралық автоөндіруші концерн (Қытайдың ТОП-5 автогиганты)",
+        "ru": "Международный автомобильный концерн (Топ-5 автопроизводителей Китая)",
+        "en": "Global Automotive OEM (Top-5 Chinese Manufacturer)"
+      },
+      "services": {
+        "kz": [
+          "Бренд-портал",
+          "3D шолу",
+          "Дилерлік CRM"
+        ],
+        "ru": [
+          "Бренд-портал",
+          "3D-конфигуратор",
+          "Дилерская CRM"
+        ],
+        "en": [
+          "Brand Portal",
+          "3D Configurator",
+          "Dealer CRM"
+        ]
+      },
+      "badge": {
+        "kz": "14,200+ тест-драйв",
+        "ru": "14 200+ тест-драйвов",
+        "en": "14,200+ Test Drives"
+      },
+      "summary": {
+        "kz": "Автомобильдердің 3D визуалды шолуы бар ресми бренд-портал, несие калькуляторы, дилерлердің интерактивті картасы және 15 секундта тест-драйвқа жазылу жүйесі әзірленді.",
+        "ru": "Разработали официальный портал бренда с фотореалистичным 3D-обзором экстерьера и салона, онлайн-калькулятором кредита и trade-in, интерактивной картой дилеров и распределительным CRM-шлюзом мгновенной записи на тест-драйв за 15 секунд.",
+        "en": "Engineered an automotive digital flagship with immersive 360° exterior/interior visualization, dynamic lease & financing calculator, interactive dealer locator, and automated smart test-drive lead dispatching."
+      },
+      "challenge": {
+        "kz": "Жергілікті нарықтың жаңа брендке сенімсіздігі, тәуелсіз дилерлік орталықтар арасында орталықтандырылған өтінім қабылдау жүйесінің болмауы және сатылым басталуына дейінгі 6 апталық қатаң мерзім.",
+        "ru": "Скептицизм локальных покупателей к новым технологичным китайским автомобилям, отсутствие централизованной системы обработки заявок между десятками независимых дилеров и жесткий дедлайн запуска к старту официальных продаж (6 недель).",
+        "en": "Local consumer hesitation toward a newcomer automotive brand, uncoordinated lead leakage across dozens of independent franchise dealerships, and an uncompromising 6-week deadline before national market launch."
+      },
+      "solution": {
+        "kz": "Автомобильдердің 3D визуалды шолуы бар ресми портал, несие және trade-in калькуляторы, дилерлердің интерактивті картасы және 15 секундта тест-драйвқа жазылу жүйесі әзірленді.",
+        "ru": "Разработали технологичный официальный портал бренда с фотореалистичным 3D-обзором экстерьера и салона, онлайн-калькулятором кредита и trade-in, интерактивной картой дилеров и распределительным CRM-шлюзом мгновенной записи на тест-драйв за 15 секунд.",
+        "en": "Engineered an automotive digital flagship with immersive 360° exterior/interior visualization, dynamic lease & financing calculator, interactive dealer locator, and automated smart test-drive lead dispatching."
+      },
+      "metrics": [
+        {
+          "label": {
+            "kz": "Тест-драйвқа өтінімдер",
+            "ru": "Заявок на тест-драйвы",
+            "en": "Test Drive Requests"
+          },
+          "value": "14 200+"
+        },
+        {
+          "label": {
+            "kz": "Жоспарды асыра орындау",
+            "ru": "Выполнение плана продаж",
+            "en": "Sales Target Overrun"
+          },
+          "value": "+160%"
+        },
+        {
+          "label": {
+            "kz": "Қосылған дилерлер",
+            "ru": "Подключено дилеров",
+            "en": "Dealer Franchises"
+          },
+          "value": "28 центров"
+        },
+        {
+          "label": {
+            "kz": "Кредитті онлайн мақұлдау",
+            "ru": "Расчет автокредита",
+            "en": "Instant Loan Decision"
+          },
+          "value": "15 сек"
+        }
+      ],
+      "deliverables": [
+        "Official Automotive Flagship Portal",
+        "WebGL 360° Exterior & Interior Vehicle Viewer",
+        "Integrated Financing & Trade-in Calculator",
+        "National Multi-Dealer Lead Distribution Engine",
+        "Performance Launch Landing Pages"
+      ],
+      "technologies": [
+        "React",
+        "WebGL",
+        "Three.js",
+        "Next.js",
+        "Node.js",
+        "Tailwind CSS",
+        "Dealer CRM API"
       ],
       "tags": [
         "Websites",
         "Branding",
-        "SEO Optimization",
-        "Full Packaging"
+        "SEO Optimization"
       ],
-      "colorMode": "thermal",
+      "colorMode": "ultraviolet",
+      "shaderVariant": "quantum",
+      "anchor": {
+        "x": 0.15,
+        "y": 0.85
+      },
+      "seed": 5.67,
       "published": true
     }
   ],

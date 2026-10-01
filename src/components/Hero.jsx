@@ -24,6 +24,9 @@ export default function Hero({ lang, onOpenContact }) {
   return (
     <section className="relative min-h-[100dvh] pt-24 sm:pt-28 pb-4 sm:pb-6 lg:pb-8 flex flex-col justify-between overflow-hidden ambient-glow-hero w-full max-w-full">
       
+      {/* Top Ambient Gradient Strip under Menu: full width, semi-transparent white in light mode, black in dark mode */}
+      <div className="absolute top-0 left-0 right-0 w-full h-32 sm:h-40 bg-gradient-to-b from-white/90 via-white/45 to-transparent dark:from-black/90 dark:via-black/50 dark:to-transparent pointer-events-none z-10" />
+
       {/* Background Video: Crisp, vivid, clearly visible without heavy scrims */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none select-none z-0">
         <video
