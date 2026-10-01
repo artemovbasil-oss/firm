@@ -24,7 +24,7 @@ export const TRANSLATIONS = {
       ctaCalc: 'Сметаны есептеу',
       ctaAudit: 'Тегін аудит алу',
       stats: {
-        projects: '150+ жоба',
+        projects: '150+',
         projectsDesc: 'Іске қосылған сәтті өнімдер',
         conversion: 'x3.4',
         conversionDesc: 'Конверсияның орташа өсімі',
@@ -198,7 +198,7 @@ export const TRANSLATIONS = {
       ctaCalc: 'Рассчитать смету',
       ctaAudit: 'Получить аудит',
       stats: {
-        projects: '150+ проектов',
+        projects: '150+',
         projectsDesc: 'Успешно запущено в прод',
         conversion: 'x3.4',
         conversionDesc: 'Средний рост конверсии',
@@ -372,12 +372,12 @@ export const TRANSLATIONS = {
       ctaCalc: 'Estimate Scope',
       ctaAudit: 'Request Teardown',
       stats: {
-        projects: '150+ Projects',
+        projects: '150+',
         projectsDesc: 'Successfully deployed live',
         conversion: 'x3.4',
         conversionDesc: 'Average conversion boost',
         capital: '$18M+',
-        capitalDesc: 'Raised via our pitch decks',
+        capitalDesc: 'Raised via pitch decks',
         sla: '100% NDA',
         slaDesc: 'Strict timeline guarantee'
       },

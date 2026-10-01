@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { 
   ArrowLeft, ArrowUpRight, CheckCircle2, ShieldCheck, 
   ExternalLink, Layers, Cpu, TrendingUp, Target, 
-  Sparkles, Clock, Globe, Award, Share2
+  Sparkles, Clock, Globe, Award, Share2, Home
 } from 'lucide-react';
 import ArtxLogo from './ArtxLogo';
 
@@ -50,49 +50,69 @@ export default function CaseStudyDetail({
     }
   };
 
-  return (
-    <div className="min-h-screen bg-[#fcfcfd] dark:bg-[#070708] text-neutral-950 dark:text-white pt-20 sm:pt-24 pb-20 selection:bg-amber-400 selection:text-neutral-950">
-      
-      {/* Top Floating Breadcrumb Bar */}
-      <header className="fixed top-0 left-0 right-0 z-40 bg-white/90 dark:bg-[#080808]/90 backdrop-blur-xl border-b border-black/[0.06] dark:border-white/[0.08]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-18 flex items-center justify-between gap-4">
-          <button
-            type="button"
-            onClick={onClose}
-            className="flex items-center gap-2 text-xs sm:text-sm font-heading font-semibold text-neutral-600 dark:text-neutral-400 hover:text-neutral-950 dark:hover:text-white transition-colors group"
-          >
-            <div className="w-8 h-8 rounded-full border border-black/10 dark:border-white/10 flex items-center justify-center group-hover:bg-neutral-100 dark:group-hover:bg-white/10 transition-colors">
-              <ArrowLeft className="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" />
-            </div>
-            <span>{lang === 'en' ? 'Back to All Cases' : (lang === 'kz' ? 'Барлық кейстерге қайту' : 'Все кейсы')}</span>
-          </button>
+  const CASE_HERO_IMAGES = {
+    'luxury-furniture-kazakhstan': '/cases/hero/furniture.jpg',
+    'italian-eyewear-platform': '/cases/hero/eyewear.jpg',
+    'transport-hr-platform': '/cases/hero/transport.jpg',
+    'employee-learning-lms': '/cases/hero/lms-team.jpg',
+    'nail-cosmetics-brand': '/cases/hero/hero_frame.jpg',
+    'automotive-market-launch': '/cases/hero/automotive.jpg'
+  };
+  const heroImg = caseItem.heroImage || CASE_HERO_IMAGES[caseItem.slug] || '/cases/hero/furniture.jpg';
 
-          <div className="flex items-center gap-3">
+  return (
+    <div className="min-h-screen bg-[#fcfcfd] dark:bg-[#070708] text-neutral-950 dark:text-white pt-24 sm:pt-32 pb-20 selection:bg-amber-400 selection:text-neutral-950">
+      
+      {/* Case Header Hero */}
+      <article className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        {/* Breadcrumbs Navigation & Actions */}
+        <div className="flex flex-wrap items-center justify-between gap-4 mb-6 sm:mb-8 pb-4 border-b border-black/[0.06] dark:border-white/[0.08]">
+          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs font-mono text-neutral-500 dark:text-neutral-400">
+            <button
+              type="button" 
+              onClick={() => onClose()}
+              className="hover:text-neutral-950 dark:hover:text-white transition-colors flex items-center gap-1.5 cursor-pointer font-medium"
+            >
+              <Home className="w-3.5 h-3.5" />
+              <span>{lang === 'en' ? 'Main' : (lang === 'kz' ? 'Басты бет' : 'Главная')}</span>
+            </button>
+            <span className="text-neutral-300 dark:text-neutral-700">/</span>
+            <button 
+              type="button"
+              onClick={() => onClose('cases')}
+              className="hover:text-neutral-950 dark:hover:text-white transition-colors cursor-pointer font-medium"
+            >
+              {lang === 'en' ? 'Cases' : (lang === 'kz' ? 'Кейстер' : 'Кейсы')}
+            </button>
+            <span className="text-neutral-300 dark:text-neutral-700">/</span>
+            <span className="text-neutral-950 dark:text-white font-bold truncate max-w-[200px] sm:max-w-xs md:max-w-sm">
+              {title}
+            </span>
+          </nav>
+
+          <div className="flex items-center gap-2.5">
             <button
               type="button"
               onClick={handleShare}
-              className="p-2 rounded-full border border-black/10 dark:border-white/10 text-neutral-600 dark:text-neutral-400 hover:text-neutral-950 dark:hover:text-white hover:bg-neutral-100 dark:hover:bg-white/10 transition-all"
-              title="Share"
+              className="px-3 py-1.5 rounded-full border border-black/10 dark:border-white/10 text-xs font-mono text-neutral-600 dark:text-neutral-300 hover:text-neutral-950 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10 transition-all flex items-center gap-1.5 cursor-pointer"
             >
-              <Share2 className="w-4 h-4" />
+              <Share2 className="w-3.5 h-3.5" />
+              <span>{lang === 'en' ? 'Share' : (lang === 'kz' ? 'Бөлісу' : 'Поделиться')}</span>
             </button>
             <button
               type="button"
               onClick={() => onOpenContact(`${title} Case Discussion`)}
-              className="px-4 py-2 rounded-full bg-neutral-950 dark:bg-white text-white dark:text-neutral-950 text-xs font-heading font-bold hover:opacity-90 transition-all flex items-center gap-1.5 shadow-sm"
+              className="px-4 py-1.5 rounded-full bg-neutral-950 dark:bg-white text-white dark:text-neutral-950 text-xs font-heading font-bold hover:opacity-90 transition-all flex items-center gap-1.5 shadow-sm cursor-pointer"
             >
-              <span>{lang === 'en' ? 'Discuss Similar Project' : (lang === 'kz' ? 'Осыған ұқсас жоба' : 'Обсудить аналогичный проект')}</span>
+              <span>{lang === 'en' ? 'Discuss Similar' : (lang === 'kz' ? 'Осыған ұқсас жоба' : 'Обсудить аналогичный')}</span>
               <ArrowUpRight className="w-3.5 h-3.5" />
             </button>
           </div>
         </div>
-      </header>
 
-      {/* Case Header Hero */}
-      <article className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-10">
-        
         {/* Meta / Badges */}
-        <div className="flex flex-wrap items-center gap-2.5 sm:gap-3 mb-6">
+        <div className="flex flex-wrap items-center gap-2.5 sm:gap-3 mb-5">
           <span className="px-3.5 py-1 rounded-full text-xs font-mono font-bold bg-amber-400 text-neutral-950 shadow-sm">
             {badge}
           </span>
@@ -105,27 +125,83 @@ export default function CaseStudyDetail({
         </div>
 
         {/* Big Editorial Title */}
-        <h1 className="text-3xl sm:text-5xl lg:text-6xl font-heading font-black tracking-tight text-neutral-950 dark:text-white uppercase leading-[1.05] max-w-5xl mb-6 sm:mb-8">
+        <h1 className="text-2xl sm:text-4xl lg:text-5xl font-heading font-black tracking-tight text-neutral-950 dark:text-white uppercase leading-[1.08] max-w-5xl mb-4 sm:mb-6">
           {title}
         </h1>
 
         {/* Lead Summary */}
-        <p className="text-base sm:text-xl lg:text-2xl text-neutral-600 dark:text-neutral-300 max-w-4xl font-normal leading-relaxed mb-10 sm:mb-14">
+        <p className="text-sm sm:text-lg lg:text-xl text-neutral-600 dark:text-neutral-300 max-w-4xl font-normal leading-relaxed mb-8 sm:mb-10">
           {summary}
         </p>
 
-        {/* Key Metrics Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-5 mb-14 sm:mb-20">
+        {/* Thematic Graphics & Mockup Showcase Block */}
+        <div className="mb-10 sm:mb-14 rounded-2xl sm:rounded-3xl border border-black/[0.08] dark:border-white/10 bg-[#0c0c0e] shadow-2xl overflow-hidden relative group">
+          {/* Top Window Bar (Browser / App Mockup style) */}
+          <div className="px-4 py-3 bg-neutral-950/90 backdrop-blur-md border-b border-white/10 flex items-center justify-between text-xs font-mono text-neutral-400">
+            <div className="flex items-center gap-2">
+              <span className="w-2.5 h-2.5 rounded-full bg-rose-500/80 inline-block"></span>
+              <span className="w-2.5 h-2.5 rounded-full bg-amber-500/80 inline-block"></span>
+              <span className="w-2.5 h-2.5 rounded-full bg-emerald-500/80 inline-block"></span>
+              <span className="ml-2 text-[11px] text-neutral-400 hidden sm:inline font-mono">
+                artx.one/cases/{caseItem.slug}
+              </span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-white/10 text-white/90 border border-white/15">
+                <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span>
+                {caseItem.tagline || badge}
+              </span>
+            </div>
+          </div>
+
+          {/* Visual Banner Container */}
+          <div className="relative aspect-[16/9] sm:aspect-[21/9] max-h-[460px] w-full overflow-hidden bg-neutral-950">
+            <img 
+              src={heroImg} 
+              alt={title}
+              className="w-full h-full object-cover object-center group-hover:scale-[1.02] transition-transform duration-700 opacity-95"
+              loading="eager"
+            />
+            {/* Subtle Vignette & Frame Contrast */}
+            <div className="absolute inset-0 bg-gradient-to-t from-neutral-950/80 via-transparent to-neutral-950/20 pointer-events-none"></div>
+
+            {/* Overlaid Floating Metadata Chips */}
+            <div className="absolute bottom-4 left-4 sm:bottom-6 sm:left-6 flex flex-wrap items-center gap-2 z-10 pointer-events-none">
+              <span className="px-3 py-1 rounded-full text-[11px] font-mono font-semibold bg-neutral-950/80 text-white border border-white/20 backdrop-blur-md shadow-lg">
+                {client}
+              </span>
+              <span className="px-3 py-1 rounded-full text-[11px] font-mono font-semibold bg-amber-400 text-neutral-950 shadow-lg">
+                {badge}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* Uniform Key Metrics Grid */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-12 sm:mb-16">
           {(caseItem.metrics || []).map((m, idx) => (
             <div 
               key={idx}
-              className="p-5 sm:p-7 rounded-2xl sm:rounded-3xl border border-black/[0.08] dark:border-white/10 bg-white/70 dark:bg-white/[0.02] backdrop-blur-md shadow-sm"
+              className="h-[104px] sm:h-[114px] p-3.5 sm:p-4 rounded-2xl border border-black/[0.08] dark:border-white/10 bg-white/80 dark:bg-white/[0.03] backdrop-blur-md shadow-sm flex flex-col justify-between group hover:border-amber-400/40 transition-colors min-w-0"
             >
-              <div className="text-2xl sm:text-4xl lg:text-5xl font-heading font-black tracking-tight text-neutral-950 dark:text-white tabular-nums mb-2">
-                {m.value}
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-amber-400 shadow-[0_0_6px_rgba(251,191,36,0.6)]"></span>
+                  <span className="text-[10px] font-mono text-neutral-400 dark:text-neutral-500">
+                    0{idx + 1}
+                  </span>
+                </div>
+                <span className="text-[9px] font-mono uppercase tracking-widest text-neutral-400 dark:text-neutral-500">
+                  METRIC
+                </span>
               </div>
-              <div className="text-xs sm:text-sm font-mono text-neutral-500 dark:text-neutral-400 leading-snug">
-                {getLocalized(m.label)}
+              <div className="min-w-0">
+                <div className="text-xl sm:text-2xl font-heading font-black tracking-tight text-neutral-950 dark:text-white tabular-nums leading-none mb-1 truncate">
+                  {m.value}
+                </div>
+                <div className="text-[11px] sm:text-xs font-mono text-neutral-500 dark:text-neutral-400 leading-snug line-clamp-1 truncate">
+                  {getLocalized(m.label)}
+                </div>
               </div>
             </div>
           ))}

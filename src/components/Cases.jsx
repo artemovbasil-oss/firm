@@ -157,12 +157,12 @@ function CaseCard({ item, idx, lang, onOpenContact, onSelectCase, t, getLocalize
           </span>
         </div>
 
-        {/* Monumental Hero Metric (Clean, no rectangular drop-shadow artifact) */}
-        <div className="my-auto z-10 py-4 sm:py-6 relative min-w-0">
-          <div className="text-3xl sm:text-5xl lg:text-6xl font-heading font-black text-white tracking-tight tabular-nums truncate">
+        {/* Monumental Hero Metric (Clean, proportional, no overflow) */}
+        <div className="my-auto z-10 py-3 sm:py-5 relative min-w-0">
+          <div className="text-2xl sm:text-4xl lg:text-[42px] font-heading font-black text-white tracking-tight tabular-nums leading-none truncate">
             {heroMetric ? heroMetric.value : '+340%'}
           </div>
-          <div className="text-xs sm:text-sm font-mono font-bold text-white/80 uppercase tracking-wider mt-2 line-clamp-2">
+          <div className="text-xs font-mono font-medium text-white/80 uppercase tracking-wider mt-2 line-clamp-1 truncate">
             {heroMetric ? getLocalized(heroMetric.label) : (lang === 'en' ? 'Organic Revenue Surge' : (lang === 'kz' ? 'Органикалық өсім' : 'Рост выручки'))}
           </div>
         </div>

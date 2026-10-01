@@ -73,12 +73,17 @@ export default function App() {
     window.history.pushState(null, '', `/cases/${slug}`);
   };
 
-  const handleCloseCase = () => {
+  const handleCloseCase = (targetAnchor) => {
     setActiveCaseSlug(null);
-    window.history.pushState(null, '', '/#cases');
+    const anchor = typeof targetAnchor === 'string' ? targetAnchor : 'cases';
+    window.history.pushState(null, '', anchor === 'top' ? '/' : `/#${anchor}`);
     setTimeout(() => {
-      const el = document.getElementById('cases');
-      if (el) el.scrollIntoView({ behavior: 'smooth' });
+      if (anchor === 'top') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        const el = document.getElementById(anchor);
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      }
     }, 50);
   };
 
@@ -228,18 +233,19 @@ export default function App() {
         </div>
       )}
 
-      {/* Header */}
-      {!activeCaseItem && (
-        <Navbar
-          lang={lang}
-          setLang={setLang}
-          theme={theme}
-          setTheme={setTheme}
-          onOpenContact={handleOpenContact}
-          onOpenAdmin={() => setIsAdminOpen(true)}
-          isTickerSticky={isTickerSticky}
-        />
-      )}
+      {/* Header Navbar */}
+      <Navbar
+        lang={lang}
+        setLang={setLang}
+        theme={theme}
+        setTheme={setTheme}
+        onOpenContact={handleOpenContact}
+        onOpenAdmin={() => setIsAdminOpen(true)}
+        isTickerSticky={isTickerSticky}
+        activeNav={activeCaseItem ? 'cases' : null}
+        isOnCasePage={Boolean(activeCaseItem)}
+        onNavigateHome={handleCloseCase}
+      />
 
       {/* Main Content */}
       {activeCaseItem ? (

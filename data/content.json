@@ -113,7 +113,8 @@
         "y": 0.25
       },
       "seed": 0.42,
-      "published": true
+      "published": true,
+      "heroImage": "/cases/hero/furniture.jpg"
     },
     {
       "id": 2,
@@ -229,7 +230,8 @@
         "y": 0.78
       },
       "seed": 1.85,
-      "published": true
+      "published": true,
+      "heroImage": "/cases/hero/eyewear.jpg"
     },
     {
       "id": 3,
@@ -344,7 +346,8 @@
         "y": 0.38
       },
       "seed": 3.14,
-      "published": true
+      "published": true,
+      "heroImage": "/cases/hero/transport.jpg"
     },
     {
       "id": 4,
@@ -458,7 +461,8 @@
         "y": 0.65
       },
       "seed": 2.11,
-      "published": true
+      "published": true,
+      "heroImage": "/cases/hero/lms-team.jpg"
     },
     {
       "id": 5,
@@ -572,7 +576,8 @@
         "y": 0.7
       },
       "seed": 4.88,
-      "published": true
+      "published": true,
+      "heroImage": "/cases/hero/hero_frame.jpg"
     },
     {
       "id": 6,
@@ -687,7 +692,8 @@
         "y": 0.85
       },
       "seed": 5.67,
-      "published": true
+      "published": true,
+      "heroImage": "/cases/hero/automotive.jpg"
     }
   ],
   "services": [

@@ -11,7 +11,10 @@ export default function Navbar({
   theme, 
   setTheme, 
   onOpenContact,
-  isTickerSticky = false 
+  isTickerSticky = false,
+  activeNav = null,
+  isOnCasePage = false,
+  onNavigateHome = null
 }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -19,18 +22,18 @@ export default function Navbar({
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      setIsScrolled(window.scrollY > 20 || isOnCasePage);
     };
     handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [isOnCasePage]);
 
   const navLinks = [
-    { name: t.services, href: '#services' },
-    { name: t.cases, href: '#cases' },
-    { name: t.audit, href: '#audit' },
-    { name: t.faq, href: '#faq' },
+    { id: 'services', name: t.services, href: isOnCasePage ? '/#services' : '#services' },
+    { id: 'cases', name: t.cases, href: isOnCasePage ? '/#cases' : '#cases' },
+    { id: 'audit', name: t.audit, href: isOnCasePage ? '/#audit' : '#audit' },
+    { id: 'faq', name: t.faq, href: isOnCasePage ? '/#faq' : '#faq' },
   ];
 
   return (
@@ -51,7 +54,16 @@ export default function Navbar({
         >
           
           {/* Logo with live status beacon */}
-          <a href="#" className="flex items-center gap-2.5 group shrink-0">
+          <a 
+            href={isOnCasePage ? "/" : "#"} 
+            onClick={(e) => {
+              if (isOnCasePage && onNavigateHome) {
+                e.preventDefault();
+                onNavigateHome();
+              }
+            }}
+            className="flex items-center gap-2.5 group shrink-0"
+          >
             <ArtxLogo className="w-8 h-8 group-hover:scale-105 transition-transform" />
             <div className="flex flex-col">
               <div className="flex items-center gap-1.5">
@@ -68,15 +80,28 @@ export default function Navbar({
 
           {/* Desktop Nav Links */}
           <nav className="hidden lg:flex items-center gap-1 xl:gap-2">
-            {navLinks.map((link) => (
-              <a
-                key={link.name}
-                href={link.href}
-                className="px-3.5 py-1.5 rounded-full text-xs font-heading font-semibold text-neutral-700 dark:text-neutral-200 hover:text-neutral-950 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10 transition-all duration-150"
-              >
-                {link.name}
-              </a>
-            ))}
+            {navLinks.map((link) => {
+              const isActive = activeNav === link.id;
+              return (
+                <a
+                  key={link.id}
+                  href={link.href}
+                  onClick={(e) => {
+                    if (isOnCasePage && onNavigateHome) {
+                      e.preventDefault();
+                      onNavigateHome(link.id);
+                    }
+                  }}
+                  className={`px-3.5 py-1.5 rounded-full text-xs font-heading transition-all duration-150 ${
+                    isActive 
+                      ? 'bg-neutral-950 dark:bg-white text-white dark:text-neutral-950 font-bold shadow-sm'
+                      : 'font-semibold text-neutral-700 dark:text-neutral-200 hover:text-neutral-950 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10'
+                  }`}
+                >
+                  {link.name}
+                </a>
+              );
+            })}
           </nav>
 
           {/* Controls Dock */}
@@ -164,16 +189,29 @@ export default function Navbar({
         {mobileMenuOpen && (
           <div className="pointer-events-auto sm:hidden mt-3 p-5 rounded-3xl bg-white/95 dark:bg-[#0a0a0a]/95 backdrop-blur-2xl border border-black/10 dark:border-white/10 shadow-2xl space-y-4 animate-scaleUp">
             <div className="flex flex-col gap-1.5">
-              {navLinks.map((link) => (
-                <a
-                  key={link.name}
-                  href={link.href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="px-3 py-2 rounded-xl text-sm font-heading font-medium text-neutral-800 dark:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-white/10"
-                >
-                  {link.name}
-                </a>
-              ))}
+              {navLinks.map((link) => {
+                const isActive = activeNav === link.id;
+                return (
+                  <a
+                    key={link.id}
+                    href={link.href}
+                    onClick={(e) => {
+                      setMobileMenuOpen(false);
+                      if (isOnCasePage && onNavigateHome) {
+                        e.preventDefault();
+                        onNavigateHome(link.id);
+                      }
+                    }}
+                    className={`px-3 py-2 rounded-xl text-sm font-heading font-medium transition-all ${
+                      isActive
+                        ? 'bg-neutral-950 dark:bg-white text-white dark:text-neutral-950 font-bold shadow-sm'
+                        : 'text-neutral-800 dark:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-white/10'
+                    }`}
+                  >
+                    {link.name}
+                  </a>
+                );
+              })}
             </div>
 
             <div className="pt-3 border-t border-neutral-100 dark:border-neutral-800 flex items-center justify-between">

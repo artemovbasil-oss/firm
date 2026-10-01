@@ -573,6 +573,7 @@ export const INITIAL_CASES = [
   {
     "id": 1,
     "slug": "luxury-furniture-kazakhstan",
+    "heroImage": "/cases/hero/furniture.jpg",
     "year": "2025–2026",
     "title": {
       "kz": "Премиум жиһаз дүкені және 3D конфигуратор",
@@ -688,6 +689,7 @@ export const INITIAL_CASES = [
   {
     "id": 2,
     "slug": "italian-eyewear-platform",
+    "heroImage": "/cases/hero/eyewear.jpg",
     "year": "2025–2026",
     "title": {
       "kz": "Италиялық оптикаға онлайн тапсырыс беру платформасы",
@@ -804,6 +806,7 @@ export const INITIAL_CASES = [
   {
     "id": 3,
     "slug": "transport-hr-platform",
+    "heroImage": "/cases/hero/transport.jpg",
     "year": "2025–2026",
     "title": {
       "kz": "Көлік кәсіпорнының цифрлық HR және карьералық платформасы",
@@ -919,6 +922,7 @@ export const INITIAL_CASES = [
   {
     "id": 4,
     "slug": "employee-learning-lms",
+    "heroImage": "/cases/hero/lms-team.jpg",
     "year": "2025–2026",
     "title": {
       "kz": "Қызметкерлерді оқытуға арналған онлайн сервис және интерактивті тренажерлар",
@@ -1033,6 +1037,7 @@ export const INITIAL_CASES = [
   {
     "id": 5,
     "slug": "nail-cosmetics-brand",
+    "heroImage": "/cases/hero/hero_frame.jpg",
     "year": "2025–2026",
     "title": {
       "kz": "Тырнақ бояуларын өндіруші брендке арналған премиум брендинг және сайт",
@@ -1147,6 +1152,7 @@ export const INITIAL_CASES = [
   {
     "id": 6,
     "slug": "automotive-market-launch",
+    "heroImage": "/cases/hero/automotive.jpg",
     "year": "2025–2026",
     "title": {
       "kz": "Қытайлық автоөндірушіні жергілікті нарыққа шығаруға арналған цифрлық экожүйе",

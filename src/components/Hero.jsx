@@ -127,19 +127,24 @@ export default function Hero({ lang, onOpenContact }) {
           ].map((stat, idx) => (
             <div 
               key={idx}
-              className="p-3 sm:p-4 lg:p-5 rounded-2xl sm:rounded-3xl backdrop-blur-2xl bg-white/50 dark:bg-[#0c0c0e]/85 border border-black/[0.06] dark:border-white/10 shadow-lg dark:shadow-2xl flex flex-col justify-between group hover:border-amber-400/50 hover:bg-white/70 dark:hover:bg-[#0c0c0e] transition-all duration-300 min-w-0"
+              className="h-[96px] sm:h-[104px] p-3 sm:p-4 rounded-2xl backdrop-blur-2xl bg-white/60 dark:bg-[#0c0c0e]/85 border border-black/[0.06] dark:border-white/10 shadow-lg dark:shadow-2xl flex flex-col justify-between group hover:border-amber-400/50 hover:bg-white/75 dark:hover:bg-[#0c0c0e] transition-all duration-300 min-w-0"
             >
-              <div className="flex items-center justify-between mb-2">
-                <span className={`w-2 h-2 rounded-full ${stat.accent}`}></span>
-                <span className="text-[9px] sm:text-[10px] font-mono uppercase tracking-widest text-neutral-500 dark:text-neutral-400">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-1.5">
+                  <span className={`w-1.5 h-1.5 rounded-full ${stat.accent}`}></span>
+                  <span className="text-[10px] font-mono text-neutral-400 dark:text-neutral-500">
+                    0{idx + 1}
+                  </span>
+                </div>
+                <span className="text-[9px] font-mono uppercase tracking-widest text-neutral-400 dark:text-neutral-500">
                   METRIC
                 </span>
               </div>
               <div className="min-w-0">
-                <div className="text-xl sm:text-2xl lg:text-3xl font-heading font-bold tracking-tight text-neutral-950 dark:text-white leading-none mb-1 tabular-nums truncate">
+                <div className="text-xl sm:text-2xl lg:text-[26px] font-heading font-black tracking-tight text-neutral-950 dark:text-white leading-none mb-1 tabular-nums">
                   {stat.value}
                 </div>
-                <div className="text-[10px] sm:text-xs font-mono text-neutral-600 dark:text-neutral-300 uppercase tracking-wider font-medium line-clamp-2">
+                <div className="text-[11px] sm:text-xs font-mono text-neutral-600 dark:text-neutral-300 font-medium leading-snug line-clamp-1 truncate">
                   {stat.label}
                 </div>
               </div>
