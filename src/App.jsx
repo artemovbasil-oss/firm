@@ -89,29 +89,14 @@ export default function App() {
 
   const activeCaseItem = casesList.find(c => c.slug === activeCaseSlug || String(c.id) === String(activeCaseSlug));
 
-  const [contentBoostY, setContentBoostY] = useState(0);
-
   // Monitor scroll for sticky ticker & navbar adjustment
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
-      // Strip transitions / docks to top position at 450px
-      setIsTickerSticky(scrollY >= 450);
-
-      // Light acceleration towards the mark as user scrolls towards 450px
-      if (scrollY > 0) {
-        if (scrollY < 450) {
-          const p = scrollY / 450;
-          // Quadratic acceleration pulling content upward slightly faster as it approaches the mark
-          const boost = -Math.round(Math.pow(p, 1.4) * 60);
-          setContentBoostY(boost);
-        } else {
-          setContentBoostY(-60);
-        }
-      } else {
-        setContentBoostY(0);
-      }
+      // Strip transitions / docks to top position at 350px with 20px hysteresis
+      setIsTickerSticky(prev => scrollY >= 350 ? true : (scrollY < 330 ? false : prev));
     };
+    handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -283,18 +268,12 @@ export default function App() {
             onOpenContact={handleOpenContact} 
           />
 
-          {/* Main Page Content: starts right at 100vh fold with -mt-[460px] so there is zero empty void, and scrolls up with slight acceleration towards the mark */}
-          <div 
-            className="relative w-full max-w-full z-20 -mt-[460px]"
-            style={{ 
-              transform: contentBoostY ? `translate3d(0, ${contentBoostY}px, 0)` : undefined,
-              transition: 'transform 0.05s linear'
-            }}
-          >
+          {/* Main Page Content: starts right at 100vh fold with -mt-[360px] so there is zero empty void */}
+          <div className="relative w-full max-w-full z-20 -mt-[360px]">
             {/* Running Marquee Ticker: sits directly below the Hero fold and docks stickily when scrolled */}
             <div className="relative w-full max-w-full z-20">
               {isTickerSticky && (
-                <div className="h-12 sm:h-14 w-full" aria-hidden="true" />
+                <div className="h-[46px] sm:h-[50px] w-full" aria-hidden="true" />
               )}
               <MarqueeTicker lang={lang} isSticky={isTickerSticky} />
             </div>

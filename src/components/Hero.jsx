@@ -50,13 +50,18 @@ export default function Hero({ lang, theme = 'dark', onOpenContact }) {
     if (window.scrollY > 20) {
       isIntroPlayingRef.current = false;
       const scrollY = window.scrollY;
-      const progress = Math.max(0, Math.min(1, 1 - scrollY / 180));
+      const progress = Math.max(0, Math.min(1, 1 - scrollY / 150));
       maskProgress.set(progress);
 
-      const upwardDelta = Math.max(0, scrollY - 150);
-      badgeY.set(-Math.round(upwardDelta * 0.52));
+      let currentBadgeY = 0;
+      if (scrollY > 40) {
+        const t = Math.min(1, Math.max(0, (scrollY - 40) / 80));
+        const easeIn = t * t * (3 - 2 * t);
+        currentBadgeY = -(scrollY - 40) * 0.82 * easeIn;
+      }
+      badgeY.set(currentBadgeY);
 
-      const fade = scrollY < 360 ? 1 : Math.max(0, 1 - (scrollY - 360) / 90);
+      const fade = scrollY < 260 ? 1 : Math.max(0, 1 - (scrollY - 260) / 90);
       badgeFade.set(fade);
     } else {
       maskProgress.set(0);
@@ -82,16 +87,21 @@ export default function Hero({ lang, theme = 'dark', onOpenContact }) {
       }
       const scrollY = window.scrollY;
 
-      // 1. Aperture collapses into mark over first 180px
-      const progress = Math.max(0, Math.min(1, 1 - scrollY / 180));
+      // 1. Aperture collapses into mark over first 150px
+      const progress = Math.max(0, Math.min(1, 1 - scrollY / 150));
       maskProgress.set(progress);
 
-      // 2. Mark scrolls UP towards the menu, slower than content below
-      const upwardDelta = Math.max(0, scrollY - 150);
-      badgeY.set(-Math.round(upwardDelta * 0.52));
+      // 2. Logo scrolls UP towards the menu swiftly and with liquid-smooth sub-pixel precision
+      let currentBadgeY = 0;
+      if (scrollY > 40) {
+        const t = Math.min(1, Math.max(0, (scrollY - 40) / 80));
+        const easeIn = t * t * (3 - 2 * t);
+        currentBadgeY = -(scrollY - 40) * 0.82 * easeIn;
+      }
+      badgeY.set(currentBadgeY);
 
-      // 3. Convergence & Dissolve: as the rising ticker strip nears the upward-gliding badge (360px -> 450px), badge dissolves
-      const fade = scrollY < 360 ? 1 : Math.max(0, 1 - (scrollY - 360) / 90);
+      // 3. Convergence & Dissolve: as the rising ticker strip nears the upward-gliding badge (260px -> 350px), badge dissolves
+      const fade = scrollY < 260 ? 1 : Math.max(0, 1 - (scrollY - 260) / 90);
       badgeFade.set(fade);
     };
 
@@ -136,7 +146,7 @@ export default function Hero({ lang, theme = 'dark', onOpenContact }) {
   return (
     <section 
       ref={containerRef}
-      style={{ minHeight: 'calc(100vh + 460px)' }}
+      style={{ minHeight: 'calc(100vh + 360px)' }}
       className="relative w-full max-w-full"
     >
       {/* Pinned 100vh Screen Container */}

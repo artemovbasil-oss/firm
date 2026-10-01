@@ -95,10 +95,10 @@ export default function MarqueeTicker({ lang = 'ru', isSticky = false }) {
     <div
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className={`w-full overflow-hidden select-none transition-all duration-300 ${
+      className={`w-full overflow-hidden select-none ${
         isSticky
-          ? 'fixed top-0 left-0 right-0 z-40 py-2 sm:py-2.5 bg-white/95 dark:bg-[#080808]/95 backdrop-blur-xl border-b border-black/[0.08] dark:border-white/10 shadow-sm'
-          : 'relative z-20 py-3.5 sm:py-4 bg-neutral-100/90 dark:bg-[#080808]/90 backdrop-blur-md border-y border-neutral-200/80 dark:border-white/10 shadow-sm dark:shadow-xl'
+          ? 'fixed top-0 left-0 right-0 z-40 py-2.5 sm:py-3 bg-white/95 dark:bg-[#080808]/95 backdrop-blur-xl border-b border-black/[0.08] dark:border-white/10 shadow-sm'
+          : 'relative z-20 py-2.5 sm:py-3 bg-neutral-100/90 dark:bg-[#080808]/90 backdrop-blur-md border-y border-neutral-200/80 dark:border-white/10 shadow-sm dark:shadow-xl'
       }`}
     >
       {/* Edge gradient masks for smooth fade in/out */}
@@ -110,11 +110,7 @@ export default function MarqueeTicker({ lang = 'ru', isSticky = false }) {
         <div
           ref={trackRef}
           style={{ willChange: 'transform' }}
-          className={`flex items-center whitespace-nowrap font-mono font-semibold uppercase tracking-wider ${
-            isSticky
-              ? 'text-[11px] sm:text-xs text-neutral-800 dark:text-neutral-200'
-              : 'text-xs sm:text-sm text-neutral-900 dark:text-white'
-          }`}
+          className="flex items-center whitespace-nowrap font-mono font-semibold uppercase tracking-wider text-xs sm:text-sm text-neutral-900 dark:text-white"
         >
           {/* Render 3 identical sets for seamless continuous offset wrapping */}
           {[0, 1, 2].map((setIndex) => (
