@@ -92,7 +92,8 @@ export default function App() {
   // Monitor scroll for sticky ticker & navbar adjustment
   useEffect(() => {
     const handleScroll = () => {
-      setIsTickerSticky(window.scrollY > 480);
+      const heroThreshold = window.innerHeight + 260;
+      setIsTickerSticky(window.scrollY > heroThreshold);
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
@@ -223,7 +224,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#fcfcfd] dark:bg-[#080808] text-neutral-900 dark:text-neutral-100 flex flex-col font-sans transition-colors duration-200 w-full max-w-full overflow-x-hidden">
+    <div className="min-h-screen bg-[#fcfcfd] dark:bg-[#080808] text-neutral-900 dark:text-neutral-100 flex flex-col font-sans transition-colors duration-200 w-full max-w-full">
       
       {/* Toast notification */}
       {toastMessage && (
@@ -258,9 +259,10 @@ export default function App() {
           onOpenContact={handleOpenContact}
         />
       ) : (
-        <main className="flex-1 w-full max-w-full overflow-x-hidden">
+        <main className="flex-1 w-full max-w-full">
           <Hero 
             lang={lang}
+            theme={theme}
             onOpenContact={handleOpenContact} 
           />
 
