@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { ArrowUpRight, ArrowDown } from 'lucide-react';
 import { motion, useTransform, useMotionValue, animate } from 'framer-motion';
 import { TRANSLATIONS } from '../data/translations';
@@ -10,9 +10,24 @@ export default function Hero({ lang, theme = 'dark', onOpenContact }) {
 
   // Single unified motion value: 0 = collapsed in ARTX mark, 1 = full open screen
   const maskProgress = useMotionValue(0);
+  const badgeY = useMotionValue(0);
   const badgeFade = useMotionValue(1);
   const controlsRef = useRef(null);
   const isIntroPlayingRef = useRef(true);
+
+  // Track viewport max dimension for exact SVG coordinate translation
+  const [vmax, setVmax] = useState(() => (typeof window !== 'undefined' ? Math.max(window.innerWidth, window.innerHeight) : 1000));
+
+  useEffect(() => {
+    const updateVmax = () => {
+      setVmax(Math.max(window.innerWidth, window.innerHeight));
+    };
+    window.addEventListener('resize', updateVmax);
+    return () => window.removeEventListener('resize', updateVmax);
+  }, []);
+
+  // badgeSvgY converts screen pixel upward offset into exact SVG viewBox units
+  const badgeSvgY = useTransform(badgeY, (px) => (px * 1000) / (vmax || 1000));
 
   // Autoplay video
   useEffect(() => {
@@ -29,17 +44,23 @@ export default function Hero({ lang, theme = 'dark', onOpenContact }) {
     }
   }, []);
 
-  // Intro reveal on page load + scroll collapse synchronization
+  // Intro reveal on page load + scroll collapse & upward drift synchronization
   useEffect(() => {
     // If the user already loaded at a scrolled position, skip intro
     if (window.scrollY > 20) {
       isIntroPlayingRef.current = false;
-      const progress = Math.max(0, Math.min(1, 1 - window.scrollY / 200));
+      const scrollY = window.scrollY;
+      const progress = Math.max(0, Math.min(1, 1 - scrollY / 180));
       maskProgress.set(progress);
-      const fade = window.scrollY < 280 ? 1 : Math.max(0, 1 - (window.scrollY - 280) / 90);
+
+      const upwardDelta = Math.max(0, scrollY - 150);
+      badgeY.set(-Math.round(upwardDelta * 0.52));
+
+      const fade = scrollY < 360 ? 1 : Math.max(0, 1 - (scrollY - 360) / 90);
       badgeFade.set(fade);
     } else {
       maskProgress.set(0);
+      badgeY.set(0);
       badgeFade.set(1);
       controlsRef.current = animate(maskProgress, 1, {
         duration: 1.9,
@@ -60,11 +81,17 @@ export default function Hero({ lang, theme = 'dark', onOpenContact }) {
         isIntroPlayingRef.current = false;
       }
       const scrollY = window.scrollY;
-      const progress = Math.max(0, Math.min(1, 1 - scrollY / 200));
+
+      // 1. Aperture collapses into mark over first 180px
+      const progress = Math.max(0, Math.min(1, 1 - scrollY / 180));
       maskProgress.set(progress);
 
-      // Badge stays pinned at center until ticker approaches it, then dissolves (280px -> 370px)
-      const fade = scrollY < 280 ? 1 : Math.max(0, 1 - (scrollY - 280) / 90);
+      // 2. Mark scrolls UP towards the menu, slower than content below
+      const upwardDelta = Math.max(0, scrollY - 150);
+      badgeY.set(-Math.round(upwardDelta * 0.52));
+
+      // 3. Convergence & Dissolve: as the rising ticker strip nears the upward-gliding badge (360px -> 450px), badge dissolves
+      const fade = scrollY < 360 ? 1 : Math.max(0, 1 - (scrollY - 360) / 90);
       badgeFade.set(fade);
     };
 
@@ -75,7 +102,7 @@ export default function Hero({ lang, theme = 'dark', onOpenContact }) {
       }
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [maskProgress, badgeFade]);
+  }, [maskProgress, badgeY, badgeFade]);
 
   // Unified visual transforms derived directly from maskProgress (0 -> 1)
   // 1. Aperture scale: from compact badge (1.5x = ~135px) to fullscreen aperture (18x)
@@ -109,7 +136,7 @@ export default function Hero({ lang, theme = 'dark', onOpenContact }) {
   return (
     <section 
       ref={containerRef}
-      style={{ minHeight: 'calc(100vh + 380px)' }}
+      style={{ minHeight: 'calc(100vh + 460px)' }}
       className="relative w-full max-w-full"
     >
       {/* Pinned 100vh Screen Container */}
@@ -147,7 +174,10 @@ export default function Hero({ lang, theme = 'dark', onOpenContact }) {
 
         {/* Ambient Amber Glow behind collapsed badge */}
         <motion.div 
-          style={{ opacity: useTransform([badgeGlowOpacity, badgeFade], ([glow, fade]) => glow * fade) }}
+          style={{ 
+            y: badgeY,
+            opacity: useTransform([badgeGlowOpacity, badgeFade], ([glow, fade]) => glow * fade) 
+          }}
           className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 rounded-full pointer-events-none z-5 bg-amber-400/25 dark:bg-amber-400/20 blur-3xl"
         />
 
@@ -161,29 +191,31 @@ export default function Hero({ lang, theme = 'dark', onOpenContact }) {
             <defs>
               <mask id="artxHeroInvertedMask">
                 {/* Solid white base: everything is visible (dark overlay covers screen) */}
-                <rect x="0" y="0" width="1000" height="1000" fill="white" />
+                <rect x="-500" y="-500" width="2000" height="2000" fill="white" />
 
                 {/* Dynamic aperture centered at (500, 500): cuts hole in overlay */}
-                <g transform="translate(500, 500)">
-                  <motion.g style={{ scale: apertureScale }}>
-                    <g transform="translate(-50, -50)">
-                      {/* Black ARTX architectural A contour */}
-                      <path 
-                        d="M 44,13 L 56,13 L 89,87 L 66,87 C 54,87 50.8,77 50.5,69 C 52,60 58,54 71,52 C 58,50 52,43 50,30 C 48,43 42,50 29,52 C 42,54 48,60 49.5,69 C 49.2,77 46,87 34,87 L 11,87 Z" 
-                        fill="black" 
-                      />
+                <motion.g style={{ y: badgeSvgY }}>
+                  <g transform="translate(500, 500)">
+                    <motion.g style={{ scale: apertureScale }}>
+                      <g transform="translate(-50, -50)">
+                        {/* Black ARTX architectural A contour */}
+                        <path 
+                          d="M 44,13 L 56,13 L 89,87 L 66,87 C 54,87 50.8,77 50.5,69 C 52,60 58,54 71,52 C 58,50 52,43 50,30 C 48,43 42,50 29,52 C 42,54 48,60 49.5,69 C 49.2,77 46,87 34,87 L 11,87 Z" 
+                          fill="black" 
+                        />
 
-                      {/* Expanding circular iris from the amber heart of the A */}
-                      <motion.circle 
-                        cx="50" 
-                        cy="50" 
-                        r="80" 
-                        fill="black" 
-                        style={{ scale: irisScale, transformOrigin: '50px 50px' }} 
-                      />
-                    </g>
-                  </motion.g>
-                </g>
+                        {/* Expanding circular iris from the amber heart of the A */}
+                        <motion.circle 
+                          cx="50" 
+                          cy="50" 
+                          r="80" 
+                          fill="black" 
+                          style={{ scale: irisScale, transformOrigin: '50px 50px' }} 
+                        />
+                      </g>
+                    </motion.g>
+                  </g>
+                </motion.g>
               </mask>
 
               <linearGradient id="heroAmberSpark" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -195,17 +227,17 @@ export default function Hero({ lang, theme = 'dark', onOpenContact }) {
 
             {/* Dark/Light Overlay with Mask */}
             <motion.rect 
-              x="0" 
-              y="0" 
-              width="1000" 
-              height="1000" 
+              x="-500" 
+              y="-500" 
+              width="2000" 
+              height="2000" 
               fill={overlayBg} 
               mask="url(#artxHeroInvertedMask)" 
               style={{ opacity: overlayOpacity }}
             />
 
             {/* Foreground Badge Details (Central Amber Spark & Squircle Border) */}
-            <motion.g style={{ opacity: badgeFade }}>
+            <motion.g style={{ opacity: badgeFade, y: badgeSvgY }}>
               <g transform="translate(500, 500)">
                 <motion.g style={{ scale: apertureScale }}>
                   <g transform="translate(-50, -50)">
@@ -240,6 +272,7 @@ export default function Hero({ lang, theme = 'dark', onOpenContact }) {
           type="button"
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
           style={{ 
+            y: badgeY,
             opacity: useTransform([borderOpacity, badgeFade], ([b, f]) => b * f), 
             pointerEvents: badgePointerEvents 
           }}

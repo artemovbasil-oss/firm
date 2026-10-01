@@ -95,15 +95,19 @@ export default function App() {
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
-      // Strip transitions / docks to top position at 370px
-      setIsTickerSticky(scrollY >= 370);
+      // Strip transitions / docks to top position at 450px
+      setIsTickerSticky(scrollY >= 450);
 
-      // Light acceleration towards the mark as user scrolls towards 370px
-      if (scrollY > 0 && scrollY < 370) {
-        const p = scrollY / 370;
-        // Quadratic acceleration pulling content upward slightly faster as it approaches the mark
-        const boost = -Math.round(Math.pow(p, 1.5) * 55);
-        setContentBoostY(boost);
+      // Light acceleration towards the mark as user scrolls towards 450px
+      if (scrollY > 0) {
+        if (scrollY < 450) {
+          const p = scrollY / 450;
+          // Quadratic acceleration pulling content upward slightly faster as it approaches the mark
+          const boost = -Math.round(Math.pow(p, 1.4) * 60);
+          setContentBoostY(boost);
+        } else {
+          setContentBoostY(-60);
+        }
       } else {
         setContentBoostY(0);
       }
@@ -279,9 +283,9 @@ export default function App() {
             onOpenContact={handleOpenContact} 
           />
 
-          {/* Main Page Content: starts right at 100vh fold with -mt-[380px] so there is zero empty void, and scrolls up with slight acceleration towards the mark */}
+          {/* Main Page Content: starts right at 100vh fold with -mt-[460px] so there is zero empty void, and scrolls up with slight acceleration towards the mark */}
           <div 
-            className="relative w-full max-w-full z-20 -mt-[380px]"
+            className="relative w-full max-w-full z-20 -mt-[460px]"
             style={{ 
               transform: contentBoostY ? `translate3d(0, ${contentBoostY}px, 0)` : undefined,
               transition: 'transform 0.05s linear'
