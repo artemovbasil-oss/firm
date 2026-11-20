@@ -1452,6 +1452,5 @@ export const INITIAL_SETTINGS = {
   telegram: 'artemov_basil',
   phone: '+7 (999) 000-00-00',
   telegramBotToken: '',
-  telegramChatId: '',
-  adminPin: 'artx_KkBOtISfzIs!2026'
+  telegramChatId: ''
 };

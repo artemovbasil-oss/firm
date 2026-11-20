@@ -56,7 +56,7 @@
 ## ☁️ Развертывание в Railway
 
 Сервис развернут в Railway:
-- Сервис: `chic-friendship`
+- Сервис: `firm`
 - Окружение: `production`
 
 ---

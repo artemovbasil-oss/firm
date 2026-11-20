@@ -13,7 +13,7 @@ const DATA_DIR = process.env.DATA_DIR || path.join(__dirname, 'data');
 const LEADS_FILE = path.join(DATA_DIR, 'leads.json');
 const CONTENT_FILE = path.join(DATA_DIR, 'content.json');
 
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'artx_KkBOtISfzIs!2026';
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || '';
 const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN || '';
 const CHAT_ID = process.env.TELEGRAM_CHAT_ID || '';
 
@@ -185,6 +185,10 @@ const server = http.createServer(async (req, res) => {
 
   // Admin Auth endpoint
   if (req.method === 'POST' && pathname === '/api/admin/login') {
+    if (!ADMIN_PASSWORD) {
+      res.writeHead(503, { 'Content-Type': 'application/json' });
+      return res.end(JSON.stringify({ success: false, error: 'Admin access is not configured' }));
+    }
     try {
       const { password } = await parseJsonBody(req);
       if (password === ADMIN_PASSWORD) {
