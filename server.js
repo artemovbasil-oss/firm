@@ -376,6 +376,18 @@ const server = http.createServer(async (req, res) => {
   const parsedUrl = new URL(req.url, `http://${req.headers.host || 'localhost'}`);
   const pathname = parsedUrl.pathname;
 
+  // Direct hits on the Railway mirror domain get noindex + a disallow-all
+  // robots.txt so search engines consolidate on the canonical artx.one.
+  // Proxied requests (atrx-one) carry X-Forwarded-Host and pass through.
+  const host = (req.headers.host || '').split(':')[0];
+  const forwardedHost = String(req.headers['x-forwarded-host'] || '').split(',')[0].trim().split(':')[0];
+  const isDirectFirm = host === 'firm-production-93e2.up.railway.app' && !['artx.one', 'www.artx.one'].includes(forwardedHost);
+
+  if (isDirectFirm && pathname === '/robots.txt') {
+    res.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-8', 'Cache-Control': 'no-cache' });
+    return res.end('User-agent: *\nDisallow: /\n');
+  }
+
   if (pathname === '/health' || pathname === '/api/health') {
     return sendJson(req, res, 200, {
       status: 'ok',
@@ -536,6 +548,10 @@ const server = http.createServer(async (req, res) => {
         cacheControl = 'public, max-age=3600';
       } else {
         cacheControl = 'public, max-age=31536000, immutable';
+      }
+
+      if (isDirectFirm && (spaFallback || ext === '.html')) {
+        res.setHeader('X-Robots-Tag', 'noindex, nofollow');
       }
 
       const stat = fs.statSync(filePath);

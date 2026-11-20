@@ -3,5 +3,4 @@ Allow: /
 Disallow: /admin
 Disallow: /api/
 
-Sitemap: https://firm-production-93e2.up.railway.app/sitemap.xml
-Host: https://firm-production-93e2.up.railway.app
+Sitemap: https://artx.one/sitemap.xml

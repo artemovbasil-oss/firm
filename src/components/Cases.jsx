@@ -107,9 +107,14 @@ function CaseCard({ item, idx, lang, onOpenContact, onSelectCase, t, getLocalize
       className="group w-full"
     >
       {/* Visual Showcase Card with Motion Hover & WebGL Thermal Heatmap */}
-      <motion.div 
+      <motion.a
         ref={cardRef}
-        onClick={handleClick}
+        href={`/cases/${item.slug || item.id}`}
+        onClick={(e) => {
+          if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+          e.preventDefault();
+          handleClick();
+        }}
         whileHover={{ y: -6 }}
         transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
         style={{ 
@@ -117,7 +122,7 @@ function CaseCard({ item, idx, lang, onOpenContact, onSelectCase, t, getLocalize
           transform: 'translateZ(0)',
           isolation: 'isolate'
         }}
-        className={`w-full aspect-[16/10] rounded-[24px] bg-gradient-to-br ${activeGrad} p-6 sm:p-10 flex flex-col justify-between relative overflow-hidden shadow-xl dark:shadow-2xl cursor-pointer`}
+        className={`block w-full aspect-[16/10] rounded-[24px] bg-gradient-to-br ${activeGrad} p-6 sm:p-10 flex flex-col justify-between relative overflow-hidden shadow-xl dark:shadow-2xl cursor-pointer`}
       >
         {/* Dynamic WebGL Thermal Heatmap + Analog Film Grain Noise on Hover */}
         <CardShaderHover 
@@ -176,7 +181,7 @@ function CaseCard({ item, idx, lang, onOpenContact, onSelectCase, t, getLocalize
             <ArrowUpRight className="w-4 h-4" />
           </div>
         </div>
-      </motion.div>
+      </motion.a>
     </motion.div>
   );
 }

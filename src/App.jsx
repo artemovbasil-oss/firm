@@ -20,7 +20,12 @@ import { CheckCircle2 } from 'lucide-react';
 
 export default function App() {
   // Localization & Theming
-  const [lang, setLang] = useState(() => localStorage.getItem('firm_lang') || 'ru');
+  const [lang, setLang] = useState(() => {
+    const param = new URLSearchParams(window.location.search).get('lang');
+    const normalized = param === 'kk' ? 'kz' : param;
+    if (normalized === 'ru' || normalized === 'en' || normalized === 'kz') return normalized;
+    return localStorage.getItem('firm_lang') || 'ru';
+  });
   const [theme, setTheme] = useState(() => localStorage.getItem('firm_theme') || 'dark');
   
   // Currency strictly tied to language: KZ -> KZT, RU -> RUB, EN -> USD
@@ -117,6 +122,10 @@ export default function App() {
   useEffect(() => {
     localStorage.setItem('firm_lang', lang);
     document.documentElement.setAttribute('lang', lang === 'kz' ? 'kk' : lang);
+    const url = new URL(window.location.href);
+    if (lang === 'ru') url.searchParams.delete('lang');
+    else url.searchParams.set('lang', lang);
+    if (url.href !== window.location.href) window.history.replaceState(null, '', url);
 
     if (lang === 'en') {
       document.title = 'ARTX — Digital Production & Growth Agency | Web, Branding, Software, SEO';

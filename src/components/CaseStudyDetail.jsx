@@ -69,22 +69,30 @@ export default function CaseStudyDetail({
         {/* Breadcrumbs Navigation & Actions */}
         <div className="flex flex-wrap items-center justify-between gap-4 mb-6 sm:mb-8 pb-4 border-b border-black/[0.06] dark:border-white/[0.08]">
           <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs font-mono text-neutral-500 dark:text-neutral-400">
-            <button
-              type="button" 
-              onClick={() => onClose()}
+            <a
+              href="/"
+              onClick={(e) => {
+                if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+                e.preventDefault();
+                onClose();
+              }}
               className="hover:text-neutral-950 dark:hover:text-white transition-colors flex items-center gap-1.5 cursor-pointer font-medium"
             >
               <Home className="w-3.5 h-3.5" />
               <span>{lang === 'en' ? 'Main' : (lang === 'kz' ? 'Басты бет' : 'Главная')}</span>
-            </button>
+            </a>
             <span className="text-neutral-300 dark:text-neutral-700">/</span>
-            <button 
-              type="button"
-              onClick={() => onClose('cases')}
+            <a
+              href="/#cases"
+              onClick={(e) => {
+                if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+                e.preventDefault();
+                onClose('cases');
+              }}
               className="hover:text-neutral-950 dark:hover:text-white transition-colors cursor-pointer font-medium"
             >
               {lang === 'en' ? 'Cases' : (lang === 'kz' ? 'Кейстер' : 'Кейсы')}
-            </button>
+            </a>
             <span className="text-neutral-300 dark:text-neutral-700">/</span>
             <span className="text-neutral-950 dark:text-white font-bold truncate max-w-[200px] sm:max-w-xs md:max-w-sm">
               {title}
@@ -387,10 +395,14 @@ export default function CaseStudyDetail({
         {/* Next / Previous Case Navigation */}
         <nav className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 border-t border-black/[0.06] dark:border-white/[0.08]">
           {prevCase && (
-            <button
-              type="button"
-              onClick={() => onSelectCase(prevCase.slug || prevCase.id)}
-              className="w-full sm:w-auto p-4 rounded-2xl border border-black/[0.08] dark:border-white/10 hover:border-neutral-400 transition-all text-left group"
+            <a
+              href={`/cases/${prevCase.slug || prevCase.id}`}
+              onClick={(e) => {
+                if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+                e.preventDefault();
+                onSelectCase(prevCase.slug || prevCase.id);
+              }}
+              className="block w-full sm:w-auto p-4 rounded-2xl border border-black/[0.08] dark:border-white/10 hover:border-neutral-400 transition-all text-left group"
             >
               <div className="text-[10px] font-mono text-neutral-500 uppercase tracking-wider mb-1 flex items-center gap-1">
                 <ArrowLeft className="w-3 h-3 group-hover:-translate-x-1 transition-transform" />
@@ -399,14 +411,18 @@ export default function CaseStudyDetail({
               <div className="text-sm font-heading font-bold text-neutral-950 dark:text-white truncate max-w-xs">
                 {getLocalized(prevCase.title)}
               </div>
-            </button>
+            </a>
           )}
 
           {nextCase && (
-            <button
-              type="button"
-              onClick={() => onSelectCase(nextCase.slug || nextCase.id)}
-              className="w-full sm:w-auto p-4 rounded-2xl border border-black/[0.08] dark:border-white/10 hover:border-neutral-400 transition-all text-right group ml-auto"
+            <a
+              href={`/cases/${nextCase.slug || nextCase.id}`}
+              onClick={(e) => {
+                if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+                e.preventDefault();
+                onSelectCase(nextCase.slug || nextCase.id);
+              }}
+              className="block w-full sm:w-auto p-4 rounded-2xl border border-black/[0.08] dark:border-white/10 hover:border-neutral-400 transition-all text-right group ml-auto"
             >
               <div className="text-[10px] font-mono text-neutral-500 uppercase tracking-wider mb-1 flex items-center justify-end gap-1">
                 <span>{lang === 'en' ? 'Next Case' : (lang === 'kz' ? 'Келесі кейс' : 'Следующий кейс')}</span>
@@ -415,7 +431,7 @@ export default function CaseStudyDetail({
               <div className="text-sm font-heading font-bold text-neutral-950 dark:text-white truncate max-w-xs">
                 {getLocalized(nextCase.title)}
               </div>
-            </button>
+            </a>
           )}
         </nav>
 

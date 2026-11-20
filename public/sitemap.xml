@@ -2,48 +2,72 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://firm-production-93e2.up.railway.app/</loc>
-    <xhtml:link rel="alternate" hreflang="ru" href="https://firm-production-93e2.up.railway.app/?lang=ru"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://firm-production-93e2.up.railway.app/?lang=en"/>
-    <xhtml:link rel="alternate" hreflang="kk" href="https://firm-production-93e2.up.railway.app/?lang=kz"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://firm-production-93e2.up.railway.app/"/>
-    <lastmod>2026-09-28</lastmod>
+    <loc>https://artx.one/</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://artx.one/?lang=ru"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://artx.one/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="kk" href="https://artx.one/?lang=kz"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://artx.one/"/>
+    <lastmod>2026-11-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://firm-production-93e2.up.railway.app/#services</loc>
-    <xhtml:link rel="alternate" hreflang="ru" href="https://firm-production-93e2.up.railway.app/?lang=ru#services"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://firm-production-93e2.up.railway.app/?lang=en#services"/>
-    <xhtml:link rel="alternate" hreflang="kk" href="https://firm-production-93e2.up.railway.app/?lang=kz#services"/>
-    <lastmod>2026-09-28</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://firm-production-93e2.up.railway.app/#cases</loc>
-    <xhtml:link rel="alternate" hreflang="ru" href="https://firm-production-93e2.up.railway.app/?lang=ru#cases"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://firm-production-93e2.up.railway.app/?lang=en#cases"/>
-    <xhtml:link rel="alternate" hreflang="kk" href="https://firm-production-93e2.up.railway.app/?lang=kz#cases"/>
-    <lastmod>2026-09-28</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://firm-production-93e2.up.railway.app/#calculator</loc>
-    <xhtml:link rel="alternate" hreflang="ru" href="https://firm-production-93e2.up.railway.app/?lang=ru#calculator"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://firm-production-93e2.up.railway.app/?lang=en#calculator"/>
-    <xhtml:link rel="alternate" hreflang="kk" href="https://firm-production-93e2.up.railway.app/?lang=kz#calculator"/>
-    <lastmod>2026-09-28</lastmod>
+    <loc>https://artx.one/cases/luxury-furniture-kazakhstan</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://artx.one/cases/luxury-furniture-kazakhstan?lang=ru"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://artx.one/cases/luxury-furniture-kazakhstan?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="kk" href="https://artx.one/cases/luxury-furniture-kazakhstan?lang=kz"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://artx.one/cases/luxury-furniture-kazakhstan"/>
+    <lastmod>2026-11-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://firm-production-93e2.up.railway.app/#audit</loc>
-    <xhtml:link rel="alternate" hreflang="ru" href="https://firm-production-93e2.up.railway.app/?lang=ru#audit"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://firm-production-93e2.up.railway.app/?lang=en#audit"/>
-    <xhtml:link rel="alternate" hreflang="kk" href="https://firm-production-93e2.up.railway.app/?lang=kz#audit"/>
-    <lastmod>2026-09-28</lastmod>
+    <loc>https://artx.one/cases/italian-eyewear-platform</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://artx.one/cases/italian-eyewear-platform?lang=ru"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://artx.one/cases/italian-eyewear-platform?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="kk" href="https://artx.one/cases/italian-eyewear-platform?lang=kz"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://artx.one/cases/italian-eyewear-platform"/>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://artx.one/cases/transport-hr-platform</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://artx.one/cases/transport-hr-platform?lang=ru"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://artx.one/cases/transport-hr-platform?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="kk" href="https://artx.one/cases/transport-hr-platform?lang=kz"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://artx.one/cases/transport-hr-platform"/>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://artx.one/cases/employee-learning-lms</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://artx.one/cases/employee-learning-lms?lang=ru"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://artx.one/cases/employee-learning-lms?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="kk" href="https://artx.one/cases/employee-learning-lms?lang=kz"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://artx.one/cases/employee-learning-lms"/>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://artx.one/cases/nail-cosmetics-brand</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://artx.one/cases/nail-cosmetics-brand?lang=ru"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://artx.one/cases/nail-cosmetics-brand?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="kk" href="https://artx.one/cases/nail-cosmetics-brand?lang=kz"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://artx.one/cases/nail-cosmetics-brand"/>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://artx.one/cases/automotive-market-launch</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://artx.one/cases/automotive-market-launch?lang=ru"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://artx.one/cases/automotive-market-launch?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="kk" href="https://artx.one/cases/automotive-market-launch?lang=kz"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://artx.one/cases/automotive-market-launch"/>
+    <lastmod>2026-11-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
