@@ -355,6 +355,7 @@ export default function App() {
         lang={lang}
         casesList={casesList}
         onUpdateCases={(newCases) => setCasesList(newCases)}
+        servicesList={servicesList}
         techStackList={techStackList}
         onUpdateTechStack={(newStack) => setTechStackList(newStack)}
         testimonialsList={testimonialsList}

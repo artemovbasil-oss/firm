@@ -14,6 +14,7 @@ export default function AdminPanel({
   lang = 'ru', 
   casesList = [], 
   onUpdateCases,
+  servicesList = [],
   techStackList = [],
   onUpdateTechStack,
   testimonialsList = [],
@@ -33,12 +34,14 @@ export default function AdminPanel({
 
   // Content state
   const [cases, setCases] = useState(() => (Array.isArray(casesList) && casesList.length > 0 ? casesList : []));
-  const [services, setServices] = useState([]);
+  const [services, setServices] = useState(() => (Array.isArray(servicesList) && servicesList.length > 0 ? servicesList : []));
   const [techStack, setTechStack] = useState(() => (Array.isArray(techStackList) && techStackList.length > 0 ? techStackList : []));
   const [testimonials, setTestimonials] = useState(() => (Array.isArray(testimonialsList) && testimonialsList.length > 0 ? testimonialsList : []));
   const [editingCase, setEditingCase] = useState(null);
   const [editingTestimonial, setEditingTestimonial] = useState(null);
   const [saveSuccess, setSaveSuccess] = useState(false);
+  const [saveError, setSaveError] = useState('');
+  const [contentLoaded, setContentLoaded] = useState(false);
 
   useEffect(() => {
     if (Array.isArray(casesList) && casesList.length > 0 && cases.length === 0) {
@@ -95,10 +98,25 @@ export default function AdminPanel({
     setPassword('');
   };
 
+  const authHeaders = () => ({
+    'Content-Type': 'application/json',
+    'X-Admin-Token': localStorage.getItem('artx_admin_token') || localStorage.getItem('firm_admin_token') || ''
+  });
+
+  const handleAuthFailure = () => {
+    localStorage.removeItem('artx_admin_token');
+    localStorage.removeItem('firm_admin_token');
+    setIsAuthenticated(false);
+  };
+
   const fetchData = async () => {
     try {
       // Fetch leads
-      const leadsRes = await fetch('/api/leads');
+      const leadsRes = await fetch('/api/leads', { headers: authHeaders() });
+      if (leadsRes.status === 401) {
+        handleAuthFailure();
+        return;
+      }
       if (leadsRes.ok) {
         const data = await leadsRes.json();
         setLeads(data.leads || []);
@@ -123,6 +141,7 @@ export default function AdminPanel({
           setTestimonials(content.testimonials);
           if (onUpdateTestimonials) onUpdateTestimonials(content.testimonials);
         }
+        setContentLoaded(true);
       }
     } catch (err) {
       console.error('Failed to load admin data:', err);
@@ -133,9 +152,13 @@ export default function AdminPanel({
     try {
       const res = await fetch(`/api/leads/${leadId}`, {
         method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
+        headers: authHeaders(),
         body: JSON.stringify({ status: newStatus })
       });
+      if (res.status === 401) {
+        handleAuthFailure();
+        return;
+      }
       if (res.ok) {
         setLeads(prev => prev.map(l => l.id === leadId ? { ...l, status: newStatus } : l));
         if (selectedLead && selectedLead.id === leadId) {
@@ -160,9 +183,13 @@ export default function AdminPanel({
     try {
       const res = await fetch(`/api/leads/${leadId}`, {
         method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
+        headers: authHeaders(),
         body: JSON.stringify({ notes: updatedNotes })
       });
+      if (res.status === 401) {
+        handleAuthFailure();
+        return;
+      }
       if (res.ok) {
         setLeads(prev => prev.map(l => l.id === leadId ? { ...l, notes: updatedNotes } : l));
         setSelectedLead(prev => ({ ...prev, notes: updatedNotes }));
@@ -176,7 +203,11 @@ export default function AdminPanel({
   const deleteLead = async (leadId) => {
     if (!confirm('Вы уверены, что хотите удалить эту заявку?')) return;
     try {
-      const res = await fetch(`/api/leads/${leadId}`, { method: 'DELETE' });
+      const res = await fetch(`/api/leads/${leadId}`, { method: 'DELETE', headers: authHeaders() });
+      if (res.status === 401) {
+        handleAuthFailure();
+        return;
+      }
       if (res.ok) {
         setLeads(prev => prev.filter(l => l.id !== leadId));
         if (selectedLead && selectedLead.id === leadId) {
@@ -189,21 +220,16 @@ export default function AdminPanel({
   };
 
   const saveAllContent = async (updatedCases, updatedServices, updatedTechStack, updatedTestimonials) => {
+    if (!contentLoaded) {
+      setSaveError('Данные ещё не загружены — подождите секунду и повторите.');
+      setTimeout(() => setSaveError(''), 4000);
+      return;
+    }
     try {
       const casesToSave = updatedCases || cases;
       const servicesToSave = updatedServices || services;
       const techStackToSave = updatedTechStack || techStack;
       const testimonialsToSave = updatedTestimonials || testimonials;
-
-      if (updatedCases && onUpdateCases) {
-        onUpdateCases(casesToSave);
-      }
-      if (updatedTechStack && onUpdateTechStack) {
-        onUpdateTechStack(techStackToSave);
-      }
-      if (updatedTestimonials && onUpdateTestimonials) {
-        onUpdateTestimonials(testimonialsToSave);
-      }
 
       const payload = {
         cases: casesToSave,
@@ -214,15 +240,27 @@ export default function AdminPanel({
       };
       const res = await fetch('/api/content', {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        headers: authHeaders(),
         body: JSON.stringify(payload)
       });
+      if (res.status === 401) {
+        handleAuthFailure();
+        return;
+      }
       if (res.ok) {
+        if (updatedCases && onUpdateCases) onUpdateCases(casesToSave);
+        if (updatedTechStack && onUpdateTechStack) onUpdateTechStack(techStackToSave);
+        if (updatedTestimonials && onUpdateTestimonials) onUpdateTestimonials(testimonialsToSave);
         setSaveSuccess(true);
         setTimeout(() => setSaveSuccess(false), 3000);
+      } else {
+        setSaveError('Не удалось сохранить изменения на сервере. Попробуйте ещё раз.');
+        setTimeout(() => setSaveError(''), 4000);
       }
     } catch (err) {
       console.error('Failed to save content:', err);
+      setSaveError('Ошибка сети при сохранении. Попробуйте ещё раз.');
+      setTimeout(() => setSaveError(''), 4000);
     }
   };
 
@@ -695,6 +733,12 @@ export default function AdminPanel({
                   <div className="p-3 rounded-xl bg-emerald-950/40 border border-emerald-800 text-emerald-300 text-xs flex items-center gap-2">
                     <CheckCircle2 className="w-4 h-4" />
                     <span>Изменения успешно сохранены на сервере!</span>
+                  </div>
+                )}
+
+                {saveError && (
+                  <div className="p-3 rounded-xl bg-rose-950/40 border border-rose-800 text-rose-300 text-xs flex items-center gap-2">
+                    <span>{saveError}</span>
                   </div>
                 )}
 

@@ -2,6 +2,7 @@ import http from 'http';
 import fs from 'fs';
 import path from 'path';
 import crypto from 'crypto';
+import zlib from 'zlib';
 import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -17,19 +18,28 @@ const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || '';
 const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN || '';
 const CHAT_ID = process.env.TELEGRAM_CHAT_ID || '';
 
+const SESSION_TTL_MS = 24 * 60 * 60 * 1000;
+const sessions = new Map();
+const rateLimits = new Map();
+
+const ALLOWED_ORIGINS = new Set([
+  'https://artx.one',
+  'https://www.artx.one',
+  'https://firm-production-93e2.up.railway.app',
+  'https://atrx-one-production.up.railway.app'
+]);
+
 // Ensure data folder exists
 try {
   fs.mkdirSync(DATA_DIR, { recursive: true });
   console.log(`📁 Using persistent DATA_DIR: ${DATA_DIR}`);
-  
-  // Seed initial content.json to persistent volume if missing
+
   const DEFAULT_CONTENT_FILE = path.join(__dirname, 'data', 'content.json');
   if (!fs.existsSync(CONTENT_FILE) && fs.existsSync(DEFAULT_CONTENT_FILE)) {
     fs.copyFileSync(DEFAULT_CONTENT_FILE, CONTENT_FILE);
     console.log(`✅ Seeded default content.json to ${CONTENT_FILE}`);
   }
 
-  // Ensure leads.json exists
   if (!fs.existsSync(LEADS_FILE)) {
     fs.writeFileSync(LEADS_FILE, JSON.stringify([], null, 2), 'utf8');
     console.log(`✅ Initialized empty leads.json at ${LEADS_FILE}`);
@@ -44,6 +54,7 @@ const MIME_TYPES = {
   '.mjs': 'application/javascript; charset=utf-8',
   '.css': 'text/css; charset=utf-8',
   '.json': 'application/json; charset=utf-8',
+  '.webmanifest': 'application/manifest+json; charset=utf-8',
   '.png': 'image/png',
   '.jpg': 'image/jpeg',
   '.jpeg': 'image/jpeg',
@@ -59,6 +70,127 @@ const MIME_TYPES = {
   '.webm': 'video/webm'
 };
 
+const COMPRESSIBLE_EXTS = new Set(['.html', '.js', '.mjs', '.css', '.json', '.webmanifest', '.svg', '.xml', '.txt']);
+
+function buildCsp() {
+  let scriptSrc = "'self'";
+  try {
+    const html = fs.readFileSync(path.join(DIST_DIR, 'index.html'), 'utf8');
+    const m = html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/);
+    if (m) {
+      const hash = crypto.createHash('sha256').update(m[1]).digest('base64');
+      scriptSrc += ` 'sha256-${hash}'`;
+    }
+  } catch {
+    // dist not built yet (local dev) — JSON-LD data blocks are not CSP-executable anyway
+  }
+  return [
+    "default-src 'self'",
+    `script-src ${scriptSrc}`,
+    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+    "font-src 'self' https://fonts.gstatic.com",
+    "img-src 'self' data: https:",
+    "media-src 'self'",
+    "connect-src 'self'",
+    "frame-ancestors 'self'",
+    "base-uri 'self'",
+    "form-action 'self'",
+    "object-src 'none'"
+  ].join('; ');
+}
+
+const CSP = buildCsp();
+
+function isPrivateIp(ip) {
+  const v = ip.replace(/^::ffff:/i, '');
+  return (
+    /^(10\.|127\.|0\.|169\.254\.|192\.168\.)/.test(v) ||
+    /^172\.(1[6-9]|2\d|3[01])\./.test(v) ||
+    /^100\.(6[4-9]|[7-9]\d|1[01]\d|12[0-7])\./.test(v) ||
+    v === '::1' ||
+    /^f[cd]/i.test(v) ||
+    /^fe80:/i.test(v)
+  );
+}
+
+// Rightmost public IP in X-Forwarded-For: trusted proxies (Railway edge,
+// atrx-one reverse proxy) append the real socket IP, so spoofed entries
+// injected by the client end up on the left and are ignored.
+function getClientIp(req) {
+  const xff = req.headers['x-forwarded-for'];
+  if (typeof xff === 'string' && xff) {
+    const parts = xff.split(',').map(s => s.trim()).filter(Boolean);
+    for (let i = parts.length - 1; i >= 0; i--) {
+      if (!isPrivateIp(parts[i])) return parts[i];
+    }
+  }
+  return req.socket.remoteAddress || 'unknown';
+}
+
+function checkRate(bucket, ip, limit, windowMs) {
+  const key = `${bucket}:${ip}`;
+  const now = Date.now();
+  const entry = rateLimits.get(key);
+  if (!entry || now > entry.resetAt) {
+    rateLimits.set(key, { count: 1, resetAt: now + windowMs });
+    return true;
+  }
+  entry.count += 1;
+  return entry.count <= limit;
+}
+
+setInterval(() => {
+  const now = Date.now();
+  for (const [key, entry] of rateLimits) {
+    if (now > entry.resetAt) rateLimits.delete(key);
+  }
+  for (const [token, expires] of sessions) {
+    if (now > expires) sessions.delete(token);
+  }
+}, 10 * 60 * 1000).unref();
+
+function timingSafeEqualStr(a, b) {
+  const ha = crypto.createHash('sha256').update(String(a)).digest();
+  const hb = crypto.createHash('sha256').update(String(b)).digest();
+  return crypto.timingSafeEqual(ha, hb);
+}
+
+function isAdmin(req) {
+  const header = req.headers['x-admin-token'];
+  const bearer = (req.headers.authorization || '').replace(/^Bearer\s+/i, '');
+  const token = (typeof header === 'string' && header) || bearer;
+  if (!token) return false;
+  const expires = sessions.get(token);
+  if (!expires) return false;
+  if (Date.now() > expires) {
+    sessions.delete(token);
+    return false;
+  }
+  return true;
+}
+
+function acceptsGzip(req) {
+  return /\bgzip\b/.test(req.headers['accept-encoding'] || '');
+}
+
+function sendJson(req, res, status, obj) {
+  const body = JSON.stringify(obj);
+  const headers = {
+    'Content-Type': 'application/json; charset=utf-8',
+    'Cache-Control': 'no-store'
+  };
+  if (body.length > 1024 && acceptsGzip(req)) {
+    const gz = zlib.gzipSync(body);
+    headers['Content-Encoding'] = 'gzip';
+    headers['Content-Length'] = gz.length;
+    res.writeHead(status, headers);
+    return res.end(gz);
+  }
+  headers['Content-Length'] = Buffer.byteLength(body);
+  res.writeHead(status, headers);
+  res.end(body);
+}
+
 function readLeads() {
   try {
     if (!fs.existsSync(LEADS_FILE)) return [];
@@ -66,14 +198,6 @@ function readLeads() {
   } catch (err) {
     console.error('Error reading leads:', err);
     return [];
-  }
-}
-
-function saveLeads(leads) {
-  try {
-    fs.writeFileSync(LEADS_FILE, JSON.stringify(leads, null, 2), 'utf8');
-  } catch (err) {
-    console.error('Error saving leads:', err);
   }
 }
 
@@ -88,14 +212,82 @@ function readContent() {
   return null;
 }
 
-function saveContent(content) {
+function atomicWriteJson(file, data) {
+  const tmp = `${file}.tmp`;
+  fs.writeFileSync(tmp, JSON.stringify(data, null, 2), 'utf8');
   try {
-    fs.writeFileSync(CONTENT_FILE, JSON.stringify(content, null, 2), 'utf8');
-    return true;
+    if (fs.existsSync(file)) {
+      fs.copyFileSync(file, file.replace(/\.json$/, '.prev.json'));
+    }
   } catch (err) {
-    console.error('Error saving dynamic content:', err);
-    return false;
+    console.error('Backup copy failed:', err);
   }
+  fs.renameSync(tmp, file);
+}
+
+// Serialize all lead mutations: read-modify-write happens inside one chain,
+// so concurrent requests cannot overwrite each other's leads.
+let leadWriteChain = Promise.resolve();
+function mutateLeads(mutator) {
+  const task = leadWriteChain.then(() => {
+    const leads = readLeads();
+    const result = mutator(leads);
+    if (result !== false) atomicWriteJson(LEADS_FILE, leads);
+    return result;
+  });
+  leadWriteChain = task.catch(() => {});
+  return task;
+}
+
+const LEAD_STRING_FIELDS = [
+  'type', 'name', 'contact', 'service', 'budget', 'message', 'comment', 'issue',
+  'currency', 'urgency', 'estimatedPrice', 'estimatedDays', 'discount',
+  'targetUrl', 'timestamp', 'lang'
+];
+const LEAD_STATUSES = new Set(['new', 'in_progress', 'proposal_sent', 'deal', 'archived']);
+
+function truncate(value, max) {
+  return String(value).slice(0, max);
+}
+
+function sanitizeLeadPayload(data) {
+  const lead = {};
+  for (const field of LEAD_STRING_FIELDS) {
+    if (typeof data[field] === 'string' && data[field]) {
+      lead[field] = truncate(data[field], field === 'message' || field === 'comment' || field === 'issue' ? 5000 : 2000);
+    }
+  }
+  if (Array.isArray(data.selectedServices)) {
+    lead.selectedServices = data.selectedServices
+      .filter(s => typeof s === 'string')
+      .slice(0, 30)
+      .map(s => truncate(s, 200));
+  }
+  return lead;
+}
+
+function sanitizeLeadUpdates(data) {
+  const updates = {};
+  if (typeof data.status === 'string' && LEAD_STATUSES.has(data.status)) {
+    updates.status = data.status;
+  }
+  if (Array.isArray(data.notes)) {
+    updates.notes = data.notes
+      .filter(n => n && typeof n === 'object' && typeof n.text === 'string')
+      .slice(0, 200)
+      .map(n => ({
+        text: truncate(n.text, 2000),
+        createdAt: typeof n.createdAt === 'string' ? truncate(n.createdAt, 64) : new Date().toISOString()
+      }));
+  }
+  return updates;
+}
+
+function escapeHtml(value) {
+  return String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
 }
 
 async function notifyTelegram(lead) {
@@ -103,33 +295,37 @@ async function notifyTelegram(lead) {
 
   try {
     let msg = `🔥 <b>НОВАЯ ЗАЯВКА ARTX AGENCY</b>\n\n`;
-    msg += `<b>Тип:</b> ${lead.type || 'Контакт'}\n`;
-    if (lead.name) msg += `<b>Имя:</b> ${lead.name}\n`;
-    if (lead.contact) msg += `<b>Контакт:</b> ${lead.contact}\n`;
-    if (lead.service) msg += `<b>Услуга:</b> ${lead.service}\n`;
-    if (lead.budget) msg += `<b>Бюджет:</b> ${lead.budget}\n`;
-    if (lead.estimatedPrice) msg += `<b>Смета:</b> ${lead.estimatedPrice}\n`;
-    if (lead.estimatedDays) msg += `<b>Срок:</b> ${lead.estimatedDays}\n`;
-    if (lead.targetUrl) msg += `<b>Сайт/профиль для аудита:</b> ${lead.targetUrl}\n`;
-    if (lead.issue) msg += `<b>Проблема:</b> ${lead.issue}\n`;
+    msg += `<b>Тип:</b> ${escapeHtml(lead.type || 'Контакт')}\n`;
+    if (lead.name) msg += `<b>Имя:</b> ${escapeHtml(lead.name)}\n`;
+    if (lead.contact) msg += `<b>Контакт:</b> ${escapeHtml(lead.contact)}\n`;
+    if (lead.service) msg += `<b>Услуга:</b> ${escapeHtml(lead.service)}\n`;
+    if (lead.budget) msg += `<b>Бюджет:</b> ${escapeHtml(lead.budget)}\n`;
+    if (lead.estimatedPrice) msg += `<b>Смета:</b> ${escapeHtml(lead.estimatedPrice)}\n`;
+    if (lead.estimatedDays) msg += `<b>Срок:</b> ${escapeHtml(lead.estimatedDays)}\n`;
+    if (lead.targetUrl) msg += `<b>Сайт/профиль для аудита:</b> ${escapeHtml(lead.targetUrl)}\n`;
+    if (lead.issue) msg += `<b>Проблема:</b> ${escapeHtml(lead.issue)}\n`;
     if (lead.selectedServices && lead.selectedServices.length > 0) {
-      msg += `<b>Выбранные услуги:</b>\n• ${lead.selectedServices.join('\n• ')}\n`;
+      msg += `<b>Выбранные услуги:</b>\n• ${lead.selectedServices.map(escapeHtml).join('\n• ')}\n`;
     }
     if (lead.comment || lead.message) {
-      msg += `\n<b>Комментарий:</b>\n${lead.comment || lead.message}\n`;
+      msg += `\n<b>Комментарий:</b>\n${escapeHtml(lead.comment || lead.message)}\n`;
     }
-    msg += `\n<i>Дата: ${new Date().toLocaleString('ru-RU')}</i>`;
+    msg += `\n<i>Дата: ${escapeHtml(new Date().toLocaleString('ru-RU'))}</i>`;
+    msg = msg.slice(0, 4000);
 
     const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
-    await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        chat_id: CHAT_ID,
-        text: msg,
-        parse_mode: 'HTML'
-      })
-    });
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 10000);
+    try {
+      await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ chat_id: CHAT_ID, text: msg, parse_mode: 'HTML' }),
+        signal: controller.signal
+      });
+    } finally {
+      clearTimeout(timer);
+    }
   } catch (err) {
     console.error('Telegram send error:', err);
   }
@@ -157,12 +353,20 @@ function parseJsonBody(req) {
 }
 
 const server = http.createServer(async (req, res) => {
-  // CORS & Security Headers
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, PUT, DELETE, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Admin-Token');
   res.setHeader('X-Content-Type-Options', 'nosniff');
   res.setHeader('X-Frame-Options', 'SAMEORIGIN');
+  res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+  res.setHeader('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
+  res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
+  res.setHeader('Content-Security-Policy', CSP);
+  res.setHeader('Vary', 'Accept-Encoding, Origin');
+
+  const origin = req.headers.origin;
+  if (origin && ALLOWED_ORIGINS.has(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, PUT, DELETE, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Admin-Token');
+  }
 
   if (req.method === 'OPTIONS') {
     res.writeHead(204);
@@ -172,140 +376,132 @@ const server = http.createServer(async (req, res) => {
   const parsedUrl = new URL(req.url, `http://${req.headers.host || 'localhost'}`);
   const pathname = parsedUrl.pathname;
 
-  // Healthcheck endpoint
   if (pathname === '/health' || pathname === '/api/health') {
-    res.writeHead(200, { 'Content-Type': 'application/json' });
-    return res.end(JSON.stringify({
+    return sendJson(req, res, 200, {
       status: 'ok',
       service: 'artx-agency',
       uptime: process.uptime(),
       time: new Date().toISOString()
-    }));
+    });
   }
 
   // Admin Auth endpoint
   if (req.method === 'POST' && pathname === '/api/admin/login') {
     if (!ADMIN_PASSWORD) {
-      res.writeHead(503, { 'Content-Type': 'application/json' });
-      return res.end(JSON.stringify({ success: false, error: 'Admin access is not configured' }));
+      return sendJson(req, res, 503, { success: false, error: 'Admin access is not configured' });
+    }
+    const ip = getClientIp(req);
+    if (!checkRate('login', ip, 10, 15 * 60 * 1000)) {
+      res.setHeader('Retry-After', '900');
+      return sendJson(req, res, 429, { success: false, error: 'Слишком много попыток. Попробуйте через 15 минут.' });
     }
     try {
       const { password } = await parseJsonBody(req);
-      if (password === ADMIN_PASSWORD) {
-        const token = crypto.createHmac('sha256', ADMIN_PASSWORD).update('artx-admin-session').digest('hex');
-        res.writeHead(200, { 'Content-Type': 'application/json' });
-        return res.end(JSON.stringify({ success: true, token }));
-      } else {
-        res.writeHead(401, { 'Content-Type': 'application/json' });
-        return res.end(JSON.stringify({ success: false, error: 'Неверный пароль' }));
+      if (typeof password === 'string' && timingSafeEqualStr(password, ADMIN_PASSWORD)) {
+        const token = crypto.randomBytes(32).toString('hex');
+        sessions.set(token, Date.now() + SESSION_TTL_MS);
+        return sendJson(req, res, 200, { success: true, token });
       }
+      return sendJson(req, res, 401, { success: false, error: 'Неверный пароль' });
     } catch {
-      res.writeHead(400, { 'Content-Type': 'application/json' });
-      return res.end(JSON.stringify({ error: 'Invalid request' }));
+      return sendJson(req, res, 400, { error: 'Invalid request' });
     }
   }
 
-  // API: Leads submission (Public)
+  // API: Leads submission (Public — the only write endpoint open to visitors)
   if (req.method === 'POST' && pathname === '/api/leads') {
+    const ip = getClientIp(req);
+    if (!checkRate('lead', ip, 10, 60 * 60 * 1000)) {
+      res.setHeader('Retry-After', '3600');
+      return sendJson(req, res, 429, { error: 'Слишком много заявок. Попробуйте позже.' });
+    }
     try {
       const data = await parseJsonBody(req);
-      const leadId = crypto.randomUUID();
+      if (!data || typeof data !== 'object' || typeof data.contact !== 'string' || !data.contact.trim()) {
+        return sendJson(req, res, 400, { error: 'Contact is required' });
+      }
       const lead = {
-        id: leadId,
-        status: 'new', // new | in_progress | proposal_sent | deal | archived
+        ...sanitizeLeadPayload(data),
+        id: crypto.randomUUID(),
+        status: 'new',
         notes: [],
-        ip: req.headers['x-forwarded-for'] || req.socket.remoteAddress,
-        userAgent: req.headers['user-agent'] || '',
-        createdAt: new Date().toISOString(),
-        ...data
+        ip,
+        userAgent: truncate(req.headers['user-agent'] || '', 512),
+        createdAt: new Date().toISOString()
       };
 
-      const leads = readLeads();
-      leads.unshift(lead);
-      saveLeads(leads);
+      await mutateLeads(leads => {
+        leads.unshift(lead);
+      });
 
-      // Async telegram notify
       notifyTelegram(lead).catch(console.error);
-
-      res.writeHead(200, { 'Content-Type': 'application/json' });
-      return res.end(JSON.stringify({ success: true, id: leadId }));
+      return sendJson(req, res, 200, { success: true, id: lead.id });
     } catch (err) {
       console.error('Error processing lead:', err);
-      res.writeHead(400, { 'Content-Type': 'application/json' });
-      return res.end(JSON.stringify({ error: 'Invalid lead payload' }));
+      return sendJson(req, res, 400, { error: 'Invalid lead payload' });
     }
   }
 
   // API: Get leads (Admin / CRM)
   if (req.method === 'GET' && pathname === '/api/leads') {
+    if (!isAdmin(req)) return sendJson(req, res, 401, { error: 'Требуется авторизация' });
     const leads = readLeads();
-    res.writeHead(200, { 'Content-Type': 'application/json' });
-    return res.end(JSON.stringify({ count: leads.length, leads }));
+    return sendJson(req, res, 200, { count: leads.length, leads });
   }
 
-  // API: Update lead (PATCH /api/leads/:id)
+  // API: Update lead (PATCH /api/leads/:id, Admin)
   if (req.method === 'PATCH' && pathname.startsWith('/api/leads/')) {
+    if (!isAdmin(req)) return sendJson(req, res, 401, { error: 'Требуется авторизация' });
     const leadId = pathname.replace('/api/leads/', '');
     try {
-      const updates = await parseJsonBody(req);
-      const leads = readLeads();
-      const index = leads.findIndex(l => l.id === leadId);
-
-      if (index === -1) {
-        res.writeHead(404, { 'Content-Type': 'application/json' });
-        return res.end(JSON.stringify({ error: 'Lead not found' }));
-      }
-
-      leads[index] = {
-        ...leads[index],
-        ...updates,
-        updatedAt: new Date().toISOString()
-      };
-
-      saveLeads(leads);
-
-      res.writeHead(200, { 'Content-Type': 'application/json' });
-      return res.end(JSON.stringify({ success: true, lead: leads[index] }));
-    } catch (err) {
-      res.writeHead(400, { 'Content-Type': 'application/json' });
-      return res.end(JSON.stringify({ error: 'Update failed' }));
+      const updates = sanitizeLeadUpdates(await parseJsonBody(req));
+      const result = await mutateLeads(leads => {
+        const index = leads.findIndex(l => l.id === leadId);
+        if (index === -1) return false;
+        leads[index] = { ...leads[index], ...updates, updatedAt: new Date().toISOString() };
+        return leads[index];
+      });
+      if (result === false) return sendJson(req, res, 404, { error: 'Lead not found' });
+      return sendJson(req, res, 200, { success: true, lead: result });
+    } catch {
+      return sendJson(req, res, 400, { error: 'Update failed' });
     }
   }
 
-  // API: Delete lead (DELETE /api/leads/:id)
+  // API: Delete lead (DELETE /api/leads/:id, Admin)
   if (req.method === 'DELETE' && pathname.startsWith('/api/leads/')) {
+    if (!isAdmin(req)) return sendJson(req, res, 401, { error: 'Требуется авторизация' });
     const leadId = pathname.replace('/api/leads/', '');
-    let leads = readLeads();
-    const prevLen = leads.length;
-    leads = leads.filter(l => l.id !== leadId);
-
-    if (leads.length === prevLen) {
-      res.writeHead(404, { 'Content-Type': 'application/json' });
-      return res.end(JSON.stringify({ error: 'Lead not found' }));
-    }
-
-    saveLeads(leads);
-    res.writeHead(200, { 'Content-Type': 'application/json' });
-    return res.end(JSON.stringify({ success: true }));
+    const result = await mutateLeads(leads => {
+      const index = leads.findIndex(l => l.id === leadId);
+      if (index === -1) return false;
+      leads.splice(index, 1);
+      return true;
+    });
+    if (result === false) return sendJson(req, res, 404, { error: 'Lead not found' });
+    return sendJson(req, res, 200, { success: true });
   }
 
-  // API: Get dynamic content (cases, services, settings)
+  // API: Get dynamic content (public — the site renders from it)
   if (req.method === 'GET' && pathname === '/api/content') {
     const content = readContent();
-    res.writeHead(200, { 'Content-Type': 'application/json' });
-    return res.end(JSON.stringify(content || {}));
+    return sendJson(req, res, 200, content || {});
   }
 
-  // API: Save dynamic content (cases, services, settings)
+  // API: Save dynamic content (Admin). Merges into existing content so keys
+  // the admin UI does not manage (e.g. settings) are never dropped.
   if (req.method === 'PUT' && pathname === '/api/content') {
+    if (!isAdmin(req)) return sendJson(req, res, 401, { error: 'Требуется авторизация' });
     try {
       const data = await parseJsonBody(req);
-      saveContent(data);
-      res.writeHead(200, { 'Content-Type': 'application/json' });
-      return res.end(JSON.stringify({ success: true }));
-    } catch (err) {
-      res.writeHead(400, { 'Content-Type': 'application/json' });
-      return res.end(JSON.stringify({ error: 'Failed to save content' }));
+      if (!data || typeof data !== 'object' || Array.isArray(data)) {
+        return sendJson(req, res, 400, { error: 'Invalid content payload' });
+      }
+      const merged = { ...(readContent() || {}), ...data };
+      atomicWriteJson(CONTENT_FILE, merged);
+      return sendJson(req, res, 200, { success: true });
+    } catch {
+      return sendJson(req, res, 400, { error: 'Failed to save content' });
     }
   }
 
@@ -315,69 +511,85 @@ const server = http.createServer(async (req, res) => {
     if (safePath === '/' || safePath === '') safePath = '/index.html';
 
     let filePath = path.join(DIST_DIR, safePath);
+    let spaFallback = false;
+    let spaStatus = 200;
 
-    // If file doesn't exist, fallback to index.html (SPA routing)
     if (!fs.existsSync(filePath) || fs.statSync(filePath).isDirectory()) {
+      const ext = path.extname(safePath).toLowerCase();
+      if (ext && ext !== '.html') {
+        res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' });
+        return res.end('Not Found');
+      }
       filePath = path.join(DIST_DIR, 'index.html');
+      spaFallback = true;
+      spaStatus = pathname === '/' || pathname.startsWith('/cases/') ? 200 : 404;
     }
 
     if (fs.existsSync(filePath) && fs.statSync(filePath).isFile()) {
       const ext = path.extname(filePath).toLowerCase();
       const contentType = MIME_TYPES[ext] || 'application/octet-stream';
 
-      // Cache headers
-      if (ext === '.html' || ext === '.xml' || ext === '.txt') {
-        res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+      let cacheControl;
+      if (spaFallback || ext === '.html' || ext === '.xml' || ext === '.txt') {
+        cacheControl = 'no-cache, no-store, must-revalidate';
       } else if (ext === '.mp4' || ext === '.webm') {
-        res.setHeader('Cache-Control', 'public, max-age=3600');
+        cacheControl = 'public, max-age=3600';
       } else {
-        res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+        cacheControl = 'public, max-age=31536000, immutable';
       }
 
       const stat = fs.statSync(filePath);
       const fileSize = stat.size;
 
-      // Handle HTTP Range Requests (Crucial for Safari, iOS, Chrome HTML5 video streaming)
+      // Range requests for video (Safari/iOS/Chrome HTML5 streaming)
       const range = req.headers.range;
       if (range && (ext === '.mp4' || ext === '.webm')) {
         const parts = range.replace(/bytes=/, '').split('-');
         const start = parseInt(parts[0], 10);
         const end = parts[1] ? parseInt(parts[1], 10) : fileSize - 1;
 
-        if (start >= fileSize || end >= fileSize) {
-          res.writeHead(416, {
-            'Content-Range': `bytes */${fileSize}`,
-            'Access-Control-Allow-Origin': '*'
-          });
+        if (start >= fileSize || end >= fileSize || Number.isNaN(start) || Number.isNaN(end)) {
+          res.writeHead(416, { 'Content-Range': `bytes */${fileSize}` });
           return res.end();
         }
 
         const chunksize = (end - start) + 1;
-        const fileStream = fs.createReadStream(filePath, { start, end });
-
         res.writeHead(206, {
           'Content-Range': `bytes ${start}-${end}/${fileSize}`,
           'Accept-Ranges': 'bytes',
           'Content-Length': chunksize,
           'Content-Type': contentType,
-          'Cache-Control': 'public, max-age=3600',
-          'Access-Control-Allow-Origin': '*'
+          'Cache-Control': cacheControl
         });
 
         if (req.method === 'HEAD') return res.end();
+        const fileStream = fs.createReadStream(filePath, { start, end });
+        fileStream.on('error', () => res.destroy());
         return fileStream.pipe(res);
       }
 
       res.setHeader('Accept-Ranges', 'bytes');
-      res.writeHead(200, { 'Content-Type': contentType, 'Content-Length': fileSize });
+      res.setHeader('Cache-Control', cacheControl);
+
+      if (COMPRESSIBLE_EXTS.has(ext) && acceptsGzip(req)) {
+        res.writeHead(spaStatus, { 'Content-Type': contentType, 'Content-Encoding': 'gzip' });
+        if (req.method === 'HEAD') return res.end();
+        const gz = zlib.createGzip();
+        const fileStream = fs.createReadStream(filePath);
+        fileStream.on('error', () => res.destroy());
+        gz.on('error', () => res.destroy());
+        return fileStream.pipe(gz).pipe(res);
+      }
+
+      res.writeHead(spaStatus, { 'Content-Type': contentType, 'Content-Length': fileSize });
       if (req.method === 'HEAD') return res.end();
 
       const stream = fs.createReadStream(filePath);
+      stream.on('error', () => res.destroy());
       return stream.pipe(res);
     }
   }
 
-  // Fallback 404
   res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' });
   res.end('Not Found');
 });
