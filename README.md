@@ -23,7 +23,7 @@
 
 - **Frontend**: React 19, Tailwind CSS, Lucide Icons, Vite
 - **Backend & API**: Node.js HTTP/Express API, REST, Telegram Bot notifications
-- **DevOps & Cloud**: Docker (multi-stage alpine), Railway Cloud Platform, GitHub CI/CD
+- **DevOps & Cloud**: Docker (multi-stage alpine), Railway Cloud Platform (деплой: `railway up`; artx.one проксирует на этот сервис)
 
 ---
 
