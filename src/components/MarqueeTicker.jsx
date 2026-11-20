@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 export default function MarqueeTicker({ lang = 'ru', isSticky = false }) {
   const [isHovered, setIsHovered] = useState(false);
   const trackRef = useRef(null);
+  const rootRef = useRef(null);
   const xPos = useRef(0);
   const currentSpeed = useRef(1);
   const targetSpeed = useRef(1);
@@ -79,20 +80,43 @@ export default function MarqueeTicker({ lang = 'ru', isSticky = false }) {
         trackRef.current.style.transform = `translate3d(${xPos.current}px, 0, 0)`;
       }
 
-      animationFrameId = requestAnimationFrame(animate);
+      if (running) animationFrameId = requestAnimationFrame(animate);
     };
+
+    let running = true;
+    let inView = true;
+    const setActive = (active) => {
+      if (active === running) return;
+      running = active;
+      if (active) {
+        lastTime = performance.now();
+        animationFrameId = requestAnimationFrame(animate);
+      } else {
+        cancelAnimationFrame(animationFrameId);
+      }
+    };
+    const io = new IntersectionObserver(([entry]) => {
+      inView = entry.isIntersecting;
+      setActive(inView && !document.hidden);
+    }, { threshold: 0 });
+    if (rootRef.current) io.observe(rootRef.current);
+    const onVisibility = () => setActive(inView && !document.hidden);
+    document.addEventListener('visibilitychange', onVisibility);
 
     animationFrameId = requestAnimationFrame(animate);
 
     return () => {
       clearTimeout(timer);
       cancelAnimationFrame(animationFrameId);
+      io.disconnect();
+      document.removeEventListener('visibilitychange', onVisibility);
       window.removeEventListener('resize', updateWidth);
     };
   }, []);
 
   return (
     <div
+      ref={rootRef}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       className={`w-full overflow-hidden select-none ${
@@ -114,7 +138,7 @@ export default function MarqueeTicker({ lang = 'ru', isSticky = false }) {
         >
           {/* Render 3 identical sets for seamless continuous offset wrapping */}
           {[0, 1, 2].map((setIndex) => (
-            <div key={setIndex} className="flex items-center gap-6 sm:gap-8 pr-6 sm:pr-8">
+            <div key={setIndex} aria-hidden={setIndex > 0} className="flex items-center gap-6 sm:gap-8 pr-6 sm:pr-8">
               {marqueeItems.map((item, itemIdx) => (
                 <div key={itemIdx} className="flex items-center gap-6 sm:gap-8 group/item">
                   <span className="hover:text-amber-500 dark:hover:text-amber-400 transition-colors cursor-default">

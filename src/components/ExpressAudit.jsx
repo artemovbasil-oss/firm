@@ -16,14 +16,15 @@ export default function ExpressAudit({ lang, onSuccessLead }) {
 
   useEffect(() => {
     const video = videoRef.current;
-    if (video) {
-      video.defaultMuted = true;
-      video.muted = true;
-      const playPromise = video.play();
-      if (playPromise !== undefined) {
-        playPromise.catch(() => {});
-      }
-    }
+    if (!video) return;
+    video.defaultMuted = true;
+    video.muted = true;
+    const io = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) video.play().catch(() => {});
+      else video.pause();
+    }, { threshold: 0.15 });
+    io.observe(video);
+    return () => io.disconnect();
   }, []);
 
   const handleSubmit = async (e) => {
@@ -79,11 +80,10 @@ export default function ExpressAudit({ lang, onSuccessLead }) {
           <div className="absolute inset-0 overflow-hidden pointer-events-none select-none z-0 rounded-[24px]">
             <video
               ref={videoRef}
-              autoPlay
               loop
               muted
               playsInline
-              preload="auto"
+              preload="none"
               poster="/videos/audit-poster.jpg"
               className="w-full h-full object-cover scale-105 opacity-40 dark:opacity-45 [mask-image:radial-gradient(ellipse_95%_90%_at_50%_50%,black_65%,transparent_100%)] [-webkit-mask-image:radial-gradient(ellipse_95%_90%_at_50%_50%,black_65%,transparent_100%)]"
             >

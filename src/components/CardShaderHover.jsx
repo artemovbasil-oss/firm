@@ -142,8 +142,8 @@ export default function CardShaderHover({
   // Handle external hover change
   useEffect(() => {
     stateRef.current.isTouch = isTouchDevice;
-    stateRef.current.targetHover = isHovered ? 1.0 : (isTouchDevice ? 0.68 : 0.0);
-    if ((isHovered || isTouchDevice) && !stateRef.current.isRunning && stateRef.current.isVisible) {
+    stateRef.current.targetHover = isHovered ? 1.0 : 0.0;
+    if (isHovered && !stateRef.current.isRunning && stateRef.current.isVisible) {
       stateRef.current.isRunning = true;
       if (startLoopRef.current) startLoopRef.current();
     }
@@ -507,7 +507,7 @@ export default function CardShaderHover({
     };
     startLoopRef.current = startLoop;
 
-    if (isHovered || isTouchDevice) {
+    if (isHovered) {
       stateRef.current.isRunning = true;
       startLoop();
     }

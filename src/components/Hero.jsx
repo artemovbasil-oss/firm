@@ -29,19 +29,19 @@ export default function Hero({ lang, theme = 'dark', onOpenContact }) {
   // badgeSvgY converts screen pixel upward offset into exact SVG viewBox units
   const badgeSvgY = useTransform(badgeY, (px) => (px * 1000) / (vmax || 1000));
 
-  // Autoplay video
+  // Autoplay video; pause while offscreen to save CPU/battery
   useEffect(() => {
     const video = videoRef.current;
-    if (video) {
-      video.defaultMuted = true;
-      video.muted = true;
-      const playPromise = video.play();
-      if (playPromise !== undefined) {
-        playPromise.catch(() => {
-          // Autoplay fallback if browser requires user gesture
-        });
-      }
-    }
+    if (!video) return;
+    video.defaultMuted = true;
+    video.muted = true;
+    video.play().catch(() => {});
+    const io = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) video.play().catch(() => {});
+      else video.pause();
+    }, { threshold: 0.05 });
+    io.observe(video);
+    return () => io.disconnect();
   }, []);
 
   // Intro reveal on page load + scroll collapse & upward drift synchronization

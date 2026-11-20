@@ -548,7 +548,7 @@ const server = http.createServer(async (req, res) => {
       if (spaFallback || ext === '.html' || ext === '.xml' || ext === '.txt') {
         cacheControl = 'no-cache, no-store, must-revalidate';
       } else if (ext === '.mp4' || ext === '.webm') {
-        cacheControl = 'public, max-age=3600';
+        cacheControl = 'public, max-age=604800';
       } else {
         cacheControl = 'public, max-age=31536000, immutable';
       }

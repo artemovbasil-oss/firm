@@ -12,8 +12,24 @@ import Testimonials from './components/Testimonials';
 import Faq from './components/Faq';
 import Footer from './components/Footer';
 import ContactModal from './components/ContactModal';
-import AdminPanel from './components/AdminPanel';
-import CaseStudyDetail from './components/CaseStudyDetail';
+const AdminPanel = React.lazy(() => import('./components/AdminPanel'));
+const CaseStudyDetail = React.lazy(() => import('./components/CaseStudyDetail'));
+
+function AdminPanelSuspense(props) {
+  return (
+    <React.Suspense fallback={null}>
+      <AdminPanel {...props} />
+    </React.Suspense>
+  );
+}
+
+function CaseStudySuspense(props) {
+  return (
+    <React.Suspense fallback={null}>
+      <CaseStudyDetail {...props} />
+    </React.Suspense>
+  );
+}
 import { INITIAL_SERVICES, INITIAL_CASES, TECH_STACK, TESTIMONIALS } from './data/agencyData';
 import { TRANSLATIONS } from './data/translations';
 import { CheckCircle2 } from 'lucide-react';
@@ -261,7 +277,7 @@ export default function App() {
 
       {/* Main Content */}
       {activeCaseItem ? (
-        <CaseStudyDetail 
+        <CaseStudySuspense 
           caseItem={activeCaseItem}
           allCases={casesList}
           lang={lang}
@@ -358,7 +374,7 @@ export default function App() {
       />
 
       {/* Admin Panel & CRM */}
-      <AdminPanel
+      <AdminPanelSuspense
         isOpen={isAdminOpen}
         onClose={() => setIsAdminOpen(false)}
         lang={lang}
