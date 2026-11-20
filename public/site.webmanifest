@@ -1,6 +1,11 @@
 {
+  "id": "/",
   "name": "ARTX — Digital Agency",
   "short_name": "ARTX",
+  "description": "Агентство цифровых решений: сайты, брендинг, ПО, SEO и упаковка бизнеса.",
+  "lang": "ru",
+  "start_url": "/",
+  "scope": "/",
   "icons": [
     {
       "src": "/android-chrome-192x192.png",
@@ -14,6 +19,6 @@
     }
   ],
   "theme_color": "#07080c",
-  "background_color": "#000000",
+  "background_color": "#07080c",
   "display": "standalone"
 }

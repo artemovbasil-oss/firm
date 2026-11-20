@@ -84,7 +84,9 @@ export default function Services({
                 <button
                   type="button"
                   onClick={() => setActiveService(isSelected ? null : service.id)}
-                  className="w-full py-5 sm:py-7 lg:py-8 text-left flex flex-col md:flex-row md:items-center justify-between gap-3 sm:gap-6 focus:outline-none group px-1 sm:px-4"
+                  aria-expanded={isSelected}
+                  aria-controls={`service-panel-${service.id}`}
+                  className="w-full py-5 sm:py-7 lg:py-8 text-left flex flex-col md:flex-row md:items-center justify-between gap-3 sm:gap-6 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400/50 rounded-xl group px-1 sm:px-4"
                 >
                   <div className="flex items-center gap-4 sm:gap-8 min-w-0 flex-1">
                     <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-heading font-extrabold tracking-tight text-neutral-950 dark:text-white group-hover:translate-x-2 transition-transform duration-200 truncate sm:whitespace-normal">
@@ -120,6 +122,7 @@ export default function Services({
                   {isSelected && (
                     <motion.div
                       key="content"
+                      id={`service-panel-${service.id}`}
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: 'auto', opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}

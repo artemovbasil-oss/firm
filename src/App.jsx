@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import MarqueeTicker from './components/MarqueeTicker';
@@ -12,6 +12,7 @@ import Testimonials from './components/Testimonials';
 import Faq from './components/Faq';
 import Footer from './components/Footer';
 import ContactModal from './components/ContactModal';
+import LegalPage from './components/LegalPage';
 const AdminPanel = React.lazy(() => import('./components/AdminPanel'));
 const CaseStudyDetail = React.lazy(() => import('./components/CaseStudyDetail'));
 
@@ -44,6 +45,11 @@ export default function App() {
   });
   const [theme, setTheme] = useState(() => localStorage.getItem('firm_theme') || 'dark');
   
+  const [legalPage] = useState(() => {
+    const p = window.location.pathname;
+    return p === '/privacy' ? 'privacy' : p === '/terms' ? 'terms' : null;
+  });
+
   // Currency strictly tied to language: KZ -> KZT, RU -> RUB, EN -> USD
   const currency = lang === 'kz' ? 'kzt' : lang === 'en' ? 'usd' : 'rub';
 
@@ -164,6 +170,13 @@ export default function App() {
     }
   }, [lang]);
 
+  useEffect(() => {
+    if (!legalPage) return;
+    document.title = legalPage === 'privacy'
+      ? (lang === 'en' ? 'Privacy Policy — ARTX' : (lang === 'kz' ? 'Құпиялылық саясаты — ARTX' : 'Политика конфиденциальности — ARTX'))
+      : (lang === 'en' ? 'Terms of Use — ARTX' : (lang === 'kz' ? 'Пайдалану шарттары — ARTX' : 'Условия использования — ARTX'));
+  }, [legalPage, lang]);
+
   // Check URL hash, path, and hotkey for admin entry
   useEffect(() => {
     const handleHash = () => {
@@ -243,9 +256,11 @@ export default function App() {
     }
   };
 
+  const toastTimer = useRef(null);
   const showToast = (msg) => {
     setToastMessage(msg);
-    setTimeout(() => {
+    if (toastTimer.current) clearTimeout(toastTimer.current);
+    toastTimer.current = setTimeout(() => {
       setToastMessage(null);
     }, 5000);
   };
@@ -255,7 +270,7 @@ export default function App() {
       
       {/* Toast notification */}
       {toastMessage && (
-        <div className="fixed bottom-6 right-6 z-50 p-4 rounded-xl bg-white dark:bg-neutral-900 border border-emerald-500/40 text-emerald-800 dark:text-emerald-300 shadow-2xl flex items-center gap-3 animate-fadeIn">
+        <div role="status" aria-live="polite" className="fixed bottom-6 right-6 z-50 p-4 rounded-xl bg-white dark:bg-neutral-900 border border-emerald-500/40 text-emerald-800 dark:text-emerald-300 shadow-2xl flex items-center gap-3 animate-fadeIn">
           <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
           <span className="text-xs sm:text-sm font-medium">{toastMessage}</span>
         </div>
@@ -276,7 +291,9 @@ export default function App() {
       />
 
       {/* Main Content */}
-      {activeCaseItem ? (
+      {legalPage ? (
+        <LegalPage lang={lang} kind={legalPage} />
+      ) : activeCaseItem ? (
         <CaseStudySuspense 
           caseItem={activeCaseItem}
           allCases={casesList}

@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { motion, useInView, useReducedMotion } from 'framer-motion';
 
 /**
  * BlindTextReveal
@@ -22,6 +22,7 @@ export default function BlindTextReveal({
   ...props
 }) {
   const ref = useRef(null);
+  const reduceMotion = useReducedMotion();
   
   const isInView = useInView(ref, { 
     once, 
@@ -35,8 +36,8 @@ export default function BlindTextReveal({
   return (
     <div ref={ref} className={`overflow-hidden ${displayClass} py-0.5 ${className}`}>
       <Component
-        initial={{ y: yOffset, opacity: 1 }}
-        animate={isInView ? { y: 0, opacity: 1 } : { y: yOffset, opacity: 1 }}
+        initial={{ y: reduceMotion ? 0 : yOffset, opacity: 1 }}
+        animate={isInView || reduceMotion ? { y: 0, opacity: 1 } : { y: yOffset, opacity: 1 }}
         transition={{
           duration,
           delay: isInView ? delay : 0,
@@ -65,6 +66,7 @@ export function BlindLines({
   duration = 0.75,
 }) {
   const ref = useRef(null);
+  const reduceMotion = useReducedMotion();
   
   const isInView = useInView(ref, { 
     once: true, 
@@ -77,8 +79,8 @@ export function BlindLines({
       {lines.map((line, idx) => (
         <div key={idx} className="overflow-hidden block py-0.5">
           <motion.div
-            initial={{ y: '105%', opacity: 1 }}
-            animate={isInView ? { y: 0, opacity: 1 } : { y: '105%', opacity: 1 }}
+            initial={{ y: reduceMotion ? 0 : '105%', opacity: 1 }}
+            animate={isInView || reduceMotion ? { y: 0, opacity: 1 } : { y: '105%', opacity: 1 }}
             transition={{
               duration,
               delay: isInView ? baseDelay + idx * stagger : 0,

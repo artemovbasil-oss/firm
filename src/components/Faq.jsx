@@ -43,7 +43,9 @@ export default function Faq({ lang }) {
                 <button
                   type="button"
                   onClick={() => toggle(idx)}
-                  className="w-full py-6 sm:py-8 text-left flex items-center justify-between gap-4 sm:gap-6 focus:outline-none group px-1 sm:px-4"
+                  aria-expanded={isOpen}
+                  aria-controls={`faq-panel-${idx}`}
+                  className="w-full py-6 sm:py-8 text-left flex items-center justify-between gap-4 sm:gap-6 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400/50 rounded-xl group px-1 sm:px-4"
                 >
                   <span className="font-heading font-bold text-base sm:text-xl lg:text-2xl text-neutral-950 dark:text-white group-hover:translate-x-1.5 transition-transform duration-200">
                     {question}
@@ -61,6 +63,7 @@ export default function Faq({ lang }) {
                   {isOpen && (
                     <motion.div
                       key="faq-content"
+                      id={`faq-panel-${idx}`}
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: 'auto', opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}

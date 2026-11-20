@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { 
   Menu, X, Sun, Moon, ArrowUpRight 
 } from 'lucide-react';
@@ -18,7 +18,26 @@ export default function Navbar({
 }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const menuRef = useRef(null);
   const t = TRANSLATIONS[lang].nav;
+
+  useEffect(() => {
+    if (!mobileMenuOpen) return;
+    const onKey = (e) => { if (e.key === 'Escape') setMobileMenuOpen(false); };
+    const onDown = (e) => {
+      if (menuRef.current && !menuRef.current.contains(e.target) && !e.target.closest('#mobile-menu-button')) {
+        setMobileMenuOpen(false);
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    document.addEventListener('mousedown', onDown);
+    document.addEventListener('touchstart', onDown);
+    return () => {
+      window.removeEventListener('keydown', onKey);
+      document.removeEventListener('mousedown', onDown);
+      document.removeEventListener('touchstart', onDown);
+    };
+  }, [mobileMenuOpen]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -72,7 +91,7 @@ export default function Navbar({
                 </span>
                 <span className="inline-block w-1.5 h-1.5 rounded-full bg-amber-400 shadow-[0_0_6px_rgba(251,191,36,0.7)] animate-pulse" title="Available for projects"></span>
               </div>
-              <span className="text-[9px] uppercase font-mono tracking-widest text-neutral-400 dark:text-neutral-400 leading-tight">
+              <span className="text-[9px] uppercase font-mono tracking-widest text-neutral-500 dark:text-neutral-400 leading-tight">
                 Digital
               </span>
             </div>
@@ -137,6 +156,7 @@ export default function Navbar({
                   : 'border-black/[0.08] dark:border-white/10 bg-white/40 dark:bg-white/[0.04] backdrop-blur-md'
               } text-neutral-700 dark:text-neutral-300 hover:text-neutral-950 dark:hover:text-white flex items-center justify-center hover:scale-105`}
               title={theme === 'dark' ? t.themeLight : t.themeDark}
+              aria-label={theme === 'dark' ? t.themeLight : t.themeDark}
             >
               {theme === 'dark' ? (
                 <Sun className="w-3.5 h-3.5 text-amber-400" />
@@ -160,6 +180,7 @@ export default function Navbar({
           <div className="flex sm:hidden items-center gap-1.5">
             <button
               onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+              aria-label={theme === 'dark' ? t.themeLight : t.themeDark}
               className="w-8 h-8 rounded-full border border-black/10 dark:border-white/10 flex items-center justify-center text-neutral-700 dark:text-neutral-300 bg-white/40 dark:bg-white/[0.04] backdrop-blur-sm"
             >
               {theme === 'dark' ? <Sun className="w-3.5 h-3.5 text-amber-400" /> : <Moon className="w-3.5 h-3.5" />}
@@ -170,13 +191,18 @@ export default function Navbar({
                 const nextLang = lang === 'kz' ? 'ru' : lang === 'ru' ? 'en' : 'kz';
                 setLang(nextLang);
               }}
+              aria-label={lang === 'en' ? 'Change language' : (lang === 'kz' ? 'Тілді ауыстыру' : 'Сменить язык')}
               className="px-2.5 py-1 rounded-full border border-black/10 dark:border-white/10 text-[11px] font-mono font-bold bg-white/40 dark:bg-white/[0.04] backdrop-blur-sm"
             >
               {lang.toUpperCase()}
             </button>
 
             <button
+              id="mobile-menu-button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label={lang === 'en' ? 'Menu' : (lang === 'kz' ? 'Мәзір' : 'Меню')}
+              aria-expanded={mobileMenuOpen}
+              aria-controls="mobile-menu"
               className="w-8 h-8 rounded-full border border-black/10 dark:border-white/10 flex items-center justify-center text-neutral-700 dark:text-neutral-300 bg-white/40 dark:bg-white/[0.04] backdrop-blur-sm"
             >
               {mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
@@ -187,8 +213,8 @@ export default function Navbar({
 
         {/* Mobile menu dropdown: pure neutral monochrome */}
         {mobileMenuOpen && (
-          <div className="pointer-events-auto sm:hidden mt-3 p-5 rounded-3xl bg-white/95 dark:bg-[#0a0a0a]/95 backdrop-blur-2xl border border-black/10 dark:border-white/10 shadow-2xl space-y-4 animate-scaleUp">
-            <div className="flex flex-col gap-1.5">
+          <div ref={menuRef} id="mobile-menu" className="pointer-events-auto sm:hidden mt-3 p-5 rounded-3xl bg-white/95 dark:bg-[#0a0a0a]/95 backdrop-blur-2xl border border-black/10 dark:border-white/10 shadow-2xl space-y-4 animate-scaleUp">
+            <nav aria-label={lang === 'en' ? 'Mobile menu' : (lang === 'kz' ? 'Мобильді мәзір' : 'Мобильное меню')} className="flex flex-col gap-1.5">
               {navLinks.map((link) => {
                 const isActive = activeNav === link.id;
                 return (
@@ -212,7 +238,7 @@ export default function Navbar({
                   </a>
                 );
               })}
-            </div>
+            </nav>
 
             <div className="pt-3 border-t border-neutral-100 dark:border-neutral-800 flex items-center justify-between">
               <span className="text-xs text-neutral-500 font-mono font-medium">Тіл / Язык:</span>

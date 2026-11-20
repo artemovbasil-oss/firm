@@ -148,6 +148,7 @@ export default function ExpressAudit({ lang, onSuccessLead }) {
                   </div>
                   <input
                     type="text"
+                    aria-label={lang === 'en' ? 'Website or project URL' : (lang === 'kz' ? 'Сайт немесе жоба сілтемесі' : 'Ссылка на сайт или проект')}
                     placeholder={lang === 'en' ? 'https://yourwebsite.com' : (lang === 'kz' ? 'Сайт немесе жоба сілтемесі' : 'Ссылка на ваш сайт или проект')}
                     value={targetUrl}
                     onChange={(e) => setTargetUrl(e.target.value)}
@@ -163,6 +164,7 @@ export default function ExpressAudit({ lang, onSuccessLead }) {
                   <input
                     type="text"
                     required
+                    aria-label={lang === 'en' ? 'Contact handle' : (lang === 'kz' ? 'Байланыс контакты' : 'Контакт для связи')}
                     placeholder={lang === 'en' ? 'Telegram (@user) or WhatsApp *' : (lang === 'kz' ? 'Telegram (@user) немесе WhatsApp *' : 'Telegram (@user) или WhatsApp *')}
                     value={contact}
                     onChange={(e) => setContact(e.target.value)}
@@ -192,14 +194,14 @@ export default function ExpressAudit({ lang, onSuccessLead }) {
               </div>
 
               {status === 'success' && (
-                <div className="mt-4 p-4 rounded-2xl bg-amber-500/15 border border-amber-500/30 text-amber-900 dark:text-amber-200 text-xs sm:text-sm flex items-center justify-center gap-2 animate-fadeIn">
+                <div role="status" className="mt-4 p-4 rounded-2xl bg-amber-500/15 border border-amber-500/30 text-amber-900 dark:text-amber-200 text-xs sm:text-sm flex items-center justify-center gap-2 animate-fadeIn">
                   <CheckCircle2 className="w-4 h-4 text-amber-500 dark:text-amber-400 shrink-0" />
                   <span>{t.successMsg}</span>
                 </div>
               )}
 
               {status === 'error' && (
-                <div className="mt-4 p-4 rounded-2xl bg-rose-500/20 border border-rose-500/40 text-rose-200 text-xs sm:text-sm flex items-center justify-center gap-2 animate-fadeIn">
+                <div role="alert" className="mt-4 p-4 rounded-2xl bg-rose-500/20 border border-rose-500/40 text-rose-900 dark:text-rose-200 text-xs sm:text-sm flex items-center justify-center gap-2 animate-fadeIn">
                   <AlertCircle className="w-4 h-4 text-rose-400 shrink-0" />
                   <span>{t.errorMsg}</span>
                 </div>

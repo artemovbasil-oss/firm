@@ -142,14 +142,14 @@ export default function Footer({ lang, servicesList = [], onOpenContact }) {
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-neutral-400">
+        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-neutral-500 dark:text-neutral-400">
           <div>
             © {new Date().getFullYear()} ARTX Digital Agency. {t.rights}
           </div>
 
           <div className="flex items-center gap-5 text-xs">
-            <a href="#" className="hover:text-neutral-950 dark:hover:text-white transition-colors">{t.privacy}</a>
-            <a href="#" className="hover:text-neutral-950 dark:hover:text-white transition-colors">{t.terms}</a>
+            <a href="/privacy" className="hover:text-neutral-950 dark:hover:text-white transition-colors">{t.privacy}</a>
+            <a href="/terms" className="hover:text-neutral-950 dark:hover:text-white transition-colors">{t.terms}</a>
             <button
               onClick={scrollToTop}
               className="w-8 h-8 rounded-lg border border-neutral-200 dark:border-white/10 flex items-center justify-center text-neutral-400 hover:text-neutral-950 dark:hover:text-white hover:border-neutral-400 transition-all"

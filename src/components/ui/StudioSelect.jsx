@@ -14,6 +14,7 @@ export default function StudioSelect({
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef(null);
+  const listRef = useRef(null);
 
   // Normalize options to { value, label, desc }
   const normalizedOptions = options.map((opt) => {
@@ -50,7 +51,12 @@ export default function StudioSelect({
   // Close on Escape key
   useEffect(() => {
     const handleKeyDown = (e) => {
-      if (e.key === 'Escape') setIsOpen(false);
+      if (e.key === 'Escape') {
+        e.stopImmediatePropagation();
+        setIsOpen(false);
+        const trigger = containerRef.current?.querySelector('button');
+        if (trigger) trigger.focus();
+      }
     };
     if (isOpen) {
       window.addEventListener('keydown', handleKeyDown);
@@ -61,6 +67,24 @@ export default function StudioSelect({
   const handleSelect = (optValue) => {
     onChange(optValue);
     setIsOpen(false);
+    const trigger = containerRef.current?.querySelector('button');
+    if (trigger) trigger.focus();
+  };
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const selected = listRef.current?.querySelector('[aria-selected="true"]');
+    if (selected) selected.focus();
+  }, [isOpen]);
+
+  const handleListKeyDown = (e) => {
+    const opts = Array.from(listRef.current?.querySelectorAll('[role="option"]') || []);
+    if (!opts.length) return;
+    const idx = opts.indexOf(document.activeElement);
+    if (e.key === 'ArrowDown') { e.preventDefault(); (opts[idx + 1] || opts[0]).focus(); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); (opts[idx - 1] || opts[opts.length - 1]).focus(); }
+    else if (e.key === 'Home') { e.preventDefault(); opts[0].focus(); }
+    else if (e.key === 'End') { e.preventDefault(); opts[opts.length - 1].focus(); }
   };
 
   return (
@@ -143,6 +167,8 @@ export default function StudioSelect({
             transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
             className="hidden sm:block absolute left-0 right-0 top-full mt-2 z-[60] rounded-2xl bg-white/95 dark:bg-[#0c0c0e]/95 backdrop-blur-2xl border border-neutral-200 dark:border-white/15 shadow-2xl p-2 space-y-1 max-h-80 overflow-y-auto"
             role="listbox"
+            ref={listRef}
+            onKeyDown={handleListKeyDown}
           >
             {normalizedOptions.map((opt) => {
               const isSelected = opt.value === value;
@@ -151,8 +177,15 @@ export default function StudioSelect({
                   key={opt.value}
                   role="option"
                   aria-selected={isSelected}
+                  tabIndex={0}
                   onClick={() => handleSelect(opt.value)}
-                  className={`px-4 py-3 rounded-xl cursor-pointer transition-all flex items-center justify-between gap-3 ${
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      handleSelect(opt.value);
+                    }
+                  }}
+                  className={`px-4 py-3 rounded-xl cursor-pointer transition-all flex items-center justify-between gap-3 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400/50 ${
                     isSelected
                       ? 'bg-amber-400/10 dark:bg-amber-400/15 text-amber-600 dark:text-amber-300 font-bold border border-amber-400/30'
                       : 'text-neutral-800 dark:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-white/10'

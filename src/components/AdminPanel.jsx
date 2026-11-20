@@ -1734,37 +1734,13 @@ export default function AdminPanel({
                     Настройка интеграции с Telegram Bot для мгновенных push-уведомлений при поступлении новых заявок.
                   </p>
 
-                  <div className="space-y-3 pt-2">
-                    <div>
-                      <label className="block text-xs font-mono text-slate-400 mb-1">Telegram логин менеджера:</label>
-                      <input
-                        type="text"
-                        defaultValue="@artemov_basil"
-                        className="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-800 text-xs text-white focus:outline-none"
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-xs font-mono text-slate-400 mb-1">Telegram Bot Token (для сервера):</label>
-                      <input
-                        type="text"
-                        placeholder="Например: 123456789:ABCdefGhIJKlmNoPQRsTUVwxyZ"
-                        className="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-800 text-xs text-white focus:outline-none"
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-xs font-mono text-slate-400 mb-1">Telegram Chat ID получателя:</label>
-                      <input
-                        type="text"
-                        placeholder="Например: 582910481"
-                        className="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-800 text-xs text-white focus:outline-none"
-                      />
-                    </div>
+                  <div className="space-y-2 pt-2 text-xs text-slate-300 font-mono">
+                    <div>TELEGRAM_BOT_TOKEN — токен бота-отправителя уведомлений</div>
+                    <div>TELEGRAM_CHAT_ID — chat ID получателя заявок</div>
                   </div>
 
                   <div className="pt-2 text-xs text-slate-500">
-                    💡 Переменные `TELEGRAM_BOT_TOKEN` и `TELEGRAM_CHAT_ID` также можно указать в панели Railway для автоматической отправки.
+                    💡 Значения задаются в переменных окружения сервиса Railway (environment production) — здесь они не редактируются.
                   </div>
                 </div>
               </div>

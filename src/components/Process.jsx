@@ -73,10 +73,10 @@ export default function Process({ lang }) {
   ];
 
   const sprintColumns = [
-    { label: lang === 'en' ? 'Sprint 01' : 'Спринт 01', range: lang === 'en' ? 'Days 1–6' : 'Дни 1–6' },
-    { label: lang === 'en' ? 'Sprint 02' : 'Спринт 02', range: lang === 'en' ? 'Days 7–12' : 'Дни 7–12' },
-    { label: lang === 'en' ? 'Sprint 03' : 'Спринт 03', range: lang === 'en' ? 'Days 13–18' : 'Дни 13–18' },
-    { label: lang === 'en' ? 'Sprint 04' : 'Спринт 04', range: lang === 'en' ? 'Days 19–22' : 'Дни 19–22' },
+    { label: lang === 'en' ? 'Sprint 01' : 'Спринт 01', range: lang === 'en' ? 'Days 1–6' : (lang === 'kz' ? '1–6 күн' : 'Дни 1–6') },
+    { label: lang === 'en' ? 'Sprint 02' : 'Спринт 02', range: lang === 'en' ? 'Days 7–12' : (lang === 'kz' ? '7–12 күн' : 'Дни 7–12') },
+    { label: lang === 'en' ? 'Sprint 03' : 'Спринт 03', range: lang === 'en' ? 'Days 13–18' : (lang === 'kz' ? '13–18 күн' : 'Дни 13–18') },
+    { label: lang === 'en' ? 'Sprint 04' : 'Спринт 04', range: lang === 'en' ? 'Days 19–22' : (lang === 'kz' ? '19–22 күн' : 'Дни 19–22') },
   ];
 
   return (

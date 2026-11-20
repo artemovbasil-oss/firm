@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { 
   ArrowLeft, ArrowUpRight, CheckCircle2, ShieldCheck, 
@@ -15,9 +15,48 @@ export default function CaseStudyDetail({
   onSelectCase, 
   onOpenContact 
 }) {
+  const [copied, setCopied] = useState(false);
+
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'instant' });
   }, [caseItem?.slug]);
+
+  // Per-case SEO meta + BreadcrumbList structured data
+  useEffect(() => {
+    if (!caseItem) return;
+    const loc = (f) => (typeof f === 'string' ? f : (f?.[lang] || f?.ru || f?.en || ''));
+    const caseTitle = loc(caseItem.title);
+    const desc = loc(caseItem.summary) || caseTitle;
+    const url = `https://artx.one/cases/${caseItem.slug || caseItem.id}`;
+    const prevTitle = document.title;
+    document.title = `${caseTitle} — ARTX Case Study`;
+    const set = (sel, attr, val) => { const el = document.querySelector(sel); if (el) el.setAttribute(attr, val); };
+    set('meta[name="description"]', 'content', desc);
+    set('meta[property="og:title"]', 'content', `${caseTitle} — ARTX Case Study`);
+    set('meta[property="og:description"]', 'content', desc);
+    set('meta[property="og:url"]', 'content', url);
+    set('meta[name="twitter:title"]', 'content', `${caseTitle} — ARTX Case Study`);
+    set('meta[name="twitter:description"]', 'content', desc);
+    set('link[rel="canonical"]', 'href', url);
+    const ld = document.createElement('script');
+    ld.type = 'application/ld+json';
+    ld.textContent = JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'ARTX', item: 'https://artx.one/' },
+        { '@type': 'ListItem', position: 2, name: loc({ ru: 'Кейсы', en: 'Cases', kz: 'Кейстер' }), item: 'https://artx.one/#cases' },
+        { '@type': 'ListItem', position: 3, name: caseTitle, item: url }
+      ]
+    });
+    document.head.appendChild(ld);
+    return () => {
+      document.title = prevTitle;
+      set('meta[property="og:url"]', 'content', 'https://artx.one/');
+      set('link[rel="canonical"]', 'href', 'https://artx.one/');
+      ld.remove();
+    };
+  }, [caseItem, lang]);
 
   if (!caseItem) return null;
 
@@ -44,9 +83,13 @@ export default function CaseStudyDetail({
         title: `${title} · ARTX Digital Case Study`,
         url: window.location.href
       }).catch(() => {});
-    } else {
-      navigator.clipboard.writeText(window.location.href);
-      alert(lang === 'en' ? 'Link copied to clipboard!' : (lang === 'kz' ? 'Сілтеме көшірілді!' : 'Ссылка скопирована в буфер обмена!'));
+    } else if (navigator.clipboard) {
+      navigator.clipboard.writeText(window.location.href)
+        .then(() => {
+          setCopied(true);
+          setTimeout(() => setCopied(false), 2500);
+        })
+        .catch(() => {});
     }
   };
 
@@ -62,6 +105,11 @@ export default function CaseStudyDetail({
 
   return (
     <div className="min-h-screen bg-[#fcfcfd] dark:bg-[#070708] text-neutral-950 dark:text-white pt-24 sm:pt-32 pb-20 selection:bg-amber-400 selection:text-neutral-950">
+      {copied && (
+        <div role="status" className="fixed bottom-6 right-6 z-50 p-4 rounded-xl bg-white dark:bg-neutral-900 border border-emerald-500/40 text-emerald-800 dark:text-emerald-300 shadow-2xl text-xs sm:text-sm font-medium animate-fadeIn">
+          {lang === 'en' ? 'Link copied to clipboard' : (lang === 'kz' ? 'Сілтеме көшірілді' : 'Ссылка скопирована в буфер обмена')}
+        </div>
+      )}
       
       {/* Case Header Hero */}
       <article className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">

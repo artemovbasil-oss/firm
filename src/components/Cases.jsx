@@ -122,7 +122,7 @@ function CaseCard({ item, idx, lang, onOpenContact, onSelectCase, t, getLocalize
           transform: 'translateZ(0)',
           isolation: 'isolate'
         }}
-        className={`block w-full aspect-[16/10] rounded-[24px] bg-gradient-to-br ${activeGrad} p-6 sm:p-10 flex flex-col justify-between relative overflow-hidden shadow-xl dark:shadow-2xl cursor-pointer`}
+        className={`block w-full aspect-[16/10] rounded-[24px] bg-gradient-to-br ${activeGrad} p-6 sm:p-10 flex flex-col justify-between relative overflow-hidden shadow-xl dark:shadow-2xl cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400/60`}
       >
         {/* Dynamic WebGL Thermal Heatmap + Analog Film Grain Noise on Hover */}
         <CardShaderHover 
@@ -155,7 +155,7 @@ function CaseCard({ item, idx, lang, onOpenContact, onSelectCase, t, getLocalize
         {/* Top Bar with category tag & status */}
         <div className="flex items-center justify-between z-10 gap-3 relative">
           <span className="font-mono text-xs font-semibold text-white/90 uppercase tracking-widest truncate">
-            {client} · 2026
+            {client} · {String(item.year || '2026').slice(-4)}
           </span>
           <span className="px-3.5 py-1 rounded-full text-xs font-mono font-bold bg-white text-neutral-950 shadow-xl shrink-0">
             {badge}
@@ -191,6 +191,11 @@ export default function Cases({ lang, casesList = [], onOpenContact, onSelectCas
   const t = TRANSLATIONS[lang].cases;
 
   const tags = ['All', 'Websites', 'Branding', 'SaaS', 'SEO Optimization', 'Full Packaging'];
+  const TAG_LABELS = {
+    ru: { Websites: 'Сайты', Branding: 'Брендинг', SaaS: 'SaaS', 'SEO Optimization': 'SEO', 'Full Packaging': 'Упаковка 360°' },
+    en: { Websites: 'Websites', Branding: 'Branding', SaaS: 'SaaS', 'SEO Optimization': 'SEO', 'Full Packaging': 'Full Packaging' },
+    kz: { Websites: 'Сайттар', Branding: 'Брендинг', SaaS: 'SaaS', 'SEO Optimization': 'SEO', 'Full Packaging': '360° қаптама' }
+  };
   const publishedCases = casesList.filter(c => c.published !== false);
 
   const filteredCases = selectedTag === 'All' 
@@ -234,7 +239,7 @@ export default function Cases({ lang, casesList = [], onOpenContact, onSelectCas
                     : 'border border-black/[0.08] dark:border-white/10 text-neutral-600 dark:text-neutral-400 hover:text-neutral-950 dark:hover:text-white'
                 }`}
               >
-                {tag === 'All' ? t.filterAll : tag}
+                {tag === 'All' ? t.filterAll : (TAG_LABELS[lang]?.[tag] || tag)}
               </button>
             ))}
           </div>

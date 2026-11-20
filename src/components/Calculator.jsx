@@ -259,6 +259,7 @@ export default function Calculator({
               <input
                 type="text"
                 required
+                aria-label={lang === 'en' ? 'Contact for estimate' : (lang === 'kz' ? 'Байланыс контакты' : 'Контакт для связи')}
                 placeholder={lang === 'en' ? 'Telegram @username or WhatsApp' : (lang === 'kz' ? 'Telegram немесе телефон *' : 'Telegram или телефон *')}
                 value={clientContact}
                 onChange={(e) => setClientContact(e.target.value)}
@@ -269,7 +270,7 @@ export default function Calculator({
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 type="submit"
-                disabled={isSubmitting}
+                disabled={isSubmitting || selectedServices.length === 0}
                 className="w-full py-4 rounded-2xl bg-neutral-950 dark:bg-white text-white dark:text-neutral-950 font-heading font-bold text-xs sm:text-sm hover:bg-neutral-800 dark:hover:bg-neutral-200 transition-all flex items-center justify-center gap-2 disabled:opacity-50 shadow-xl"
               >
                 {isSubmitting ? (
@@ -283,14 +284,14 @@ export default function Calculator({
               </motion.button>
 
               {submitStatus === 'success' && (
-                <div className="p-3.5 rounded-2xl bg-amber-500/15 border border-amber-500/30 text-amber-900 dark:text-amber-200 text-xs flex items-center gap-2">
+                <div role="status" className="p-3.5 rounded-2xl bg-amber-500/15 border border-amber-500/30 text-amber-900 dark:text-amber-200 text-xs flex items-center gap-2">
                   <CheckCircle2 className="w-4 h-4 text-amber-500 dark:text-amber-400 shrink-0" />
                   <span>{t.successMsg}</span>
                 </div>
               )}
 
               {submitStatus === 'error' && (
-                <div className="p-3.5 rounded-2xl bg-rose-500/20 border border-rose-500/40 text-rose-200 text-xs flex items-center gap-2">
+                <div role="alert" className="p-3.5 rounded-2xl bg-rose-500/20 border border-rose-500/40 text-rose-900 dark:text-rose-200 text-xs flex items-center gap-2">
                   <span>{t.errorMsg}</span>
                 </div>
               )}

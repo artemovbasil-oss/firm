@@ -1,12 +1,13 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { ArrowUpRight, ArrowDown } from 'lucide-react';
-import { motion, useTransform, useMotionValue, animate } from 'framer-motion';
+import { motion, useTransform, useMotionValue, animate , useReducedMotion } from 'framer-motion';
 import { TRANSLATIONS } from '../data/translations';
 
 export default function Hero({ lang, theme = 'dark', onOpenContact }) {
   const t = TRANSLATIONS[lang].hero;
   const videoRef = useRef(null);
   const containerRef = useRef(null);
+  const reduceMotion = useReducedMotion();
 
   // Single unified motion value: 0 = collapsed in ARTX mark, 1 = full open screen
   const maskProgress = useMotionValue(0);
@@ -63,6 +64,11 @@ export default function Hero({ lang, theme = 'dark', onOpenContact }) {
 
       const fade = scrollY < 260 ? 1 : Math.max(0, 1 - (scrollY - 260) / 90);
       badgeFade.set(fade);
+    } else if (reduceMotion) {
+      maskProgress.set(1);
+      badgeY.set(0);
+      badgeFade.set(1);
+      isIntroPlayingRef.current = false;
     } else {
       maskProgress.set(0);
       badgeY.set(0);
@@ -287,8 +293,8 @@ export default function Hero({ lang, theme = 'dark', onOpenContact }) {
             pointerEvents: badgePointerEvents 
           }}
           className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-36 h-36 rounded-3xl z-30 cursor-pointer focus:outline-none transition-transform hover:scale-105 active:scale-95"
-          title="ARTX · Наверх"
-          aria-label="Наверх к первому экрану"
+          title={lang === 'en' ? 'ARTX · Back to top' : (lang === 'kz' ? 'ARTX · Жоғары' : 'ARTX · Наверх')}
+          aria-label={lang === 'en' ? 'Back to first screen' : (lang === 'kz' ? 'Бірінші экранға оралу' : 'Наверх к первому экрану')}
         />
 
         {/* Main Content Area: Headline, Subtitle, Actions, Calibrated Metric Plaques */}
@@ -374,11 +380,11 @@ export default function Hero({ lang, theme = 'dark', onOpenContact }) {
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-1.5">
                     <span className={`w-1.5 h-1.5 rounded-full ${stat.accent}`}></span>
-                    <span className="text-[10px] font-mono text-neutral-400 dark:text-neutral-500">
+                    <span className="text-[10px] font-mono text-neutral-500 dark:text-neutral-500">
                       0{idx + 1}
                     </span>
                   </div>
-                  <span className="text-[9px] font-mono uppercase tracking-widest text-neutral-400 dark:text-neutral-500">
+                  <span className="text-[9px] font-mono uppercase tracking-widest text-neutral-500 dark:text-neutral-500">
                     METRIC
                   </span>
                 </div>

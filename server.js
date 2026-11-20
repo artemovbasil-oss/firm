@@ -244,7 +244,7 @@ function mutateLeads(mutator) {
 }
 
 const LEAD_STRING_FIELDS = [
-  'type', 'name', 'contact', 'service', 'budget', 'message', 'comment', 'issue',
+  'type', 'name', 'contact', 'service', 'source', 'budget', 'message', 'comment', 'issue',
   'currency', 'urgency', 'estimatedPrice', 'estimatedDays', 'discount',
   'targetUrl', 'timestamp', 'lang'
 ];
@@ -303,6 +303,7 @@ async function notifyTelegram(lead) {
     if (lead.name) msg += `<b>Имя:</b> ${escapeHtml(lead.name)}\n`;
     if (lead.contact) msg += `<b>Контакт:</b> ${escapeHtml(lead.contact)}\n`;
     if (lead.service) msg += `<b>Услуга:</b> ${escapeHtml(lead.service)}\n`;
+    if (lead.source) msg += `<b>Источник (CTA):</b> ${escapeHtml(lead.source)}\n`;
     if (lead.budget) msg += `<b>Бюджет:</b> ${escapeHtml(lead.budget)}\n`;
     if (lead.estimatedPrice) msg += `<b>Смета:</b> ${escapeHtml(lead.estimatedPrice)}\n`;
     if (lead.estimatedDays) msg += `<b>Срок:</b> ${escapeHtml(lead.estimatedDays)}\n`;
@@ -537,7 +538,7 @@ const server = http.createServer(async (req, res) => {
       }
       filePath = path.join(DIST_DIR, 'index.html');
       spaFallback = true;
-      spaStatus = pathname === '/' || pathname.startsWith('/cases/') ? 200 : 404;
+      spaStatus = pathname === '/' || pathname.startsWith('/cases/') || pathname === '/privacy' || pathname === '/terms' ? 200 : 404;
     }
 
     if (fs.existsSync(filePath) && fs.statSync(filePath).isFile()) {

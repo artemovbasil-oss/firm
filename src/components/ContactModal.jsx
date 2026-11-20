@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Send, CheckCircle2, AlertCircle, ShieldCheck, Sparkles, DollarSign } from 'lucide-react';
 import { TRANSLATIONS } from '../data/translations';
@@ -12,23 +12,20 @@ export default function ContactModal({
   initialService, 
   onSuccessLead 
 }) {
+  const defaultTurnkeyTitle = lang === 'en'
+    ? 'Turnkey Packaging 360°'
+    : (lang === 'kz' ? '360° Кешенді қаптама' : 'Комплексный проект / Упаковка 360°');
+
   const [name, setName] = useState('');
   const [contact, setContact] = useState('');
-  const [selectedService, setSelectedService] = useState(
-    initialService || (lang === 'en' ? 'Turnkey Packaging 360°' : (lang === 'kz' ? '360° Кешенді қаптама' : 'Комплексный проект / Упаковка 360°'))
-  );
+  const [selectedService, setSelectedService] = useState(initialService || defaultTurnkeyTitle);
   const [budget, setBudget] = useState('$1,500 – $3,500');
   const [message, setMessage] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [status, setStatus] = useState(null);
+  const dialogRef = useRef(null);
 
   const t = TRANSLATIONS[lang].modal;
-
-  useEffect(() => {
-    if (initialService) {
-      setSelectedService(initialService);
-    }
-  }, [initialService]);
 
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -45,10 +42,6 @@ export default function ContactModal({
   }, [isOpen, onClose]);
 
   // Dynamic service options
-  const defaultTurnkeyTitle = lang === 'en' 
-    ? 'Turnkey Packaging 360°' 
-    : (lang === 'kz' ? '360° Кешенді қаптама' : 'Комплексный проект / Упаковка 360°');
-
   const serviceOptions = [
     {
       value: defaultTurnkeyTitle,
@@ -92,6 +85,37 @@ export default function ContactModal({
     }
   ];
 
+  useEffect(() => {
+    if (initialService && serviceOptions.some(o => o.value === initialService)) {
+      setSelectedService(initialService);
+    }
+  }, [initialService, servicesList, lang]);
+
+  // Focus trap, initial focus and focus restore for the dialog
+  useEffect(() => {
+    if (!isOpen) return;
+    const node = dialogRef.current;
+    if (!node) return;
+    const previous = document.activeElement;
+    const focusables = () => Array.from(node.querySelectorAll('button, input, textarea, select, [tabindex]:not([tabindex="-1"])')).filter(el => !el.disabled && el.offsetParent !== null);
+    const initial = node.querySelector('input') || focusables()[0];
+    if (initial) initial.focus();
+    const trap = (e) => {
+      if (e.key !== 'Tab') return;
+      const list = focusables();
+      if (!list.length) return;
+      const first = list[0];
+      const last = list[list.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    };
+    node.addEventListener('keydown', trap);
+    return () => {
+      node.removeEventListener('keydown', trap);
+      if (previous && previous.focus) previous.focus();
+    };
+  }, [isOpen]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!contact.trim()) return;
@@ -104,6 +128,7 @@ export default function ContactModal({
       name: name.trim() || (lang === 'en' ? 'Not specified' : (lang === 'kz' ? 'Көрсетілмеген' : 'Не указано')),
       contact: contact.trim(),
       service: selectedService,
+      source: initialService || '',
       budget,
       message: message.trim(),
       timestamp: new Date().toISOString()
@@ -147,6 +172,10 @@ export default function ContactModal({
 
           {/* Modal Dialog Content Shell */}
           <motion.div 
+            ref={dialogRef}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="contact-modal-title"
             initial={{ opacity: 0, scale: 0.95, y: 16 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 16 }}
@@ -163,6 +192,7 @@ export default function ContactModal({
               whileHover={{ scale: 1.1, rotate: 90 }}
               whileTap={{ scale: 0.9 }}
               onClick={onClose}
+              aria-label={lang === 'en' ? 'Close' : (lang === 'kz' ? 'Жабу' : 'Закрыть')}
               className="absolute top-4 right-4 sm:top-5 sm:right-5 z-20 w-10 h-10 rounded-full border border-neutral-200 dark:border-white/10 bg-white/80 dark:bg-neutral-900/80 backdrop-blur-md flex items-center justify-center text-neutral-500 hover:text-neutral-950 dark:hover:text-white transition-colors shadow-sm"
             >
               <X className="w-4 h-4" />
@@ -173,7 +203,7 @@ export default function ContactModal({
               
               {/* Simplified Modal Header */}
               <div className="mb-6 pr-12">
-                <h3 className="text-2xl sm:text-3xl font-heading font-black text-neutral-950 dark:text-white tracking-tight uppercase leading-tight">
+                <h3 id="contact-modal-title" className="text-2xl sm:text-3xl font-heading font-black text-neutral-950 dark:text-white tracking-tight uppercase leading-tight">
                   {t.title}
                 </h3>
               </div>
@@ -183,11 +213,12 @@ export default function ContactModal({
               
               {/* Field 1: Contact (Required, prominent) */}
               <div>
-                <label className="block text-xs font-mono font-medium text-neutral-700 dark:text-neutral-300 uppercase tracking-wider mb-2">
+                <label htmlFor="contact-field" className="block text-xs font-mono font-medium text-neutral-700 dark:text-neutral-300 uppercase tracking-wider mb-2">
                   {lang === 'en' ? 'Contact Handle / Phone *' : (lang === 'kz' ? 'Байланыс телефоны немесе мессенджер *' : 'Контакты для связи (Telegram, WhatsApp или тел.) *')}
                 </label>
                 <div className="relative flex items-center">
                   <input
+                    id="contact-field"
                     type="text"
                     required
                     placeholder="@username, phone or email"
@@ -200,10 +231,11 @@ export default function ContactModal({
 
               {/* Field 2: Name / Company */}
               <div>
-                <label className="block text-xs font-mono font-medium text-neutral-700 dark:text-neutral-300 uppercase tracking-wider mb-2">
+                <label htmlFor="contact-name" className="block text-xs font-mono font-medium text-neutral-700 dark:text-neutral-300 uppercase tracking-wider mb-2">
                   {t.nameLabel}
                 </label>
                 <input
+                  id="contact-name"
                   type="text"
                   placeholder={lang === 'en' ? 'John Doe / Company' : (lang === 'kz' ? 'Есіміңіз немесе компания' : 'Как вас зовут / Компания')}
                   value={name}
@@ -215,6 +247,7 @@ export default function ContactModal({
               {/* Modern Studio Selects: 1 select per row so options never truncate */}
               <div className="space-y-4">
                 <StudioSelect
+                  id="contact-service"
                   label={t.serviceLabel}
                   value={selectedService}
                   onChange={setSelectedService}
@@ -224,6 +257,7 @@ export default function ContactModal({
                 />
 
                 <StudioSelect
+                  id="contact-budget"
                   label={t.budgetLabel}
                   value={budget}
                   onChange={setBudget}
@@ -236,7 +270,7 @@ export default function ContactModal({
               {/* Field 5: Brief description + 1-Tap Quick Tags */}
               <div>
                 <div className="flex items-center justify-between mb-2">
-                  <label className="block text-xs font-mono font-medium text-neutral-700 dark:text-neutral-300 uppercase tracking-wider">
+                  <label htmlFor="contact-message" className="block text-xs font-mono font-medium text-neutral-700 dark:text-neutral-300 uppercase tracking-wider">
                     {t.messageLabel}
                   </label>
                   <span className="text-[10px] font-mono text-neutral-400">
@@ -245,6 +279,7 @@ export default function ContactModal({
                 </div>
 
                 <textarea
+                  id="contact-message"
                   rows="3"
                   placeholder={lang === 'en' ? 'Tell us briefly about your goals or paste current website link...' : (lang === 'kz' ? 'Жобаңыз туралы қысқаша немесе сайт сілтемесі...' : 'Расскажите в двух словах о задаче или пришлите ссылку...')}
                   value={message}
@@ -272,14 +307,14 @@ export default function ContactModal({
               </motion.button>
 
               {status === 'success' && (
-                <div className="p-4 rounded-2xl border border-amber-400/50 bg-amber-50 dark:bg-amber-950/40 text-amber-900 dark:text-amber-200 text-xs sm:text-sm flex items-center gap-2.5 animate-fadeIn">
+                <div role="status" className="p-4 rounded-2xl border border-amber-400/50 bg-amber-50 dark:bg-amber-950/40 text-amber-900 dark:text-amber-200 text-xs sm:text-sm flex items-center gap-2.5 animate-fadeIn">
                   <CheckCircle2 className="w-4 h-4 text-amber-500 shrink-0" />
                   <span>{t.successMsg}</span>
                 </div>
               )}
 
               {status === 'error' && (
-                <div className="p-4 rounded-2xl border border-rose-400/50 bg-rose-50 dark:bg-rose-950/40 text-rose-900 dark:text-rose-200 text-xs sm:text-sm flex items-center gap-2.5 animate-fadeIn">
+                <div role="alert" className="p-4 rounded-2xl border border-rose-400/50 bg-rose-50 dark:bg-rose-950/40 text-rose-900 dark:text-rose-200 text-xs sm:text-sm flex items-center gap-2.5 animate-fadeIn">
                   <AlertCircle className="w-4 h-4 text-rose-500 shrink-0" />
                   <span>{t.errorMsg}</span>
                 </div>
