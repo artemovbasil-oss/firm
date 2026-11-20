@@ -113,15 +113,19 @@ function isPrivateIp(ip) {
   );
 }
 
-// Rightmost public IP in X-Forwarded-For: trusted proxies (Railway edge,
-// atrx-one reverse proxy) append the real socket IP, so spoofed entries
-// injected by the client end up on the left and are ignored.
+// Via the atrx-one proxy the Railway edge rewrites XFF, so the proxy passes
+// the visitor IP in a dedicated header. On direct hits the leftmost XFF
+// entry is the client (the edge appends its own hops after it).
 function getClientIp(req) {
+  if (req.headers['x-artx-proxy'] === 'atrx-one') {
+    const proxied = req.headers['x-artx-client-ip'];
+    if (typeof proxied === 'string' && proxied && !isPrivateIp(proxied)) return proxied;
+  }
   const xff = req.headers['x-forwarded-for'];
   if (typeof xff === 'string' && xff) {
     const parts = xff.split(',').map(s => s.trim()).filter(Boolean);
-    for (let i = parts.length - 1; i >= 0; i--) {
-      if (!isPrivateIp(parts[i])) return parts[i];
+    for (const part of parts) {
+      if (!isPrivateIp(part)) return part;
     }
   }
   return req.socket.remoteAddress || 'unknown';
@@ -380,8 +384,7 @@ const server = http.createServer(async (req, res) => {
   // robots.txt so search engines consolidate on the canonical artx.one.
   // Proxied requests (atrx-one) carry X-Forwarded-Host and pass through.
   const host = (req.headers.host || '').split(':')[0];
-  const forwardedHost = String(req.headers['x-forwarded-host'] || '').split(',')[0].trim().split(':')[0];
-  const isDirectFirm = host === 'firm-production-93e2.up.railway.app' && !['artx.one', 'www.artx.one'].includes(forwardedHost);
+  const isDirectFirm = host === 'firm-production-93e2.up.railway.app' && req.headers['x-artx-proxy'] !== 'atrx-one';
 
   if (isDirectFirm && pathname === '/robots.txt') {
     res.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-8', 'Cache-Control': 'no-cache' });
