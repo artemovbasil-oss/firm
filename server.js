@@ -526,7 +526,20 @@ const server = http.createServer(async (req, res) => {
     let safePath = path.normalize(pathname).replace(/^(\.\.[\/\\])+/, '');
     if (safePath === '/' || safePath === '') safePath = '/index.html';
 
-    let filePath = path.join(DIST_DIR, safePath);
+    // Prerendered SEO HTML for home and case pages, per language
+    let filePath = null;
+    if (pathname === '/' || pathname.startsWith('/cases/')) {
+      const langParam = parsedUrl.searchParams.get('lang');
+      const preLang = langParam === 'kk' ? 'kz' : (['ru', 'en', 'kz'].includes(langParam) ? langParam : 'ru');
+      const slug = pathname.startsWith('/cases/')
+        ? pathname.slice('/cases/'.length).replace(/[^a-zA-Z0-9-]/g, '')
+        : '';
+      const preFile = slug
+        ? path.join(DIST_DIR, 'prerender', `case-${slug}-${preLang}.html`)
+        : path.join(DIST_DIR, 'prerender', `home-${preLang}.html`);
+      if (fs.existsSync(preFile)) filePath = preFile;
+    }
+    if (!filePath) filePath = path.join(DIST_DIR, safePath);
     let spaFallback = false;
     let spaStatus = 200;
 
